@@ -1,10 +1,12 @@
 package net.glasslauncher.alwaysmoreitems.mixin.client;
 
-import net.glasslauncher.alwaysmoreitems.AMITextField;
-import net.glasslauncher.mods.gcapi.impl.screen.widget.ExtensibleTextFieldWidget;
+import net.glasslauncher.alwaysmoreitems.screen.OverlayScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,16 +14,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HandledScreen.class)
 public class ScreenMixinHandler extends Screen {
+
     @Unique
-    AMITextField textFieldWidget;
+    OverlayScreen overlay;
 
     @Inject(method = "<init>", at = @At(value = "RETURN"))
-    public void test(CallbackInfo ci) {
-//        textFieldWidget = new AMITextField((HandledScreen) (Object) this, textRenderer);
+    public void constructor(CallbackInfo ci) {
+        overlay = new OverlayScreen((HandledScreen) (Object) this);
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ingame/HandledScreen;drawForeground()V", shift = At.Shift.AFTER))
+    @Override
+    public void init(Minecraft minecraft, int width, int height) {
+        super.init(minecraft, width, height);
+        overlay.init(minecraft, width, height);
+    }
+
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;render(IIF)V", shift = At.Shift.AFTER))
     public void render(int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        textFieldWidget.draw(mouseX, mouseY);
+        overlay.render(mouseX, mouseY, delta);
+    }
+
+    @Inject(method = "tick", at = @At(value = "TAIL"))
+    public void tick(CallbackInfo ci){
+        overlay.tick();
+    }
+
+    @Inject(method = "mouseClicked", at = @At(value = "TAIL"))
+    public void mouseClicked(int mouseX, int mouseY, int button, CallbackInfo ci){
+        overlay.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Inject(method = "keyPressed", at = @At(value = "TAIL"))
+    public void keyPressed(char character, int keyCode, CallbackInfo ci){
+        overlay.keyPressed(character, keyCode);
     }
 }
