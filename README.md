@@ -1,4 +1,4 @@
-# Fabric Example Mod with StationAPI and BIN Mappings for beta 1.7.3 server + client
+# Always More Items
 
 ## Setup
 
