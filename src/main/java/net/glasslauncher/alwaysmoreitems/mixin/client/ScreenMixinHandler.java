@@ -1,12 +1,10 @@
 package net.glasslauncher.alwaysmoreitems.mixin.client;
 
-import net.glasslauncher.alwaysmoreitems.screen.OverlayScreen;
+import net.glasslauncher.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

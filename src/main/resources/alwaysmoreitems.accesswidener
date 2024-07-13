@@ -5,3 +5,5 @@ accessible field net/minecraft/client/Minecraft INSTANCE Lnet/minecraft/client/M
 
 accessible field net/minecraft/client/gui/screen/ingame/HandledScreen backgroundWidth I
 accessible field net/minecraft/client/gui/screen/ingame/HandledScreen backgroundHeight I
+
+accessible field net/minecraft/server/network/ServerPlayNetworkHandler player Lnet/minecraft/entity/player/ServerPlayerEntity;
