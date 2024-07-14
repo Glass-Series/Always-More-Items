@@ -9,8 +9,7 @@ import net.glasslauncher.alwaysmoreitems.network.ActionButtonC2SPacket;
 import net.minecraft.class_564;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import org.lwjgl.input.Keyboard;
 
@@ -28,6 +27,9 @@ public class OverlayScreen extends Screen {
     public static int maxActionButtonPanelWidth = 100;
     public static int actionButtonOffset = 2;
 
+    public String currentTooltip;
+    int tooltipYOffset = 0;
+    int tooltipXOffset = 0;
 
     // Screen Rescaling Stuff
     int lastWidth = 0;
@@ -41,6 +43,8 @@ public class OverlayScreen extends Screen {
     @Override
     public void init() {
         int id = 0;
+
+        currentTooltip = "";
 
         searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2), height - 25, searchFieldWidth, 20);
         searchField.setMaxLength(64);
@@ -79,12 +83,47 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        // Draw Regular Buttons
         super.render(mouseX, mouseY, delta);
-        searchField.draw(mouseX, mouseY);
-        textRenderer.drawWithShadow("CAALM", 0, 0, 16722100);
 
+        // Reset Tooltip
+        currentTooltip = "";
+
+        // Draw Search Field
+        searchField.draw(mouseX, mouseY);
+
+        // Draw CAAALM
+        //textRenderer.drawWithShadow("CAALM", 0, 0, 16722100);
+
+        // Draw Action Buttons
         for (var actionButton : actionButtons) {
             actionButton.render(minecraft, mouseX, mouseY);
+            if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
+                boolean holdingShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+                String translationKey = "actionButton." + actionButton.actionIdentifier.namespace + "." + actionButton.actionIdentifier.path;
+
+                if (holdingShift && !TranslationStorage.getInstance().get(translationKey + ".alt").equals(translationKey + ".alt")) {
+                    currentTooltip = TranslationStorage.getInstance().get(translationKey + ".alt");
+                } else {
+                    currentTooltip = TranslationStorage.getInstance().get(translationKey);
+                }
+            }
+        }
+
+        // Tooltip offsets
+        tooltipXOffset = 9;
+        tooltipYOffset = -15;
+
+        // If the mouse is so close to the top of the screen that the tooltip would get cut off, render it at the height of mouse cursor
+        if (mouseY < -tooltipYOffset) {
+            tooltipYOffset = 0;
+        }
+
+        // Draw Tooltip
+        if (!currentTooltip.isEmpty()) {
+            int tooltipWidth = textRenderer.getWidth(currentTooltip) + 4;
+            fillGradient(mouseX + tooltipXOffset, mouseY + tooltipYOffset, mouseX + tooltipWidth + tooltipXOffset, mouseY + 12 + tooltipYOffset + 2, -1073741824, -1073741824); // -1073741824
+            textRenderer.drawWithShadow(currentTooltip, mouseX + tooltipXOffset + 3, mouseY + tooltipYOffset + 3, -1);
         }
     }
 
@@ -103,7 +142,6 @@ public class OverlayScreen extends Screen {
                 if (!minecraft.world.isRemote || actionButton.action.isClientsideOnly()) {
                     actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, holdingShift);
                 } else {
-                    System.out.println("Not done yet ¯\\_(ツ)_/¯");
                     PacketHelper.send(new ActionButtonC2SPacket(actionButton.actionIdentifier, button, holdingShift));
                 }
             }
