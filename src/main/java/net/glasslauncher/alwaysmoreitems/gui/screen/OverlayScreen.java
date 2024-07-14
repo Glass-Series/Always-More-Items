@@ -2,6 +2,7 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
+import net.glasslauncher.alwaysmoreitems.action.TrashActionButton;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
 import net.glasslauncher.alwaysmoreitems.SearchHelper;
@@ -15,18 +16,24 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("unchecked")
 public class OverlayScreen extends Screen {
 
+    // Parent Screen
     public HandledScreen parent;
 
+    // Search Field
     public SearchTextFieldWidget searchField;
     public static int searchFieldWidth = 180;
 
+    // Trash Button
+    public ActionButtonWidget trashButton;
+
+    // Action Buttons
     ArrayList<ActionButtonWidget> actionButtons;
     public static int maxActionButtonPanelWidth = 100;
     public static int actionButtonOffset = 2;
 
+    // Tooltip
     public String currentTooltip;
     int tooltipYOffset = 0;
     int tooltipXOffset = 0;
@@ -44,18 +51,25 @@ public class OverlayScreen extends Screen {
     public void init() {
         int id = 0;
 
+        // Tooltip
         currentTooltip = "";
 
+        // Search Field
         searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2), height - 25, searchFieldWidth, 20);
         searchField.setMaxLength(64);
         searchField.setText(SearchHelper.searchTerm);
 
+        // Action Buttons
         actionButtons = new ArrayList<>();
         int actionButtonX = 0;
         int actionButtonY = 0;
         int maxHeightForLine = 0;
 
         for (var action : ActionButtonRegistry.registry.entrySet()) {
+            if (action.getValue().dontAddToScreen()) {
+                continue;
+            }
+
             if (actionButtonX + action.getValue().getWidth() > maxActionButtonPanelWidth) {
                 actionButtonX = 0;
                 actionButtonY += maxHeightForLine + actionButtonOffset;
@@ -74,6 +88,11 @@ public class OverlayScreen extends Screen {
             actionButtonX += action.getValue().getWidth() + actionButtonOffset;
         }
 
+        // Trash Button
+        trashButton = new ActionButtonWidget(id++, 0, height - 20, 90, 20, "button.always_more_items.trash", "button.always_more_items.trash.alt");
+        trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
+        trashButton.action = ActionButtonRegistry.get(trashButton.actionIdentifier);
+        actionButtons.add(trashButton);
     }
 
     @Override
@@ -98,6 +117,11 @@ public class OverlayScreen extends Screen {
         // Draw Action Buttons
         for (var actionButton : actionButtons) {
             actionButton.render(minecraft, mouseX, mouseY);
+
+            if (!actionButton.action.tooltipEnabled()) {
+                continue;
+            }
+
             if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 boolean holdingShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
                 String translationKey = "actionButton." + actionButton.actionIdentifier.namespace + "." + actionButton.actionIdentifier.path;

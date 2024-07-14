@@ -56,4 +56,12 @@ public interface ActionButton {
     default boolean isClientsideOnly(){
         return false;
     }
+
+    default boolean dontAddToScreen(){
+        return false;
+    }
+
+    default boolean tooltipEnabled(){
+        return true;
+    }
 }

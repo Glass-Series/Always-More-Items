@@ -5,17 +5,22 @@ import net.glasslauncher.alwaysmoreitems.api.action.ActionButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Identifier;
+import org.lwjgl.input.Keyboard;
 
 public class ActionButtonWidget extends ButtonWidget {
     ButtonIconType iconType;
     ItemStack item;
     String texture;
+    String altText;
     public ActionButton action;
     public Identifier actionIdentifier;
+
+    String buttonText = "";
 
     protected ActionButtonWidget(int id, int x, int y, int width, int height) {
         super(id, x, y, width, height, "");
@@ -33,9 +38,25 @@ public class ActionButtonWidget extends ButtonWidget {
         this.iconType = ButtonIconType.ITEM;
     }
 
-    public ActionButtonWidget(int id, int x, int y, int width, int height, String text, String a) {
+    /**
+     * @param id      ID of the button
+     * @param x       x position of the button on screen
+     * @param y       y position of the button on screen
+     * @param width   width of the button
+     * @param height  height of the button
+     * @param text    the text thats displayed normally
+     * @param altText the text thats displayed when SHIFT is held, leave blank or null to be same as normal text
+     */
+    public ActionButtonWidget(int id, int x, int y, int width, int height, String text, String altText) {
         this(id, x, y, width, height);
-        this.text = text;
+        this.text = TranslationStorage.getInstance().get(text);
+
+        if (altText == null || altText.isEmpty()) {
+            this.altText = TranslationStorage.getInstance().get(text);
+        } else {
+            this.altText = TranslationStorage.getInstance().get(altText);
+        }
+
         this.iconType = ButtonIconType.TEXT;
     }
 
@@ -68,12 +89,14 @@ public class ActionButtonWidget extends ButtonWidget {
                 RenderHelper.drawTexture(x + 2, y + 2, 16, 16);
             }
             case TEXT -> {
+                buttonText = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) ? altText : text;
+
                 if (!active) {
-                    drawCenteredTextWithShadow(fontrenderer, text, x + width / 2, y + (height - 8) / 2, 0xffa0a0a0);
+                    drawCenteredTextWithShadow(fontrenderer, buttonText, x + width / 2, y + (height - 8) / 2, 0xffa0a0a0);
                 } else if (isHovered) {
-                    drawCenteredTextWithShadow(fontrenderer, text, x + width / 2, y + (height - 8) / 2, 0xffffa0);
+                    drawCenteredTextWithShadow(fontrenderer, buttonText, x + width / 2, y + (height - 8) / 2, 0xffffa0);
                 } else {
-                    drawCenteredTextWithShadow(fontrenderer, text, x + width / 2, y + (height - 8) / 2, 0xe0e0e0);
+                    drawCenteredTextWithShadow(fontrenderer, buttonText, x + width / 2, y + (height - 8) / 2, 0xe0e0e0);
                 }
             }
         }

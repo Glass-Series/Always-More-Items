@@ -37,7 +37,7 @@ public class ScreenMixinHandler extends Screen {
         overlay.tick();
     }
 
-    @Inject(method = "mouseClicked", at = @At(value = "TAIL"))
+    @Inject(method = "mouseClicked", at = @At(value = "HEAD"))
     public void mouseClicked(int mouseX, int mouseY, int button, CallbackInfo ci){
         overlay.mouseClicked(mouseX, mouseY, button);
     }
