@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class HealActionButton implements ActionButton {
     @Override
-    public boolean perform(Minecraft minecraft, World world, PlayerEntity player, int mouseButton) {
+    public boolean perform(Object minecraft, World world, PlayerEntity player, int mouseButton) {
         player.heal(player.maxHealth);
         return true;
     }

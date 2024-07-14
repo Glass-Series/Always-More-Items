@@ -58,7 +58,7 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
     public void handleServer(NetworkHandler networkHandler){
         if(networkHandler instanceof ServerPlayNetworkHandler serverPlay) {
             ActionButton actionButton = ActionButtonRegistry.get(actionIdentifier);
-            actionButton.perform(null, serverPlay.player.world, serverPlay.player, mouseButton);
+            actionButton.perform(serverPlay.server, serverPlay.player.world, serverPlay.player, mouseButton);
         }
     }
 
