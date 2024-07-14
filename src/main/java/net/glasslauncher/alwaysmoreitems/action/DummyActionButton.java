@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class DummyActionButton implements ActionButton {
 
     @Override
-    public boolean perform(Object minecraft, World world, PlayerEntity player, int mouseButton) {
+    public boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton) {
         return false;
     }
 

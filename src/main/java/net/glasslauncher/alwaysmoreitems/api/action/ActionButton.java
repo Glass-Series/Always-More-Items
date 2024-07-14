@@ -11,11 +11,12 @@ public interface ActionButton {
      * @param minecraft {@link Minecraft} on client and {@link MinecraftServer} on server
      * @param world The world the player is currently in
      * @param player The player who executed the action
+     * @param isOperator If the player is opped. This will always be true in Singleplayer
      * @param mouseButton Mouse button used to click on the button.
      *                    <p> 0 is Left Button, 1 is Right Button, 2 is Middle Button, 3 and 4 are Side Buttons
      * @return Whether the action was performed
      */
-    boolean perform(Object minecraft, World world, PlayerEntity player, int mouseButton);
+    boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton);
 
     /**
      * I would not recommend touching this to keep the button grid consistent

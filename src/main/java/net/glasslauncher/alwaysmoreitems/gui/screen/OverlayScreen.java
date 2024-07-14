@@ -99,9 +99,8 @@ public class OverlayScreen extends Screen {
             if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 this.minecraft.soundManager.playSound(actionButton.action.getClickSound(), 1.0F, 1.0F);
                 if (!minecraft.world.isRemote || actionButton.action.isClientsideOnly()) {
-                    actionButton.performAction(minecraft, minecraft.world, minecraft.player, button);
+                    actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button);
                 } else {
-                    // Send a Packet with the Action (ID????????????????)
                     System.out.println("Not done yet ¯\\_(ツ)_/¯");
                     PacketHelper.send(new ActionButtonC2SPacket(actionButton.actionIdentifier, button));
                 }

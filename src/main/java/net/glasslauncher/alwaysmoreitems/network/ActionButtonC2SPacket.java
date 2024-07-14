@@ -55,10 +55,20 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
     }
 
     @Environment(EnvType.SERVER)
-    public void handleServer(NetworkHandler networkHandler){
-        if(networkHandler instanceof ServerPlayNetworkHandler serverPlay) {
+    public void handleServer(NetworkHandler networkHandler) {
+        if (networkHandler instanceof ServerPlayNetworkHandler serverPlay) {
             ActionButton actionButton = ActionButtonRegistry.get(actionIdentifier);
-            actionButton.perform(serverPlay.server, serverPlay.player.world, serverPlay.player, mouseButton);
+            if (actionButton != null) {
+                actionButton.perform(
+                        serverPlay.server,
+                        serverPlay.player.world,
+                        serverPlay.player,
+                        serverPlay.server.field_2842.method_584(serverPlay.player.name), // serverPlay.server.ops.contains(playername)
+                        mouseButton
+                );
+            } else {
+                AlwaysMoreItems.LOGGER.warn("Player {} tried to execute invalid action {}", serverPlay.player.name, actionIdentifier);
+            }
         }
     }
 
@@ -72,7 +82,7 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
         return identifier;
     }
 
-    public static void register(){
+    public static void register() {
         IdentifiablePacket.register(identifier, false, true, ActionButtonC2SPacket::new);
     }
 }

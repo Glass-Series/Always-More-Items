@@ -39,8 +39,8 @@ public class ActionButtonWidget extends ButtonWidget {
         this.iconType = ButtonIconType.TEXT;
     }
 
-    public void performAction(Minecraft minecraft, World world, PlayerEntity player, int mouseButton) {
-        action.perform(minecraft, world, player, mouseButton);
+    public void performAction(Minecraft minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton) {
+        action.perform(minecraft, world, player, isOperator, mouseButton);
     }
 
     @Override
