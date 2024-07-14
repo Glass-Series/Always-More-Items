@@ -7,7 +7,7 @@ import net.modificationstation.stationapi.api.util.Formatting;
 
 public class HealActionButton implements ActionButton {
     @Override
-    public boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton) {
+    public boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton, boolean holdingShift) {
         if(isOperator){
             player.heal(player.maxHealth);
             return true;

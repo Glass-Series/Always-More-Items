@@ -16,7 +16,7 @@ public interface ActionButton {
      *                    <p> 0 is Left Button, 1 is Right Button, 2 is Middle Button, 3 and 4 are Side Buttons
      * @return Whether the action was performed
      */
-    boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton);
+    boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton, boolean holdingShift);
 
     /**
      * I would not recommend touching this to keep the button grid consistent

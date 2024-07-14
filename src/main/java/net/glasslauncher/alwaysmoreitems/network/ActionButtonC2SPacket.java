@@ -21,18 +21,22 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
 
     public Identifier actionIdentifier;
     public int mouseButton;
+    boolean holdingShift;
 
     public ActionButtonC2SPacket() {
     }
 
-    public ActionButtonC2SPacket(Identifier actionIdentifier, int mouseButton) {
+    public ActionButtonC2SPacket(Identifier actionIdentifier, int mouseButton, boolean holdingShift) {
         this.actionIdentifier = actionIdentifier;
+        this.mouseButton = mouseButton;
+        this.holdingShift = holdingShift;
     }
 
     @Override
     public void read(DataInputStream stream) {
         try {
             mouseButton = stream.readInt();
+            holdingShift = stream.readBoolean();
             actionIdentifier = Identifier.of(stream.readUTF());
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,6 +47,7 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
     public void write(DataOutputStream stream) {
         try {
             stream.writeInt(mouseButton);
+            stream.writeBoolean(holdingShift);
             stream.writeUTF(actionIdentifier.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,7 +69,8 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
                         serverPlay.player.world,
                         serverPlay.player,
                         serverPlay.server.field_2842.method_584(serverPlay.player.name), // serverPlay.server.ops.contains(playername)
-                        mouseButton
+                        mouseButton,
+                        holdingShift
                 );
             } else {
                 AlwaysMoreItems.LOGGER.warn("Player {} tried to execute invalid action {}", serverPlay.player.name, actionIdentifier);
@@ -74,7 +80,7 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
 
     @Override
     public int size() {
-        return 4 + actionIdentifier.toString().length();
+        return 5 + actionIdentifier.toString().length();
     }
 
     @Override

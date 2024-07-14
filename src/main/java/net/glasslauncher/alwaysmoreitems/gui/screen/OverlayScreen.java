@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.network.packet.Packet;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 
@@ -98,11 +99,12 @@ public class OverlayScreen extends Screen {
         for (var actionButton : actionButtons) {
             if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 this.minecraft.soundManager.playSound(actionButton.action.getClickSound(), 1.0F, 1.0F);
+                boolean holdingShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
                 if (!minecraft.world.isRemote || actionButton.action.isClientsideOnly()) {
-                    actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button);
+                    actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, holdingShift);
                 } else {
                     System.out.println("Not done yet ¯\\_(ツ)_/¯");
-                    PacketHelper.send(new ActionButtonC2SPacket(actionButton.actionIdentifier, button));
+                    PacketHelper.send(new ActionButtonC2SPacket(actionButton.actionIdentifier, button, holdingShift));
                 }
             }
         }
