@@ -46,4 +46,10 @@ public class ScreenMixinHandler extends Screen {
     public void keyPressed(char character, int keyCode, CallbackInfo ci){
         overlay.keyPressed(character, keyCode);
     }
+
+    @Override
+    public void onMouseEvent(){
+        super.onMouseEvent();
+        overlay.onMouseEvent();
+    }
 }
