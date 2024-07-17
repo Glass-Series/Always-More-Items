@@ -15,7 +15,7 @@ public class RenderHelper {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public static void drawTexture(int x, int y, int width, int height){
+    public static void drawTexture(int x, int y, int width, int height) {
         Tessellator tessellator = Tessellator.INSTANCE;
         tessellator.startQuads();
         tessellator.vertex(x, y + height, 0, 0, 1);
@@ -46,5 +46,11 @@ public class RenderHelper {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glEnable(2896 /*GL_LIGHTING*/);
         GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
+    }
+
+    public static void disableLighting() {
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glDisable(2896 /*GL_LIGHTING*/);
+        GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
     }
 }

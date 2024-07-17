@@ -8,6 +8,7 @@ import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
 import net.glasslauncher.alwaysmoreitems.network.ActionButtonC2SPacket;
+import net.glasslauncher.alwaysmoreitems.network.GiveItemC2SPacket;
 import net.minecraft.class_564;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -45,15 +46,18 @@ public class OverlayScreen extends Screen {
 
     // Item Overlay
     public static int maxItemListWidth = 10;
-    public static int maxItemListHeight = 10;
+    public static int maxItemListHeight = 100;
     public static int itemSize = 18;
     ArrayList<ItemRenderEntry> renderedItems;
     public ButtonWidget nextButton;
     public ButtonWidget previousButton;
-    int currentPage = 7;
-    int pageCount = 11;
+    int currentPage = 1;
+    int pageCount = 1;
     boolean rolloverPage = true;
     public boolean flipScrollDirection = false;
+    public ItemRenderEntry hoveredItem = null;
+    public static int leftClickGiveAmount = 64;
+    public static int rightClickGiveAmount = 1;
 
     // Screen Rescaling Stuff
     int lastWidth = 0;
@@ -120,16 +124,9 @@ public class OverlayScreen extends Screen {
         actionButtons.add(trashButton);
     }
 
-    int counter = 20;
-
     @Override
     public void tick() {
         rescale();
-        if (counter == 0) {
-            rebuildRenderList();
-            counter = 50;
-        }
-        counter--;
     }
 
     @Override
@@ -139,6 +136,13 @@ public class OverlayScreen extends Screen {
 
         // Reset Tooltip
         currentTooltip = "";
+
+        // Draw Slot Highlight
+        hoveredItem = getHoveredItem(mouseX, mouseY);
+        if (hoveredItem != null) {
+            this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -16729800);
+            currentTooltip = hoveredItem.item.getItem().getTranslatedName();
+        }
 
         // Draw Items
         if (renderedItems != null) {
@@ -203,14 +207,13 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
-        System.out.println("MOUSE X : " + mouseX + " | MOUSE Y : " + mouseY);
-
         super.mouseClicked(mouseX, mouseY, button);
 
         // Search Field
         searchField.mouseClicked(mouseX, mouseY, button);
         SearchHelper.searchTerm = searchField.getText();
 
+        // Action Buttons
         for (var actionButton : actionButtons) {
             if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 this.minecraft.soundManager.playSound(actionButton.action.getClickSound(), 1.0F, 1.0F);
@@ -219,6 +222,23 @@ public class OverlayScreen extends Screen {
                     actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, holdingShift);
                 } else {
                     PacketHelper.send(new ActionButtonC2SPacket(actionButton.actionIdentifier, button, holdingShift));
+                }
+            }
+        }
+
+        // Hovered Item
+        if (hoveredItem != null) {
+            if (minecraft.world.isRemote) {
+                if (button == 0) { // LMB - Give Stack
+                    PacketHelper.send(new GiveItemC2SPacket(hoveredItem.item.itemId, Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount), hoveredItem.item.getDamage()));
+                } else if (button == 1) { // RMB - Give One
+                    PacketHelper.send(new GiveItemC2SPacket(hoveredItem.item.itemId, rightClickGiveAmount, hoveredItem.item.getDamage()));
+                }
+            } else {
+                if (button == 0) { // LMB - Give Stack
+                    minecraft.player.inventory.method_671(new ItemStack(hoveredItem.item.getItem(), Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount)));
+                } else if (button == 1) { // RMB - Give One
+                    minecraft.player.inventory.method_671(new ItemStack(hoveredItem.item.getItem(), rightClickGiveAmount));
                 }
             }
         }
@@ -246,6 +266,7 @@ public class OverlayScreen extends Screen {
         if (searchField.isSelected()) {
             searchField.keyPressed(character, keyCode);
             SearchHelper.searchTerm = searchField.getText();
+            rebuildRenderList();
         }
     }
 
@@ -273,6 +294,7 @@ public class OverlayScreen extends Screen {
             lastHeight = minecraft.displayHeight;
             init();
             rebuildRenderList();
+            currentPage = 1;
         }
     }
 
@@ -292,6 +314,26 @@ public class OverlayScreen extends Screen {
         return overlayStartX;
     }
 
+    public ItemRenderEntry getHoveredItem(int mouseX, int mouseY) {
+        if (renderedItems == null) {
+            return null;
+        }
+
+        if (mouseY <= 21 || mouseX < getOverlayStartX()) {
+            return null;
+        }
+
+        int itemX = (mouseX - getOverlayStartX()) / itemSize;
+        int itemY = (mouseY - 21) / itemSize;
+        int itemIndexOnPage = (itemY * getItemListWidth()) + itemX;
+
+        if (itemIndexOnPage < renderedItems.size() && itemIndexOnPage >= 0) {
+            return renderedItems.get(itemIndexOnPage);
+        } else {
+            return null;
+        }
+    }
+
     // Rebuild the list of items that are rendered
     public void rebuildRenderList() {
         // Discovered
@@ -300,29 +342,40 @@ public class OverlayScreen extends Screen {
             discoveredItems.add(new ItemStack(item.value()));
         }
 
+        // Filtered
+        ArrayList<ItemStack> filteredItems = new ArrayList<>();
+        for (var item : discoveredItems) {
+            if (item.getItem().getTranslatedName().toLowerCase().contains(searchField.getText().toLowerCase())) {
+                filteredItems.add(item);
+            }
+        }
+
         // Rendered
         renderedItems = new ArrayList<>();
 
         int itemListWidth = getItemListWidth();
         int itemListHeight = getItemListHeight();
         int overlayStartX = getOverlayStartX();
+        int itemsPerPage = itemListWidth * itemListHeight;
+        pageCount = (int) Math.ceil((double) filteredItems.size() / itemsPerPage);
 
-        int itemX = 0;
-        int itemY = 0;
+        for (int yIndex = 0; yIndex < itemListHeight; yIndex++) {
+            for (int xIndex = 0; xIndex < itemListWidth; xIndex++) {
+                int itemIndexOnThisPage = (yIndex * itemListWidth) + xIndex;
+                int itemIndex = ((currentPage - 1) * itemsPerPage) + itemIndexOnThisPage;
 
-        for (ItemStack item : discoveredItems) {
-            if (itemX >= itemListWidth) {
-                itemX = 0;
-                itemY ++;
+                if (itemIndex >= filteredItems.size()) {
+                    return;
+                }
+
+                renderedItems.add(
+                        new ItemRenderEntry(
+                                overlayStartX + (xIndex * itemSize),
+                                21 + (yIndex * itemSize),
+                                filteredItems.get(itemIndex)
+                        )
+                );
             }
-
-            if(itemY >= itemListHeight) {
-                continue;
-            }
-
-            renderedItems.add(new ItemRenderEntry(overlayStartX + (itemX * itemSize), 21 + (itemY * itemSize), item));
-
-            itemX++;
         }
     }
 
@@ -344,9 +397,10 @@ public class OverlayScreen extends Screen {
                 }
             }
         }
+        rebuildRenderList();
     }
 
-    static class ItemRenderEntry {
+    public static class ItemRenderEntry {
         int x;
         int y;
         ItemStack item;

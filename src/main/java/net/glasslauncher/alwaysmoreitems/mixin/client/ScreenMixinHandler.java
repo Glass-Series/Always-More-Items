@@ -4,6 +4,7 @@ import net.glasslauncher.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,23 +34,26 @@ public class ScreenMixinHandler extends Screen {
     }
 
     @Inject(method = "tick", at = @At(value = "TAIL"))
-    public void tick(CallbackInfo ci){
+    public void tick(CallbackInfo ci) {
         overlay.tick();
     }
 
-    @Inject(method = "mouseClicked", at = @At(value = "HEAD"))
-    public void mouseClicked(int mouseX, int mouseY, int button, CallbackInfo ci){
-        overlay.mouseClicked(mouseX, mouseY, button);
-    }
+//    @Inject(method = "mouseClicked", at = @At(value = "HEAD"))
+//    public void mouseClicked(int mouseX, int mouseY, int button, CallbackInfo ci){
+//        overlay.mouseClicked(mouseX, mouseY, button);
+//    }
 
-    @Inject(method = "keyPressed", at = @At(value = "TAIL"))
-    public void keyPressed(char character, int keyCode, CallbackInfo ci){
+    @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true)
+    public void keyPressed(char character, int keyCode, CallbackInfo ci) {
         overlay.keyPressed(character, keyCode);
+        if (keyCode == Keyboard.KEY_E && overlay.searchField.isSelected()) {
+            ci.cancel();
+        }
     }
 
     @Override
-    public void onMouseEvent(){
-        super.onMouseEvent();
+    public void onMouseEvent() {
         overlay.onMouseEvent();
+        super.onMouseEvent();
     }
 }
