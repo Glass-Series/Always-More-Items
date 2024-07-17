@@ -2,8 +2,9 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
-import net.glasslauncher.alwaysmoreitems.SearchHelper;
+import net.glasslauncher.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.registry.Registry;
@@ -25,7 +27,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class OverlayScreen extends Screen {
 
@@ -45,7 +47,7 @@ public class OverlayScreen extends Screen {
     public static int actionButtonOffset = 2;
 
     // Tooltip
-    public String currentTooltip;
+    public List<String> currentTooltip;
     int tooltipYOffset = 0;
     int tooltipXOffset = 0;
 
@@ -80,12 +82,12 @@ public class OverlayScreen extends Screen {
         buttons.clear();
 
         // Tooltip
-        currentTooltip = "";
+        currentTooltip = null;
 
         // Search Field
         searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2), height - 25, searchFieldWidth, 20);
         searchField.setMaxLength(64);
-        searchField.setText(SearchHelper.searchTerm);
+        searchField.setText(AlwaysMoreItems.getItemFilter().getFilterText());
 
         // Item Overlay
         previousButton = new ButtonWidget(10, getOverlayStartX(), 0, 20, 20, "<");
@@ -140,13 +142,16 @@ public class OverlayScreen extends Screen {
         super.render(mouseX, mouseY, delta);
 
         // Reset Tooltip
-        currentTooltip = "";
+        currentTooltip = null;
 
         // Draw Slot Highlight
         hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -16729800);
-            currentTooltip = hoveredItem.item.getItem().getTranslatedName();
+            String simpleTip = hoveredItem.item.getItem().getTranslatedName();
+            if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
+                currentTooltip = List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip));
+            }
         }
 
         // Draw Items
@@ -181,14 +186,14 @@ public class OverlayScreen extends Screen {
                 continue;
             }
 
-            if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
+            if (currentTooltip == null && actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 boolean holdingShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
                 String translationKey = "actionButton." + actionButton.actionIdentifier.namespace + "." + actionButton.actionIdentifier.path;
 
                 if (holdingShift && !TranslationStorage.getInstance().get(translationKey + ".alt").equals(translationKey + ".alt")) {
-                    currentTooltip = TranslationStorage.getInstance().get(translationKey + ".alt");
+                    currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(translationKey + ".alt"));
                 } else {
-                    currentTooltip = TranslationStorage.getInstance().get(translationKey);
+                    currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(translationKey));
                 }
             }
         }
@@ -203,10 +208,8 @@ public class OverlayScreen extends Screen {
         }
 
         // Draw Tooltip
-        if (!currentTooltip.isEmpty()) {
-            int tooltipWidth = textRenderer.getWidth(currentTooltip) + 4;
-            fillGradient(mouseX + tooltipXOffset, mouseY + tooltipYOffset, mouseX + tooltipWidth + tooltipXOffset, mouseY + 12 + tooltipYOffset + 2, -1073741824, -1073741824); // -1073741824
-            textRenderer.drawWithShadow(currentTooltip, mouseX + tooltipXOffset + 3, mouseY + tooltipYOffset + 3, -1);
+        if (currentTooltip != null && !currentTooltip.isEmpty()) {
+            DrawableHelper.drawTooltip(currentTooltip, mouseX, mouseY, 0, 0);
         }
     }
 
@@ -216,7 +219,7 @@ public class OverlayScreen extends Screen {
 
         // Search Field
         searchField.mouseClicked(mouseX, mouseY, button);
-        SearchHelper.searchTerm = searchField.getText();
+        ItemFilter.setFilterText(searchField.getText());
 
         // Action Buttons
         for (var actionButton : actionButtons) {
@@ -280,7 +283,7 @@ public class OverlayScreen extends Screen {
         // Search Field
         if (searchField.isSelected()) {
             searchField.keyPressed(character, keyCode);
-            SearchHelper.searchTerm = searchField.getText();
+            ItemFilter.setFilterText(searchField.getText());
             rebuildRenderList();
         }
     }

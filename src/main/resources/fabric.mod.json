@@ -14,7 +14,7 @@
     "sources": "https://github.com/Glass-Series/Always-More-Items"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/alwaysmoreitems/icon.png",
 
   "environment": "*",
@@ -27,6 +27,7 @@
       "net.glasslauncher.alwaysmoreitems.init.PacketListener"
     ],
     "stationapi:event_bus_client": [
+      "net.glasslauncher.alwaysmoreitems.ClientInit"
     ],
     "stationapi:event_bus_server": [
     ]
@@ -37,5 +38,21 @@
   "accessWidener": "alwaysmoreitems.accesswidener",
   "depends": {
     "minecraft": "1.0.0-beta.7.3"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_17": [
+        "net/glasslauncher/alwaysmoreitems/api/SubProvider"
+      ],
+      "net/minecraft/class_124": [
+        "net/glasslauncher/alwaysmoreitems/api/SubProvider"
+      ],
+      "net/minecraft/class_8": [
+        "net/glasslauncher/alwaysmoreitems/api/AMINbt"
+      ],
+      "net/minecraft/class_67": [
+        "net/glasslauncher/alwaysmoreitems/api/AMIFancyFont"
+      ]
+    }
   }
 }

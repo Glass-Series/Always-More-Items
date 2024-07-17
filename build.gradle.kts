@@ -4,6 +4,7 @@ plugins {
 	id("fabric-loom") version "1.7.2"
 	id("babric-loom-extension") version "1.7.3"
 	id("maven-publish")
+	id("io.freefair.lombok") version "8.6"
 }
 
 project.java {
@@ -64,6 +65,17 @@ repositories {
 
 loom {
 	accessWidenerPath = file("src/main/resources/alwaysmoreitems.accesswidener")
+
+	runs {
+		register("testClient") {
+			source("test")
+			client()
+		}
+		register("testServer") {
+			source("test")
+			client()
+		}
+	}
 }
 
 dependencies {

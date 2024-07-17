@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "alwaysmoreitemstest",
+  "version": "${version}",
+
+  "name": "Always More Items Test Mod",
+  "description": "This is the content part of the total conversion mod known as Always More Items.",
+  "authors": [
+    "calmilamsy",
+    "danygames2014"
+  ],
+  "contact": {
+    "homepage": "https://glass-launcher.net/",
+    "sources": "https://github.com/Glass-Series/Always-More-Items"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/alwaysmoreitemstest/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "stationapi:event_bus": [
+      "net.glasslauncher.mods.alwaysmoreitems.testmod.TestMod"
+    ],
+    "stationapi:event_bus_client": [
+    ],
+    "stationapi:event_bus_server": [
+    ]
+  },
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}

@@ -10,8 +10,8 @@ import org.lwjgl.opengl.GL11;
 public class RenderHelper {
     public static ItemRenderer itemRenderer = new ItemRenderer();
 
-    public static void bindTexture(Minecraft minecraft, String texturePath) {
-        minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId(texturePath));
+    public static void bindTexture(String texturePath) {
+        Minecraft.INSTANCE.textureManager.bindTexture(Minecraft.INSTANCE.textureManager.getTextureId(texturePath));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
@@ -33,9 +33,9 @@ public class RenderHelper {
         }
     }
 
-    private static void enableItemLighting() {
+    public static void enableItemLighting() {
         enableLighting();
-        GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/);
+        GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/); // Uhh, this doesn't exist?
         GL11.glPushMatrix();
         GL11.glRotatef(120F, 1.0F, 0.0F, 0.0F);
         class_583.method_1930();

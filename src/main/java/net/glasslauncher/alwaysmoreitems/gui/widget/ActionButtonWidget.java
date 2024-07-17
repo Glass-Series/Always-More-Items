@@ -71,7 +71,7 @@ public class ActionButtonWidget extends ButtonWidget {
         }
 
         TextRenderer fontrenderer = minecraft.textRenderer;
-        RenderHelper.bindTexture(minecraft, "/gui/gui.png");
+        RenderHelper.bindTexture("/gui/gui.png");
         boolean isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
         int k = method_1187(isHovered);
 
@@ -85,7 +85,7 @@ public class ActionButtonWidget extends ButtonWidget {
                 RenderHelper.drawItemStack(x + 2, y + 2, item, false);
             }
             case TEXTURE -> {
-                RenderHelper.bindTexture(minecraft, texture);
+                RenderHelper.bindTexture(texture);
                 RenderHelper.drawTexture(x + 2, y + 2, 16, 16);
             }
             case TEXT -> {
