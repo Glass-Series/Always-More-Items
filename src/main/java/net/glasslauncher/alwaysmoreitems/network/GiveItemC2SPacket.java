@@ -2,12 +2,16 @@ package net.glasslauncher.alwaysmoreitems.network;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
+import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
 
@@ -19,41 +23,41 @@ import java.io.IOException;
 public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
     private static final Identifier identifier = AlwaysMoreItems.NAMESPACE.id("give_item");
 
-    public int id;
-    public int count;
+    //    public int id;
     public int damage;
-//    public Identifier itemIdentifier;
+    public int count;
+    public Identifier itemIdentifier;
 
     public GiveItemC2SPacket() {
     }
 
-    public GiveItemC2SPacket(int id) {
-        this(id, 64);
-    }
-
-    public GiveItemC2SPacket(int id, int count) {
-        this(id, count, 0);
-    }
-
-    public GiveItemC2SPacket(int id, int count, int damage) {
-        this.id = id;
-        this.count = count;
-        this.damage = damage;
-    }
-
-    //    public GiveItemC2SPacket(Identifier itemIdentifier, int damage, int count) {
-//        this.itemIdentifier = itemIdentifier;
-//        this.damage = damage;
-//        this.count = count;
+//    public GiveItemC2SPacket(int id) {
+//        this(id, 64);
 //    }
+//
+//    public GiveItemC2SPacket(int id, int count) {
+//        this(id, count, 0);
+//    }
+//
+//    public GiveItemC2SPacket(int id, int count, int damage) {
+//        this.id = id;
+//        this.count = count;
+//        this.damage = damage;
+//    }
+
+    public GiveItemC2SPacket(Identifier itemIdentifier, int damage, int count) {
+        this.itemIdentifier = itemIdentifier;
+        this.damage = damage;
+        this.count = count;
+    }
 
     @Override
     public void read(DataInputStream stream) {
         try {
-            id = stream.readInt();
+//            id = stream.readInt();
             count = stream.readInt();
             damage = stream.readInt();
-//            itemIdentifier = Identifier.of(stream.readUTF());
+            itemIdentifier = Identifier.of(stream.readUTF());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,10 +66,10 @@ public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
     @Override
     public void write(DataOutputStream stream) {
         try {
-            stream.writeInt(id);
+//            stream.writeInt(id);
             stream.writeInt(count);
             stream.writeInt(damage);
-//            stream.writeUTF(itemIdentifier.toString());
+            stream.writeUTF(itemIdentifier.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,25 +83,36 @@ public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
     @Environment(EnvType.SERVER)
     public void handleServer(NetworkHandler networkHandler) {
         if (networkHandler instanceof ServerPlayNetworkHandler serverPlay) {
-//            Item item = ItemRegistry.INSTANCE.get(itemIdentifier);
+            Item item = ItemRegistry.INSTANCE.get(itemIdentifier);
 
-//            if (item == null) {
-//                AlwaysMoreItems.LOGGER.warn("{} tried to give an invalid item with id {}", serverPlay.getName(), itemIdentifier);
-//                return;
-//            }
+            if (item == null) {
+                AlwaysMoreItems.LOGGER.warn("{} tried to give an invalid item with id {}", serverPlay.getName(), itemIdentifier);
+                return;
+            }
 
             if (!serverPlay.server.field_2842.method_584(serverPlay.player.name)) {
                 serverPlay.player.method_490(Formatting.RED + "You need to be opped to do this action!");
                 return;
             }
 
-            serverPlay.player.inventory.method_671(new ItemStack(id, count, damage));
+            serverPlay.player.inventory.method_671(new ItemStack(ItemRegistry.INSTANCE.getRawId(item), count, damage));
+            serverPlay.player.method_490("Gave " + count + " " + item.getTranslatedName() + "@" + damage);
+
+            // Mark the inventory dirty
+            serverPlay.player.inventory.markDirty();
+
+            // Send content updates to client
+            if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
+                if (serverPlay.player.container != null) {
+                    serverPlay.player.container.sendContentUpdates();
+                }
+            }
         }
     }
 
     @Override
     public int size() {
-        return 12;// + itemIdentifier.toString().length();
+        return 8 + itemIdentifier.toString().length();
     }
 
     @Override
@@ -107,5 +122,14 @@ public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
 
     public static void register() {
         IdentifiablePacket.register(identifier, false, true, GiveItemC2SPacket::new);
+    }
+
+    @Override
+    public String toString() {
+        return "GiveItemC2SPacket{" +
+                "count=" + count +
+                ", damage=" + damage +
+                ", itemIdentifier=" + itemIdentifier +
+                '}';
     }
 }

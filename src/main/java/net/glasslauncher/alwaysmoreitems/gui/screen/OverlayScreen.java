@@ -14,9 +14,14 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
+import net.modificationstation.stationapi.api.registry.Registry;
+import net.modificationstation.stationapi.api.registry.RegistryKey;
+import net.modificationstation.stationapi.api.tag.TagKey;
+import net.modificationstation.stationapi.api.util.Identifier;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -230,9 +235,19 @@ public class OverlayScreen extends Screen {
         if (hoveredItem != null) {
             if (minecraft.world.isRemote) {
                 if (button == 0) { // LMB - Give Stack
-                    PacketHelper.send(new GiveItemC2SPacket(hoveredItem.item.itemId, Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount), hoveredItem.item.getDamage()));
+                    PacketHelper.send(new GiveItemC2SPacket(
+                                    ItemRegistry.INSTANCE.getId(hoveredItem.item.getItem()),
+                                    hoveredItem.item.getDamage(),
+                                    Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount)
+                            )
+                    );
                 } else if (button == 1) { // RMB - Give One
-                    PacketHelper.send(new GiveItemC2SPacket(hoveredItem.item.itemId, rightClickGiveAmount, hoveredItem.item.getDamage()));
+                    PacketHelper.send(new GiveItemC2SPacket(
+                                    ItemRegistry.INSTANCE.getId(hoveredItem.item.getItem()),
+                                    hoveredItem.item.getDamage(),
+                                    rightClickGiveAmount
+                            )
+                    );
                 }
             } else {
                 if (button == 0) { // LMB - Give Stack
