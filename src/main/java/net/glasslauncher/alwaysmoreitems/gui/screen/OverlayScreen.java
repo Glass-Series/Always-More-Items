@@ -219,7 +219,9 @@ public class OverlayScreen extends Screen {
 
         // Search Field
         searchField.mouseClicked(mouseX, mouseY, button);
-        ItemFilter.setFilterText(searchField.getText());
+        if (ItemFilter.setFilterText(searchField.getText())) {
+            rebuildRenderList();
+        }
 
         // Action Buttons
         for (var actionButton : actionButtons) {
@@ -354,17 +356,11 @@ public class OverlayScreen extends Screen {
 
     // Rebuild the list of items that are rendered
     public void rebuildRenderList() {
-        // Discovered
-        ArrayList<ItemStack> discoveredItems = new ArrayList<>();
-        for (var item : ItemRegistry.INSTANCE.getIndexedEntries()) {
-            discoveredItems.add(new ItemStack(item.value()));
-        }
-
         // Filtered
         ArrayList<ItemStack> filteredItems = new ArrayList<>();
-        for (var item : discoveredItems) {
-            if (item.getItem().getTranslatedName().toLowerCase().contains(searchField.getText().toLowerCase())) {
-                filteredItems.add(item);
+        for (var item : AlwaysMoreItems.getItemFilter().getItemList()) {
+            if (item.getItemStack().getItem().getTranslatedName().toLowerCase().contains(searchField.getText().toLowerCase())) {
+                filteredItems.add(item.getItemStack());
             }
         }
 

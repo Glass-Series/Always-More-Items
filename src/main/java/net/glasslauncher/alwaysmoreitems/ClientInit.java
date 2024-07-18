@@ -10,6 +10,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.client.event.option.KeyBindingRegisterEvent;
 import net.modificationstation.stationapi.api.event.mod.InitEvent;
+import net.modificationstation.stationapi.api.event.registry.DimensionRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 import org.lwjgl.input.Keyboard;
@@ -40,7 +41,8 @@ public class ClientInit {
 
 		IModPlugin vanillaPlugin = getVanillaPlugin(plugins);
 		if (vanillaPlugin != null) {
-			plugins.remove(vanillaPlugin);
+            //noinspection DataFlowIssue stfu intellijank, this is a fucking arraylist
+            plugins.remove(vanillaPlugin);
 			plugins.add(0, vanillaPlugin);
 		}
 
@@ -76,8 +78,9 @@ public class ClientInit {
 		event.keyBindings.add(new KeyBinding("key.alwaysmoreitems.recipeBack", Keyboard.KEY_BACK));
 	}
 
+	// TODO: Move to registries frozen event when StAPI a3 merges into master
 	@EventListener
-	public static void init(InitEvent event) {
+	public static void init(DimensionRegistryEvent event) {
 		startAMI();
 	}
 
@@ -130,8 +133,6 @@ public class ClientInit {
 		}
 
 		AlwaysMoreItems.setItemFilter(new ItemFilter(itemRegistry));
-//		ItemListOverlay itemListOverlay = new ItemListOverlay(itemFilter);
-//		guiEventHandler.setItemListOverlay(itemListOverlay);
 	}
 
 	public static void resetItemFilter() {

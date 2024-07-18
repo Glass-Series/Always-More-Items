@@ -48,13 +48,14 @@ public class ItemFilter {
 		this.filteredItemMapsCache.invalidateAll();
 	}
 
-	public static void setFilterText(@Nonnull String filterText) {
+	public static boolean setFilterText(@Nonnull String filterText) {
 		String lowercaseFilterText = filterText.toLowerCase();
 		if (ItemFilter.filterText.equals(lowercaseFilterText)) {
-			return;
+			return false;
 		}
 
 		ItemFilter.filterText = lowercaseFilterText;
+		return true;
 	}
 
 	@Nonnull
