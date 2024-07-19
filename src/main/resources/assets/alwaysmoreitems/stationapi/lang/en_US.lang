@@ -1,13 +1,14 @@
-# @ is a shorthand for the current mod id, which is examplemod.
-actionButton.always_more_items.heal=Heal
-actionButton.always_more_items.heal.alt=Click with MMB to stop being considered alive
-actionButton.always_more_items.set_time_day=Set Time To Day
-actionButton.always_more_items.set_time_night=Set Time to Night
+# @ is a shorthand for the current mod id, which is alwaysmoreitems.
+@.actionButton.@.heal=Heal
+@.actionButton.@.heal.alt=Click with MMB to stop being considered alive
+@.actionButton.@.set_time_day=Set Time To Day
+@.actionButton.@.set_time_night=Set Time to Night
+@.actionButton.@.toggle_weather=Toggle Weather
 
-button.always_more_items.trash=Trash
-button.always_more_items.trash.alt=Clear Inventory
+button.@.trash=Trash
+button.@.trash.alt=Clear Inventory
 
-key.alwaysmoreitems.toggleOverlay=Toggle Overlay
-key.alwaysmoreitems.showRecipe=Show Recipe
-key.alwaysmoreitems.showUses=Show Uses
-key.alwaysmoreitems.recipeBack=Recipe Back
+key.@.toggleOverlay=Toggle Overlay
+key.@.showRecipe=Show Recipe
+key.@.showUses=Show Uses
+key.@.recipeBack=Recipe Back

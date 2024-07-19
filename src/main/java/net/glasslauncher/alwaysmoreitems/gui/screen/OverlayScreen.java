@@ -89,8 +89,10 @@ public class OverlayScreen extends Screen {
 
         // Item Overlay
         previousButton = new ButtonWidget(10, getOverlayStartX(), 0, 20, 20, "<");
+        //noinspection unchecked
         buttons.add(previousButton);
         nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
+        //noinspection unchecked
         buttons.add(nextButton);
 
         // Action Buttons
@@ -123,7 +125,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Trash Button
-        trashButton = new ActionButtonWidget(id++, 0, height - 20, 90, 20, "button.always_more_items.trash", "button.always_more_items.trash.alt");
+        trashButton = new ActionButtonWidget(id++, 0, height - 20, 90, 20, "button." + AlwaysMoreItems.NAMESPACE + ".trash", "button." + AlwaysMoreItems.NAMESPACE + ".trash.alt");
         trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
         trashButton.action = ActionButtonRegistry.get(trashButton.actionIdentifier);
         actionButtons.add(trashButton);
@@ -155,7 +157,7 @@ public class OverlayScreen extends Screen {
         hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -16729800);
-            String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey());
+            String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
             if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
                 currentTooltip = List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip));
             }
@@ -198,7 +200,7 @@ public class OverlayScreen extends Screen {
 
             if (currentTooltip == null && actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 boolean holdingShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-                String translationKey = "actionButton." + actionButton.actionIdentifier.namespace + "." + actionButton.actionIdentifier.path;
+                String translationKey = AlwaysMoreItems.NAMESPACE + ".actionButton." + actionButton.actionIdentifier.namespace + "." + actionButton.actionIdentifier.path;
 
                 if (holdingShift && !TranslationStorage.getInstance().get(translationKey + ".alt").equals(translationKey + ".alt")) {
                     currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(translationKey + ".alt"));
