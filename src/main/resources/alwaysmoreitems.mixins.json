@@ -11,7 +11,9 @@
   "server": [
   ],
   "client": [
-    "client.ScreenMixinHandler"
+    "client.HandledScreenMixin",
+    "client.ScreenMixinHandler",
+    "client.TextRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
