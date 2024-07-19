@@ -73,7 +73,7 @@ loom {
 		}
 		register("testServer") {
 			source("test")
-			client()
+			server()
 		}
 	}
 }
@@ -97,7 +97,7 @@ dependencies {
 	modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") {
 		isTransitive = false
 	}
-	modImplementation("com.github.matthewperiut:spc-babric:${project.properties["spc_version"]}") {
+	modLocalRuntime("com.github.matthewperiut:spc-babric:${project.properties["spc_version"]}") {
 		isTransitive = false
 	}
 }
