@@ -153,10 +153,19 @@ public class OverlayScreen extends Screen {
         // Reset Tooltip
         currentTooltip = null;
 
+        // Draw Items
+        if (renderedItems != null) {
+            RenderHelper.enableItemLighting();
+            for (ItemRenderEntry item : renderedItems) {
+                RenderHelper.drawItemStack(item.x, item.y, item.item, false);
+            }
+            RenderHelper.disableItemLighting();
+        }
+
         // Draw Slot Highlight
         hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
-            this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -16729800);
+            this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -2130706433);
             String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
             if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
                 currentTooltip = List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip));
@@ -165,16 +174,6 @@ public class OverlayScreen extends Screen {
                 currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name"));
             }
         }
-
-        // Draw Items
-        if (renderedItems != null) {
-            for (ItemRenderEntry item : renderedItems) {
-                RenderHelper.drawItemStack(item.x, item.y, item.item, false);
-            }
-        }
-
-        // Draw Search Field
-        searchField.draw(mouseX, mouseY);
 
         // Draw CAAALM
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
@@ -189,6 +188,9 @@ public class OverlayScreen extends Screen {
                 6,
                 -1
         );
+
+        // Draw Search Field
+        searchField.draw(mouseX, mouseY);
 
         // Draw Action Buttons
         for (var actionButton : actionButtons) {
@@ -223,6 +225,9 @@ public class OverlayScreen extends Screen {
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
             DrawableHelper.drawTooltip(currentTooltip, mouseX, mouseY);
         }
+    }
+
+    public void renderSlots(int mouseX, int mouseY) {
     }
 
     @Override
@@ -273,9 +278,13 @@ public class OverlayScreen extends Screen {
                 }
             } else {
                 if (button == 0) { // LMB - Give Stack
-                    minecraft.player.inventory.method_671(new ItemStack(hoveredItem.item.getItem(), Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount)));
+                    ItemStack itemStack = hoveredItem.item.copy();
+                    itemStack.count = Math.min(leftClickGiveAmount, itemStack.getMaxCount());
+                    minecraft.player.inventory.method_671(itemStack);
                 } else if (button == 1) { // RMB - Give One
-                    minecraft.player.inventory.method_671(new ItemStack(hoveredItem.item.getItem(), rightClickGiveAmount));
+                    ItemStack itemStack = hoveredItem.item.copy();
+                    itemStack.count = rightClickGiveAmount;
+                    minecraft.player.inventory.method_671(itemStack);
                 }
             }
         }
@@ -300,18 +309,15 @@ public class OverlayScreen extends Screen {
         }
     }
 
-    @Override
-    public void keyPressed(char character, int keyCode) {
-        super.keyPressed(character, keyCode);
-
+    public boolean overlayKeyPressed(char character, int keyCode) {
         // Toggle Overlay
         if (keyCode == KeybindListener.toggleOverlay.code && !searchField.isSelected()) {
             AlwaysMoreItems.overlayEnabled = !AlwaysMoreItems.overlayEnabled;
         }
 
         // Cancel keys if overlay is not enabled
-        if(!AlwaysMoreItems.overlayEnabled){
-            return;
+        if(!AlwaysMoreItems.overlayEnabled) {
+            return false;
         }
 
         // Search Field
@@ -319,7 +325,7 @@ public class OverlayScreen extends Screen {
             searchField.keyPressed(character, keyCode);
             ItemFilter.setFilterText(searchField.getText());
             rebuildRenderList();
-            return;
+            return true;
         }
 
         // Item Actions
@@ -327,13 +333,16 @@ public class OverlayScreen extends Screen {
             // Show Recipes
             if (keyCode == KeybindListener.showRecipe.code) {
                 showRecipe(hoveredItem);
+                return true;
             }
 
             // Show Uses
             if (keyCode == KeybindListener.showUses.code) {
                 showUses(hoveredItem);
+                return true;
             }
         }
+        return false;
     }
 
     public void showRecipe(ItemRenderEntry item) {

@@ -12,6 +12,6 @@ public class ItemMixin implements SubProvider {
 
     @Override
     public List<ItemStack> getSubItems() {
-        return Collections.singletonList(new ItemStack(Item.class.cast(this)));
+        return Collections.emptyList();
     }
 }

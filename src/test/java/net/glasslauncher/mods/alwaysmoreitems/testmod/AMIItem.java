@@ -1,6 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod;
 
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
@@ -14,6 +15,7 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider {
     public AMIItem(Identifier identifier) {
         super(identifier);
         setTranslationKey("amitestitem");
+        setHasSubtypes(true);
     }
 
     @Override

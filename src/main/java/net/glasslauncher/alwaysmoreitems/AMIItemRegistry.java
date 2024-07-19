@@ -27,7 +27,8 @@ public class AMIItemRegistry implements IItemRegistry {
         List<ItemStack> itemListMutable = new ArrayList<>();
         List<ItemStack> fuelsMutable = new ArrayList<>();
 
-        for (Item item : ItemRegistry.INSTANCE.stream().toArray(Item[]::new)) {
+        Item[] items = ItemRegistry.INSTANCE.stream().toArray(Item[]::new);
+        for (Item item : items) {
             addItemAndSubItems(item, itemListMutable, fuelsMutable);
         }
 

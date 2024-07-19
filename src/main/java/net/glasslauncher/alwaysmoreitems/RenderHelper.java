@@ -26,7 +26,6 @@ public class RenderHelper {
     }
 
     public static void drawItemStack(int x, int y, ItemStack item, boolean drawOverlay) {
-        enableItemLighting();
         itemRenderer.method_1487(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, item, x, y);
         if (drawOverlay) {
             itemRenderer.method_1488(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, item, x, y);
@@ -35,7 +34,7 @@ public class RenderHelper {
 
     public static void enableItemLighting() {
         enableLighting();
-        GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/); // Uhh, this doesn't exist?
+        GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/);
         GL11.glPushMatrix();
         GL11.glRotatef(120F, 1.0F, 0.0F, 0.0F);
         class_583.method_1930();
@@ -52,5 +51,11 @@ public class RenderHelper {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(2896 /*GL_LIGHTING*/);
         GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
+    }
+
+    public static void disableItemLighting() {
+        disableLighting();
+        GL11.glDisable(32826 /*GL_RESCALE_NORMAL_EXT*/);
+        class_583.method_1927();
     }
 }

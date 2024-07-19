@@ -173,12 +173,33 @@ public class StackHelper implements IStackHelper {
 //				}
 //			}
 //		}
-
-		return ((SubProvider) item).getSubItems().stream().map(itemStack -> {
+		List<ItemStack> subItems = ((SubProvider) item).getSubItems().stream().map(itemStack -> {
 			ItemStack newStack = itemStack.copy();
 			newStack.count = stackSize;
 			return newStack;
 		}).toList();
+
+		if (subItems.isEmpty()) {
+			subItems = new ArrayList<>();
+			List<String> keyCache = new ArrayList<>();
+			for (int i = 0; i < 16; i++) {
+				try { // Shitcoders go brrr
+					ItemStack itemStack = new ItemStack(item, stackSize, i);
+					String translationKey = itemStack.getTranslationKey();
+					if (keyCache.contains(translationKey)) {
+						break;
+					}
+					keyCache.add(translationKey);
+					subItems.add(itemStack);
+				}
+				catch (Exception e) {
+                    //noinspection OptionalGetWithoutIsPresent if we throw an exception on this get, then someone fucked up big time.
+                    AlwaysMoreItems.LOGGER.error("An item being autoregistered threw an exception, yell at the creator of " + ItemRegistry.INSTANCE.getId(item.id).get(), e);
+				}
+			}
+		}
+
+		return subItems;
 	}
 
 	@Override

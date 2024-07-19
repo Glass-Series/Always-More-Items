@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HandledScreen.class)
-public class ScreenMixinHandler extends Screen {
+public class OverlayScreenInjectionsMixin extends Screen {
 
     @Unique
     OverlayScreen overlay;
@@ -45,8 +45,7 @@ public class ScreenMixinHandler extends Screen {
 
     @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true)
     public void keyPressed(char character, int keyCode, CallbackInfo ci) {
-        overlay.keyPressed(character, keyCode);
-        if (keyCode == Keyboard.KEY_E && overlay.searchField.isSelected()) {
+        if (overlay.overlayKeyPressed(character, keyCode)) {
             ci.cancel();
         }
     }

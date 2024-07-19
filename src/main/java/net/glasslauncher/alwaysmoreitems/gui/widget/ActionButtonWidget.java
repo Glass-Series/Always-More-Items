@@ -82,7 +82,9 @@ public class ActionButtonWidget extends ButtonWidget {
 
         switch (iconType) {
             case ITEM -> {
+                RenderHelper.enableItemLighting();
                 RenderHelper.drawItemStack(x + 2, y + 2, item, false);
+                RenderHelper.disableItemLighting();
             }
             case TEXTURE -> {
                 RenderHelper.bindTexture(texture);

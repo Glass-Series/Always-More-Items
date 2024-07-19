@@ -91,7 +91,7 @@ dependencies {
 	modImplementation("net.modificationstation:StationAPI:${project.properties["stapi_version"]}")
 
 	// Optional, but convenient mods for mod creators and users alike.
-	modImplementation("com.github.calmilamsy:ModMenu:${project.properties["modmenu_version"]}") {
+	modLocalRuntime("com.github.calmilamsy:ModMenu:${project.properties["modmenu_version"]}") {
 		isTransitive = false
 	}
 	modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") {

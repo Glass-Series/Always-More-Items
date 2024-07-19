@@ -12,7 +12,7 @@
   ],
   "client": [
     "client.HandledScreenMixin",
-    "client.ScreenMixinHandler",
+    "client.OverlayScreenInjectionsMixin",
     "client.TextRendererMixin"
   ],
   "injectors": {
