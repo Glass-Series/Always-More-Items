@@ -25,9 +25,7 @@ import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class OverlayScreen extends Screen {
 
@@ -157,9 +155,12 @@ public class OverlayScreen extends Screen {
         hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -16729800);
-            String simpleTip = hoveredItem.item.getItem().getTranslatedName();
+            String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey());
             if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
                 currentTooltip = List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip));
+            }
+            else {
+                currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name"));
             }
         }
 
