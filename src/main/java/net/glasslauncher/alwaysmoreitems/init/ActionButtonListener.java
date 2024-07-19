@@ -2,6 +2,7 @@ package net.glasslauncher.alwaysmoreitems.init;
 
 import net.glasslauncher.alwaysmoreitems.action.HealActionButton;
 import net.glasslauncher.alwaysmoreitems.action.SetTimeActionButton;
+import net.glasslauncher.alwaysmoreitems.action.ToggleWeatherActionButton;
 import net.glasslauncher.alwaysmoreitems.action.TrashActionButton;
 import net.glasslauncher.alwaysmoreitems.api.event.ActionButtonRegisterEvent;
 import net.mine_diver.unsafeevents.listener.EventListener;
@@ -19,6 +20,7 @@ public class ActionButtonListener {
         // 23000 = Dusk, 6000 = Day, 13000 = Dusk, 18000 = Night
         event.add(NAMESPACE.id("set_time_day"), new SetTimeActionButton(6000, "/assets/alwaysmoreitems/stationapi/textures/gui/day.png"));
         event.add(NAMESPACE.id("set_time_night"), new SetTimeActionButton(18000, "/assets/alwaysmoreitems/stationapi/textures/gui/night.png"));
+        event.add(NAMESPACE.id("toggle_weather"), new ToggleWeatherActionButton());
         event.add(NAMESPACE.id("heal"), new HealActionButton());
         event.add(NAMESPACE.id("trash"), new TrashActionButton());
     }
