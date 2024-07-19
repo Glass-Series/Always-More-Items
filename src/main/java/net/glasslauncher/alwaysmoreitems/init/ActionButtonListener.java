@@ -17,8 +17,8 @@ public class ActionButtonListener {
     @EventListener
     public void registerActionButtons(ActionButtonRegisterEvent event) {
         // 23000 = Dusk, 6000 = Day, 13000 = Dusk, 18000 = Night
-        event.add(NAMESPACE.id("set_time_day"), new SetTimeActionButton(6000, "assets/alwaysmoreitems/stationapi/textures/gui/day.png"));
-        event.add(NAMESPACE.id("set_time_night"), new SetTimeActionButton(18000, "assets/alwaysmoreitems/stationapi/textures/gui/night.png"));
+        event.add(NAMESPACE.id("set_time_day"), new SetTimeActionButton(6000, "/assets/alwaysmoreitems/stationapi/textures/gui/day.png"));
+        event.add(NAMESPACE.id("set_time_night"), new SetTimeActionButton(18000, "/assets/alwaysmoreitems/stationapi/textures/gui/night.png"));
         event.add(NAMESPACE.id("heal"), new HealActionButton());
         event.add(NAMESPACE.id("trash"), new TrashActionButton());
     }
