@@ -6,3 +6,8 @@ actionButton.always_more_items.set_time_night=Set Time to Night
 
 button.always_more_items.trash=Trash
 button.always_more_items.trash.alt=Clear Inventory
+
+key.alwaysmoreitems.toggleOverlay=Toggle Overlay
+key.alwaysmoreitems.showRecipe=Show Recipe
+key.alwaysmoreitems.showUses=Show Uses
+key.alwaysmoreitems.recipeBack=Recipe Back

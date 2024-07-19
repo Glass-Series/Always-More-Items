@@ -1,33 +1,33 @@
 package net.glasslauncher.alwaysmoreitems.gui.screen;
 
+import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.ItemFilter;
+import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
+import net.glasslauncher.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.alwaysmoreitems.network.ActionButtonC2SPacket;
 import net.glasslauncher.alwaysmoreitems.network.GiveItemC2SPacket;
+import net.glasslauncher.alwaysmoreitems.util.ItemStackElement;
 import net.minecraft.class_564;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
-import net.modificationstation.stationapi.api.registry.Registry;
-import net.modificationstation.stationapi.api.registry.RegistryKey;
-import net.modificationstation.stationapi.api.tag.TagKey;
-import net.modificationstation.stationapi.api.util.Identifier;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class OverlayScreen extends Screen {
 
@@ -133,11 +133,20 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void tick() {
+        // Do not tick if not enabled
+        if(!AlwaysMoreItems.overlayEnabled){
+            return;
+        }
         rescale();
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        // Do not render if not enabled
+        if(!AlwaysMoreItems.overlayEnabled){
+            return;
+        }
+
         // Draw Regular Buttons
         super.render(mouseX, mouseY, delta);
 
@@ -215,6 +224,11 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
+        // Do not process if not enabled
+        if(!AlwaysMoreItems.overlayEnabled){
+            return;
+        }
+
         super.mouseClicked(mouseX, mouseY, button);
 
         // Search Field
@@ -266,6 +280,11 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void onMouseEvent() {
+        // Do not process if not enabled
+        if(!AlwaysMoreItems.overlayEnabled){
+            return;
+        }
+
         super.onMouseEvent();
 
         int mouseX = Mouse.getEventX() * this.width / this.minecraft.displayWidth;
@@ -282,12 +301,44 @@ public class OverlayScreen extends Screen {
     public void keyPressed(char character, int keyCode) {
         super.keyPressed(character, keyCode);
 
+        // Toggle Overlay
+        if (keyCode == KeybindListener.toggleOverlay.code && !searchField.isSelected()) {
+            AlwaysMoreItems.overlayEnabled = !AlwaysMoreItems.overlayEnabled;
+        }
+
+        // Cancel keys if overlay is not enabled
+        if(!AlwaysMoreItems.overlayEnabled){
+            return;
+        }
+
         // Search Field
         if (searchField.isSelected()) {
             searchField.keyPressed(character, keyCode);
             ItemFilter.setFilterText(searchField.getText());
             rebuildRenderList();
+            return;
         }
+
+        // Item Actions
+        if (hoveredItem != null) {
+            // Show Recipes
+            if (keyCode == KeybindListener.showRecipe.code) {
+                showRecipe(hoveredItem);
+            }
+
+            // Show Uses
+            if (keyCode == KeybindListener.showUses.code) {
+                showUses(hoveredItem);
+            }
+        }
+    }
+
+    public void showRecipe(ItemRenderEntry item) {
+
+    }
+
+    public void showUses(ItemRenderEntry item) {
+
     }
 
     @Override
@@ -320,22 +371,19 @@ public class OverlayScreen extends Screen {
 
     public int getItemListWidth() {
         int possibleOverlayStartX = ((parent.width - parent.backgroundWidth) / 2) + parent.backgroundWidth + 10;
-        int itemListWidth = Math.min(((width - possibleOverlayStartX) / itemSize), maxItemListWidth);
-        return itemListWidth;
+        return Math.min(((width - possibleOverlayStartX) / itemSize), maxItemListWidth);
     }
 
     public int getItemListHeight() {
-        int itemListHeight = Math.min(((height - 20) / itemSize), maxItemListHeight);
-        return itemListHeight;
+        return Math.min(((height - 20) / itemSize), maxItemListHeight);
     }
 
     public int getOverlayStartX() {
-        int overlayStartX = width - (getItemListWidth() * itemSize);
-        return overlayStartX;
+        return width - (getItemListWidth() * itemSize);
     }
 
     public ItemRenderEntry getHoveredItem(int mouseX, int mouseY) {
-        if (renderedItems == null) {
+        if (renderedItems == null || !AlwaysMoreItems.overlayEnabled) {
             return null;
         }
 
@@ -357,12 +405,7 @@ public class OverlayScreen extends Screen {
     // Rebuild the list of items that are rendered
     public void rebuildRenderList() {
         // Filtered
-        ArrayList<ItemStack> filteredItems = new ArrayList<>();
-        for (var item : AlwaysMoreItems.getItemFilter().getItemList()) {
-            if (item.getItemStack().getItem().getTranslatedName().toLowerCase().contains(searchField.getText().toLowerCase())) {
-                filteredItems.add(item.getItemStack());
-            }
-        }
+        ImmutableList<ItemStackElement> filteredItems = AlwaysMoreItems.getItemFilter().getItemList();
 
         // Rendered
         renderedItems = new ArrayList<>();
@@ -386,7 +429,7 @@ public class OverlayScreen extends Screen {
                         new ItemRenderEntry(
                                 overlayStartX + (xIndex * itemSize),
                                 21 + (yIndex * itemSize),
-                                filteredItems.get(itemIndex)
+                                filteredItems.get(itemIndex).getItemStack()
                         )
                 );
             }

@@ -27,6 +27,8 @@ public class AlwaysMoreItems {
     @Getter @Setter(value = AccessLevel.PACKAGE)
     private static boolean started;
 
+    public static boolean overlayEnabled = true;
+
     public static StackHelper getStackHelper() {
         return helpers.getStackHelper();
     }

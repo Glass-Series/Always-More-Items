@@ -27,7 +27,8 @@
       "net.glasslauncher.alwaysmoreitems.init.PacketListener"
     ],
     "stationapi:event_bus_client": [
-      "net.glasslauncher.alwaysmoreitems.ClientInit"
+      "net.glasslauncher.alwaysmoreitems.ClientInit",
+      "net.glasslauncher.alwaysmoreitems.init.KeybindListener"
     ],
     "stationapi:event_bus_server": [
     ]

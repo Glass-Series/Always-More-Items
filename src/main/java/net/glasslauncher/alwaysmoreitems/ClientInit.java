@@ -70,14 +70,6 @@ public class ClientInit {
 		return null;
 	}
 
-	@EventListener
-	public static void initKeys(KeyBindingRegisterEvent event) {
-		event.keyBindings.add(new KeyBinding("key.alwaysmoreitems.toggleOverlay", Keyboard.KEY_O));
-		event.keyBindings.add(new KeyBinding("key.alwaysmoreitems.showRecipe", Keyboard.KEY_R));
-		event.keyBindings.add(new KeyBinding("key.alwaysmoreitems.showUses", Keyboard.KEY_U));
-		event.keyBindings.add(new KeyBinding("key.alwaysmoreitems.recipeBack", Keyboard.KEY_BACK));
-	}
-
 	// TODO: Move to registries frozen event when StAPI a3 merges into master
 	@EventListener
 	public static void init(DimensionRegistryEvent event) {
