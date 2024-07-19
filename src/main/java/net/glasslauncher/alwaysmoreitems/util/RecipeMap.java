@@ -6,16 +6,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Table;
-
-import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.*;
+import java.util.*;
 
 /**
  * A RecipeMap efficiently links Recipes, IRecipeCategory, and ItemStacks.

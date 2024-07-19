@@ -1,15 +1,13 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Locale;
-
-import com.google.common.collect.ImmutableList;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
+
+import javax.annotation.*;
+import java.util.*;
 
 /**
  * For getting properties of ItemStacks efficiently

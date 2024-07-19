@@ -1,6 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.api.gui;
 
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 public interface IRecipeLayout {
 	/**

@@ -1,7 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.gui.widget;
 
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.mods.gcapi.impl.screen.widget.ExtensibleTextFieldWidget;
 import net.minecraft.client.font.TextRenderer;
 

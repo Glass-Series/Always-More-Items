@@ -5,8 +5,6 @@ import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.*;
-
 public class RecipeTransferErrorInternal implements IRecipeTransferError {
 	public static final RecipeTransferErrorInternal instance = new RecipeTransferErrorInternal();
 

@@ -1,9 +1,9 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe.transfer;
 
-import java.util.List;
-
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+
+import java.util.*;
 
 /**
  * Gives JEI the information it needs to transfer recipes from a slotted inventory into the crafting area.

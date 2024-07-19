@@ -1,7 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.transfer;
 
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.api.gui.IGuiItemStackGroup;
 import net.glasslauncher.alwaysmoreitems.api.gui.IRecipeLayout;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
@@ -16,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 
 import javax.annotation.*;
 import java.util.*;

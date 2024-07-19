@@ -5,13 +5,10 @@ import net.glasslauncher.alwaysmoreitems.config.ConfigItemBlacklist;
 import net.glasslauncher.mods.gcapi.api.ConfigEntry;
 import net.glasslauncher.mods.gcapi.api.ConfigRoot;
 import net.glasslauncher.mods.gcapi.api.GCAPI;
-import net.glasslauncher.mods.gcapi.api.GeneratedConfig;
 import net.glasslauncher.mods.gcapi.impl.GlassYamlFile;
 import net.minecraft.item.ItemStack;
 
 import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
 
 public class AMIConfig {
 

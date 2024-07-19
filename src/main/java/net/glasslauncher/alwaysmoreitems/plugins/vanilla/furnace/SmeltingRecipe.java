@@ -4,7 +4,6 @@ import net.glasslauncher.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
-import java.util.List;
 import java.util.*;
 
 public class SmeltingRecipe extends VanillaRecipeWrapper {

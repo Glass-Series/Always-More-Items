@@ -8,22 +8,18 @@ import com.google.common.cache.Weigher;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.api.IItemBlacklist;
 import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
+import net.glasslauncher.alwaysmoreitems.util.ItemStackElement;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import net.glasslauncher.alwaysmoreitems.util.ItemStackElement;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.*;
+import java.util.*;
 
 public class ItemFilter {
 	/** The currently active filter text */

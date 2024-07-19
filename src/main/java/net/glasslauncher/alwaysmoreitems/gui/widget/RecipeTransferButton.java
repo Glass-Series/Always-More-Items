@@ -1,7 +1,5 @@
 package net.glasslauncher.alwaysmoreitems.gui.widget;
 
-import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
-import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.alwaysmoreitems.transfer.RecipeTransferUtil;

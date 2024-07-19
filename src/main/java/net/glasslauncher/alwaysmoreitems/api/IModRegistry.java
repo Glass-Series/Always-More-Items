@@ -1,13 +1,13 @@
 package net.glasslauncher.alwaysmoreitems.api;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeHandler;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.*;
+import java.util.*;
 
 /**
  * Passed to IModPlugins so they can register themselves.

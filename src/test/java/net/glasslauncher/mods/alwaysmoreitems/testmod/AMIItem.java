@@ -3,7 +3,6 @@ package net.glasslauncher.mods.alwaysmoreitems.testmod;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
-import net.modificationstation.stationapi.api.template.item.TemplateAxeItem;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;

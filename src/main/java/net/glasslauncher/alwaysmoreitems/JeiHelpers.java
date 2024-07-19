@@ -1,13 +1,10 @@
 package net.glasslauncher.alwaysmoreitems;
 
-import javax.annotation.Nonnull;
-
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import net.glasslauncher.alwaysmoreitems.api.IJeiHelpers;
 import net.glasslauncher.alwaysmoreitems.transfer.RecipeTransferHandlerHelper;
 import net.glasslauncher.alwaysmoreitems.util.StackHelper;
-import net.glasslauncher.alwaysmoreitems.api.IJeiHelpers;
+
+import javax.annotation.*;
 
 public class JeiHelpers implements IJeiHelpers {
 	private final StackHelper stackHelper;

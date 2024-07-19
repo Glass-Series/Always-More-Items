@@ -1,16 +1,8 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.RecipeRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IModRegistry;
-import net.glasslauncher.alwaysmoreitems.api.IRecipeRegistry;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeHandler;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
@@ -19,6 +11,9 @@ import net.glasslauncher.alwaysmoreitems.gui.RecipeClickableArea;
 import net.glasslauncher.alwaysmoreitems.plugins.jei.description.ItemDescriptionRecipe;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.*;
+import java.util.*;
 
 public class ModRegistry implements IModRegistry {
 	private final List<IRecipeCategory> recipeCategories = new ArrayList<>();

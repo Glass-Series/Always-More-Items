@@ -1,10 +1,10 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe;
 
-import javax.annotation.Nonnull;
-
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.gui.IRecipeLayout;
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.*;
 
 /**
  * Defines a category of recipe, (i.e. Crafting Table Recipe, Furnace Recipe)

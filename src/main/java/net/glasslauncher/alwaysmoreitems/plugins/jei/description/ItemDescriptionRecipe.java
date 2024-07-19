@@ -1,7 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.plugins.jei.description;
 
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
-import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.recipe.BlankRecipeWrapper;

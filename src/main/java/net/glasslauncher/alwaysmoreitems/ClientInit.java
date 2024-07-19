@@ -6,14 +6,11 @@ import net.glasslauncher.alwaysmoreitems.api.IModPlugin;
 import net.glasslauncher.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.glasslauncher.alwaysmoreitems.util.ModRegistry;
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.client.event.option.KeyBindingRegisterEvent;
 import net.modificationstation.stationapi.api.event.mod.InitEvent;
 import net.modificationstation.stationapi.api.event.registry.DimensionRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
-import org.lwjgl.input.Keyboard;
 
 import javax.annotation.*;
 import java.util.*;

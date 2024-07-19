@@ -1,6 +1,5 @@
 package net.glasslauncher.alwaysmoreitems;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.api.IRecipeRegistry;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;

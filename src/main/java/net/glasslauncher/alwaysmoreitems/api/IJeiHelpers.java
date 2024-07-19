@@ -1,9 +1,9 @@
 package net.glasslauncher.alwaysmoreitems.api;
 
-import javax.annotation.Nonnull;
-
 import net.glasslauncher.alwaysmoreitems.api.recipe.IStackHelper;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
+
+import javax.annotation.*;
 
 /**
  * IJeiHelpers provides helpers and tools for addon mods.

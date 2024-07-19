@@ -1,10 +1,9 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.*;
+import java.util.*;
 
 /**
  * A wrapper around a normal recipe with methods that allow JEI can make sense of it.

@@ -1,9 +1,9 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe.transfer;
 
-import javax.annotation.Nonnull;
-
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.*;
 
 /**
  * A reason that the recipe transfer couldn't happen. See IRecipeTransferError.Type

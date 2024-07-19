@@ -1,8 +1,8 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import java.util.List;
-
 import org.lwjgl.input.Keyboard;
+
+import java.util.*;
 
 public class CycleTimer {
 	/* the amount of time in ms to display one thing before cycling to the next one */

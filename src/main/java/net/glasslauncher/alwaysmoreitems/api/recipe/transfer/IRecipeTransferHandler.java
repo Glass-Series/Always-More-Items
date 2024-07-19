@@ -1,13 +1,11 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe.transfer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import net.glasslauncher.alwaysmoreitems.api.gui.IRecipeLayout;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.entity.player.PlayerEntity;
-
-import net.glasslauncher.alwaysmoreitems.api.gui.IRecipeLayout;
 import net.minecraft.screen.ScreenHandler;
+
+import javax.annotation.*;
 
 /**
  * A recipe transfer handler moves items into a crafting area, based on the items in a recipe.

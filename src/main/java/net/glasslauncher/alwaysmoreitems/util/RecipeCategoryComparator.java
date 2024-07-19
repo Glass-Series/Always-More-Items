@@ -1,12 +1,10 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
 import com.google.common.collect.ImmutableList;
-
-import javax.annotation.Nonnull;
-import java.util.Comparator;
-import java.util.List;
-
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
+
+import javax.annotation.*;
+import java.util.*;
 
 public class RecipeCategoryComparator implements Comparator<IRecipeCategory> {
 	@Nonnull

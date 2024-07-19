@@ -1,13 +1,5 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.alwaysmoreitems.api.SubProvider;
@@ -18,6 +10,9 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
+
+import javax.annotation.*;
+import java.util.*;
 
 /**
  * @deprecated Use IJeiHelpers.getStackHelper()

@@ -1,13 +1,10 @@
 package net.glasslauncher.alwaysmoreitems;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import net.glasslauncher.alwaysmoreitems.api.IItemBlacklist;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.*;
+import java.util.*;
 
 public class ItemBlacklist implements IItemBlacklist {
 	@Nonnull

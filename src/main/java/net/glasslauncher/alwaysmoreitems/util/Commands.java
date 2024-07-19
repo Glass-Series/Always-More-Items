@@ -1,15 +1,13 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ClientPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import org.apache.commons.lang3.StringUtils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import javax.annotation.*;
+import java.util.*;
 
 public class Commands {
 

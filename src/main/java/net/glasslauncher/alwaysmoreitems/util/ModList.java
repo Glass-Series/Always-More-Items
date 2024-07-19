@@ -1,18 +1,15 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
+import net.minecraft.item.Item;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.apache.commons.lang3.text.WordUtils;
 
-import net.minecraft.item.Item;
+import javax.annotation.*;
+import java.util.*;
 
 public class ModList {
 

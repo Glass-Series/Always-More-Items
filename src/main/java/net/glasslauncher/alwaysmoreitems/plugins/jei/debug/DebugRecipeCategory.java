@@ -9,7 +9,6 @@ import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.*;
 

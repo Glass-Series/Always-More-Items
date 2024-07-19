@@ -2,7 +2,7 @@ package net.glasslauncher.alwaysmoreitems.api.gui;
 
 import net.glasslauncher.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 import java.util.*;
 
 /**

@@ -1,11 +1,5 @@
 package net.glasslauncher.alwaysmoreitems.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.*;
-
-import com.matthewperiut.spc.command.Id;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.alwaysmoreitems.api.SubProvider;
@@ -17,12 +11,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
-import net.modificationstation.stationapi.api.registry.RegistryEntryList;
-import net.modificationstation.stationapi.api.registry.tag.BlockTags;
-import net.modificationstation.stationapi.api.tag.TagKey;
-import net.modificationstation.stationapi.api.tag.TagManagerLoader;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.impl.vanillafix.recipe.VanillaTagRecipeFixImpl;
+
+import javax.annotation.*;
+import java.util.*;
 
 public class StackHelper implements IStackHelper {
 	/**

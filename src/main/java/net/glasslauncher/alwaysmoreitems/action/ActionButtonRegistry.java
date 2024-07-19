@@ -3,7 +3,7 @@ package net.glasslauncher.alwaysmoreitems.action;
 import net.glasslauncher.alwaysmoreitems.api.action.ActionButton;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class ActionButtonRegistry {
     public static LinkedHashMap<Identifier, ActionButton> registry = new LinkedHashMap<>();

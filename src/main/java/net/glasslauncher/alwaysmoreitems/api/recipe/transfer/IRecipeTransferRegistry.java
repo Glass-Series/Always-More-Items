@@ -1,8 +1,8 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe.transfer;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.screen.ScreenHandler;
+
+import javax.annotation.*;
 
 /**
  * Register recipe transfer handlers here to give JEI the information it needs to transfer recipes into the crafting area.

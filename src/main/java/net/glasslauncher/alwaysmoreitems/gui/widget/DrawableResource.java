@@ -1,7 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.gui.widget;
 
 import net.glasslauncher.alwaysmoreitems.AMIDrawContext;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawableStatic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;

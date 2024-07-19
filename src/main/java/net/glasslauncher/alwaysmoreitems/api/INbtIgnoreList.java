@@ -1,12 +1,11 @@
 package net.glasslauncher.alwaysmoreitems.api;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Set;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+
+import javax.annotation.*;
+import java.util.*;
 
 public interface INbtIgnoreList {
 	/**

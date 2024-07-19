@@ -1,12 +1,11 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe.wrapper;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
+import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import javax.annotation.*;
+import java.util.*;
 
 public interface ICraftingRecipeWrapper extends IRecipeWrapper {
 

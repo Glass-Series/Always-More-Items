@@ -2,20 +2,14 @@ package net.glasslauncher.alwaysmoreitems;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Sets;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import net.glasslauncher.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.alwaysmoreitems.api.INbtIgnoreList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
 import net.minecraft.nbt.NbtCompound;
+
+import javax.annotation.*;
+import java.util.*;
 
 public class NbtIgnoreList implements INbtIgnoreList {
 	private final Set<String> nbtTagNameBlacklist = new HashSet<>();

@@ -1,8 +1,8 @@
 package net.glasslauncher.alwaysmoreitems.api.gui;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.*;
 
 public interface IDrawable {
 

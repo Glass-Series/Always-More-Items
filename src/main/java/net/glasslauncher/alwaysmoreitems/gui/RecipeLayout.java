@@ -102,7 +102,7 @@ public class RecipeLayout implements IRecipeLayout {
 				// older wrappers don't have this method
 			}
 			if (tooltipStrings != null && !tooltipStrings.isEmpty()) {
-				DrawableHelper.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY, 0, 0);
+				DrawableHelper.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY);
 			}
 		}
 

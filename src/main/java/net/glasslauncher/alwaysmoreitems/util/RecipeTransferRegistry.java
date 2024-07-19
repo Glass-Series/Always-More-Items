@@ -8,7 +8,7 @@ import net.glasslauncher.alwaysmoreitems.transfer.BasicRecipeTransferHandler;
 import net.glasslauncher.alwaysmoreitems.transfer.BasicRecipeTransferInfo;
 import net.minecraft.screen.ScreenHandler;
 
-import javax.annotation.Nullable;
+import javax.annotation.*;
 import java.util.*;
 
 public class RecipeTransferRegistry implements IRecipeTransferRegistry {

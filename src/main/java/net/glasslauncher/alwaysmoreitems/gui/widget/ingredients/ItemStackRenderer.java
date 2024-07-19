@@ -5,7 +5,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
-import net.modificationstation.stationapi.api.util.Formatting;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.*;

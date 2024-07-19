@@ -1,6 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.api.gui;
 
-import java.util.List;
+import java.util.*;
 
 public interface ITooltipCallback<T> {
 	/** Change the tooltip for an ingredient. */
