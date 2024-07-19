@@ -173,11 +173,7 @@ public class StackHelper implements IStackHelper {
 //				}
 //			}
 //		}
-		List<ItemStack> subItems = ((SubProvider) item).getSubItems().stream().map(itemStack -> {
-			ItemStack newStack = itemStack.copy();
-			newStack.count = stackSize;
-			return newStack;
-		}).toList();
+		List<ItemStack> subItems = ((SubProvider) item).getSubItems().stream().peek(itemStack -> itemStack.count = stackSize).toList();
 
 		if (subItems.isEmpty()) {
 			subItems = new ArrayList<>();
