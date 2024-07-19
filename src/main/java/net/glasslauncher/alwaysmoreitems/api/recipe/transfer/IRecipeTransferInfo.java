@@ -6,7 +6,7 @@ import net.minecraft.screen.slot.Slot;
 import java.util.*;
 
 /**
- * Gives JEI the information it needs to transfer recipes from a slotted inventory into the crafting area.
+ * Gives AMI the information it needs to transfer recipes from a slotted inventory into the crafting area.
  *
  * Most plugins should create new IRecipeTransferInfo instances with IModRegistry.createRecipeTransferHelper.
  * Containers with slot ranges that contain gaps or other oddities can implement this interface directly.

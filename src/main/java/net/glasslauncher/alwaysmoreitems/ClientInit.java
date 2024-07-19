@@ -22,7 +22,7 @@ public class ClientInit {
 
 	private static void initVersionChecker() {
 		final NbtCompound compound = new NbtCompound();
-		compound.putString("curseProjectName", "just-enough-items-jei");
+		compound.putString("curseProjectName", "just-enough-items-ami");
 		compound.putString("curseFilenameParser", "always_more_items_b1.7.3-[].jar");
 //		FMLInterModComms.sendRuntimeMessage(Constants.MOD_ID, "VersionChecker", "addCurseCheck", compound);
 	}
@@ -31,7 +31,7 @@ public class ClientInit {
 	public static void preInit(InitEvent event) {
 //		Config.preInit(event);
 		AlwaysMoreItems.LOGGER.info("Hello");
-		AlwaysMoreItems.setHelpers(new JeiHelpers());
+		AlwaysMoreItems.setHelpers(new AMIHelpers());
 		initVersionChecker();
 
 		plugins = FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:plugin", IModPlugin.class).stream().map(EntrypointContainer::getEntrypoint).toList();
@@ -47,7 +47,7 @@ public class ClientInit {
 		while (iterator.hasNext()) {
 			IModPlugin plugin = iterator.next();
 			try {
-				plugin.onJeiHelpersAvailable(AlwaysMoreItems.getHelpers());
+				plugin.onAMIHelpersAvailable(AlwaysMoreItems.getHelpers());
 			} catch (AbstractMethodError ignored) {
 				// older plugins don't have this method
 			} catch (RuntimeException e) {

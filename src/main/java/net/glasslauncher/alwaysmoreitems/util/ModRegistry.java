@@ -8,7 +8,7 @@ import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeHandler;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferRegistry;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeClickableArea;
-import net.glasslauncher.alwaysmoreitems.plugins.jei.description.ItemDescriptionRecipe;
+import net.glasslauncher.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipe;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 

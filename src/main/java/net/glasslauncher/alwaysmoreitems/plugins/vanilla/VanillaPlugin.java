@@ -2,11 +2,10 @@ package net.glasslauncher.alwaysmoreitems.plugins.vanilla;
 
 import net.glasslauncher.alwaysmoreitems.ContainerFakeWorkbench;
 import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.alwaysmoreitems.api.IJeiHelpers;
+import net.glasslauncher.alwaysmoreitems.api.IAMIHelpers;
 import net.glasslauncher.alwaysmoreitems.api.IModPlugin;
 import net.glasslauncher.alwaysmoreitems.api.IModRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IRecipeRegistry;
-import net.glasslauncher.alwaysmoreitems.api.JEIPlugin;
 import net.glasslauncher.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferRegistry;
 import net.glasslauncher.alwaysmoreitems.plugins.vanilla.crafting.CraftingRecipeCategory;
@@ -25,14 +24,13 @@ import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.recipe.CraftingRecipeManager;
 import net.minecraft.screen.FurnaceScreenHandler;
 
-@JEIPlugin
 public class VanillaPlugin implements IModPlugin {
 	private IItemRegistry itemRegistry;
-	private IJeiHelpers jeiHelpers;
+	private IAMIHelpers amiHelpers;
 
 	@Override
-	public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers) {
-		this.jeiHelpers = jeiHelpers;
+	public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
+		this.amiHelpers = amiHelpers;
 	}
 
 	@Override
@@ -67,8 +65,8 @@ public class VanillaPlugin implements IModPlugin {
 		recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.FUEL, 1, 1, 3, 36);
 
 		registry.addRecipes(CraftingRecipeManager.getInstance().getRecipes());
-		registry.addRecipes(SmeltingRecipeMaker.getFurnaceRecipes(jeiHelpers));
-		registry.addRecipes(FuelRecipeMaker.getFuelRecipes(itemRegistry, jeiHelpers));
+		registry.addRecipes(SmeltingRecipeMaker.getFurnaceRecipes(amiHelpers));
+		registry.addRecipes(FuelRecipeMaker.getFuelRecipes(itemRegistry, amiHelpers));
 	}
 
 	@Override

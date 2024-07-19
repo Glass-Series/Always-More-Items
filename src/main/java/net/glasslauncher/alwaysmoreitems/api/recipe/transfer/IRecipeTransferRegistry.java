@@ -5,7 +5,7 @@ import net.minecraft.screen.ScreenHandler;
 import javax.annotation.*;
 
 /**
- * Register recipe transfer handlers here to give JEI the information it needs to transfer recipes into the crafting area.
+ * Register recipe transfer handlers here to give AMI the information it needs to transfer recipes into the crafting area.
  */
 public interface IRecipeTransferRegistry {
 	/**

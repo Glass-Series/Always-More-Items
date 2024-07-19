@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * The IRecipeManager offers several functions for retrieving and handling recipes.
- * The IRecipeManager instance is provided in JEIManager.
+ * The IRecipeManager instance is provided in AMIManager.
  * Available to IModPlugins
  */
 public interface IRecipeRegistry {

@@ -48,7 +48,7 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 		IRecipeTransferHandlerHelper handlerHelper = AlwaysMoreItems.getHelpers().recipeTransferHandlerHelper();
 		StackHelper stackHelper = AlwaysMoreItems.getStackHelper();
 
-		if (!AlwaysMoreItems.isJeiOnServer()) {
+		if (!AlwaysMoreItems.isAMIOnServer()) {
 			return handlerHelper.createInternalError();
 		}
 		
@@ -100,14 +100,14 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 
 		// check if we have enough inventory space to shuffle items around to their final locations
 		if (filledCraftSlotCount - inputCount > emptySlotCount) {
-			String message = TranslationStorage.getInstance().get("jei.tooltip.error.recipe.transfer.inventory.full");
+			String message = TranslationStorage.getInstance().get("ami.tooltip.error.recipe.transfer.inventory.full");
 			return handlerHelper.createUserErrorWithTooltip(message);
 		}
 
 		StackHelper.MatchingItemsResult matchingItemsResult = stackHelper.getMatchingItems(availableItemStacks, itemStackGroup.getGuiIngredients());
 
 		if (!matchingItemsResult.missingItems.isEmpty()) {
-			String message = TranslationStorage.getInstance().get("jei.tooltip.error.recipe.transfer.missing");
+			String message = TranslationStorage.getInstance().get("ami.tooltip.error.recipe.transfer.missing");
 			return handlerHelper.createUserErrorForSlots(message, matchingItemsResult.missingItems);
 		}
 

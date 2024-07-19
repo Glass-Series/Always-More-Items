@@ -1,4 +1,4 @@
-package net.glasslauncher.alwaysmoreitems.plugins.jei.description;
+package net.glasslauncher.alwaysmoreitems.plugins.ami.description;
 
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
@@ -22,7 +22,7 @@ public class ItemDescriptionRecipeCategory implements IRecipeCategory {
 
 	public ItemDescriptionRecipeCategory() {
 		background = DrawableHelper.createBlankDrawable(recipeWidth, recipeHeight);
-		localizedName = TranslationStorage.getInstance().get("gui.jei.category.itemDescription");
+		localizedName = TranslationStorage.getInstance().get("gui.ami.category.itemDescription");
 	}
 
 	@Nonnull

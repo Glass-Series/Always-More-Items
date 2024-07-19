@@ -6,10 +6,10 @@ import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHand
 import javax.annotation.*;
 
 /**
- * IJeiHelpers provides helpers and tools for addon mods.
+ * IAMIHelpers provides helpers and tools for addon mods.
  * Available to IModPlugins
  */
-public interface IJeiHelpers {
+public interface IAMIHelpers {
 
 	/**
 	 * Helps with getting itemStacks from recipes.
@@ -18,13 +18,13 @@ public interface IJeiHelpers {
     IStackHelper getStackHelper();
 
 	/**
-	 * Used to stop JEI from displaying a specific item in the item list.
+	 * Used to stop AMI from displaying a specific item in the item list.
 	 */
 	@Nonnull
 	IItemBlacklist getItemBlacklist();
 
 	/**
-	 * Used to tell JEI to ignore NBT tags when comparing items for recipes.
+	 * Used to tell AMI to ignore NBT tags when comparing items for recipes.
 	 */
 	@Nonnull
 	INbtIgnoreList getNbtIgnoreList();
@@ -36,7 +36,7 @@ public interface IJeiHelpers {
     IRecipeTransferHandlerHelper recipeTransferHandlerHelper();
 
 	/**
-	 * Reload JEI at runtime.
+	 * Reload AMI at runtime.
 	 * Used by mods that add and remove items or recipes like MineTweaker's /mt reload.
 	 */
 	void reload();

@@ -15,7 +15,7 @@ import javax.annotation.*;
 import java.util.*;
 
 /**
- * @deprecated Use IJeiHelpers.getStackHelper()
+ * @deprecated Use IAMIHelpers.getStackHelper()
  */
 @Deprecated
 public class StackUtil {

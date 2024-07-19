@@ -1,4 +1,4 @@
-package net.glasslauncher.alwaysmoreitems.plugins.jei.debug;
+package net.glasslauncher.mods.alwaysmoreitems.testmod.recipe;
 
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.api.recipe.BlankRecipeWrapper;

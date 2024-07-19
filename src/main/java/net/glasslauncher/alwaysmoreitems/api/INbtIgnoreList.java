@@ -9,8 +9,8 @@ import java.util.*;
 
 public interface INbtIgnoreList {
 	/**
-	 * Tell JEI to ignore NBT tags on a specific item when comparing items for recipes.
-	 * @since JEI 2.22.0, NBT is automatically ignored on items that don't have subtypes.
+	 * Tell AMI to ignore NBT tags on a specific item when comparing items for recipes.
+	 * @since AMI 2.22.0, NBT is automatically ignored on items that don't have subtypes.
 	 */
 	void ignoreNbtTagNames(@Nonnull Item item, String... nbtTagNames);
 
@@ -27,7 +27,7 @@ public interface INbtIgnoreList {
 	NbtCompound getNbt(@Nonnull ItemStack itemStack);
 
 	/**
-	 * Tell JEI to ignore NBT tags when comparing items for recipes.
+	 * Tell AMI to ignore NBT tags when comparing items for recipes.
 	 * @deprecated use the item-specific version, to avoid nbt conflicts with other mods
 	 */
 	@Deprecated

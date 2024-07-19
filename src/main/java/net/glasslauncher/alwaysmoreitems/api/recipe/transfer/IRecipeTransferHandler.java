@@ -25,7 +25,7 @@ public interface IRecipeTransferHandler {
 	String getRecipeCategoryUid();
 
 	/**
-	 * @deprecated since JEI 2.20.0, use the version with the maxTransfer parameter
+	 * @deprecated since AMI 2.20.0, use the version with the maxTransfer parameter
 	 */
 	@Deprecated
 	IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean doTransfer);
@@ -37,7 +37,7 @@ public interface IRecipeTransferHandler {
 	 * @param maxTransfer  if true, transfer as many items as possible. if false, transfer one set
 	 * @param doTransfer   if true, do the transfer. if false, check for errors but do not actually transfer the items
 	 * @return a recipe transfer error if the recipe can't be transferred. Return null on success.
-	 * @since JEI 2.20.0
+	 * @since AMI 2.20.0
 	 */
 	@Nullable
 	IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull IRecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer);

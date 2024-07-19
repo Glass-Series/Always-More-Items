@@ -6,7 +6,7 @@
 //import java.io.*;
 //import java.util.*;
 //
-//public class PacketRecipeTransfer extends PacketJEI {
+//public class PacketRecipeTransfer extends PacketAMI {
 //
 //	private Map<Integer, ItemStack> recipeMap;
 //	private List<Integer> craftingSlots;

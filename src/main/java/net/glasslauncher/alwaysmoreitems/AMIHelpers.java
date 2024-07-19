@@ -1,18 +1,18 @@
 package net.glasslauncher.alwaysmoreitems;
 
-import net.glasslauncher.alwaysmoreitems.api.IJeiHelpers;
+import net.glasslauncher.alwaysmoreitems.api.IAMIHelpers;
 import net.glasslauncher.alwaysmoreitems.transfer.RecipeTransferHandlerHelper;
 import net.glasslauncher.alwaysmoreitems.util.StackHelper;
 
 import javax.annotation.*;
 
-public class JeiHelpers implements IJeiHelpers {
+public class AMIHelpers implements IAMIHelpers {
 	private final StackHelper stackHelper;
 	private final ItemBlacklist itemBlacklist;
 	private final NbtIgnoreList nbtIgnoreList;
 	private final RecipeTransferHandlerHelper recipeTransferHandlerHelper;
 
-	public JeiHelpers() {
+	public AMIHelpers() {
 		this.stackHelper = new StackHelper();
 		this.itemBlacklist = new ItemBlacklist();
 		this.nbtIgnoreList = new NbtIgnoreList();

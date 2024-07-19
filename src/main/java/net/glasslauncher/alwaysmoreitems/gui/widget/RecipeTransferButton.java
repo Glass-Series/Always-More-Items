@@ -9,7 +9,7 @@ import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class RecipeTransferButton extends ButtonWidget {
-	private static final String transferTooltip = TranslationStorage.getInstance().get("jei.tooltip.transfer");
+	private static final String transferTooltip = TranslationStorage.getInstance().get("ami.tooltip.transfer");
 	private RecipeLayout recipeLayout;
 	private IRecipeTransferError recipeTransferError;
 

@@ -1,4 +1,4 @@
-package net.glasslauncher.alwaysmoreitems.plugins.jei.description;
+package net.glasslauncher.alwaysmoreitems.plugins.ami.description;
 
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;

@@ -6,7 +6,7 @@ import javax.annotation.*;
 
 public interface IItemBlacklist {
 	/**
-	 * Stop JEI from displaying a specific item in the item list.
+	 * Stop AMI from displaying a specific item in the item list.
 	 * Use OreDictionary.WILDCARD_VALUE meta for wildcard.
 	 * Items blacklisted with this API can't be seen in the config or in edit mode.
 	 */

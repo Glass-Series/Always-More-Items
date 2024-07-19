@@ -6,7 +6,7 @@ import javax.annotation.*;
 import java.util.*;
 
 /**
- * A wrapper around a normal recipe with methods that allow JEI can make sense of it.
+ * A wrapper around a normal recipe with methods that allow AMI can make sense of it.
  * Implementers will have to create a wrapper for each type of recipe they have.
  */
 public interface IRecipeWrapper {
@@ -37,7 +37,7 @@ public interface IRecipeWrapper {
 	 *
 	 * @param mouseX the X position of the mouse, relative to the recipe.
 	 * @param mouseY the Y position of the mouse, relative to the recipe.
-	 * @since JEI 2.19.0
+	 * @since AMI 2.19.0
 	 */
 	void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY);
 
@@ -46,7 +46,7 @@ public interface IRecipeWrapper {
 
 	/**
 	 * Get the tooltip for whatever's under the mouse.
-	 * ItemStack and fluid tooltips are already handled by JEI, this is for anything else.
+	 * ItemStack and fluid tooltips are already handled by AMI, this is for anything else.
 	 *
 	 * @param mouseX the X position of the mouse, relative to the recipe.
 	 * @param mouseY the Y position of the mouse, relative to the recipe.
@@ -63,7 +63,7 @@ public interface IRecipeWrapper {
 	 * @param mouseY      the Y position of the mouse, relative to the recipe.
 	 * @param mouseButton the current mouse event button.
 	 * @return true if the click was handled, false otherwise
-	 * @since JEI 2.19.0
+	 * @since AMI 2.19.0
 	 */
 	boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton);
 }

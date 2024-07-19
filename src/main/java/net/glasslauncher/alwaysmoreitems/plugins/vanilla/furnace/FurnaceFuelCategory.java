@@ -20,7 +20,7 @@ public class FurnaceFuelCategory extends FurnaceRecipeCategory {
 	public FurnaceFuelCategory() {
 		super();
 		background = DrawableHelper.createDrawable("/gui/furnace.png", 55, 38, 18, 32, 0, 0, 0, 80);
-		localizedName = TranslationStorage.getInstance().get("gui.jei.category.fuel");
+		localizedName = TranslationStorage.getInstance().get("gui.ami.category.fuel");
 	}
 
 	@Override

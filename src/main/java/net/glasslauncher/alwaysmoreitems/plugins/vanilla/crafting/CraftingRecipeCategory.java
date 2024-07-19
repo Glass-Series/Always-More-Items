@@ -31,7 +31,7 @@ public class CraftingRecipeCategory implements IRecipeCategory {
 
 	public CraftingRecipeCategory() {
 		background = DrawableHelper.createDrawable("/gui/crafting.png", 29, 16, 116, 54);
-		localizedName = TranslationStorage.getInstance().get("gui.jei.category.craftingTable");
+		localizedName = TranslationStorage.getInstance().get("gui.ami.category.craftingTable");
 		craftingGridHelper = new CraftingGridHelper(craftInputSlot1, craftOutputSlot);
 	}
 

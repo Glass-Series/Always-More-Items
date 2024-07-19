@@ -1,16 +1,16 @@
 package net.glasslauncher.alwaysmoreitems.api;
 
 /**
- * The main class for a plugin. Everything communicated between a mod and JEI is through this class.
- * IModPlugins must have the @JEIPlugin annotation to get loaded by JEI.
+ * The main class for a plugin. Everything communicated between a mod and AMI is through this class.
+ * IModPlugins must have the @AMIPlugin annotation to get loaded by AMI.
  * This class must not import anything that could be missing at runtime (i.e. code from any other mod).
  */
 public interface IModPlugin {
 	/**
-	 * Called when the IJeiHelpers is available.
-	 * IModPlugins should store IJeiHelpers here if they need it.
+	 * Called when the IAMIHelpers is available.
+	 * IModPlugins should store IAMIHelpers here if they need it.
 	 */
-	void onJeiHelpersAvailable(IJeiHelpers jeiHelpers);
+	void onAMIHelpersAvailable(IAMIHelpers amiHelpers);
 
 	/**
 	 * Called when the IItemRegistry is available, before register.

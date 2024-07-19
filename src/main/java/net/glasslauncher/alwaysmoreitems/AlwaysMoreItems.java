@@ -17,7 +17,7 @@ public class AlwaysMoreItems {
     public static final Logger LOGGER = Null.get();
 
     @Getter @Setter
-    private static JeiHelpers helpers;
+    private static AMIHelpers helpers;
     @Getter @Setter
     private static ItemFilter itemFilter;
     @Getter @Setter
@@ -40,7 +40,7 @@ public class AlwaysMoreItems {
     }
 
 
-    public static boolean isJeiOnServer() {
+    public static boolean isAMIOnServer() {
         return false;
     }
 }

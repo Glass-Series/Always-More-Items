@@ -244,20 +244,20 @@
 //
 //		if (Config.isEditModeEnabled()) {
 //			list.add("");
-//			list.add(EnumChatFormatting.ITALIC + Translator.translateToLocal("gui.jei.editMode.description"));
+//			list.add(EnumChatFormatting.ITALIC + Translator.translateToLocal("gui.ami.editMode.description"));
 //			if (Config.isItemOnConfigBlacklist(itemStack, false)) {
-//				String description = EnumChatFormatting.YELLOW + Translator.translateToLocal("gui.jei.editMode.description.show");
+//				String description = EnumChatFormatting.YELLOW + Translator.translateToLocal("gui.ami.editMode.description.show");
 //				list.addAll(minecraft.fontRendererObj.listFormattedStringToWidth(description, Constants.MAX_TOOLTIP_WIDTH));
 //			} else {
-//				String description = EnumChatFormatting.YELLOW + Translator.translateToLocal("gui.jei.editMode.description.hide");
+//				String description = EnumChatFormatting.YELLOW + Translator.translateToLocal("gui.ami.editMode.description.hide");
 //				list.addAll(minecraft.fontRendererObj.listFormattedStringToWidth(description, Constants.MAX_TOOLTIP_WIDTH));
 //			}
 //
 //			if (Config.isItemOnConfigBlacklist(itemStack, true)) {
-//				String description = EnumChatFormatting.RED + Translator.translateToLocal("gui.jei.editMode.description.show.wild");
+//				String description = EnumChatFormatting.RED + Translator.translateToLocal("gui.ami.editMode.description.show.wild");
 //				list.addAll(minecraft.fontRendererObj.listFormattedStringToWidth(description, Constants.MAX_TOOLTIP_WIDTH));
 //			} else {
-//				String description = EnumChatFormatting.RED + Translator.translateToLocal("gui.jei.editMode.description.hide.wild");
+//				String description = EnumChatFormatting.RED + Translator.translateToLocal("gui.ami.editMode.description.hide.wild");
 //				list.addAll(minecraft.fontRendererObj.listFormattedStringToWidth(description, Constants.MAX_TOOLTIP_WIDTH));
 //			}
 //		}

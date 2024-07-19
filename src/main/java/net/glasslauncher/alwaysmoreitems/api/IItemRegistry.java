@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.*;
 
 /**
- * The IItemRegistry is provided by JEI and has some useful functions related to items.
+ * The IItemRegistry is provided by AMI and has some useful functions related to items.
  */
 public interface IItemRegistry {
 
