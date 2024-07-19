@@ -146,7 +146,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
 				tooltipCallback.onTooltip(slotIndex, input, value, tooltip);
 			}
 
-			DrawableHelper.drawTooltip(tooltip, mouseX, mouseY, 0, 0);
+			DrawableHelper.drawTooltip(tooltip, mouseX, mouseY);
 
 			GL11.glEnable(GL11.GL_DEPTH);
 		} catch (RuntimeException e) {

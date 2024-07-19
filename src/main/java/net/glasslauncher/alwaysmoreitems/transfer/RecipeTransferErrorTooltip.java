@@ -23,6 +23,6 @@ public class RecipeTransferErrorTooltip implements IRecipeTransferError {
 
 	@Override
 	public void showError(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int containerX, int containerY, @Nonnull RecipeLayout recipeLayout) {
-		DrawableHelper.drawTooltip(Collections.singletonList(message), mouseX, mouseY, containerX, containerY);
+		DrawableHelper.drawTooltip(Collections.singletonList(message), mouseX, mouseY);
 	}
 }

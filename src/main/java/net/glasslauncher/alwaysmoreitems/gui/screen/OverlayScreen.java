@@ -218,7 +218,7 @@ public class OverlayScreen extends Screen {
 
         // Draw Tooltip
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            DrawableHelper.drawTooltip(currentTooltip, mouseX, mouseY, 0, 0);
+            DrawableHelper.drawTooltip(currentTooltip, mouseX, mouseY);
         }
     }
 

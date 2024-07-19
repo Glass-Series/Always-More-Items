@@ -9,12 +9,9 @@ import net.glasslauncher.alwaysmoreitems.gui.widget.DrawableBlank;
 import net.glasslauncher.alwaysmoreitems.gui.widget.DrawableResource;
 import net.glasslauncher.alwaysmoreitems.util.TickTimer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.Tessellator;
 
 import javax.annotation.*;
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 import java.util.stream.*;
 
 public class DrawableHelper {
@@ -70,13 +67,13 @@ public class DrawableHelper {
         return new DrawableResource(resourceLocation, u, v, width, height);
     }
 
-    public static void drawTooltip(List<String> tooltip, int mouseX, int mouseY, int containerX, int containerY) {
+    public static void drawTooltip(List<String> tooltip, int mouseX, int mouseY) {
         if (tooltip != null) tooltip.stream().mapToInt(AMITextRenderer.INSTANCE::getWidth).max().ifPresent(tooltipWidth -> {
-            int tooltipX = mouseX - containerX + 12;
-            int tooltipY = mouseY - containerY - 12;
+            int tooltipX = mouseX + 12;
+            int tooltipY = mouseY - 12;
             AMIDrawContext.INSTANCE.fill(tooltipX - 3, tooltipY - 3, tooltipX + tooltipWidth + 3, tooltipY + (8 * tooltip.size()) + (3 * tooltip.size()), -1073741824);
-            IntStream.range(0, tooltip.size()).forEach(currentTooltip -> AMITextRenderer.INSTANCE.renderStringAtPos(tooltip.get(currentTooltip), tooltipX + 1, tooltipY + (8 * currentTooltip) + (3 * currentTooltip) + 1, Color.WHITE, true));
-            IntStream.range(0, tooltip.size()).forEach(currentTooltip -> AMITextRenderer.INSTANCE.renderStringAtPos(tooltip.get(currentTooltip), tooltipX, tooltipY + (8 * currentTooltip) + (3 * currentTooltip), Color.WHITE, false));
+            IntStream.range(0, tooltip.size()).forEach(currentTooltip -> Minecraft.INSTANCE.textRenderer.draw(tooltip.get(currentTooltip), tooltipX + 1, tooltipY + (8 * currentTooltip) + (3 * currentTooltip) + 1, -1, true));
+            IntStream.range(0, tooltip.size()).forEach(currentTooltip -> Minecraft.INSTANCE.textRenderer.draw(tooltip.get(currentTooltip), tooltipX, tooltipY + (8 * currentTooltip) + (3 * currentTooltip), -1, false));
         });
     }
 

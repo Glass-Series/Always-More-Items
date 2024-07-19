@@ -40,7 +40,7 @@ public class RecipeTransferButton extends ButtonWidget {
 			if (recipeTransferError != null) {
 				recipeTransferError.showError(mc, mouseX, mouseY, 0, 0, recipeLayout);
 			} else {
-				AMITextRenderer.INSTANCE.drawWithShadow(transferTooltip, mouseX, mouseY, -1);
+				Minecraft.INSTANCE.textRenderer.drawWithShadow(transferTooltip, mouseX, mouseY, -1);
 			}
 		}
 	}
