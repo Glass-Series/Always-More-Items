@@ -10,8 +10,8 @@ import net.modificationstation.stationapi.api.util.Formatting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class AMITextRenderer extends TextRenderer {
     public static final String BOLD = Formatting.FORMATTING_CODE_PREFIX + "l";
@@ -86,6 +86,8 @@ public class AMITextRenderer extends TextRenderer {
         boolean strikethroughStyle = false;
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, field_2461);
+        setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+
         for(int i = 0; i < text.length(); ++i) {
             char c0 = text.charAt(i);
             int i1;
@@ -107,7 +109,7 @@ public class AMITextRenderer extends TextRenderer {
                     }
 
                     j1 = colorCode[i1];
-                    setColor((float)(j1 >> 16) / 255.0F, (float)(j1 >> 8 & 255) / 255.0F, (float)(j1 & 255) / 255.0F, color.getAlpha());
+                    setColor((float)(j1 >> 16), (float)(j1 >> 8 & 255), (float)(j1 & 255), color.getAlpha());
                 } else if (i1 == 16) {
                     randomStyle = true;
                 } else if (i1 == 17) {
@@ -124,7 +126,7 @@ public class AMITextRenderer extends TextRenderer {
                     strikethroughStyle = false;
                     underlineStyle = false;
                     italicStyle = false;
-                    setColor(color.getRed(), color.getBlue(), color.getGreen(), color.getAlpha());
+                    setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
                 }
 
                 ++i;
@@ -180,7 +182,7 @@ public class AMITextRenderer extends TextRenderer {
     }
 
     protected void setColor(float red, float green, float blue, float alpha) {
-        GL11.glColor4f(red, green, blue, alpha);
+        GL11.glColor4f(red / 255, green / 255, blue / 255, alpha / 255);
     }
 
     private float validateAndRenderChar(int posX, int posY, char charToRender, boolean shadow) {
