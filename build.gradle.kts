@@ -97,9 +97,6 @@ dependencies {
 	modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") {
 		isTransitive = false
 	}
-	modLocalRuntime("com.github.matthewperiut:spc-babric:${project.properties["spc_version"]}") {
-		isTransitive = false
-	}
 }
 
 tasks.withType<ProcessResources> {
