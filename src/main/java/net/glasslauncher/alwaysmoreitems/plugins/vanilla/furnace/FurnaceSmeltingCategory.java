@@ -20,7 +20,7 @@ public class FurnaceSmeltingCategory extends FurnaceRecipeCategory {
 	public FurnaceSmeltingCategory() {
 		super();
 		background = DrawableHelper.createDrawable("/gui/furnace.png", 55, 16, 82, 54);
-		localizedName = TranslationStorage.getInstance().get("gui.ami.category.smelting");
+		localizedName = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.smelting");
 	}
 
 	@Override

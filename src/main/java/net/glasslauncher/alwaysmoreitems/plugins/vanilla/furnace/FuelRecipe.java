@@ -25,7 +25,7 @@ public class FuelRecipe extends VanillaRecipeWrapper {
 	public FuelRecipe(@Nonnull Collection<ItemStack> input, int burnTime) {
 		List<ItemStack> inputList = new ArrayList<>(input);
 		this.inputs = Collections.singletonList(inputList);
-		this.burnTimeString = TranslationStorage.getInstance().get("gui.ami.category.fuel.burnTime", burnTime);
+		this.burnTimeString = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime", burnTime);
 
 		IDrawableStatic flameDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 176, 0, 14, 14);
 		this.flame = DrawableHelper.createAnimatedDrawable(flameDrawable, burnTime, IDrawableAnimated.StartDirection.TOP, true);

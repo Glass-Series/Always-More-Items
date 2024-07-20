@@ -22,7 +22,7 @@ public class ItemDescriptionRecipeCategory implements IRecipeCategory {
 
 	public ItemDescriptionRecipeCategory() {
 		background = DrawableHelper.createBlankDrawable(recipeWidth, recipeHeight);
-		localizedName = TranslationStorage.getInstance().get("gui.ami.category.itemDescription");
+		localizedName = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.itemDescription");
 	}
 
 	@Nonnull

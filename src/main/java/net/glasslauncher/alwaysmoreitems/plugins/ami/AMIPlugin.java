@@ -11,6 +11,11 @@ public class AMIPlugin implements IModPlugin {
 	private IAMIHelpers amiHelpers;
 
 	@Override
+	public String getName() {
+		return "AMI";
+	}
+
+	@Override
 	public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
 		this.amiHelpers = amiHelpers;
 	}

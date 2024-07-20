@@ -56,7 +56,7 @@ public class RecipeLayout implements IRecipeLayout {
 		GL11.glTranslatef(posX, posY, 0.0F);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_ALPHA);
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
 
 		IDrawable background = recipeCategory.getBackground();
 		background.draw(minecraft);
@@ -89,9 +89,9 @@ public class RecipeLayout implements IRecipeLayout {
 //		GuiIngredient hoveredFluidStack = guiFluidStackGroup.draw(minecraft, recipeMouseX, recipeMouseY);
 
 		if (hoveredItemStack != null) {
-//			RenderHelper.enableGUIStandardItemLighting();
+			RenderHelper.enableItemLighting();
 			hoveredItemStack.drawHovered(minecraft, recipeMouseX, recipeMouseY);
-//			RenderHelper.disableStandardItemLighting();
+			RenderHelper.disableItemLighting();
 //		} else if (hoveredFluidStack != null) {
 //			hoveredFluidStack.drawHovered(minecraft, recipeMouseX, recipeMouseY);
 		} else if (recipeMouseX >= 0 && recipeMouseX < background.getWidth() && recipeMouseY >= 0 && recipeMouseY < background.getHeight()) {
@@ -106,7 +106,7 @@ public class RecipeLayout implements IRecipeLayout {
 			}
 		}
 
-		GL11.glDisable(GL11.GL_ALPHA);
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
 		GL11.glPopMatrix();
 	}
 

@@ -3,6 +3,7 @@ package net.glasslauncher.alwaysmoreitems.gui.widget.ingredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import org.lwjgl.opengl.GL11;
@@ -20,9 +21,10 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
 		}
 
 		TextRenderer font = Minecraft.INSTANCE.textRenderer;
+		TextureManager texture = Minecraft.INSTANCE.textureManager;
 
-		itemRenderer.method_1487(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, itemStack, xPosition, yPosition);
-		itemRenderer.method_1488(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, itemStack, xPosition, yPosition);
+		itemRenderer.method_1487(font, texture, itemStack, xPosition, yPosition);
+		itemRenderer.method_1488(font, texture, itemStack, xPosition, yPosition);
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 

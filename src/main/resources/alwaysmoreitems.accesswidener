@@ -2,6 +2,7 @@ accessWidener v2 named
 
 # Haha, cope mine L diver
 accessible field net/minecraft/client/Minecraft INSTANCE Lnet/minecraft/client/Minecraft;
+accessible method net/minecraft/client/Minecraft logGlError (Ljava/lang/String;)V
 
 accessible field net/minecraft/client/gui/screen/ingame/HandledScreen backgroundWidth I
 accessible field net/minecraft/client/gui/screen/ingame/HandledScreen backgroundHeight I

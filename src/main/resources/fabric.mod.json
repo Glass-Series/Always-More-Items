@@ -31,6 +31,10 @@
       "net.glasslauncher.alwaysmoreitems.init.KeybindListener"
     ],
     "stationapi:event_bus_server": [
+    ],
+    "alwaysmoreitems:plugin": [
+      "net.glasslauncher.alwaysmoreitems.plugins.ami.AMIPlugin",
+      "net.glasslauncher.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
     ]
   },
   "mixins": [

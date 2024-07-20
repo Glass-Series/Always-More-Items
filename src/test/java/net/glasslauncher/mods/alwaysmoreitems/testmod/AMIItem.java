@@ -14,7 +14,7 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider {
 
     public AMIItem(Identifier identifier) {
         super(identifier);
-        setTranslationKey("amitestitem");
+        setTranslationKey(TestMod.NAMESPACE, "amitestitem");
         setHasSubtypes(true);
     }
 

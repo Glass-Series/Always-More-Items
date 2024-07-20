@@ -16,6 +16,11 @@ import java.util.*;
 public class DebugPlugin implements IModPlugin {
 
     @Override
+    public String getName() {
+        return "Debug";
+    }
+
+    @Override
     public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
 
     }
@@ -30,9 +35,9 @@ public class DebugPlugin implements IModPlugin {
 
         registry.addDescription(
                 new ItemStack(Item.WOODEN_DOOR),
-                "description.ami.wooden.door.1", // actually 2 lines
-                "description.ami.wooden.door.2",
-                "description.ami.wooden.door.3"
+                "description.alwaysmoreitemstest.wooden.door.1", // actually 2 lines
+                "description.alwaysmoreitemstest.wooden.door.2",
+                "description.alwaysmoreitemstest.wooden.door.3"
         );
 
         registry.addRecipeCategories(new DebugRecipeCategory());

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
@@ -227,9 +228,6 @@ public class OverlayScreen extends Screen {
         }
     }
 
-    public void renderSlots(int mouseX, int mouseY) {
-    }
-
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
         // Do not process if not enabled
@@ -332,25 +330,25 @@ public class OverlayScreen extends Screen {
         if (hoveredItem != null) {
             // Show Recipes
             if (keyCode == KeybindListener.showRecipe.code) {
-                showRecipe(hoveredItem);
+                showRecipe(new Focus(hoveredItem.item));
                 return true;
             }
 
             // Show Uses
             if (keyCode == KeybindListener.showUses.code) {
-                showUses(hoveredItem);
+                showUses(new Focus(hoveredItem.item));
                 return true;
             }
         }
         return false;
     }
 
-    public void showRecipe(ItemRenderEntry item) {
-
+    public void showRecipe(Focus item) {
+        RecipesGui.INSTANCE.showRecipes(item);
     }
 
-    public void showUses(ItemRenderEntry item) {
-
+    public void showUses(Focus item) {
+        RecipesGui.INSTANCE.showUses(item);
     }
 
     @Override

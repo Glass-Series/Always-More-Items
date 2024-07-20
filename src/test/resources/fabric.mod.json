@@ -28,6 +28,9 @@
     ],
     "alwaysmoreitem:event_bus": [
       "net.glasslauncher.mods.alwaysmoreitems.testmod.init.ActionButtonListener"
+    ],
+    "alwaysmoreitems:plugin": [
+      "net.glasslauncher.mods.alwaysmoreitems.testmod.init.DebugPlugin"
     ]
   },
   "depends": {

@@ -34,11 +34,10 @@ public class ClientInit {
 		AlwaysMoreItems.setHelpers(new AMIHelpers());
 		initVersionChecker();
 
-		plugins = FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:plugin", IModPlugin.class).stream().map(EntrypointContainer::getEntrypoint).toList();
+		plugins = new ArrayList<>(FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:plugin", IModPlugin.class).stream().map(EntrypointContainer::getEntrypoint).toList());
 
 		IModPlugin vanillaPlugin = getVanillaPlugin(plugins);
 		if (vanillaPlugin != null) {
-            //noinspection DataFlowIssue stfu intellijank, this is a fucking arraylist
             plugins.remove(vanillaPlugin);
 			plugins.add(0, vanillaPlugin);
 		}
@@ -111,6 +110,7 @@ public class ClientInit {
 		iterator = plugins.iterator();
 		while (iterator.hasNext()) {
 			IModPlugin plugin = iterator.next();
+            AlwaysMoreItems.LOGGER.info("Initializing plugin {}", plugin.getName());
 			try {
 				plugin.onRecipeRegistryAvailable(recipeRegistry);
 			} catch (AbstractMethodError ignored) {

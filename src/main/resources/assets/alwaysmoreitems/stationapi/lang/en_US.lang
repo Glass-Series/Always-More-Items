@@ -12,3 +12,11 @@ key.@.toggleOverlay=Toggle Overlay
 key.@.showRecipe=Show Recipe
 key.@.showUses=Show Uses
 key.@.recipeBack=Recipe Back
+
+gui.@.category.craftingTable=Crafting Table
+gui.@.category.smelting=Smelting
+gui.@.category.fuel=Fuel
+gui.@.category.fuel.burnTime=Burn time: %s
+gui.@.category.itemDescription=Description
+
+@.tooltip.show.all.recipes=Show all recipes

@@ -29,6 +29,11 @@ public class VanillaPlugin implements IModPlugin {
 	private IAMIHelpers amiHelpers;
 
 	@Override
+	public String getName() {
+		return "Vanilla";
+	}
+
+	@Override
 	public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
 		this.amiHelpers = amiHelpers;
 	}

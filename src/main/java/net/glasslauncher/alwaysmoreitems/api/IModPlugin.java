@@ -6,6 +6,7 @@ package net.glasslauncher.alwaysmoreitems.api;
  * This class must not import anything that could be missing at runtime (i.e. code from any other mod).
  */
 public interface IModPlugin {
+	String getName();
 	/**
 	 * Called when the IAMIHelpers is available.
 	 * IModPlugins should store IAMIHelpers here if they need it.

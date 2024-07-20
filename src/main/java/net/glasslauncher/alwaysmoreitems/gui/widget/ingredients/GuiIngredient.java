@@ -135,7 +135,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
 
 	private void drawTooltip(@Nonnull Minecraft minecraft, int mouseX, int mouseY, @Nonnull T value) {
 		try {
-			GL11.glDisable(GL11.GL_DEPTH);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 			RenderHelper.disableLighting();
 			AMIDrawContext.INSTANCE.fill(xPosition + padding, yPosition + padding, xPosition + width - padding, yPosition + height - padding, 0x7FFFFFFF);
@@ -148,7 +148,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
 
 			DrawableHelper.drawTooltip(tooltip, mouseX, mouseY);
 
-			GL11.glEnable(GL11.GL_DEPTH);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 		} catch (RuntimeException e) {
 			AlwaysMoreItems.LOGGER.error("Exception when rendering tooltip on {}.", value, e);
 		}

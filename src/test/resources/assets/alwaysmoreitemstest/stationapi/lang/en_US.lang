@@ -1,0 +1,23 @@
+# @ is a shorthand for the current mod id, which is alwaysmoreitemstest.
+
+item.@.amitestitem.name=AMI Debug Item
+
+alwaysmoreitems.actionButton.@.dummy0=Dummy Action 0
+alwaysmoreitems.actionButton.@.dummy1=Dummy Action 1
+alwaysmoreitems.actionButton.@.dummy2=Dummy Action 2
+alwaysmoreitems.actionButton.@.dummy3=Dummy Action 3
+alwaysmoreitems.actionButton.@.dummy4=Dummy Action 4
+alwaysmoreitems.actionButton.@.dummy5=Dummy Action 5
+alwaysmoreitems.actionButton.@.dummy6=Dummy Action 6
+alwaysmoreitems.actionButton.@.dummy7=Dummy Action 7
+alwaysmoreitems.actionButton.@.dummy8=Dummy Action 8
+alwaysmoreitems.actionButton.@.dummy9=Dummy Action 9
+alwaysmoreitems.actionButton.@.dummy10=Dummy Action 10
+alwaysmoreitems.actionButton.@.dummy11=Dummy Action 11
+alwaysmoreitems.actionButton.@.dummy12=Dummy Action 12
+alwaysmoreitems.actionButton.@.dummy13=Dummy Action 13
+alwaysmoreitems.actionButton.@.dummy14=Dummy Action 14
+
+description.@.wooden.door.1=Wooden Doors allow you to block monsters from entering your building.\nTesting sentences.
+description.@.wooden.door.2=Clicking on a door changes its state from open to closed and visa versa.
+description.@.wooden.door.3=Wooden Doors can be opened/closed via Redstone Circuits.
