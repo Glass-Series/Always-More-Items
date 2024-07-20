@@ -3,6 +3,7 @@ package net.glasslauncher.alwaysmoreitems.gui.widget.ingredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
@@ -31,7 +32,7 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
     @Nonnull
     @Override
     public List<String> getTooltip(@Nonnull Minecraft minecraft, @Nonnull ItemStack itemStack) {
-        String tooltip = itemStack.getItem().getTranslatedName();
+        String tooltip = TranslationStorage.getInstance().get(itemStack.getTranslationKey());
         List<String> list = null;
         if (itemStack.getItem() instanceof CustomTooltipProvider tooltipProvider) {
             list = List.of(tooltipProvider.getTooltip(itemStack, tooltip));
