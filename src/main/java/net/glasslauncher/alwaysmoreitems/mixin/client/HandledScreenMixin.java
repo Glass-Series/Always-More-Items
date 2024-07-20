@@ -1,13 +1,10 @@
 package net.glasslauncher.alwaysmoreitems.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import org.spongepowered.asm.mixin.Mixin;

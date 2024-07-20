@@ -1,8 +1,8 @@
 package net.glasslauncher.alwaysmoreitems.plugins.vanilla;
 
 import net.glasslauncher.alwaysmoreitems.ContainerFakeWorkbench;
-import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IAMIHelpers;
+import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IModPlugin;
 import net.glasslauncher.alwaysmoreitems.api.IModRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IRecipeRegistry;

@@ -9,9 +9,6 @@ import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeHandler;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeWrapper;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.recipe.CraftingRecipe;
-import net.minecraft.recipe.CraftingRecipeManager;
 import net.minecraft.screen.ScreenHandler;
 
 import javax.annotation.*;

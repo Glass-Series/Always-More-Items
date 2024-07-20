@@ -1,7 +1,7 @@
 package net.glasslauncher.alwaysmoreitems.plugins.vanilla.furnace;
 
-import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IAMIHelpers;
+import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IStackHelper;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.recipe.FuelRegistry;
