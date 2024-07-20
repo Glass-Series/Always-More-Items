@@ -31,6 +31,6 @@ public class ToggleWeatherActionButton implements ActionButton {
 
     @Override
     public String getTexture() {
-        return "/assets/alwaysmoreitems/stationapi/textures/gui/weather.png";
+        return "/assets/alwaysmoreitems/stationapi/textures/gui/rain.png";
     }
 }
