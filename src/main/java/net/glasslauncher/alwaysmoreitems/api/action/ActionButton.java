@@ -8,10 +8,10 @@ import net.minecraft.world.World;
 @SuppressWarnings("UnusedReturnValue")
 public interface ActionButton {
     /**
-     * @param minecraft {@link Minecraft} on client and {@link MinecraftServer} on server
-     * @param world The world the player is currently in
-     * @param player The player who executed the action
-     * @param isOperator If the player is opped. This will always be true in Singleplayer
+     * @param minecraft   {@link Minecraft} on client and {@link MinecraftServer} on server
+     * @param world       The world the player is currently in
+     * @param player      The player who executed the action
+     * @param isOperator  If the player is opped. This will always be true in Singleplayer
      * @param mouseButton Mouse button used to click on the button.
      *                    <p> 0 is Left Button, 1 is Right Button, 2 is Middle Button, 3 and 4 are Side Buttons
      * @return Whether the action was performed
@@ -20,17 +20,19 @@ public interface ActionButton {
 
     /**
      * I would not recommend touching this to keep the button grid consistent
+     *
      * @return The width of the button
      */
-    default int getWidth(){
+    default int getWidth() {
         return 20;
     }
 
     /**
      * I would not recommend touching this to keep the button grid consistent
+     *
      * @return The height of the button
      */
-    default int getHeight(){
+    default int getHeight() {
         return 20;
     }
 
@@ -44,7 +46,7 @@ public interface ActionButton {
     /**
      * @return The sound that will be played when the button is clicked
      */
-    default String getClickSound(){
+    default String getClickSound() {
         return "random.click";
     }
 
@@ -53,15 +55,15 @@ public interface ActionButton {
      *
      * @return Whether the button is only clientsided
      */
-    default boolean isClientsideOnly(){
+    default boolean isClientsideOnly() {
         return false;
     }
 
-    default boolean dontAddToScreen(){
+    default boolean dontAddToScreen() {
         return false;
     }
 
-    default boolean tooltipEnabled(){
+    default boolean tooltipEnabled() {
         return true;
     }
 }

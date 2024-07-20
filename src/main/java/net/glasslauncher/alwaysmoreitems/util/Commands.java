@@ -25,7 +25,7 @@ public class Commands {
 	public static void giveStack(@Nonnull ItemStack itemStack, int amount) {
 		ClientPlayerEntity sender = Minecraft.INSTANCE.player;
 		String senderName = sender.name;
-		
+
 		List<String> commandStrings = new ArrayList<>();
 		commandStrings.add("/give");
 		commandStrings.add(senderName);

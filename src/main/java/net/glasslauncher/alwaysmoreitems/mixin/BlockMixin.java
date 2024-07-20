@@ -10,7 +10,7 @@ import java.util.*;
 
 @Mixin(Block.class)
 public class BlockMixin implements SubProvider {
-    
+
     @Override
     public List<ItemStack> getSubItems() {
         return Collections.emptyList();

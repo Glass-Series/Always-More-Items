@@ -11,18 +11,24 @@ import javax.annotation.*;
  */
 public interface IItemRegistry {
 
-	/** Returns a list of all the Items registered. */
-	@Nonnull
-	ImmutableList<ItemStack> getItemList();
+    /**
+     * Returns a list of all the Items registered.
+     */
+    @Nonnull
+    ImmutableList<ItemStack> getItemList();
 
-	/** Returns a list of all the Items that can be used as fuel in a vanilla furnace. */
-	@Nonnull
-	ImmutableList<ItemStack> getFuels();
+    /**
+     * Returns a list of all the Items that can be used as fuel in a vanilla furnace.
+     */
+    @Nonnull
+    ImmutableList<ItemStack> getFuels();
 
-	/** Returns a mod name for the given item. */
-	@Nonnull
-	String getModNameForItem(@Nonnull Item item);
+    /**
+     * Returns a mod name for the given item.
+     */
+    @Nonnull
+    String getModNameForItem(@Nonnull Item item);
 
-	@Nonnull
-	ImmutableList<ItemStack> getItemListForModId(@Nonnull String modId);
+    @Nonnull
+    ImmutableList<ItemStack> getItemListForModId(@Nonnull String modId);
 }

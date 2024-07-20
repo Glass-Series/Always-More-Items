@@ -5,7 +5,7 @@ package net.glasslauncher.alwaysmoreitems.api.gui;
  * Get an instance from the IGuiHelper
  */
 public interface ITickTimer {
-	int getValue();
+    int getValue();
 
-	int getMaxValue();
+    int getMaxValue();
 }

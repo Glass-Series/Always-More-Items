@@ -6,7 +6,7 @@ import javax.annotation.*;
 import java.util.*;
 
 public interface IIngredientHelper<T> {
-	Collection<T> expandSubtypes(Collection<T> contained);
+    Collection<T> expandSubtypes(Collection<T> contained);
 
-	T getMatch(Iterable<T> contained, @Nonnull Focus toMatch);
+    T getMatch(Iterable<T> contained, @Nonnull Focus toMatch);
 }

@@ -159,7 +159,7 @@ public class RecipeGuiLogic {
 			updateRecipes();
 		}
 	}
-	
+
 	private void updateRecipes() {
 		if (state == null) {
 			return;

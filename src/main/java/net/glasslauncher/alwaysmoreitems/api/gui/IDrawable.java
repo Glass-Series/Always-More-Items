@@ -6,12 +6,12 @@ import javax.annotation.*;
 
 public interface IDrawable {
 
-	int getWidth();
+    int getWidth();
 
-	int getHeight();
+    int getHeight();
 
-	void draw(@Nonnull Minecraft minecraft);
+    void draw(@Nonnull Minecraft minecraft);
 
-	void draw(@Nonnull Minecraft minecraft, int xOffset, int yOffset);
+    void draw(@Nonnull Minecraft minecraft, int xOffset, int yOffset);
 
 }

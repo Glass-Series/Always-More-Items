@@ -135,7 +135,7 @@ public class OverlayScreen extends Screen {
     @Override
     public void tick() {
         // Do not tick if not enabled
-        if(!AlwaysMoreItems.overlayEnabled){
+        if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
         rescale();
@@ -144,7 +144,7 @@ public class OverlayScreen extends Screen {
     @Override
     public void render(int mouseX, int mouseY, float delta) {
         // Do not render if not enabled
-        if(!AlwaysMoreItems.overlayEnabled){
+        if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
 
@@ -170,8 +170,7 @@ public class OverlayScreen extends Screen {
             String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
             if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
                 currentTooltip = List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip));
-            }
-            else {
+            } else {
                 currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name"));
             }
         }
@@ -231,7 +230,7 @@ public class OverlayScreen extends Screen {
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
         // Do not process if not enabled
-        if(!AlwaysMoreItems.overlayEnabled){
+        if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
 
@@ -291,7 +290,7 @@ public class OverlayScreen extends Screen {
     @Override
     public void onMouseEvent() {
         // Do not process if not enabled
-        if(!AlwaysMoreItems.overlayEnabled){
+        if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
 
@@ -314,7 +313,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Cancel keys if overlay is not enabled
-        if(!AlwaysMoreItems.overlayEnabled) {
+        if (!AlwaysMoreItems.overlayEnabled) {
             return false;
         }
 

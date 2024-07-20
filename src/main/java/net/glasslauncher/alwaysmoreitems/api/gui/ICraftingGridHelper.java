@@ -11,10 +11,10 @@ import java.util.*;
  */
 public interface ICraftingGridHelper {
 
-	void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List input);
+    void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List input);
 
-	void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List input, int width, int height);
+    void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List input, int width, int height);
 
-	void setOutput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List<ItemStack> output);
+    void setOutput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List<ItemStack> output);
 
 }

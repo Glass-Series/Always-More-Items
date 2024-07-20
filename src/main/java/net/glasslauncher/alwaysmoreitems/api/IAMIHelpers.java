@@ -11,33 +11,33 @@ import javax.annotation.*;
  */
 public interface IAMIHelpers {
 
-	/**
-	 * Helps with getting itemStacks from recipes.
-	 */
-	@Nonnull
+    /**
+     * Helps with getting itemStacks from recipes.
+     */
+    @Nonnull
     IStackHelper getStackHelper();
 
-	/**
-	 * Used to stop AMI from displaying a specific item in the item list.
-	 */
-	@Nonnull
-	IItemBlacklist getItemBlacklist();
+    /**
+     * Used to stop AMI from displaying a specific item in the item list.
+     */
+    @Nonnull
+    IItemBlacklist getItemBlacklist();
 
-	/**
-	 * Used to tell AMI to ignore NBT tags when comparing items for recipes.
-	 */
-	@Nonnull
-	INbtIgnoreList getNbtIgnoreList();
+    /**
+     * Used to tell AMI to ignore NBT tags when comparing items for recipes.
+     */
+    @Nonnull
+    INbtIgnoreList getNbtIgnoreList();
 
-	/**
-	 * Helps with the implementation of Recipe Transfer Handlers
-	 */
-	@Nonnull
+    /**
+     * Helps with the implementation of Recipe Transfer Handlers
+     */
+    @Nonnull
     IRecipeTransferHandlerHelper recipeTransferHandlerHelper();
 
-	/**
-	 * Reload AMI at runtime.
-	 * Used by mods that add and remove items or recipes like MineTweaker's /mt reload.
-	 */
-	void reload();
+    /**
+     * Reload AMI at runtime.
+     * Used by mods that add and remove items or recipes like MineTweaker's /mt reload.
+     */
+    void reload();
 }

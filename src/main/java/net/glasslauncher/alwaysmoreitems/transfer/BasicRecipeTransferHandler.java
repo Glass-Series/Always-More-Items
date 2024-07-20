@@ -51,7 +51,7 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 		if (!AlwaysMoreItems.isAMIOnServer()) {
 			return handlerHelper.createInternalError();
 		}
-		
+
 		Map<Integer, Slot> inventorySlots = new HashMap<>();
 		for (Slot slot : transferHelper.getInventorySlots(container)) {
 			inventorySlots.put(slot.id, slot);

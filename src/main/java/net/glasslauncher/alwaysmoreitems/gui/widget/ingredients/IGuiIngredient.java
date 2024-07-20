@@ -9,26 +9,28 @@ import java.util.List;
 import java.util.*;
 
 public interface IGuiIngredient<T> {
-	void set(@Nonnull T contained, @Nonnull Focus focus);
+    void set(@Nonnull T contained, @Nonnull Focus focus);
 
-	void set(@Nonnull Collection<T> contained, @Nonnull Focus focus);
+    void set(@Nonnull Collection<T> contained, @Nonnull Focus focus);
 
-	void clear();
+    void clear();
 
-	@Nullable
-	T get();
+    @Nullable
+    T get();
 
-	@Nonnull
-	List<T> getAll();
+    @Nonnull
+    List<T> getAll();
 
-	boolean isInput();
+    boolean isInput();
 
-	boolean isMouseOver(int mouseX, int mouseY);
+    boolean isMouseOver(int mouseX, int mouseY);
 
-	void draw(@Nonnull Minecraft minecraft);
+    void draw(@Nonnull Minecraft minecraft);
 
-	void drawHovered(@Nonnull Minecraft minecraft, int mouseX, int mouseY);
+    void drawHovered(@Nonnull Minecraft minecraft, int mouseX, int mouseY);
 
-	/** Offset is in screen coordinates, unlike the other draw methods */
-	void drawHighlight(@Nonnull Minecraft minecraft, Color color, int xOffset, int yOffset);
+    /**
+     * Offset is in screen coordinates, unlike the other draw methods
+     */
+    void drawHighlight(@Nonnull Minecraft minecraft, Color color, int xOffset, int yOffset);
 }
