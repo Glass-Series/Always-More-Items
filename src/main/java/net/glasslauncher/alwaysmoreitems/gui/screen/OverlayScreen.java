@@ -2,6 +2,7 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
+import net.glasslauncher.alwaysmoreitems.AMIConfig;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
@@ -15,6 +16,7 @@ import net.glasslauncher.alwaysmoreitems.network.ActionButtonC2SPacket;
 import net.glasslauncher.alwaysmoreitems.network.GiveItemC2SPacket;
 import net.glasslauncher.alwaysmoreitems.util.ItemStackElement;
 import net.minecraft.class_564;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -257,6 +259,14 @@ public class OverlayScreen extends Screen {
 
         // Hovered Item
         if (hoveredItem != null) {
+            if (!AMIConfig.INSTANCE.cheatMode) {
+                if (button == 0) { // LMB - Show Recipe
+                    showRecipe(new Focus(hoveredItem.item));
+                } else if (button == 1) { // RMB - Show Uses
+                    showUses(new Focus(hoveredItem.item));
+                }
+                return;
+            }
             if (minecraft.world.isRemote) {
                 if (button == 0) { // LMB - Give Stack
                     PacketHelper.send(new GiveItemC2SPacket(

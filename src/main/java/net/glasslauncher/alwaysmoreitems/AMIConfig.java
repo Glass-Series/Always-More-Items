@@ -25,6 +25,9 @@ public class AMIConfig {
     // TODO: Hide item blacklist?
     public static class AMIConfigInstance {
 
+        @ConfigEntry(name = "Cheat Mode")
+        public Boolean cheatMode = false;
+
         @ConfigEntry(name = "Edit Mode")
         public Boolean editMode = false;
 
