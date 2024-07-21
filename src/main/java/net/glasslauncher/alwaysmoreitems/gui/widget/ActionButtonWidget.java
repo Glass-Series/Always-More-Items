@@ -88,7 +88,7 @@ public class ActionButtonWidget extends ButtonWidget {
             }
             case TEXTURE -> {
                 RenderHelper.bindTexture(texture);
-                RenderHelper.drawTexture(x + 2, y + 2, 16, 16);
+                RenderHelper.drawTexture(x + 2, y + 2, width - 4, height - 4);
             }
             case TEXT -> {
                 buttonText = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) ? altText : text;
@@ -109,6 +109,7 @@ public class ActionButtonWidget extends ButtonWidget {
     public enum ButtonIconType {
         ITEM,
         TEXTURE,
-        TEXT
+        TEXT,
+        OTHER
     }
 }

@@ -9,12 +9,15 @@ import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
+import net.glasslauncher.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
 import net.glasslauncher.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.alwaysmoreitems.network.ActionButtonC2SPacket;
 import net.glasslauncher.alwaysmoreitems.network.GiveItemC2SPacket;
 import net.glasslauncher.alwaysmoreitems.util.ItemStackElement;
+import net.glasslauncher.mods.gcapi.api.GCAPI;
+import net.glasslauncher.mods.gcapi.impl.GlassYamlFile;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -28,6 +31,7 @@ import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import javax.management.*;
 import java.util.*;
 
 public class OverlayScreen extends Screen {
@@ -38,7 +42,7 @@ public class OverlayScreen extends Screen {
 
     // Search Field
     public SearchTextFieldWidget searchField;
-    public static int searchFieldWidth = 180;
+    public static int searchFieldWidth = 160;
 
     // Trash Button
     public ActionButtonWidget trashButton;
@@ -60,6 +64,7 @@ public class OverlayScreen extends Screen {
     ArrayList<ItemRenderEntry> renderedItems;
     public ButtonWidget nextButton;
     public ButtonWidget previousButton;
+    public ButtonWidget settingsButton;
     int currentPage = 0;
     int pageCount = 1;
     boolean rolloverPage = true;
@@ -97,7 +102,7 @@ public class OverlayScreen extends Screen {
         currentTooltip = null;
 
         // Search Field
-        searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2), height - 25, searchFieldWidth, 20);
+        searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2) - 10, height - 25, searchFieldWidth - 1, 20);
         searchField.setMaxLength(64);
         searchField.setText(AlwaysMoreItems.getItemFilter().getFilterText());
 
@@ -108,6 +113,9 @@ public class OverlayScreen extends Screen {
         nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
         //noinspection unchecked
         buttons.add(nextButton);
+        settingsButton = new AMISettingsButton(12, (width / 2) - (searchFieldWidth / 2) + searchFieldWidth - 10, height - 26);
+        //noinspection unchecked
+        buttons.add(settingsButton);
 
         // Action Buttons
         actionButtons = new ArrayList<>();
@@ -380,12 +388,24 @@ public class OverlayScreen extends Screen {
 
     @Override
     protected void buttonClicked(ButtonWidget button) {
-        if (button.id == 10) {
+        if (button.id == previousButton.id) {
             flipPage(-1);
         }
 
-        if (button.id == 11) {
+        if (button.id == nextButton.id) {
             flipPage(1);
+        }
+
+        if (button.id == settingsButton.id) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile() {{set("cheatMode", !AMIConfig.INSTANCE.cheatMode);}});
+                return;
+            }
+            try {
+                Minecraft.INSTANCE.setScreen(GCAPI.getRootConfigScreen(AlwaysMoreItems.NAMESPACE.id("config"), parent));
+            } catch (AttributeNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

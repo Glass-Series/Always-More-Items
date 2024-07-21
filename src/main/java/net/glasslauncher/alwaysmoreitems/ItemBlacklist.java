@@ -42,7 +42,7 @@ public class ItemBlacklist implements IItemBlacklist {
 		}
 		List<String> uids = AlwaysMoreItems.getStackHelper().getUniqueIdentifiersWithWildcard(itemStack);
 		for (String uid : uids) {
-			if (itemBlacklist.contains(uid) || AMIConfig.INSTANCE.itemBlacklist.contains(uid)) {
+			if (itemBlacklist.contains(uid) || AMIConfig.itemBlacklist.contains(uid)) {
 				return true;
 			}
 		}

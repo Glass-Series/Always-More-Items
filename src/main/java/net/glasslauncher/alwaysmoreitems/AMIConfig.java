@@ -33,26 +33,26 @@ public class AMIConfig {
 
         @ConfigEntry(name = "Debug Mode")
         public Boolean debugMode = false;
-
-        @ConfigEntry(
-                name = "Item Blacklist",
-                description = ""// todo: do the desc
-        )
-        public ConfigItemBlacklist itemBlacklist = new ConfigItemBlacklist();
-
-        @ConfigEntry(
-                name = "NBT Blacklist",
-                description = ""// todo: do the desc
-        )
-        public ConfigItemBlacklist nbtBlacklist = new ConfigItemBlacklist();
     }
+
+    @ConfigEntry(
+            name = "Item Blacklist",
+            description = ""// todo: do the desc
+    )
+    public static ConfigItemBlacklist itemBlacklist = new ConfigItemBlacklist();
+
+    @ConfigEntry(
+            name = "NBT Blacklist",
+            description = ""// todo: do the desc
+    )
+    public static ConfigItemBlacklist nbtBlacklist = new ConfigItemBlacklist();
 
     public static void addItemToConfigBlacklist(ItemStack itemStack, boolean wildcard) {
         if (itemStack == null) {
             return;
         }
         String uid = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack, wildcard);
-        if (INSTANCE.itemBlacklist.add(uid)) {
+        if (itemBlacklist.add(uid)) {
             updateBlacklist();
         }
     }
@@ -62,14 +62,14 @@ public class AMIConfig {
             return;
         }
         String uid = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack, wildcard);
-        if (INSTANCE.itemBlacklist.remove(uid)) {
+        if (itemBlacklist.remove(uid)) {
             updateBlacklist();
         }
     }
 
     public static boolean isItemOnConfigBlacklist(ItemStack itemStack, boolean wildcard) {
         String uid = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack, wildcard);
-        return INSTANCE.itemBlacklist.contains(uid);
+        return itemBlacklist.contains(uid);
     }
 
     public static boolean isDebugModeEnabled() {

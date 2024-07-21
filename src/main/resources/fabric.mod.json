@@ -35,6 +35,9 @@
     "alwaysmoreitems:plugin": [
       "net.glasslauncher.alwaysmoreitems.plugins.ami.AMIPlugin",
       "net.glasslauncher.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
+    ],
+    "gcapi": [
+      "net.glasslauncher.alwaysmoreitems.AMIConfig"
     ]
   },
   "mixins": [
