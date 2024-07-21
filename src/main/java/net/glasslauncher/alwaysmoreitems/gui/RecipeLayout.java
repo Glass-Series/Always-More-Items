@@ -85,7 +85,7 @@ public class RecipeLayout implements IRecipeLayout {
 
 		RenderHelper.enableItemLighting();
 		GuiIngredient hoveredItemStack = guiItemStackGroup.draw(minecraft, recipeMouseX, recipeMouseY);
-//		RenderHelper.disableStandardItemLighting();
+		RenderHelper.disableItemLighting();
 //		GuiIngredient hoveredFluidStack = guiFluidStackGroup.draw(minecraft, recipeMouseX, recipeMouseY);
 
 		if (hoveredItemStack != null) {
