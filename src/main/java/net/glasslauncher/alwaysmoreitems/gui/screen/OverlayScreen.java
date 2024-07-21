@@ -338,6 +338,12 @@ public class OverlayScreen extends Screen {
                 showUses(new Focus(hoveredItem.item));
                 return true;
             }
+
+            // Go Back
+            if (keyCode == KeybindListener.recipeBack.code) {
+                RecipesGui.INSTANCE.back();
+                return true;
+            }
         }
         return false;
     }
