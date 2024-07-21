@@ -150,7 +150,11 @@ public class StackHelper implements IStackHelper {
 		}
 
 		if (itemStack.getDamage() != -1/*OreDictionary.WILDCARD_VALUE*/) {
-			return Collections.singletonList(itemStack);
+			return new ArrayList<>() {
+				{
+					add(itemStack);
+				}
+			};
 		}
 
 		return getSubtypes(item, itemStack.count);

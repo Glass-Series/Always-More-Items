@@ -54,7 +54,7 @@ public class RecipesGui extends Screen {
     private ButtonWidget nextPage;
     private ButtonWidget previousPage;
 
-    @Nullable
+	@Nullable
     private RecipeLayout hovered;
 
     private int guiLeft;
@@ -360,5 +360,10 @@ public class RecipesGui extends Screen {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.INSTANCE.textureManager.bindTexture(Minecraft.INSTANCE.textureManager.getTextureId(texturePath));
     }
+
+	@Override
+	public boolean shouldPause() {
+		return false;
+	}
 
 }

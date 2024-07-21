@@ -22,7 +22,7 @@ public class TickTimer implements ITickTimer {
 		long worldTime = Minecraft.INSTANCE.world.getTime();
 		long ticksPassed = worldTime - lastUpdateWorldTime;
 		lastUpdateWorldTime = worldTime;
-		tickCount += ticksPassed;
+		tickCount += (int) ticksPassed;
 		if (tickCount > ticksPerCycle) {
 			tickCount = 0;
 		}

@@ -15,7 +15,7 @@ public class FuelRecipeMaker {
 	public static List<FuelRecipe> getFuelRecipes(IItemRegistry itemRegistry, IAMIHelpers helpers) {
 		IStackHelper stackHelper = helpers.getStackHelper();
 		List<ItemStack> fuelStacks = itemRegistry.getFuels();
-		List<FuelRecipe> fuelRecipes = new ArrayList<>(fuelStacks.size());
+		List<FuelRecipe> fuelRecipes = new ArrayList<>();
 		for (ItemStack fuelStack : fuelStacks) {
 			if (fuelStack == null) {
 				continue;
