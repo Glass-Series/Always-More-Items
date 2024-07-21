@@ -59,7 +59,7 @@ public class OverlayScreen extends Screen {
     ArrayList<ItemRenderEntry> renderedItems;
     public ButtonWidget nextButton;
     public ButtonWidget previousButton;
-    int currentPage = 1;
+    int currentPage = 0;
     int pageCount = 1;
     boolean rolloverPage = true;
     public boolean flipScrollDirection = false;
@@ -183,7 +183,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Draw Page Number
-        String pageNumberString = currentPage + "/" + pageCount;
+        String pageNumberString = (currentPage + 1) + "/" + pageCount;
         textRenderer.drawWithShadow(
                 pageNumberString,
                 (width - ((width - getOverlayStartX()) / 2)) - (textRenderer.getWidth(pageNumberString) / 2),
@@ -391,7 +391,7 @@ public class OverlayScreen extends Screen {
             lastHeight = minecraft.displayHeight;
             init();
             rebuildRenderList();
-            currentPage = 1;
+            currentPage = 0;
         }
     }
 
@@ -454,7 +454,7 @@ public class OverlayScreen extends Screen {
         for (int yIndex = 0; yIndex < itemListHeight; yIndex++) {
             for (int xIndex = 0; xIndex < itemListWidth; xIndex++) {
                 int itemIndexOnThisPage = (yIndex * itemListWidth) + xIndex;
-                int itemIndex = ((currentPage - 1) * itemsPerPage) + itemIndexOnThisPage;
+                int itemIndex = (currentPage * itemsPerPage) + itemIndexOnThisPage;
 
                 if (itemIndex >= filteredItems.size()) {
                     return;
@@ -473,19 +473,19 @@ public class OverlayScreen extends Screen {
 
     public void flipPage(int direction) {
         if (direction > 0) {
-            if (currentPage + 1 <= pageCount) {
+            if (currentPage < pageCount - 1) {
                 currentPage++;
             } else {
                 if (rolloverPage) {
-                    currentPage = 1;
+                    currentPage = 0;
                 }
             }
         } else if (direction < 0) {
-            if (currentPage - 1 >= 1) {
+            if (currentPage > 0) {
                 currentPage--;
             } else {
                 if (rolloverPage) {
-                    currentPage = pageCount;
+                    currentPage = Math.max(pageCount - 1, 0);
                 }
             }
         }
