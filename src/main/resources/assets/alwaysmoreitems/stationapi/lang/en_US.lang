@@ -17,6 +17,10 @@ gui.@.category.craftingTable=Crafting Table
 gui.@.category.smelting=Smelting
 gui.@.category.fuel=Fuel
 gui.@.category.fuel.burnTime=Burn time: %s
+gui.@.category.fuel.burnTime.seconds=S: %s
+gui.@.category.fuel.burnTime.seconds.full=Seconds
+gui.@.category.fuel.burnTime.items=I: %s
+gui.@.category.fuel.burnTime.items.full=Items
 gui.@.category.itemDescription=Description
 
 @.tooltip.show.all.recipes=Show all recipes
