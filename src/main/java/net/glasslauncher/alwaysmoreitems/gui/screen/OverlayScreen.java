@@ -31,6 +31,7 @@ import org.lwjgl.input.Mouse;
 import java.util.*;
 
 public class OverlayScreen extends Screen {
+    public static final OverlayScreen INSTANCE = new OverlayScreen();
 
     // Parent Screen
     public Screen parent;
@@ -68,14 +69,24 @@ public class OverlayScreen extends Screen {
     public static int rightClickGiveAmount = 1;
 
     // Screen Rescaling Stuff
-    int lastWidth = 0;
-    int lastHeight = 0;
-    class_564 screenScaler;
+    private int lastWidth = 0;
+    private int lastHeight = 0;
 
-    public OverlayScreen(Screen parent) {
-        this.parent = parent;
+    private OverlayScreen() {
     }
 
+    public void init(Screen parent, int width, int height) {
+        this.parent = parent;
+        init(Minecraft.INSTANCE, width, height);
+    }
+
+    @Deprecated
+    @Override
+    public void init(Minecraft minecraft, int width, int height) {
+        super.init(minecraft, width, height);
+    }
+
+    @Deprecated
     @Override
     public void init() {
         int id = 100;
@@ -384,7 +395,7 @@ public class OverlayScreen extends Screen {
      */
     public void rescale() {
         if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight) {
-            screenScaler = new class_564(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+            class_564 screenScaler = new class_564(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
             width = screenScaler.method_1857();
             height = screenScaler.method_1858();
             lastWidth = minecraft.displayWidth;

@@ -13,45 +13,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HandledScreen.class)
 public class OverlayScreenInjectionsMixin extends Screen {
 
-    @Unique
-    OverlayScreen overlay;
-
-    @Inject(method = "<init>", at = @At(value = "RETURN"))
-    public void constructor(CallbackInfo ci) {
-        overlay = new OverlayScreen((HandledScreen) (Object) this);
-    }
-
     @Override
     public void init(Minecraft minecraft, int width, int height) {
         super.init(minecraft, width, height);
-        overlay.init(minecraft, width, height);
+        OverlayScreen.INSTANCE.init(this, width, height);
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;render(IIF)V", shift = At.Shift.AFTER))
     public void render(int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        overlay.render(mouseX, mouseY, delta);
+        OverlayScreen.INSTANCE.render(mouseX, mouseY, delta);
     }
 
     @Inject(method = "tick", at = @At(value = "TAIL"))
     public void tick(CallbackInfo ci) {
-        overlay.tick();
+        OverlayScreen.INSTANCE.tick();
     }
-
-//    @Inject(method = "mouseClicked", at = @At(value = "HEAD"))
-//    public void mouseClicked(int mouseX, int mouseY, int button, CallbackInfo ci){
-//        overlay.mouseClicked(mouseX, mouseY, button);
-//    }
 
     @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true)
     public void keyPressed(char character, int keyCode, CallbackInfo ci) {
-        if (overlay.overlayKeyPressed(character, keyCode)) {
+        if (OverlayScreen.INSTANCE.overlayKeyPressed(character, keyCode)) {
             ci.cancel();
         }
     }
 
     @Override
     public void onMouseEvent() {
-        overlay.onMouseEvent();
+        OverlayScreen.INSTANCE.onMouseEvent();
         super.onMouseEvent();
     }
 }

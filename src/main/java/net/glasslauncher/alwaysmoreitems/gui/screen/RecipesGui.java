@@ -70,8 +70,6 @@ public class RecipesGui extends Screen {
     @Getter
     private int ySize;
 
-    private OverlayScreen overlayScreen;
-
     public RecipesGui() {
         init();
     }
@@ -201,7 +199,7 @@ public class RecipesGui extends Screen {
 
     @Override
     public void onMouseEvent() {
-        overlayScreen.onMouseEvent();
+        OverlayScreen.INSTANCE.onMouseEvent();
         super.onMouseEvent();
     }
 
@@ -209,13 +207,7 @@ public class RecipesGui extends Screen {
         if (newParent != this) {
             parent = newParent;
         }
-        if(overlayScreen == null) {
-            overlayScreen = new OverlayScreen(newParent);
-            overlayScreen.init(minecraft, width, height);
-        }
-        else {
-            overlayScreen.parent = parent;
-        }
+        OverlayScreen.INSTANCE.init(this, width, height);
         Minecraft.INSTANCE.setScreen(this);
     }
 
@@ -337,7 +329,7 @@ public class RecipesGui extends Screen {
     @Override
     public void tick() {
         super.tick();
-        overlayScreen.tick();
+        OverlayScreen.INSTANCE.tick();
     }
 
     @Override
@@ -348,7 +340,7 @@ public class RecipesGui extends Screen {
 
         drawBackground();
 
-        overlayScreen.render(mouseX, mouseY, delta);
+        OverlayScreen.INSTANCE.render(mouseX, mouseY, delta);
 
         nextRecipeCategory.render(minecraft, mouseX, mouseY);
         previousRecipeCategory.render(minecraft, mouseX, mouseY);
@@ -421,7 +413,7 @@ public class RecipesGui extends Screen {
         int mouseX = Mouse.getX() * var14 / Minecraft.INSTANCE.displayWidth;
         int mouseY = var15 - Mouse.getY() * var15 / Minecraft.INSTANCE.displayHeight - 1;
 
-        if (overlayScreen.overlayKeyPressed(character, keyCode)) {
+        if (OverlayScreen.INSTANCE.overlayKeyPressed(character, keyCode)) {
             return;
         }
 
