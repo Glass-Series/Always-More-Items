@@ -31,7 +31,7 @@ import java.util.*;
 public class OverlayScreen extends Screen {
 
     // Parent Screen
-    public HandledScreen parent;
+    public Screen parent;
 
     // Search Field
     public SearchTextFieldWidget searchField;
@@ -70,7 +70,7 @@ public class OverlayScreen extends Screen {
     int lastHeight = 0;
     class_564 screenScaler;
 
-    public OverlayScreen(HandledScreen parent) {
+    public OverlayScreen(Screen parent) {
         this.parent = parent;
     }
 
@@ -385,7 +385,16 @@ public class OverlayScreen extends Screen {
     }
 
     public int getItemListWidth() {
-        int possibleOverlayStartX = ((parent.width - parent.backgroundWidth) / 2) + parent.backgroundWidth + 10;
+        int possibleOverlayStartX;
+        if (parent instanceof HandledScreen handledScreen) {
+            possibleOverlayStartX = ((parent.width - handledScreen.backgroundWidth) / 2) + handledScreen.backgroundWidth + 10;
+        }
+        else if (parent instanceof RecipesGui recipesGui) {
+            possibleOverlayStartX = ((parent.width - recipesGui.getXSize()) / 2) + recipesGui.getXSize() + 10;
+        }
+        else {
+            throw new RuntimeException("Unsupported Screen fed to OverlayScreen!");
+        }
         return Math.min(((width - possibleOverlayStartX) / itemSize), maxItemListWidth);
     }
 

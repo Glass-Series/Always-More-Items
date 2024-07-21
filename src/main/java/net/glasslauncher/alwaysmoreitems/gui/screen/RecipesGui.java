@@ -1,5 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.gui.screen;
 
+import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
@@ -59,8 +60,12 @@ public class RecipesGui extends Screen {
 
     private int guiLeft;
     private int guiTop;
+    @Getter
     private int xSize;
+    @Getter
     private int ySize;
+
+    private OverlayScreen overlayScreen;
 
     public RecipesGui() {
         init();
@@ -174,8 +179,23 @@ public class RecipesGui extends Screen {
         return false;
     }
 
+    @Override
+    public void onMouseEvent() {
+        overlayScreen.onMouseEvent();
+        super.onMouseEvent();
+    }
+
     public void open(Screen newParent) {
-        parent = newParent;
+        if (newParent != this) {
+            parent = newParent;
+        }
+        if(overlayScreen == null) {
+            overlayScreen = new OverlayScreen(newParent);
+            overlayScreen.init(minecraft, width, height);
+        }
+        else {
+            overlayScreen.parent = parent;
+        }
         Minecraft.INSTANCE.setScreen(this);
     }
 
@@ -295,12 +315,20 @@ public class RecipesGui extends Screen {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        overlayScreen.tick();
+    }
+
+    @Override
     public void render(int mouseX, int mouseY, float delta) {
         handleMouseScrolled(mouseX, mouseY);
 
         Minecraft minecraft = Minecraft.INSTANCE;
 
         drawBackground();
+
+        overlayScreen.render(mouseX, mouseY, delta);
 
         nextRecipeCategory.render(minecraft, mouseX, mouseY);
         previousRecipeCategory.render(minecraft, mouseX, mouseY);
@@ -366,4 +394,15 @@ public class RecipesGui extends Screen {
 		return false;
 	}
 
+    @Override
+    protected void keyPressed(char character, int keyCode) {
+
+        if (overlayScreen.overlayKeyPressed(character, keyCode)) {
+            return;
+        }
+
+        if (keyCode == Keyboard.KEY_ESCAPE || keyCode == minecraft.options.inventoryKey.code) {
+            minecraft.setScreen(parent);
+        }
+    }
 }
