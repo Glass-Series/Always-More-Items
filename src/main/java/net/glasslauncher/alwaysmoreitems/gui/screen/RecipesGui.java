@@ -8,16 +8,21 @@ import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.alwaysmoreitems.gui.widget.RecipeTransferButton;
+import net.glasslauncher.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.alwaysmoreitems.transfer.RecipeTransferUtil;
 import net.glasslauncher.alwaysmoreitems.util.HoverChecker;
 import net.glasslauncher.alwaysmoreitems.util.RecipeGuiLogic;
 import net.glasslauncher.alwaysmoreitems.util.StringUtil;
 import net.minecraft.class_35;
+import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.PersistentState;
+import net.minecraft.world.PersistentStateManager;
+import net.modificationstation.stationapi.api.event.world.WorldEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -139,21 +144,36 @@ public class RecipesGui extends Screen {
 
         guiActionPerformed = false;
 
-        if (!guiActionPerformed) {
-            for (RecipeLayout recipeLayout : recipeLayouts) {
-                if (recipeLayout.handleClick(minecraft, mouseX, mouseY, mouseButton)) {
+        for (RecipeLayout recipeLayout : recipeLayouts) {
+            if (recipeLayout.handleClick(minecraft, mouseX, mouseY, mouseButton)) {
+                return;
+            }
+        }
+
+        if (titleHoverChecker.isOver(mouseX, mouseY)) {
+            boolean success = logic.setCategoryFocus();
+            if (success) {
+                updateLayout();
+            } else {
+                super.mouseClicked(mouseX, mouseY, mouseButton);
+            }
+            return;
+        }
+
+        if (hovered != null) {
+            if (mouseButton == 0) {
+                Focus focus = hovered.getItemStacks().getFocusUnderMouse(mouseX - hovered.getPosX(), mouseY - hovered.getPosY());
+                if (focus != null) {
+                    showRecipes(focus);
                     return;
                 }
             }
-
-            if (titleHoverChecker.isOver(mouseX, mouseY)) {
-                boolean success = logic.setCategoryFocus();
-                if (success) {
-                    updateLayout();
-                } else {
-                    super.mouseClicked(mouseX, mouseY, mouseButton);
+            if (mouseButton == 1) {
+                Focus focus = hovered.getItemStacks().getFocusUnderMouse(mouseX - hovered.getPosX(), mouseY - hovered.getPosY());
+                if (focus != null) {
+                    showUses(focus);
+                    return;
                 }
-                return;
             }
         }
 
@@ -376,7 +396,6 @@ public class RecipesGui extends Screen {
     public void drawBackground() {
         renderBackground();
 
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         bindTexture(backgroundTexture);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
@@ -396,6 +415,11 @@ public class RecipesGui extends Screen {
 
     @Override
     protected void keyPressed(char character, int keyCode) {
+        class_564 var13 = new class_564(Minecraft.INSTANCE.options, Minecraft.INSTANCE.displayWidth, Minecraft.INSTANCE.displayHeight);
+        int var14 = var13.method_1857();
+        int var15 = var13.method_1858();
+        int mouseX = Mouse.getX() * var14 / Minecraft.INSTANCE.displayWidth;
+        int mouseY = var15 - Mouse.getY() * var15 / Minecraft.INSTANCE.displayHeight - 1;
 
         if (overlayScreen.overlayKeyPressed(character, keyCode)) {
             return;
@@ -403,6 +427,23 @@ public class RecipesGui extends Screen {
 
         if (keyCode == Keyboard.KEY_ESCAPE || keyCode == minecraft.options.inventoryKey.code) {
             minecraft.setScreen(parent);
+        }
+
+        if (hovered != null) {
+            if (KeybindListener.showRecipe.code == keyCode) {
+                Focus focus = hovered.getItemStacks().getFocusUnderMouse(mouseX - hovered.getPosX(), mouseY - hovered.getPosY());
+                if (focus != null) {
+                    showRecipes(focus);
+                    return;
+                }
+            }
+            if (KeybindListener.showUses.code == keyCode) {
+                Focus focus = hovered.getItemStacks().getFocusUnderMouse(mouseX - hovered.getPosX(), mouseY - hovered.getPosY());
+                if (focus != null) {
+                    showUses(focus);
+                    return;
+                }
+            }
         }
     }
 }
