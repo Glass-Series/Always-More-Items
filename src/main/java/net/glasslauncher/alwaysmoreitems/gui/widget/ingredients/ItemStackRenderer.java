@@ -32,7 +32,7 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
     @Nonnull
     @Override
     public List<String> getTooltip(@Nonnull Minecraft minecraft, @Nonnull ItemStack itemStack) {
-        String tooltip = TranslationStorage.getInstance().get(itemStack.getTranslationKey());
+        String tooltip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
         List<String> list = null;
         if (itemStack.getItem() instanceof CustomTooltipProvider tooltipProvider) {
             list = List.of(tooltipProvider.getTooltip(itemStack, tooltip));
