@@ -19,7 +19,7 @@ public class OverlayScreenInjectionsMixin extends Screen {
         OverlayScreen.INSTANCE.init(this, width, height);
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;render(IIF)V", shift = At.Shift.AFTER))
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ingame/HandledScreen;drawBackground(F)V", shift = At.Shift.AFTER))
     public void render(int mouseX, int mouseY, float delta, CallbackInfo ci) {
         OverlayScreen.INSTANCE.render(mouseX, mouseY, delta);
     }
