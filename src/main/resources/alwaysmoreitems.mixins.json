@@ -13,6 +13,7 @@
   ],
   "client": [
     "client.HandledScreenMixin",
+    "client.GameOptionsMixin",
     "client.OverlayScreenInjectionsMixin",
     "client.TextRendererMixin"
   ],
