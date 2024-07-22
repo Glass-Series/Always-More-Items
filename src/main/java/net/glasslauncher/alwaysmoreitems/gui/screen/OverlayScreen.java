@@ -391,7 +391,7 @@ public class OverlayScreen extends Screen {
         }
 
         if (button.id == settingsButton.id) {
-            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
                 GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile() {{set("cheatMode", !AMIConfig.INSTANCE.cheatMode);}});
                 return;
             }
