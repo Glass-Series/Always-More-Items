@@ -1,6 +1,5 @@
 package net.glasslauncher.alwaysmoreitems.plugins.vanilla;
 
-import net.glasslauncher.alwaysmoreitems.ContainerFakeWorkbench;
 import net.glasslauncher.alwaysmoreitems.api.IAMIHelpers;
 import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
 import net.glasslauncher.alwaysmoreitems.api.IModPlugin;
@@ -22,6 +21,7 @@ import net.glasslauncher.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRecipeM
 import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.recipe.CraftingRecipeManager;
+import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.FurnaceScreenHandler;
 
 public class VanillaPlugin implements IModPlugin {
@@ -65,7 +65,7 @@ public class VanillaPlugin implements IModPlugin {
 
 		IRecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
 
-		recipeTransferRegistry.addRecipeTransferHandler(ContainerFakeWorkbench.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+		recipeTransferRegistry.addRecipeTransferHandler(CraftingScreenHandler.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
 		recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.SMELTING, 0, 1, 3, 36);
 		recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.FUEL, 1, 1, 3, 36);
 
