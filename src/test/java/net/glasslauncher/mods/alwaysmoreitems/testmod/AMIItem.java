@@ -22,17 +22,26 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider {
     public String[] getTooltip(ItemStack stack, String originalTooltip) {
         return new String[]{
                 Formatting.DARK_AQUA + originalTooltip,
-                Formatting.GRAY + AMITextRenderer.UNDERLINE + "Index " + stack.getDamage()
+                Formatting.GRAY + AMITextRenderer.UNDERLINE + "Index " + stack.getDamage(),
+                "a",
+                "a",
+                "a",
+                "a",
+                "a",
+                "a",
+                "a",
+                "a",
+                "a",
+                "a"
         };
     }
 
     @Override
     public List<ItemStack> getSubItems() {
-        return List.of(
-                new ItemStack(this, 1, 0),
-                new ItemStack(this, 1, 2),
-                new ItemStack(this, 1, 3),
-                new ItemStack(this, 1, 4)
-        );
+        ArrayList<ItemStack> list = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            list.add(new ItemStack(this, 1, i));
+        }
+        return list;
     }
 }
