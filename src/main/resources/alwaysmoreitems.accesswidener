@@ -11,3 +11,5 @@ accessible field net/minecraft/server/network/ServerPlayNetworkHandler player Ln
 accessible field net/minecraft/server/network/ServerPlayNetworkHandler server Lnet/minecraft/server/MinecraftServer;
 
 accessible field net/minecraft/client/font/TextRenderer field_2462 [I
+
+accessible field net/minecraft/inventory/CraftingInventory stacks [Lnet/minecraft/item/ItemStack;
