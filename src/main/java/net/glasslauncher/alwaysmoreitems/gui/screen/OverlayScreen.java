@@ -3,7 +3,6 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AMIConfig;
-import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;

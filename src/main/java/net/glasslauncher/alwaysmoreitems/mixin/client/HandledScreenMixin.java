@@ -2,7 +2,6 @@ package net.glasslauncher.alwaysmoreitems.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.resource.language.TranslationStorage;
