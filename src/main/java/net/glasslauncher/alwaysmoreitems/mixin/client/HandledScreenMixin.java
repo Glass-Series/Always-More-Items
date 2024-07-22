@@ -2,6 +2,7 @@ package net.glasslauncher.alwaysmoreitems.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -11,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import uk.co.benjiweber.expressions.tuple.BiTuple;
 
 import java.util.*;
 
@@ -43,7 +45,9 @@ public class HandledScreenMixin extends Screen {
         int tooltipX = mouseX - offsetX;
         int tooltipY = mouseY - offsetY;
 
-        DrawableHelper.drawTooltip(List.of(tooltip), tooltipX, tooltipY);
+        BiTuple<Integer, Integer> result = DrawableHelper.getTooltipOffsets(mouseX, mouseY, Arrays.stream(tooltip).toList(), width, height);
+
+        DrawableHelper.drawTooltip(List.of(tooltip), result.one() + tooltipX, result.two() + tooltipY);
 
         return false;
     }

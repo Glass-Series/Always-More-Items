@@ -3,6 +3,7 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AMIConfig;
+import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
@@ -30,6 +31,7 @@ import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import uk.co.benjiweber.expressions.tuple.BiTuple;
 
 import javax.management.*;
 import java.util.*;
@@ -54,8 +56,6 @@ public class OverlayScreen extends Screen {
 
     // Tooltip
     public List<String> currentTooltip;
-    int tooltipYOffset = 0;
-    int tooltipXOffset = 0;
 
     // Item Overlay
     public static int maxItemListWidth = 10;
@@ -102,7 +102,7 @@ public class OverlayScreen extends Screen {
         currentTooltip = null;
 
         // Search Field
-        searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2) - 10, height - 25, searchFieldWidth - 1, 20);
+        searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2) - 10, height - 25, searchFieldWidth - 2, 20);
         searchField.setMaxLength(64);
         searchField.setText(AlwaysMoreItems.getItemFilter().getFilterText());
 
@@ -113,7 +113,7 @@ public class OverlayScreen extends Screen {
         nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
         //noinspection unchecked
         buttons.add(nextButton);
-        settingsButton = new AMISettingsButton(12, (width / 2) - (searchFieldWidth / 2) + searchFieldWidth - 10, height - 26);
+        settingsButton = new AMISettingsButton(12, (width / 2) - (searchFieldWidth / 2) + searchFieldWidth - 11, height - 26);
         //noinspection unchecked
         buttons.add(settingsButton);
 
@@ -147,7 +147,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Trash Button
-        trashButton = new ActionButtonWidget(id++, 0, height - 20, 90, 20, "button." + AlwaysMoreItems.NAMESPACE + ".trash", "button." + AlwaysMoreItems.NAMESPACE + ".trash.alt");
+        trashButton = new ActionButtonWidget(id + 1, 0, height - 20, 90, 20, "button." + AlwaysMoreItems.NAMESPACE + ".trash", "button." + AlwaysMoreItems.NAMESPACE + ".trash.alt");
         trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
         trashButton.action = ActionButtonRegistry.get(trashButton.actionIdentifier);
         actionButtons.add(trashButton);
@@ -234,17 +234,11 @@ public class OverlayScreen extends Screen {
         }
 
         // Tooltip offsets
-        tooltipXOffset = 9;
-        tooltipYOffset = -15;
-
-        // If the mouse is so close to the top of the screen that the tooltip would get cut off, render it at the height of mouse cursor
-        if (mouseY < -tooltipYOffset) {
-            tooltipYOffset = 0;
-        }
+        BiTuple<Integer, Integer> result = DrawableHelper.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
 
         // Draw Tooltip
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            DrawableHelper.drawTooltip(currentTooltip, mouseX, mouseY);
+            DrawableHelper.drawTooltip(currentTooltip, mouseX + result.one(), mouseY + result.two());
         }
     }
 

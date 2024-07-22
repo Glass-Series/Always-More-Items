@@ -14,10 +14,12 @@ import java.util.List;
 import java.util.*;
 
 public class AMITextRenderer extends TextRenderer {
+    public static final String OBFUSCATED = Formatting.FORMATTING_CODE_PREFIX + "k";
     public static final String BOLD = Formatting.FORMATTING_CODE_PREFIX + "l";
+    public static final String STRIKETHROUGH = Formatting.FORMATTING_CODE_PREFIX + "m";
     public static final String UNDERLINE = Formatting.FORMATTING_CODE_PREFIX + "n";
     public static final String ITALICS = Formatting.FORMATTING_CODE_PREFIX + "o";
-    public static final String STRIKETHROUGH = Formatting.FORMATTING_CODE_PREFIX + "m";
+    public static final String RESET = Formatting.FORMATTING_CODE_PREFIX + "r";
 
     public static final String RANDOM_CHARS_PALLETTE = "ÀÁÂÈÊËÍÓÔÕÚßãõğİıŒœŞşŴŵžȇ\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αβΓπΣσμτΦΘΩδ∞∅∈∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u0000";
     public static final int FONT_HEIGHT = 9;
@@ -293,7 +295,7 @@ public class AMITextRenderer extends TextRenderer {
     }
 
     public static String getFormatFromString(String p_getFormatFromString_0_) {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         int i = -1;
         int j = p_getFormatFromString_0_.length();
 
@@ -301,14 +303,14 @@ public class AMITextRenderer extends TextRenderer {
             if (i < j - 1) {
                 char c0 = p_getFormatFromString_0_.charAt(i + 1);
                 if (isFormatColor(c0)) {
-                    s = "§" + c0;
+                    s = new StringBuilder("§" + c0);
                 } else if (isFormatSpecial(c0)) {
-                    s = s + "§" + c0;
+                    s.append("§").append(c0);
                 }
             }
         }
 
-        return s;
+        return s.toString();
     }
 
     private static boolean isFormatColor(char p_isFormatColor_0_) {
