@@ -12,8 +12,9 @@
   "server": [
   ],
   "client": [
-    "client.HandledScreenMixin",
+    "client.FixCraftingTableGhostItemsMixin",
     "client.GameOptionsMixin",
+    "client.HandledScreenMixin",
     "client.OverlayScreenInjectionsMixin",
     "client.TextRendererMixin"
   ],
