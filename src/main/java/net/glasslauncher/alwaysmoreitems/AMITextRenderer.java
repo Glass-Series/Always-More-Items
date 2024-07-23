@@ -25,7 +25,8 @@ public class AMITextRenderer extends TextRenderer {
     public static final int FONT_HEIGHT = 9;
     public static final Random fontRandom = new Random();
 
-    private static final int[] colorCode = new int[32];
+    public static final String VALID_COLOR_CHARS = "0123456789abcdefklmnor";
+    public static final int[] COLOR_CODES = new int[32];
 
     static {
         for (int i = 0; i < 32; ++i) {
@@ -43,7 +44,7 @@ public class AMITextRenderer extends TextRenderer {
                 i1 /= 4;
             }
 
-            colorCode[i] = (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
+            COLOR_CODES[i] = (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
         }
     }
 
@@ -51,6 +52,10 @@ public class AMITextRenderer extends TextRenderer {
 
     public AMITextRenderer(GameOptions gameOptions, String texturePath, TextureManager textureManager) {
         super(gameOptions, texturePath, textureManager);
+    }
+
+    public static int getColorFromCode(char code) {
+        return COLOR_CODES[(VALID_COLOR_CHARS.indexOf(code))];
     }
 
     protected float renderChar(int posX, int posY, int character, boolean shadow) {
@@ -95,7 +100,7 @@ public class AMITextRenderer extends TextRenderer {
             int i1;
             int j1;
             if (c0 == 167 && i + 1 < text.length()) {
-                i1 = "0123456789abcdefklmnor".indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
+                i1 = VALID_COLOR_CHARS.indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
                 if (i1 < 16) {
                     randomStyle = false;
                     boldStyle = false;
@@ -110,7 +115,7 @@ public class AMITextRenderer extends TextRenderer {
                         i1 += 16;
                     }
 
-                    j1 = colorCode[i1];
+                    j1 = COLOR_CODES[i1];
                     setColor((float)(j1 >> 16), (float)(j1 >> 8 & 255), (float)(j1 & 255), color.getAlpha());
                 } else if (i1 == 16) {
                     randomStyle = true;

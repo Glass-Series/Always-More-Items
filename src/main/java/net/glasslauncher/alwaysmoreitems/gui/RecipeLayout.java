@@ -1,6 +1,7 @@
 package net.glasslauncher.alwaysmoreitems.gui;
 
 import net.glasslauncher.alwaysmoreitems.AMIConfig;
+import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
@@ -102,7 +103,7 @@ public class RecipeLayout implements IRecipeLayout {
 				// older wrappers don't have this method
 			}
 			if (tooltipStrings != null && !tooltipStrings.isEmpty()) {
-				DrawableHelper.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY);
+				AMITooltipSystem.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY);
 			}
 		}
 

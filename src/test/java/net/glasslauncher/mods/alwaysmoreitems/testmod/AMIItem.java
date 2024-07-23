@@ -1,6 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod;
 
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
+import net.glasslauncher.alwaysmoreitems.api.AMIRarity;
+import net.glasslauncher.alwaysmoreitems.api.IAMIRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
@@ -10,7 +12,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.*;
 
-public class AMIItem extends TemplateItem implements CustomTooltipProvider {
+public class AMIItem extends TemplateItem implements CustomTooltipProvider, IAMIRarity {
 
     public AMIItem(Identifier identifier) {
         super(identifier);
@@ -21,7 +23,7 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider {
     @Override
     public String[] getTooltip(ItemStack stack, String originalTooltip) {
         return new String[]{
-                Formatting.DARK_AQUA + originalTooltip,
+                originalTooltip,
                 Formatting.GRAY + AMITextRenderer.UNDERLINE + "Index " + stack.getDamage(),
                 "a",
                 "a",
@@ -43,5 +45,10 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider {
             list.add(new ItemStack(this, 1, i));
         }
         return list;
+    }
+
+    @Override
+    public AMIRarity getRarity(ItemStack itemStack) {
+        return AMIRarity.values()[itemStack.getDamage() % (AMIRarity.values().length)];
     }
 }

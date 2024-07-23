@@ -1,6 +1,7 @@
 package net.glasslauncher.alwaysmoreitems.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -44,9 +45,9 @@ public class HandledScreenMixin extends Screen {
         int tooltipX = mouseX - offsetX;
         int tooltipY = mouseY - offsetY;
 
-        BiTuple<Integer, Integer> result = DrawableHelper.getTooltipOffsets(mouseX, mouseY, Arrays.stream(tooltip).toList(), width, height);
+        BiTuple<Integer, Integer> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, Arrays.stream(tooltip).toList(), width, height);
 
-        DrawableHelper.drawTooltip(List.of(tooltip), result.one() + tooltipX, result.two() + tooltipY);
+        AMITooltipSystem.drawTooltip(List.of(tooltip), result.one() + tooltipX, result.two() + tooltipY);
 
         return false;
     }

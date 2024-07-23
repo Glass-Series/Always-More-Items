@@ -3,12 +3,14 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AMIConfig;
+import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.action.ActionButtonRegistry;
+import net.glasslauncher.alwaysmoreitems.api.IAMIRarity;
 import net.glasslauncher.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
@@ -189,9 +191,12 @@ public class OverlayScreen extends Screen {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -2130706433);
             String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
             if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
-                currentTooltip = List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip));
+                currentTooltip = new ArrayList<>(List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip)));
             } else {
-                currentTooltip = Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name"));
+                currentTooltip = new ArrayList<>(Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name")));
+            }
+            if (hoveredItem.item.getItem() instanceof IAMIRarity rarity) {
+                currentTooltip.set(0, rarity.getRarity(hoveredItem.item) + currentTooltip.get(0));
             }
         }
 
@@ -233,11 +238,11 @@ public class OverlayScreen extends Screen {
         }
 
         // Tooltip offsets
-        BiTuple<Integer, Integer> result = DrawableHelper.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
+        BiTuple<Integer, Integer> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
 
         // Draw Tooltip
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            DrawableHelper.drawTooltip(currentTooltip, mouseX + result.one(), mouseY + result.two());
+            AMITooltipSystem.drawTooltip(currentTooltip, mouseX + result.one(), mouseY + result.two());
         }
     }
 
