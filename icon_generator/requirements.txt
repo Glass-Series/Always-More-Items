@@ -1,0 +1,4 @@
+# To use this file, use `pip[3] install -r requirements.txt` inside this folder.
+# Or you can run `pip[3] install pyqt5`, I'm not your mom.
+# Approx 50mb on win, 60mb on linux, and 30mb on macos, if pymcl binaries are anything to go by.
+pyqt5==5.15.11
