@@ -70,20 +70,28 @@ public class AMITooltipSystem {
     public static BiTuple<Integer, Integer> getTooltipOffsets(int mouseX, int mouseY, List<String> currentTooltip, int width, int height) {
         int tooltipXOffset = 9;
         int tooltipYOffset = -15;
+        boolean flipped = false;
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
             // Take away the extra padding (3) and the header+1 (9ea + 3ea) (which is above the cursor) from the equation
             int tooltipYHitbox = (currentTooltip.size() * (AMITextRenderer.FONT_HEIGHT + 3)) - 12 - 18;
             // The extra single padding and line? Fuck knows, I'm done pretending I know what I'm doing here.
             if (mouseY > height + tooltipYOffset - tooltipYHitbox + 15) {
                 // render above
-                tooltipYOffset -= tooltipYHitbox;
+                tooltipYOffset += height - (mouseY + tooltipYHitbox + 3);
             }
             else if (mouseY < -tooltipYOffset) {
                 tooltipYOffset = 0;
             }
-            int maxTipLength = AMITextRenderer.INSTANCE.getWidth(currentTooltip.stream().reduce((s, s2) -> s.length() > s2.length() ? s : s2).get());
-            if (mouseX + tooltipXOffset + maxTipLength > width) {
-                tooltipXOffset = -tooltipXOffset - maxTipLength;
+            int maxTipLength = AMITextRenderer.INSTANCE.getWidth(currentTooltip.stream().reduce((s, s2) -> s.replaceFirst(AMIRarity.HeaderCode.PREFIX_CHARACTER + ".", "").length() > s2.replaceFirst(AMIRarity.HeaderCode.PREFIX_CHARACTER + ".", "").length() ? s : s2).get());
+            maxTipLength += 3;
+            int iconWidth = 0;
+            if (currentTooltip.get(0).startsWith(String.valueOf(AMIRarity.HeaderCode.PREFIX_CHARACTER))) {
+                AMIRarity amiRarity = AMIRarity.AMI_RARITIES_BY_CODE.get(currentTooltip.get(0).charAt(1));
+                iconWidth = amiRarity.headerCode.icon[0].length * 2;
+            }
+            if (mouseX + tooltipXOffset + maxTipLength + iconWidth > width) {
+                tooltipXOffset = -tooltipXOffset - maxTipLength + 3;
+                flipped = true;
             }
         }
         // To account for the inbult offset of drawTooltip, yes, technically wasteful, but easier to think about.
