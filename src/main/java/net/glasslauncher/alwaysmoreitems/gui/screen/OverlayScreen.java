@@ -236,6 +236,10 @@ public class OverlayScreen extends Screen {
             }
         }
 
+        if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
+            currentTooltip = new ArrayList<>(){{add(TranslationStorage.getInstance().get("button.alwaysmoreitems.trash.cursor", TranslationStorage.getInstance().get(Minecraft.INSTANCE.player.inventory.getCursorStack().getTranslationKey() + ".name")));}};
+        }
+
         // Tooltip offsets
         TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
 
@@ -253,6 +257,15 @@ public class OverlayScreen extends Screen {
         }
 
         super.mouseClicked(mouseX, mouseY, button);
+
+        if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
+            if (!minecraft.world.isRemote) {
+                trashButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, false);
+            } else {
+                PacketHelper.send(new ActionButtonC2SPacket(trashButton.actionIdentifier, button, false));
+            }
+            return;
+        }
 
         // Search Field
         searchField.mouseClicked(mouseX, mouseY, button);
