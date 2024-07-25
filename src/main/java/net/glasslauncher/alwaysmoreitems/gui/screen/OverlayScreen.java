@@ -5,7 +5,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.alwaysmoreitems.AMIConfig;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
@@ -32,7 +31,7 @@ import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import uk.co.benjiweber.expressions.tuple.BiTuple;
+import uk.co.benjiweber.expressions.tuple.TriTuple;
 
 import javax.management.*;
 import java.util.*;
@@ -238,11 +237,11 @@ public class OverlayScreen extends Screen {
         }
 
         // Tooltip offsets
-        BiTuple<Integer, Integer> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
+        TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
 
         // Draw Tooltip
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            AMITooltipSystem.drawTooltip(currentTooltip, mouseX + result.one(), mouseY + result.two());
+            AMITooltipSystem.drawTooltip(currentTooltip, mouseX + result.one(), mouseY + result.two(), result.three());
         }
     }
 

@@ -2,9 +2,6 @@ package net.glasslauncher.alwaysmoreitems.api;
 
 import net.glasslauncher.alwaysmoreitems.AMIRarityIcons;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
-import net.minecraft.client.font.TextRenderer;
-import net.modificationstation.stationapi.api.util.Formatting;
-import org.w3c.dom.Text;
 
 import java.awt.*;
 import java.util.*;
@@ -14,10 +11,10 @@ public enum AMIRarity {
     NONE("None", 'b', 0, new Color(AMITextRenderer.getColorFromCode('f')), HeaderCode.NONE),
     COMMON("Common", 'c', 1, new Color(AMITextRenderer.getColorFromCode('a')), HeaderCode.NONE),
     UNCOMMON("Uncommon", 'd', 2, new Color(AMITextRenderer.getColorFromCode('b')), HeaderCode.NORMAL),
-    RARE("Rare", 'd', 3, new Color(AMITextRenderer.getColorFromCode('d')), HeaderCode.NORMAL),
-    UNIQUE("Unique", 'e', 4, new Color(AMITextRenderer.getColorFromCode('e')), HeaderCode.FANCY),
-    LEGENDARY("Legendary", 'f',  5, new Color(AMITextRenderer.getColorFromCode('5')), HeaderCode.FANCY),
-    ARTEFACT("Artefact", 'g', 6, new Color(AMITextRenderer.getColorFromCode('6')), HeaderCode.ARTEFACT),
+    RARE("Rare", 'e', 3, new Color(AMITextRenderer.getColorFromCode('d')), HeaderCode.NORMAL),
+    UNIQUE("Unique", 'f', 4, new Color(AMITextRenderer.getColorFromCode('e')), HeaderCode.FANCY),
+    LEGENDARY("Legendary", 'g',  5, new Color(43, 194, 154), new Color(150, 39, 25), new Color(43, 194, 154).darker(), HeaderCode.FANCY),
+    ARTEFACT("Artefact", 'h', 6, new Color(208, 75, 18), new Color(AMITextRenderer.getColorFromCode('6')), Color.GRAY, HeaderCode.ARTEFACT),
     ;
 
     public static final Map<Character, AMIRarity> AMI_RARITIES_BY_CODE = new HashMap<>() {{
@@ -37,7 +34,13 @@ public enum AMIRarity {
         this.name = name;
         this.value = value;
         this.textColor = color;
-        this.backgroundColor = color.darker().darker();
+
+        int intColor = color.darker().darker().getRGB();
+        float red = (float)(intColor >> 16 & 255) / 255f;
+        float green = (float)(intColor >> 8 & 255) / 255f;
+        float blue = (float)(intColor & 255) / 255f;
+
+        this.backgroundColor = new Color(red, green, blue, 192 / 255f);
         this.iconColor = color.darker();
         this.injectionCode = injectionCode;
         this.headerCode = headerCode;
@@ -48,7 +51,13 @@ public enum AMIRarity {
         this.name = name;
         this.value = value;
         this.textColor = textColor;
-        this.backgroundColor = backgroundColor;
+
+        int intColor = backgroundColor.getRGB();
+        float red = (float)(intColor >> 16 & 255) / 255f;
+        float green = (float)(intColor >> 8 & 255) / 255f;
+        float blue = (float)(intColor & 255) / 255f;
+
+        this.backgroundColor = new Color(red, green, blue, 192 / 255f);
         this.iconColor = iconColor;
         this.injectionCode = injectionCode;
         this.headerCode = headerCode;
@@ -62,11 +71,11 @@ public enum AMIRarity {
     }
 
     public enum HeaderCode {
-        BAD("Bad", '1', -1, AMIRarityIcons.BRACE_TEMPLATE),
-        NONE("None", '2', 0, AMIRarityIcons.BRACE_TEMPLATE),
-        NORMAL("Normal", '3', 1, AMIRarityIcons.BRACE_TEMPLATE),
-        FANCY("Fancy", '4', 2, AMIRarityIcons.BRACE_TEMPLATE),
-        ARTEFACT("Artefact", '5', 3, AMIRarityIcons.BRACE_TEMPLATE),
+        BAD("Bad", '1', -1, AMIRarityIcons.BAD, false),
+        NONE("None", '2', 0, AMIRarityIcons.NONE, false),
+        NORMAL("Normal", '3', 1, AMIRarityIcons.NORMAL, false),
+        FANCY("Fancy", '4', 2, AMIRarityIcons.FANCY, true),
+        ARTEFACT("Artefact", '5', 3, AMIRarityIcons.ARTEFACT, false),
         ;
 
         public static final char PREFIX_CHARACTER = '×';
@@ -75,12 +84,14 @@ public enum AMIRarity {
         public final char injectionChar;
         public final int value;
         public final boolean[][] icon;
+        public final boolean edgesStretchAcross;
 
-        HeaderCode(String name, char injectionChar, int value, boolean[][] icon) {
+        HeaderCode(String name, char injectionChar, int value, boolean[][] icon, boolean edgesStretchAcross) {
             this.name = name;
             this.injectionChar = injectionChar;
             this.value = value;
             this.icon = icon;
+            this.edgesStretchAcross = edgesStretchAcross;
         }
 
         @Override

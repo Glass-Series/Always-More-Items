@@ -2,7 +2,7 @@ package net.glasslauncher.alwaysmoreitems.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.alwaysmoreitems.api.IAMIRarity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import uk.co.benjiweber.expressions.tuple.BiTuple;
+import uk.co.benjiweber.expressions.tuple.TriTuple;
 
 import java.util.*;
 
@@ -35,19 +35,22 @@ public class HandledScreenMixin extends Screen {
 
 
         String itemName = (TranslationStorage.getInstance().get(slot.getStack().getTranslationKey() + ".name"));
-        String[] tooltip;
+        List<String> tooltip;
         if(slot.getStack().getItem() instanceof CustomTooltipProvider tooltipProvider) {
-            tooltip = tooltipProvider.getTooltip(slot.getStack(), itemName);
+            tooltip = new ArrayList<>(List.of(tooltipProvider.getTooltip(slot.getStack(), itemName)));
         }
         else {
-            tooltip = new String[]{itemName};
+            tooltip = new ArrayList<>(){{add(itemName);}};
+        }
+        if (slot.getStack().getItem() instanceof IAMIRarity rarity) {
+            tooltip.set(0, rarity.getRarity(slot.getStack()) + tooltip.get(0));
         }
         int tooltipX = mouseX - offsetX;
         int tooltipY = mouseY - offsetY;
 
-        BiTuple<Integer, Integer> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, Arrays.stream(tooltip).toList(), width, height);
+        TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, tooltip, width, height);
 
-        AMITooltipSystem.drawTooltip(List.of(tooltip), result.one() + tooltipX, result.two() + tooltipY);
+        AMITooltipSystem.drawTooltip(tooltip, result.one() + tooltipX, result.two() + tooltipY, result.three());
 
         return false;
     }

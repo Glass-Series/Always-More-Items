@@ -3,7 +3,6 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
@@ -378,7 +377,7 @@ public class RecipesGui extends Screen {
         if (titleHoverChecker.isOver(mouseX, mouseY)) {
             Focus focus = logic.getFocus();
             if (focus != null && !focus.isBlank()) {
-                AMITooltipSystem.drawTooltip(Collections.singletonList(TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.show.all.recipes")), mouseX, mouseY);
+                AMITooltipSystem.drawTooltip(Collections.singletonList(TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.show.all.recipes")), mouseX, mouseY, false);
             }
         }
     }

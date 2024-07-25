@@ -15,6 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.*;
 
+/**
+ * Should this be part of a bugfix mod? Probably, but this would cause so many issues in SP that it just makes more sense to do it myself.
+ */
 @Mixin(CraftingScreenHandler.class)
 public abstract class FixCraftingTableGhostItemsMixin extends ScreenHandler {
 
@@ -22,7 +25,7 @@ public abstract class FixCraftingTableGhostItemsMixin extends ScreenHandler {
 
     @Shadow private World world;
 
-    @Inject(method = "onClosed", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;onClosed(Lnet/minecraft/entity/player/PlayerEntity;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "onClosed", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;onClosed(Lnet/minecraft/entity/player/PlayerEntity;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, require = 0)
     public void removedFix(PlayerEntity player, CallbackInfo ci) {
         if (!world.isRemote) {
             Arrays.stream(input.stacks).forEach(player::dropItem);

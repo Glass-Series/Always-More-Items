@@ -1,8 +1,8 @@
 package net.glasslauncher.alwaysmoreitems.gui;
 
+import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.AMIConfig;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
@@ -33,8 +33,10 @@ public class RecipeLayout implements IRecipeLayout {
 	@Nonnull
 	private final IRecipeWrapper recipeWrapper;
 
-	private final int posX;
-	private final int posY;
+	@Getter
+    private final int posX;
+	@Getter
+    private final int posY;
 
 	public RecipeLayout(int index, int posX, int posY, @Nonnull IRecipeCategory recipeCategory, @Nonnull IRecipeWrapper recipeWrapper, @Nonnull Focus focus) {
 		this.recipeCategory = recipeCategory;
@@ -103,7 +105,7 @@ public class RecipeLayout implements IRecipeLayout {
 				// older wrappers don't have this method
 			}
 			if (tooltipStrings != null && !tooltipStrings.isEmpty()) {
-				AMITooltipSystem.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY);
+				AMITooltipSystem.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY, false);
 			}
 		}
 
@@ -158,13 +160,5 @@ public class RecipeLayout implements IRecipeLayout {
 	@Nonnull
 	public IRecipeCategory getRecipeCategory() {
 		return recipeCategory;
-	}
-
-	public int getPosX() {
-		return posX;
-	}
-
-	public int getPosY() {
-		return posY;
 	}
 }

@@ -1,6 +1,5 @@
 package net.glasslauncher.alwaysmoreitems;
 
-import net.glasslauncher.alwaysmoreitems.api.AMIRarity;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawableAnimated;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawableStatic;
@@ -9,16 +8,8 @@ import net.glasslauncher.alwaysmoreitems.gui.widget.DrawableAnimated;
 import net.glasslauncher.alwaysmoreitems.gui.widget.DrawableBlank;
 import net.glasslauncher.alwaysmoreitems.gui.widget.DrawableResource;
 import net.glasslauncher.alwaysmoreitems.util.TickTimer;
-import net.glasslauncher.mods.gcapi.api.CharacterUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.font.TextRenderer;
-import uk.co.benjiweber.expressions.tuple.BiTuple;
 
 import javax.annotation.*;
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-import java.util.stream.*;
 
 public class DrawableHelper {
 

@@ -3,7 +3,6 @@ package net.glasslauncher.alwaysmoreitems.gui.widget.ingredients;
 import net.glasslauncher.alwaysmoreitems.AMIDrawContext;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.alwaysmoreitems.api.gui.ITooltipCallback;
@@ -147,7 +146,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
                 tooltipCallback.onTooltip(slotIndex, input, value, tooltip);
             }
 
-            AMITooltipSystem.drawTooltip(tooltip, mouseX, mouseY);
+            AMITooltipSystem.drawTooltip(tooltip, mouseX, mouseY, false);
 
             GL11.glEnable(GL11.GL_DEPTH_TEST);
         } catch (RuntimeException e) {

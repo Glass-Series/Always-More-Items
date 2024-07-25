@@ -7,6 +7,7 @@
 
 button.@.trash=Trash
 button.@.trash.alt=Clear Inventory
+button.@.trash.cursor=Destroy %s
 
 key.@.toggleOverlay=Toggle Overlay
 key.@.showRecipe=Show Recipe

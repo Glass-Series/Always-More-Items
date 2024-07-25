@@ -1,7 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.transfer;
 
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
@@ -24,6 +23,6 @@ public class RecipeTransferErrorTooltip implements IRecipeTransferError {
 
 	@Override
 	public void showError(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int containerX, int containerY, @Nonnull RecipeLayout recipeLayout) {
-		AMITooltipSystem.drawTooltip(Collections.singletonList(message), mouseX, mouseY);
+		AMITooltipSystem.drawTooltip(Collections.singletonList(message), mouseX, mouseY, false);
 	}
 }

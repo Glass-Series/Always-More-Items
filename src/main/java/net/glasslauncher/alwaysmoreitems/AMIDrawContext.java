@@ -3,7 +3,8 @@ package net.glasslauncher.alwaysmoreitems;
 import net.minecraft.client.gui.DrawContext;
 
 /**
- * Done this way to folk changing how tooltips are typically rendered probably don't have to do much for AMI compat.
+ * Done this way so folk changing how tooltips are typically rendered probably don't have to do much for AMI compat.
+ * - 3 days before I ended up changing the entire system beyond recognition anyways.
  */
 public class AMIDrawContext extends DrawContext {
     public static final AMIDrawContext INSTANCE = new AMIDrawContext();
