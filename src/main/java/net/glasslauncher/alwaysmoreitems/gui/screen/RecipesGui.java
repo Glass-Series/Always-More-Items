@@ -3,6 +3,7 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
+import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
@@ -34,7 +35,7 @@ public class RecipesGui extends Screen {
     private static final int borderPadding = 8;
     private static final int textPadding = 5;
 
-    private Screen parent;
+    public Screen parent;
 
     private int titleHeight;
     private int headerHeight;
@@ -126,9 +127,6 @@ public class RecipesGui extends Screen {
         return (mouseX >= guiLeft) && (mouseY >= guiTop) && (mouseX < guiLeft + xSize) && (mouseY < guiTop + ySize);
     }
 
-    // workaround to see if a button was clicked
-    private boolean guiActionPerformed = false;
-
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
@@ -136,8 +134,6 @@ public class RecipesGui extends Screen {
             super.mouseClicked(mouseX, mouseY, mouseButton);
             return;
         }
-
-        guiActionPerformed = false;
 
         for (RecipeLayout recipeLayout : recipeLayouts) {
             if (recipeLayout.handleClick(minecraft, mouseX, mouseY, mouseButton)) {
@@ -175,23 +171,20 @@ public class RecipesGui extends Screen {
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-
-    public boolean handleMouseScrolled(int mouseX, int mouseY) {
+    public void handleMouseScrolled(int mouseX, int mouseY) {
         if (!isMouseOver(mouseX, mouseY)) {
-            return false;
+            return;
         }
 
         int scrollDelta = Mouse.getDWheel();
         if (scrollDelta < 0) {
             logic.nextPage();
             updateLayout();
-            return true;
-        } else if (scrollDelta > 0) {
+        }
+        else if (scrollDelta > 0) {
             logic.previousPage();
             updateLayout();
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -263,7 +256,6 @@ public class RecipesGui extends Screen {
             boolean maxTransfer = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
             if (RecipeTransferUtil.transferRecipe(recipeLayout, minecraft.player, maxTransfer)) {
                 close();
-                guiActionPerformed = true;
                 updateLayout = false;
             }
         } else {
@@ -272,7 +264,6 @@ public class RecipesGui extends Screen {
 
         if (updateLayout) {
             updateLayout();
-            guiActionPerformed = true;
         }
     }
 
