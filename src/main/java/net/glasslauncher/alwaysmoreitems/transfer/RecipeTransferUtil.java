@@ -4,7 +4,6 @@ import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
 import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
-import net.glasslauncher.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.alwaysmoreitems.gui.screen.RecipesGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;

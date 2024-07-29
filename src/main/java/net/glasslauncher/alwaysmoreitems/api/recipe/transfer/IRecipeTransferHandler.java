@@ -1,7 +1,6 @@
 package net.glasslauncher.alwaysmoreitems.api.recipe.transfer;
 
 import net.glasslauncher.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenHandler;
 

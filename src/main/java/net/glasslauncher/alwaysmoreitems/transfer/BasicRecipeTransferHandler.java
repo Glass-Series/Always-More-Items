@@ -7,7 +7,6 @@ import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferErro
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferInfo;
-import net.glasslauncher.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.glasslauncher.alwaysmoreitems.util.StackHelper;
 import net.minecraft.client.resource.language.TranslationStorage;

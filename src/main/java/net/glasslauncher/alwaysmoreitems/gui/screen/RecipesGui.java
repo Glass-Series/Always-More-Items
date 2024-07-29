@@ -3,7 +3,6 @@ package net.glasslauncher.alwaysmoreitems.gui.screen;
 import lombok.Getter;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.alwaysmoreitems.Focus;
 import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
 import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
