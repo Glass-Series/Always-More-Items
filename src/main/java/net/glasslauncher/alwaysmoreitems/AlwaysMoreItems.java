@@ -39,8 +39,7 @@ public class AlwaysMoreItems {
         }
     }
 
-
     public static boolean isAMIOnServer() {
-        return false;
+        return true;
     }
 }
