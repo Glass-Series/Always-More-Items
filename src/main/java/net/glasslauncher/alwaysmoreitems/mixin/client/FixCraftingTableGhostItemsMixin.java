@@ -23,14 +23,8 @@ public abstract class FixCraftingTableGhostItemsMixin extends ScreenHandler {
 
     @Shadow public CraftingInventory input;
 
-    @Shadow private World world;
-
-    @Inject(method = "onClosed", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;onClosed(Lnet/minecraft/entity/player/PlayerEntity;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, require = 0)
-    public void removedFix(PlayerEntity player, CallbackInfo ci) {
-        if (!world.isRemote) {
-            Arrays.stream(input.stacks).forEach(player::dropItem);
-        }
-        input.stacks = new ItemStack[input.stacks.length];
-        ci.cancel();
+    @Inject(method = "onClosed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;dropItem(Lnet/minecraft/item/ItemStack;)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD, require = 0)
+    public void removedFix(PlayerEntity player, CallbackInfo ci, int index, ItemStack itemStack) {
+        input.setStack(index, null);
     }
 }
