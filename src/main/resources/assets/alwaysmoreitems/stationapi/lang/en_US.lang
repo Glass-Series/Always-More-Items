@@ -25,3 +25,7 @@ gui.@.category.fuel.burnTime.items.full=Items
 gui.@.category.itemDescription=Description
 
 @.tooltip.show.all.recipes=Show all recipes
+@.tooltip.transfer=Transfer Items
+@.tooltip.transfer.max=Transfer Maximum Items
+@.tooltip.error.recipe.transfer.missing=Missing Items
+@.tooltip.error.recipe.transfer.inventory.full=Inventory is too full
