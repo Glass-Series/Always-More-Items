@@ -15,11 +15,20 @@ Features over HMI-fabric (for devs):
 - A ton of render helpers that make creating and editing GUIS *far* less painful.
 - An item blacklist API, which can be updated during runtime for progression-locked items, if wanted.
 
+Drawbacks compared to HMI-fabric:
+- You need StationAPI regardless of if you want it or not. (Will be worked on, but you will lose everything aside from recipe-related features)
+
 Features over every other inventory editor:
 - Multiplayer NBT and metadata giving. (Requires AMI on server)
 - Multiplayer healing. (Requires AMI on server)
 - Multiplayer day/night.
 - Recipe viewing.
+
+TODO:
+- Add tabs (see creative tabs)
+- Fix up hiding items
+- Sync recipe registry server > client
+- Get config fully set up and working.
 
 ## Setup (dev)
 
