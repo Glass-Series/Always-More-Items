@@ -132,7 +132,7 @@ public class StackHelper implements IStackHelper {
 			}
 		}
 
-		return ItemStack.areEqual(lhs, rhs);
+		return lhs.isItemEqual(rhs);
 	}
 
 	@Override
