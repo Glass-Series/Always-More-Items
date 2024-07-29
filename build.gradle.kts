@@ -23,20 +23,10 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 
-	// Used for the fabric toolchain in this project.
-	maven (
-//		name = 'Babric'
-		url = "https://maven.glass-launcher.net/babric"
-	)
-	// Used for mappings.
+	// Used for mappings, ModMenu, StationAPI and GCAPI.
 	maven (
 //		name = 'Glass Releases'
 		url = "https://maven.glass-launcher.net/releases"
-	)
-	// Used for StationAPI and HowManyItems.
-	maven (
-//		name = 'Glass Snapshots'
-		url = "https://maven.glass-launcher.net/snapshots"
 	)
 	// Used for a StationAPI dependency.
 	maven (
