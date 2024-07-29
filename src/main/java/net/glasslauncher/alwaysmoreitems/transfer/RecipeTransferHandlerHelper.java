@@ -10,6 +10,7 @@ import java.util.*;
 public class RecipeTransferHandlerHelper implements IRecipeTransferHandlerHelper {
 	@Override
 	public IRecipeTransferError createInternalError() {
+		AlwaysMoreItems.LOGGER.warn("Internal error created", new Throwable());
 		return RecipeTransferErrorInternal.instance;
 	}
 
