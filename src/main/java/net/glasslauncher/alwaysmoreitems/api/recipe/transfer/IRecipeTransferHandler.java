@@ -25,12 +25,6 @@ public interface IRecipeTransferHandler {
     String getRecipeCategoryUid();
 
     /**
-     * @deprecated since AMI 2.20.0, use the version with the maxTransfer parameter
-     */
-    @Deprecated
-    IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean doTransfer);
-
-    /**
      * @param container    the container to act on
      * @param recipeLayout the layout of the recipe, with information about the ingredients
      * @param player       the player, to do the slot manipulation

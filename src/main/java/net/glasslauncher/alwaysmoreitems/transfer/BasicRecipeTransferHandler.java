@@ -37,11 +37,6 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 		return transferHelper.getRecipeCategoryUid();
 	}
 
-	@Override
-	public IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean doTransfer) {
-		return transferRecipe(container, recipeLayout, player, false, doTransfer);
-	}
-
 	@Nullable
 	@Override
 	public IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull IRecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
