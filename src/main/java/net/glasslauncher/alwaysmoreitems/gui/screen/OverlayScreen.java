@@ -42,6 +42,8 @@ public class OverlayScreen extends Screen {
     // Parent Screen
     public Screen parent;
 
+    public final RecipesGui recipesGui = new RecipesGui();
+
     // Search Field
     public SearchTextFieldWidget searchField;
     public static int searchFieldWidth = 160;
@@ -151,26 +153,35 @@ public class OverlayScreen extends Screen {
         trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
         trashButton.action = ActionButtonRegistry.get(trashButton.actionIdentifier);
         actionButtons.add(trashButton);
+
+        recipesGui.init();
     }
 
     @Override
     public void tick() {
         // Do not tick if not enabled
-        if (!AlwaysMoreItems.overlayEnabled) {
-            return;
+        if (AlwaysMoreItems.overlayEnabled) {
+            rescale();
         }
-        rescale();
+        recipesGui.tick();
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        if (recipesGui.isActive()) {
+            recipesGui.drawBackground();
+        }
+        super.render(mouseX, mouseY, delta);
+
+        amiRender(mouseX, mouseY);
+        recipesGui.render(mouseX, mouseY, delta);
+    }
+
+    public void amiRender(int mouseX, int mouseY) {
         // Do not render if not enabled
         if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
-
-        // Draw Regular Buttons
-        super.render(mouseX, mouseY, delta);
 
         // Reset Tooltip
         currentTooltip = null;
@@ -252,6 +263,8 @@ public class OverlayScreen extends Screen {
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
         // Do not process if not enabled
+        recipesGui.mouseClicked(mouseX, mouseY, button);
+
         if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
@@ -351,6 +364,10 @@ public class OverlayScreen extends Screen {
             AlwaysMoreItems.overlayEnabled = !AlwaysMoreItems.overlayEnabled;
         }
 
+        if (recipesGui.recipeKeyPressed(keyCode)) {
+            return true;
+        }
+
         // Cancel keys if overlay is not enabled
         if (!AlwaysMoreItems.overlayEnabled) {
             return false;
@@ -381,7 +398,7 @@ public class OverlayScreen extends Screen {
 
         // Go Back
         if (keyCode == KeybindListener.recipeBack.code) {
-            RecipesGui.INSTANCE.back();
+            recipesGui.back();
             return true;
         }
 
@@ -389,15 +406,17 @@ public class OverlayScreen extends Screen {
     }
 
     public void showRecipe(Focus item) {
-        RecipesGui.INSTANCE.showRecipes(item);
+        recipesGui.showRecipes(item);
     }
 
     public void showUses(Focus item) {
-        RecipesGui.INSTANCE.showUses(item);
+        recipesGui.showUses(item);
     }
 
     @Override
     protected void buttonClicked(ButtonWidget button) {
+        recipesGui.buttonClicked(button);
+
         if (button.id == previousButton.id) {
             flipPage(-1);
         }
@@ -533,15 +552,5 @@ public class OverlayScreen extends Screen {
         rebuildRenderList();
     }
 
-    public static class ItemRenderEntry {
-        int x;
-        int y;
-        ItemStack item;
-
-        public ItemRenderEntry(int x, int y, ItemStack item) {
-            this.x = x;
-            this.y = y;
-            this.item = item;
-        }
-    }
+    public record ItemRenderEntry (int x, int y, ItemStack item) {}
 }

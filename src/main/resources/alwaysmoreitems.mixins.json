@@ -12,6 +12,7 @@
   "server": [
   ],
   "client": [
+    "client.class_555Mixin",
     "client.FixCraftingTableGhostItemsMixin",
     "client.GameOptionsMixin",
     "client.HandledScreenMixin",

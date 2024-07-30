@@ -1,6 +1,7 @@
 package net.glasslauncher.alwaysmoreitems.gui.screen;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.glasslauncher.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.alwaysmoreitems.Focus;
@@ -17,6 +18,7 @@ import net.minecraft.class_35;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,9 +32,10 @@ import java.util.List;
 import java.util.*;
 
 public class RecipesGui extends Screen {
-    public static final RecipesGui INSTANCE = new RecipesGui();
     private static final int borderPadding = 8;
     private static final int textPadding = 5;
+    @Getter @Setter
+    private boolean active = false;
 
     public Screen parent;
 
@@ -68,12 +71,15 @@ public class RecipesGui extends Screen {
     private int ySize;
 
     public RecipesGui() {
-        init();
     }
 
     @Override
     public void init() {
         minecraft = Minecraft.INSTANCE;
+        // Race condition go fucking lmao
+        if (minecraft.currentScreen == null) {
+            return;
+        }
         field_157 = new class_35(minecraft);
         textRenderer = minecraft.textRenderer;
         buttons.clear();
@@ -88,8 +94,11 @@ public class RecipesGui extends Screen {
             backgroundTexture = "/assets/alwaysmoreitems/stationapi/textures/gui/recipeBackground.png";
         }
 
-        guiLeft = (minecraft.currentScreen.width - xSize) / 2;
-        guiTop = (minecraft.currentScreen.height - ySize) / 2;
+        width = minecraft.currentScreen.width;
+        height = minecraft.currentScreen.height;
+
+        guiLeft = (width - xSize) / 2;
+        guiTop = (height - ySize) / 2;
 
         titleHeight = AMITextRenderer.FONT_HEIGHT + borderPadding;
         headerHeight = titleHeight + AMITextRenderer.FONT_HEIGHT + textPadding;
@@ -129,6 +138,10 @@ public class RecipesGui extends Screen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        if (!active) {
+            return;
+        }
+
         if (!isMouseOver(mouseX, mouseY)) {
             super.mouseClicked(mouseX, mouseY, mouseButton);
             return;
@@ -188,7 +201,10 @@ public class RecipesGui extends Screen {
 
     @Override
     public void onMouseEvent() {
-        OverlayScreen.INSTANCE.onMouseEvent();
+        if (!active) {
+            return;
+        }
+
         super.onMouseEvent();
     }
 
@@ -196,16 +212,12 @@ public class RecipesGui extends Screen {
         if (newParent != this) {
             parent = newParent;
         }
-        OverlayScreen.INSTANCE.init(this, width, height);
-        Minecraft.INSTANCE.setScreen(this);
+        active = true;
+        init();
     }
 
     public void close() {
-        if (parent != null) {
-            Minecraft.INSTANCE.setScreen(parent);
-            return;
-        }
-        Minecraft.INSTANCE.setScreen(null);
+        active = false;
     }
 
     public void showRecipes(@Nonnull Focus focus) {
@@ -315,19 +327,22 @@ public class RecipesGui extends Screen {
 
     @Override
     public void tick() {
+        if (!active) {
+            return;
+        }
+
         super.tick();
-        OverlayScreen.INSTANCE.tick();
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        if (!active) {
+            return;
+        }
+
         handleMouseScrolled(mouseX, mouseY);
 
         Minecraft minecraft = Minecraft.INSTANCE;
-
-        drawBackground();
-
-        OverlayScreen.INSTANCE.render(mouseX, mouseY, delta);
 
         nextRecipeCategory.render(minecraft, mouseX, mouseY);
         previousRecipeCategory.render(minecraft, mouseX, mouseY);
@@ -376,10 +391,8 @@ public class RecipesGui extends Screen {
         renderBackground();
 
         bindTexture(backgroundTexture);
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
 
-        drawTexture(x, y, 0, 0, xSize, ySize);
+        drawTexture(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
     private void bindTexture(String texturePath) {
@@ -387,25 +400,20 @@ public class RecipesGui extends Screen {
         Minecraft.INSTANCE.textureManager.bindTexture(Minecraft.INSTANCE.textureManager.getTextureId(texturePath));
     }
 
-	@Override
-	public boolean shouldPause() {
-		return false;
-	}
+    protected boolean recipeKeyPressed(int keyCode) {
+        if (!active) {
+            return false;
+        }
 
-    @Override
-    protected void keyPressed(char character, int keyCode) {
         class_564 var13 = new class_564(Minecraft.INSTANCE.options, Minecraft.INSTANCE.displayWidth, Minecraft.INSTANCE.displayHeight);
         int var14 = var13.method_1857();
         int var15 = var13.method_1858();
         int mouseX = Mouse.getX() * var14 / Minecraft.INSTANCE.displayWidth;
         int mouseY = var15 - Mouse.getY() * var15 / Minecraft.INSTANCE.displayHeight - 1;
 
-        if (OverlayScreen.INSTANCE.overlayKeyPressed(character, keyCode)) {
-            return;
-        }
-
         if (keyCode == Keyboard.KEY_ESCAPE || keyCode == minecraft.options.inventoryKey.code) {
-            minecraft.setScreen(parent);
+            close();
+            return true;
         }
 
         if (hovered != null) {
@@ -413,16 +421,17 @@ public class RecipesGui extends Screen {
                 Focus focus = hovered.getItemStacks().getFocusUnderMouse(mouseX - hovered.getPosX(), mouseY - hovered.getPosY());
                 if (focus != null) {
                     showRecipes(focus);
-                    return;
+                    return true;
                 }
             }
             if (KeybindListener.showUses.code == keyCode) {
                 Focus focus = hovered.getItemStacks().getFocusUnderMouse(mouseX - hovered.getPosX(), mouseY - hovered.getPosY());
                 if (focus != null) {
                     showUses(focus);
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
 }
