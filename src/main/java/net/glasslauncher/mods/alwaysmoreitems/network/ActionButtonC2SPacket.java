@@ -60,7 +60,7 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
     @Environment(EnvType.SERVER)
     public void handleServer(NetworkHandler networkHandler) {
         if (networkHandler instanceof ServerPlayNetworkHandler serverPlay) {
-            ActionButton actionButton = ActionButtonRegistry.get(actionIdentifier);
+            ActionButton actionButton = ActionButtonRegistry.INSTANCE.get(actionIdentifier);
             if (actionButton != null) {
                 actionButton.perform(
                         serverPlay.server,

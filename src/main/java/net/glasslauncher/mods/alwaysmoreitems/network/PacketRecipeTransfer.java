@@ -16,7 +16,6 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.modificationstation.stationapi.api.nbt.NbtIntArray;
 import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
-import net.modificationstation.stationapi.api.network.packet.MessagePacket;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.*;

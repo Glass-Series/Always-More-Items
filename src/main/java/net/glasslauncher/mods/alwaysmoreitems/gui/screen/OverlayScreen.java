@@ -10,6 +10,7 @@ import net.glasslauncher.mods.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.mods.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.IAMIRarity;
+import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
@@ -29,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
+import net.modificationstation.stationapi.api.util.Identifier;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import uk.co.benjiweber.expressions.tuple.TriTuple;
@@ -125,33 +127,39 @@ public class OverlayScreen extends Screen {
         int actionButtonY = 0;
         int maxHeightForLine = 0;
 
-        for (var action : ActionButtonRegistry.registry.entrySet()) {
-            if (action.getValue().dontAddToScreen()) {
+        for (int i = 0; i < ActionButtonRegistry.INSTANCE.size(); i++) {
+            Identifier identifier = ActionButtonRegistry.INSTANCE.getId(i).get();
+            ActionButton value = ActionButtonRegistry.INSTANCE.get(identifier);
+            if (value == null) {
+                AlwaysMoreItems.LOGGER.error("Identifier {} somehow returned null", identifier, new Throwable());
+                continue;
+            }
+            if (value.dontAddToScreen()) {
                 continue;
             }
 
-            if (actionButtonX + action.getValue().getWidth() > maxActionButtonPanelWidth) {
+            if (actionButtonX + value.getWidth() > maxActionButtonPanelWidth) {
                 actionButtonX = 0;
                 actionButtonY += maxHeightForLine + actionButtonOffset;
                 maxHeightForLine = 0;
             }
 
-            if (action.getValue().getHeight() > maxHeightForLine) {
-                maxHeightForLine = action.getValue().getHeight();
+            if (value.getHeight() > maxHeightForLine) {
+                maxHeightForLine = value.getHeight();
             }
 
-            ActionButtonWidget widget = new ActionButtonWidget(id++, actionButtonX, actionButtonY, action.getValue().getWidth(), action.getValue().getHeight(), action.getValue().getTexture());
+            ActionButtonWidget widget = new ActionButtonWidget(id++, actionButtonX, actionButtonY, value.getWidth(), value.getHeight(), value.getTexture());
             actionButtons.add(widget);
-            widget.action = action.getValue();
-            widget.actionIdentifier = action.getKey();
+            widget.action = value;
+            widget.actionIdentifier = identifier;
 
-            actionButtonX += action.getValue().getWidth() + actionButtonOffset;
+            actionButtonX += value.getWidth() + actionButtonOffset;
         }
 
         // Trash Button
         trashButton = new ActionButtonWidget(id + 1, 0, height - 20, 90, 20, "button." + AlwaysMoreItems.NAMESPACE + ".trash", "button." + AlwaysMoreItems.NAMESPACE + ".trash.alt");
         trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
-        trashButton.action = ActionButtonRegistry.get(trashButton.actionIdentifier);
+        trashButton.action = ActionButtonRegistry.INSTANCE.get(trashButton.actionIdentifier);
         actionButtons.add(trashButton);
 
         recipesGui.init();

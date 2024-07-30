@@ -5,7 +5,6 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransfe
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
-import net.glasslauncher.mods.alwaysmoreitems.gui.screen.RecipesGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerEntity;

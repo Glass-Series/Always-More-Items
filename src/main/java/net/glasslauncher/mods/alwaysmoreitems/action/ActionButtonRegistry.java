@@ -1,22 +1,17 @@
 package net.glasslauncher.mods.alwaysmoreitems.action;
 
+import com.mojang.serialization.Lifecycle;
+import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
-import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.api.registry.Registry;
+import net.modificationstation.stationapi.api.registry.RegistryKey;
+import net.modificationstation.stationapi.api.registry.SimpleRegistry;
 
-import java.util.*;
+public class ActionButtonRegistry extends SimpleRegistry<ActionButton> {
+    public static final RegistryKey<Registry<ActionButton>> KEY = RegistryKey.ofRegistry(AlwaysMoreItems.NAMESPACE.id("action_buttons"));
+    public static final ActionButtonRegistry INSTANCE = new ActionButtonRegistry(KEY, Lifecycle.stable());
 
-public class ActionButtonRegistry {
-    public static LinkedHashMap<Identifier, ActionButton> registry = new LinkedHashMap<>();
-
-    public static boolean add(Identifier identifier, ActionButton button) {
-        if(identifier != null && button != null && !registry.containsKey(identifier)) {
-            registry.put(identifier, button);
-            return true;
-        }
-        return false;
-    }
-
-    public static ActionButton get(Identifier id) {
-        return registry.get(id);
+    public ActionButtonRegistry(RegistryKey<? extends Registry<ActionButton>> key, Lifecycle lifecycle) {
+        super(key, lifecycle);
     }
 }
