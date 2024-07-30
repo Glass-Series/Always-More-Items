@@ -1,7 +1,12 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.init;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
+import net.glasslauncher.mods.alwaysmoreitems.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.AMIItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.ItemFilter;
+import net.glasslauncher.mods.alwaysmoreitems.RecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;

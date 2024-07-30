@@ -27,11 +27,11 @@
       "net.glasslauncher.mods.alwaysmoreitems.init.PacketListener"
     ],
     "stationapi:event_bus_client": [
-      "net.glasslauncher.mods.alwaysmoreitems.ClientInit",
+      "net.glasslauncher.mods.alwaysmoreitems.init.ClientInit",
       "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener"
     ],
     "stationapi:event_bus_server": [
-      "net.glasslauncher.mods.alwaysmoreitems.ServerInit"
+      "net.glasslauncher.mods.alwaysmoreitems.init.ServerInit"
     ],
     "alwaysmoreitems:plugin": [
       "net.glasslauncher.mods.alwaysmoreitems.plugins.ami.AMIPlugin",

@@ -1,5 +1,7 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.init;
 
+import net.glasslauncher.mods.alwaysmoreitems.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.event.mod.InitEvent;
 

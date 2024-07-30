@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
@@ -24,7 +23,7 @@ public class AlwaysMoreItems {
     private static AMIItemRegistry itemRegistry;
     @Getter @Setter
     private static RecipeRegistry recipeRegistry;
-    @Getter @Setter(value = AccessLevel.PACKAGE)
+    @Getter @Setter
     private static boolean started;
 
     public static boolean overlayEnabled = true;
