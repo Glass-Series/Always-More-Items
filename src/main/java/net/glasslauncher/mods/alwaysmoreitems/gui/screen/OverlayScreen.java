@@ -181,8 +181,9 @@ public class OverlayScreen extends Screen {
         }
         super.render(mouseX, mouseY, delta);
 
-        amiRender(mouseX, mouseY);
         recipesGui.render(mouseX, mouseY, delta);
+        amiRender(mouseX, mouseY);
+        recipesGui.drawHovered(mouseX, mouseY);
     }
 
     public void amiRender(int mouseX, int mouseY) {
