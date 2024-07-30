@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.recipe;
 
-import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
 
 import javax.annotation.*;
 

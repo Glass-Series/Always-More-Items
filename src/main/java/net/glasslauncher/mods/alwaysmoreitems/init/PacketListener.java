@@ -1,0 +1,16 @@
+package net.glasslauncher.mods.alwaysmoreitems.init;
+
+import net.glasslauncher.mods.alwaysmoreitems.network.ActionButtonC2SPacket;
+import net.glasslauncher.mods.alwaysmoreitems.network.GiveItemC2SPacket;
+import net.glasslauncher.mods.alwaysmoreitems.network.PacketRecipeTransfer;
+import net.mine_diver.unsafeevents.listener.EventListener;
+import net.modificationstation.stationapi.api.event.network.packet.PacketRegisterEvent;
+
+public class PacketListener {
+    @EventListener
+    public void registerPackets(PacketRegisterEvent event){
+        ActionButtonC2SPacket.register();
+        GiveItemC2SPacket.register();
+        PacketRecipeTransfer.register();
+    }
+}

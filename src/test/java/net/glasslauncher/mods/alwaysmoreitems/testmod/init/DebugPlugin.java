@@ -1,10 +1,10 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.init;
 
-import net.glasslauncher.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.alwaysmoreitems.api.IAMIHelpers;
-import net.glasslauncher.alwaysmoreitems.api.IModPlugin;
-import net.glasslauncher.alwaysmoreitems.api.IModRegistry;
-import net.glasslauncher.alwaysmoreitems.api.IRecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
+import net.glasslauncher.mods.alwaysmoreitems.api.IModRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipeHandler;

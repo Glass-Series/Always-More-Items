@@ -20,25 +20,25 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "net.glasslauncher.alwaysmoreitems.AlwaysMoreItems",
-      "net.glasslauncher.alwaysmoreitems.init.InitListener",
-      "net.glasslauncher.alwaysmoreitems.init.AfterBlockAndItemListener",
-      "net.glasslauncher.alwaysmoreitems.init.ActionButtonListener",
-      "net.glasslauncher.alwaysmoreitems.init.PacketListener"
+      "net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems",
+      "net.glasslauncher.mods.alwaysmoreitems.init.InitListener",
+      "net.glasslauncher.mods.alwaysmoreitems.init.AfterBlockAndItemListener",
+      "net.glasslauncher.mods.alwaysmoreitems.init.ActionButtonListener",
+      "net.glasslauncher.mods.alwaysmoreitems.init.PacketListener"
     ],
     "stationapi:event_bus_client": [
-      "net.glasslauncher.alwaysmoreitems.ClientInit",
-      "net.glasslauncher.alwaysmoreitems.init.KeybindListener"
+      "net.glasslauncher.mods.alwaysmoreitems.ClientInit",
+      "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener"
     ],
     "stationapi:event_bus_server": [
-      "net.glasslauncher.alwaysmoreitems.ServerInit"
+      "net.glasslauncher.mods.alwaysmoreitems.ServerInit"
     ],
     "alwaysmoreitems:plugin": [
-      "net.glasslauncher.alwaysmoreitems.plugins.ami.AMIPlugin",
-      "net.glasslauncher.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
+      "net.glasslauncher.mods.alwaysmoreitems.plugins.ami.AMIPlugin",
+      "net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
     ],
     "gcapi": [
-      "net.glasslauncher.alwaysmoreitems.AMIConfig"
+      "net.glasslauncher.mods.alwaysmoreitems.AMIConfig"
     ]
   },
   "mixins": [
@@ -51,16 +51,16 @@
   "custom": {
     "loom:injected_interfaces": {
       "net/minecraft/class_17": [
-        "net/glasslauncher/alwaysmoreitems/api/SubProvider"
+        "net/glasslauncher/mods/alwaysmoreitems/api/SubProvider"
       ],
       "net/minecraft/class_124": [
-        "net/glasslauncher/alwaysmoreitems/api/SubProvider"
+        "net/glasslauncher/mods/alwaysmoreitems/api/SubProvider"
       ],
       "net/minecraft/class_8": [
-        "net/glasslauncher/alwaysmoreitems/api/AMINbt"
+        "net/glasslauncher/mods/alwaysmoreitems/api/AMINbt"
       ],
       "net/minecraft/class_67": [
-        "net/glasslauncher/alwaysmoreitems/api/AMIFancyFont"
+        "net/glasslauncher/mods/alwaysmoreitems/api/AMIFancyFont"
       ]
     }
   }

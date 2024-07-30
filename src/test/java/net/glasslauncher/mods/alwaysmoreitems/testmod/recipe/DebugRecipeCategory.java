@@ -1,11 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.recipe;
 
-import net.glasslauncher.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.alwaysmoreitems.api.gui.IGuiItemStackGroup;
-import net.glasslauncher.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

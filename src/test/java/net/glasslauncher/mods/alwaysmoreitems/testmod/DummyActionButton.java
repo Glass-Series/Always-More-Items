@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod;
 
-import net.glasslauncher.alwaysmoreitems.api.action.ActionButton;
+import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
