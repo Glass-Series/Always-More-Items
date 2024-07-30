@@ -26,4 +26,9 @@ public class NbtCompoundMixin implements AMINbt {
     public boolean always_More_Items$hasNoTags() {
         return entries.isEmpty();
     }
+
+    @Override
+    public Set<Map.Entry> always_More_Items$entrySet() {
+        return entries.entrySet();
+    }
 }

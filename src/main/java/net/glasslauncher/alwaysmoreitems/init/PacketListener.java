@@ -2,6 +2,7 @@ package net.glasslauncher.alwaysmoreitems.init;
 
 import net.glasslauncher.alwaysmoreitems.network.ActionButtonC2SPacket;
 import net.glasslauncher.alwaysmoreitems.network.GiveItemC2SPacket;
+import net.glasslauncher.alwaysmoreitems.network.PacketRecipeTransfer;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.event.network.packet.PacketRegisterEvent;
 
@@ -10,5 +11,6 @@ public class PacketListener {
     public void registerPackets(PacketRegisterEvent event){
         ActionButtonC2SPacket.register();
         GiveItemC2SPacket.register();
+        PacketRecipeTransfer.register();
     }
 }

@@ -9,4 +9,6 @@ public interface AMINbt {
     Set<String> always_More_Items$getKeySet();
 
     boolean always_More_Items$hasNoTags();
+
+    Set<Map.Entry> always_More_Items$entrySet();
 }

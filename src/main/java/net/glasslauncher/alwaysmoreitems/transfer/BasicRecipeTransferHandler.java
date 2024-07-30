@@ -8,12 +8,14 @@ import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHand
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import net.glasslauncher.alwaysmoreitems.api.recipe.transfer.IRecipeTransferInfo;
 import net.glasslauncher.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
+import net.glasslauncher.alwaysmoreitems.network.PacketRecipeTransfer;
 import net.glasslauncher.alwaysmoreitems.util.StackHelper;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 
 import javax.annotation.*;
 import java.util.*;
@@ -131,10 +133,10 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 			}
 		}
 
-//		if (doTransfer) {
-//			PacketRecipeTransfer packet = new PacketRecipeTransfer(matchingItemsResult.matchingItems, craftingSlotIndexes, inventorySlotIndexes, maxTransfer);
-//			PacketHelper.send(packet);
-//		}
+		if (doTransfer) {
+			PacketRecipeTransfer packet = new PacketRecipeTransfer(matchingItemsResult.matchingItems, craftingSlotIndexes, inventorySlotIndexes, maxTransfer);
+			PacketHelper.send(packet);
+		}
 
 		return null;
 	}
