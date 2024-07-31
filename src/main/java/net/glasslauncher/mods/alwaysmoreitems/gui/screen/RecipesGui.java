@@ -370,7 +370,6 @@ public class RecipesGui extends Screen {
                 recipeWidget.draw(minecraft, mouseX, mouseY);
             }
         }
-        GL11.glEnable(GL11.GL_BLEND);
     }
 
     public void drawHovered(int mouseX, int mouseY) {
