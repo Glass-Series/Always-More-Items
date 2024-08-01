@@ -8,7 +8,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransfe
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferInfo;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
-import net.glasslauncher.mods.alwaysmoreitems.network.PacketRecipeTransfer;
+import net.glasslauncher.mods.alwaysmoreitems.network.c2s.RecipeTransferPacket;
 import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -134,7 +134,7 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 		}
 
 		if (doTransfer) {
-			PacketRecipeTransfer packet = new PacketRecipeTransfer(matchingItemsResult.matchingItems, craftingSlotIndexes, inventorySlotIndexes, maxTransfer);
+			RecipeTransferPacket packet = new RecipeTransferPacket(matchingItemsResult.matchingItems, craftingSlotIndexes, inventorySlotIndexes, maxTransfer);
 			PacketHelper.send(packet);
 		}
 

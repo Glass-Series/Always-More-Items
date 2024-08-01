@@ -15,8 +15,8 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
-import net.glasslauncher.mods.alwaysmoreitems.network.ActionButtonC2SPacket;
-import net.glasslauncher.mods.alwaysmoreitems.network.GiveItemC2SPacket;
+import net.glasslauncher.mods.alwaysmoreitems.network.c2s.ActionButtonPacket;
+import net.glasslauncher.mods.alwaysmoreitems.network.c2s.GiveItemPacket;
 import net.glasslauncher.mods.alwaysmoreitems.util.ItemStackElement;
 import net.glasslauncher.mods.gcapi.api.GCAPI;
 import net.glasslauncher.mods.gcapi.impl.GlassYamlFile;
@@ -284,7 +284,7 @@ public class OverlayScreen extends Screen {
             if (!minecraft.world.isRemote) {
                 trashButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, false);
             } else {
-                PacketHelper.send(new ActionButtonC2SPacket(trashButton.actionIdentifier, button, false));
+                PacketHelper.send(new ActionButtonPacket(trashButton.actionIdentifier, button, false));
             }
             return;
         }
@@ -303,7 +303,7 @@ public class OverlayScreen extends Screen {
                 if (!minecraft.world.isRemote || actionButton.action.isClientsideOnly()) {
                     actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, holdingShift);
                 } else {
-                    PacketHelper.send(new ActionButtonC2SPacket(actionButton.actionIdentifier, button, holdingShift));
+                    PacketHelper.send(new ActionButtonPacket(actionButton.actionIdentifier, button, holdingShift));
                 }
             }
         }
@@ -320,14 +320,14 @@ public class OverlayScreen extends Screen {
             }
             if (minecraft.world.isRemote) {
                 if (button == 0) { // LMB - Give Stack
-                    PacketHelper.send(new GiveItemC2SPacket(
+                    PacketHelper.send(new GiveItemPacket(
                                     ItemRegistry.INSTANCE.getId(hoveredItem.item.getItem()),
                                     hoveredItem.item.getDamage(),
                                     Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount)
                             )
                     );
                 } else if (button == 1) { // RMB - Give One
-                    PacketHelper.send(new GiveItemC2SPacket(
+                    PacketHelper.send(new GiveItemPacket(
                                     ItemRegistry.INSTANCE.getId(hoveredItem.item.getItem()),
                                     hoveredItem.item.getDamage(),
                                     rightClickGiveAmount

@@ -1,10 +1,11 @@
-package net.glasslauncher.mods.alwaysmoreitems.network;
+package net.glasslauncher.mods.alwaysmoreitems.network.c2s;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
+import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.BasicRecipeTransferHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,9 +23,8 @@ import javax.annotation.*;
 import java.io.*;
 import java.util.*;
 
-public class PacketRecipeTransfer extends Packet implements IdentifiablePacket {
-
-	public static final Identifier identifier = AlwaysMoreItems.NAMESPACE.id("transfer");
+public class RecipeTransferPacket extends Packet implements IdentifiablePacket {
+	private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("transfer");
 
 	private int outSize;
 
@@ -33,11 +33,11 @@ public class PacketRecipeTransfer extends Packet implements IdentifiablePacket {
 	private List<Integer> inventorySlots;
 	private boolean maxTransfer;
 
-	public PacketRecipeTransfer() {
+	public RecipeTransferPacket() {
 
 	}
 
-	public PacketRecipeTransfer(@Nonnull Map<Integer, ItemStack> recipeMap, @Nonnull List<Integer> craftingSlots, @Nonnull List<Integer> inventorySlots, boolean maxTransfer) {
+	public RecipeTransferPacket(@Nonnull Map<Integer, ItemStack> recipeMap, @Nonnull List<Integer> craftingSlots, @Nonnull List<Integer> inventorySlots, boolean maxTransfer) {
 		this.recipeMap = recipeMap;
 		this.craftingSlots = craftingSlots;
 		this.inventorySlots = inventorySlots;
@@ -46,7 +46,7 @@ public class PacketRecipeTransfer extends Packet implements IdentifiablePacket {
 
 	@Override
 	public Identifier getId() {
-		return identifier;
+		return IDENTIFIER;
 	}
 
 	@Override
@@ -84,12 +84,8 @@ public class PacketRecipeTransfer extends Packet implements IdentifiablePacket {
 
 		outData.putBoolean("maxTransfer", maxTransfer);
 
-		// Semi-wasteful, but better than an actual output stream.
-		DataOutputStream outputStream = new DataOutputStream(ByteArrayOutputStream.nullOutputStream());
-		((NbtElement) outData).write(outputStream);
-		outSize = outputStream.size();
-		((NbtElement) outData).write(buf);
-	}
+		outSize = NetworkHelper.writeAndGetNbtLength(outData, buf);
+    }
 
 	@Environment(EnvType.CLIENT)
 	private PlayerEntity getClientPlayer() {
@@ -119,6 +115,6 @@ public class PacketRecipeTransfer extends Packet implements IdentifiablePacket {
 	}
 
 	public static void register() {
-		IdentifiablePacket.register(identifier, false, true, PacketRecipeTransfer::new);
+		IdentifiablePacket.register(IDENTIFIER, false, true, RecipeTransferPacket::new);
 	}
 }

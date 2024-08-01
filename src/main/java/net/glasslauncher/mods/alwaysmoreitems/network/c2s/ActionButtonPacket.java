@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems.network;
+package net.glasslauncher.mods.alwaysmoreitems.network.c2s;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -14,17 +14,17 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import java.io.*;
 
 @SuppressWarnings("CallToPrintStackTrace")
-public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket {
-    private static final Identifier identifier = AlwaysMoreItems.NAMESPACE.id("action_button");
+public class ActionButtonPacket extends Packet implements IdentifiablePacket {
+    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("action_button");
 
     public Identifier actionIdentifier;
     public int mouseButton;
     boolean holdingShift;
 
-    public ActionButtonC2SPacket() {
+    public ActionButtonPacket() {
     }
 
-    public ActionButtonC2SPacket(Identifier actionIdentifier, int mouseButton, boolean holdingShift) {
+    public ActionButtonPacket(Identifier actionIdentifier, int mouseButton, boolean holdingShift) {
         this.actionIdentifier = actionIdentifier;
         this.mouseButton = mouseButton;
         this.holdingShift = holdingShift;
@@ -83,10 +83,10 @@ public class ActionButtonC2SPacket extends Packet implements IdentifiablePacket 
 
     @Override
     public Identifier getId() {
-        return identifier;
+        return IDENTIFIER;
     }
 
     public static void register() {
-        IdentifiablePacket.register(identifier, false, true, ActionButtonC2SPacket::new);
+        IdentifiablePacket.register(IDENTIFIER, false, true, ActionButtonPacket::new);
     }
 }

@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems.network;
+package net.glasslauncher.mods.alwaysmoreitems.network.c2s;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,32 +17,18 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import java.io.*;
 
 @SuppressWarnings("CallToPrintStackTrace")
-public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
-    private static final Identifier identifier = AlwaysMoreItems.NAMESPACE.id("give_item");
+public class GiveItemPacket extends Packet implements IdentifiablePacket {
+    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("give_item");
 
     //    public int id;
     public int damage;
     public int count;
     public Identifier itemIdentifier;
 
-    public GiveItemC2SPacket() {
+    public GiveItemPacket() {
     }
 
-//    public GiveItemC2SPacket(int id) {
-//        this(id, 64);
-//    }
-//
-//    public GiveItemC2SPacket(int id, int count) {
-//        this(id, count, 0);
-//    }
-//
-//    public GiveItemC2SPacket(int id, int count, int damage) {
-//        this.id = id;
-//        this.count = count;
-//        this.damage = damage;
-//    }
-
-    public GiveItemC2SPacket(Identifier itemIdentifier, int damage, int count) {
+    public GiveItemPacket(Identifier itemIdentifier, int damage, int count) {
         this.itemIdentifier = itemIdentifier;
         this.damage = damage;
         this.count = count;
@@ -51,7 +37,6 @@ public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
     @Override
     public void read(DataInputStream stream) {
         try {
-//            id = stream.readInt();
             count = stream.readInt();
             damage = stream.readInt();
             itemIdentifier = Identifier.of(stream.readUTF());
@@ -63,7 +48,6 @@ public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
     @Override
     public void write(DataOutputStream stream) {
         try {
-//            stream.writeInt(id);
             stream.writeInt(count);
             stream.writeInt(damage);
             stream.writeUTF(itemIdentifier.toString());
@@ -114,11 +98,11 @@ public class GiveItemC2SPacket extends Packet implements IdentifiablePacket {
 
     @Override
     public Identifier getId() {
-        return identifier;
+        return IDENTIFIER;
     }
 
     public static void register() {
-        IdentifiablePacket.register(identifier, false, true, GiveItemC2SPacket::new);
+        IdentifiablePacket.register(IDENTIFIER, false, true, GiveItemPacket::new);
     }
 
     @Override
