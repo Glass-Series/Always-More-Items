@@ -47,7 +47,7 @@ public class ModRegistry implements IModRegistry {
 
 	@Override
 	public void addDescription(List<ItemStack> itemStacks, String... descriptionKeys) {
-		if (itemStacks == null || itemStacks.size() == 0) {
+		if (itemStacks == null || itemStacks.isEmpty()) {
 			IllegalArgumentException e = new IllegalArgumentException();
 			AlwaysMoreItems.LOGGER.error("Tried to add description with no itemStacks.", e);
 			return;

@@ -26,7 +26,7 @@
     ],
     "stationapi:event_bus_server": [
     ],
-    "alwaysmoreitem:event_bus": [
+    "alwaysmoreitems:action": [
       "net.glasslauncher.mods.alwaysmoreitems.testmod.init.ActionButtonListener"
     ],
     "alwaysmoreitems:plugin": [
