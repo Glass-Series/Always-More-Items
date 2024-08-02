@@ -34,15 +34,20 @@ public class ShapedOreRecipeHandler implements IRecipeHandler<StationShapedRecip
 			return false;
 		}
 		int inputCount = 0;
-		for (Object input : recipe.getIngredients()) {
-			if (input instanceof List) {
-				if (((List) input).isEmpty()) {
-					return false;
+		try {
+			for (Object input : recipe.getIngredients()) {
+				if (input instanceof List) {
+					if (((List) input).isEmpty()) {
+						return false;
+					}
+				}
+				if (input != null) {
+					inputCount++;
 				}
 			}
-			if (input != null) {
-				inputCount++;
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 		return inputCount > 0;
 	}

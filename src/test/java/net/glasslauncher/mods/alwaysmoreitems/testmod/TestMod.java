@@ -2,7 +2,6 @@ package net.glasslauncher.mods.alwaysmoreitems.testmod;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRecipe;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

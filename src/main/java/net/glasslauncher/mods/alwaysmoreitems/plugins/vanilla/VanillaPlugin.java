@@ -29,6 +29,7 @@ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtInt;
@@ -127,18 +128,12 @@ public class VanillaPlugin implements IModPlugin {
         };
     }
 
-	private Either<Integer, Either<TagKey<Item>, ItemStack>> parseStapiFurnaceItem(NbtCompound input) {
-		if (input.getInt("itemInt") != 0) {
-			return Either.left(input.getInt("itemInt"));
-		}
-		NbtList imTooLazyForThis = new NbtList();
-		imTooLazyForThis.add(input.getCompound("itemNbt"));
-		return Either.right(parseStapiInputs(imTooLazyForThis)[0]);
-	}
-
 	public static ItemStack[] parseInputs(NbtList inputs) {
-		ItemStack[] outputs = new ItemStack[inputs.size() - 1];
+		ItemStack[] outputs = new ItemStack[inputs.size()];
 		for (int i = 0; i < inputs.size(); i++) {
+			if (((NbtCompound) inputs.get(i)).getInt("count") == 0) {
+				continue;
+			}
 			outputs[i] = new ItemStack((NbtCompound) inputs.get(i));
 		}
 		return outputs;
@@ -146,58 +141,19 @@ public class VanillaPlugin implements IModPlugin {
 
 	public static Either<TagKey<Item>, ItemStack>[] parseStapiInputs(NbtList inputs) {
         //noinspection unchecked
-        Either<TagKey<Item>, ItemStack>[] outputs = new Either[inputs.size() - 1];
+        Either<TagKey<Item>, ItemStack>[] outputs = new Either[inputs.size()];
 		for (int i = 0; i < inputs.size(); i++) {
-			NbtElement input = inputs.get(i);
-            if (input instanceof NbtString string && string.value.contains(":")) {
-				outputs[i] = Either.left(TagKey.of(ItemRegistry.KEY, Identifier.of(string.value)));
+			NbtCompound input = (NbtCompound) inputs.get(i);
+            if (input.getString("identifier").contains(":")) {
+				outputs[i] = Either.left(TagKey.of(ItemRegistry.KEY, Identifier.of(input.getString("identifier"))));
+				continue;
+			}
+			if (((NbtCompound) inputs.get(i)).getInt("count") == 0) {
 				continue;
 			}
             //noinspection DataFlowIssue
-            outputs[i] = Either.right(new ItemStack((NbtCompound) input));
+            outputs[i] = Either.right(new ItemStack(input));
 		}
 		return outputs;
-	}
-
-	public static class FurnaceRecipe implements IAMISyncableRecipe {
-		public Either<Integer, Either<TagKey<Item>, ItemStack>> input;
-		public Either<Integer, Either<TagKey<Item>, ItemStack>> output;
-
-		public FurnaceRecipe(Either<Integer, Either<TagKey<Item>, ItemStack>> input, Either<Integer, Either<TagKey<Item>, ItemStack>> output) {
-			this.input = input;
-			this.output = output;
-		}
-
-		@Override
-		public NbtCompound exportRecipe() {
-			NbtCompound recipe = new NbtCompound();
-			recipe.put("input", exportItemToNbt(input));
-			recipe.put("output", exportItemToNbt(output));
-			return recipe;
-		}
-
-		@Override
-		public Identifier getPlugin() {
-			return AlwaysMoreItems.NAMESPACE.id("always_more_items");
-		}
-
-		public NbtElement exportItemToNbt(Either<Integer, Either<TagKey<Item>, ItemStack>> item) {
-			if (item.left().isPresent()) {
-				return new NbtInt(item.left().get());
-			}
-			if (item.right().isEmpty()) {
-				throw new NullPointerException();
-			}
-			Either<TagKey<Item>, ItemStack> stapiItem = item.right().get();
-			if (stapiItem.right().isPresent()) {
-				NbtCompound itemNbt = new NbtCompound();
-				stapiItem.right().get().writeNbt(itemNbt);
-				return itemNbt;
-			}
-			if (stapiItem.right().isEmpty()) {
-				throw new NullPointerException();
-			}
-			return new NbtString(stapiItem.right().get().toString());
-		}
 	}
 }
