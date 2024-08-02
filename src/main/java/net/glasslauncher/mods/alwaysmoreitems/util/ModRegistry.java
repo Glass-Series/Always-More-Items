@@ -16,11 +16,25 @@ import javax.annotation.*;
 import java.util.*;
 
 public class ModRegistry implements IModRegistry {
-	private final List<IRecipeCategory> recipeCategories = new ArrayList<>();
-	private final List<IRecipeHandler> recipeHandlers = new ArrayList<>();
+	private final List<IRecipeCategory> recipeCategories;
+	private final List<IRecipeHandler> recipeHandlers;
 	private final List<Object> recipes = new ArrayList<>();
-	private final RecipeTransferRegistry recipeTransferRegistry = new RecipeTransferRegistry();
-	private final Map<Class<? extends HandledScreen>, RecipeClickableArea> recipeClickableAreas = new HashMap<>();
+	private final RecipeTransferRegistry recipeTransferRegistry;
+	private final Map<Class<? extends HandledScreen>, RecipeClickableArea> recipeClickableAreas;
+
+	public ModRegistry() {
+        recipeCategories = new ArrayList<>();
+        recipeHandlers = new ArrayList<>();
+        recipeTransferRegistry = new RecipeTransferRegistry();
+		recipeClickableAreas = new HashMap<>();
+    }
+
+	public ModRegistry(ModRegistry oldRegistry) {
+		recipeCategories = oldRegistry.recipeCategories;
+		recipeHandlers = oldRegistry.recipeHandlers;
+        recipeTransferRegistry = oldRegistry.recipeTransferRegistry;
+		recipeClickableAreas = oldRegistry.recipeClickableAreas;
+    }
 
 	@Override
 	public void addRecipeCategories(IRecipeCategory... recipeCategories) {

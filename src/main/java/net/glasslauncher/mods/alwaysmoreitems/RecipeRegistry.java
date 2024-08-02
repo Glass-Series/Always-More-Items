@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.ListMultimap;
+import lombok.Getter;
+import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
@@ -30,6 +32,10 @@ public class RecipeRegistry implements IRecipeRegistry {
 	private final RecipeMap recipeInputMap;
 	private final RecipeMap recipeOutputMap;
 	private final Set<Class> unhandledRecipeClasses;
+	@Getter
+	private final ArrayList<IAMISyncableRecipe> syncableRecipes;
+	@Getter
+	private final ArrayList<Object> unsyncableRecipes;
 
 	public RecipeRegistry(@Nonnull List<IRecipeCategory> recipeCategories, @Nonnull List<IRecipeHandler> recipeHandlers, @Nonnull List<IRecipeTransferHandler> recipeTransferHandlers, @Nonnull List<Object> recipes, @Nonnull Map<Class<? extends HandledScreen>, RecipeClickableArea> recipeClickableAreas) {
 		this.recipeCategoriesMap = buildRecipeCategoriesMap(recipeCategories);
@@ -44,6 +50,8 @@ public class RecipeRegistry implements IRecipeRegistry {
 		this.unhandledRecipeClasses = new HashSet<>();
 
 		this.recipesForCategories = ArrayListMultimap.create();
+		this.syncableRecipes = new ArrayList<>();
+		this.unsyncableRecipes = new ArrayList<>();
 		addRecipes(recipes);
 	}
 
@@ -202,6 +210,13 @@ public class RecipeRegistry implements IRecipeRegistry {
 		if (outputs != null) {
 			List<ItemStack> outputStacks = AlwaysMoreItems.getStackHelper().toItemStackList(outputs);
 			recipeOutputMap.addRecipe(recipe, recipeCategory, outputStacks);
+		}
+
+		if (recipe instanceof IAMISyncableRecipe syncableRecipe) {
+			syncableRecipes.add(syncableRecipe);
+		}
+		else {
+			unsyncableRecipes.add(recipe);
 		}
 
 		recipesForCategories.put(recipeCategory, recipe);

@@ -1,5 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.api;
 
+import net.minecraft.nbt.NbtCompound;
+import net.modificationstation.stationapi.api.util.Identifier;
+
 /**
  * The main class for a plugin. Everything communicated between a mod and AMI is through this class.
  * IModPlugins must have the @AMIPlugin annotation to get loaded by AMI.
@@ -7,6 +10,8 @@ package net.glasslauncher.mods.alwaysmoreitems.api;
  */
 public interface IModPlugin {
     String getName();
+
+    Identifier getId();
 
     /**
      * Called when the IAMIHelpers is available.
@@ -30,4 +35,11 @@ public interface IModPlugin {
      * Called when the IRecipeRegistry is available, after all mods have registered.
      */
     void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry);
+
+    /**
+     * Called on each recipe given to the client from the server.
+     * Don't you _DARE_ blindly trust the contents of the nbtcompound, unless you like RCE exploits.
+     * @see IAMISyncableRecipe
+     */
+    IAMISyncableRecipe deserializeRecipe(NbtCompound recipe);
 }

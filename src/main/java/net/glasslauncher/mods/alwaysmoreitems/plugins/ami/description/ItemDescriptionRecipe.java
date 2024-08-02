@@ -1,5 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
@@ -66,6 +68,9 @@ public class ItemDescriptionRecipe extends BlankRecipeWrapper {
 
 	@Nonnull
 	private static List<String> wrapDescriptionLines(@Nonnull List<String> descriptionLines) {
+		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER)) {
+			return Collections.emptyList();
+		}
 		List<String> descriptionLinesWrapped = new ArrayList<>();
 		for (String descriptionLine : descriptionLines) {
 			List<String> textLines = AMITextRenderer.INSTANCE.listFormattedStringToWidth(descriptionLine, ItemDescriptionRecipeCategory.recipeWidth);

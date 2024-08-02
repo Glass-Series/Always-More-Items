@@ -21,7 +21,7 @@
   "entrypoints": {
     "stationapi:event_bus": [
       "net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems",
-      "net.glasslauncher.mods.alwaysmoreitems.init.CommonListener",
+      "net.glasslauncher.mods.alwaysmoreitems.init.CommonInit",
       "net.glasslauncher.mods.alwaysmoreitems.init.AfterBlockAndItemListener",
       "net.glasslauncher.mods.alwaysmoreitems.init.ActionButtonListener"
     ],
@@ -30,6 +30,7 @@
       "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener"
     ],
     "stationapi:event_bus_server": [
+      "net.glasslauncher.mods.alwaysmoreitems.PlayerJoinedListener",
       "net.glasslauncher.mods.alwaysmoreitems.init.ServerInit"
     ],
     "alwaysmoreitems:plugin": [

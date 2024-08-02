@@ -1,5 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableAnimated;
@@ -38,17 +40,30 @@ public class FuelRecipe extends VanillaRecipeWrapper {
 	public FuelRecipe(@Nonnull Collection<ItemStack> input, int burnTime) {
 		List<ItemStack> inputList = new ArrayList<>(input);
 		inputs = Collections.singletonList(inputList);
-		burnTimeStringTicks = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime", burnTime);
-		burnTimeStringItems = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.items", NUMBER_FORMAT.format(burnTime / 200f));
-		burnTimeStringSeconds = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.seconds", NUMBER_FORMAT.format(burnTime / 20f));
-		burnTimeStringItemsFull = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.items.full");
-		burnTimeStringSecondsFull = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.seconds.full");
-		burnTimeStringItemsWidth = AMITextRenderer.INSTANCE.getWidth(burnTimeStringItems);
-		burnTimeStringItemsTooltipChecker = new HoverChecker(26, 35, 24, 24 + burnTimeStringItemsWidth);
-		burnTimeStringSecondsTooltipChecker = new HoverChecker(26, 35, 24 + burnTimeStringItemsWidth + 8, 24 + burnTimeStringItemsWidth + AMITextRenderer.INSTANCE.getWidth(burnTimeStringSeconds) + 8);
+		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
+			burnTimeStringTicks = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime", burnTime);
+			burnTimeStringItems = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.items", NUMBER_FORMAT.format(burnTime / 200f));
+			burnTimeStringSeconds = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.seconds", NUMBER_FORMAT.format(burnTime / 20f));
+			burnTimeStringItemsFull = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.items.full");
+			burnTimeStringSecondsFull = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.seconds.full");
+			burnTimeStringItemsWidth = AMITextRenderer.INSTANCE.getWidth(burnTimeStringItems);
+			burnTimeStringItemsTooltipChecker = new HoverChecker(26, 35, 24, 24 + burnTimeStringItemsWidth);
+			burnTimeStringSecondsTooltipChecker = new HoverChecker(26, 35, 24 + burnTimeStringItemsWidth + 8, 24 + burnTimeStringItemsWidth + AMITextRenderer.INSTANCE.getWidth(burnTimeStringSeconds) + 8);
 
-		IDrawableStatic flameDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 176, 0, 14, 14);
-		flame = DrawableHelper.createAnimatedDrawable(flameDrawable, burnTime, IDrawableAnimated.StartDirection.TOP, true);
+			IDrawableStatic flameDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 176, 0, 14, 14);
+			flame = DrawableHelper.createAnimatedDrawable(flameDrawable, burnTime, IDrawableAnimated.StartDirection.TOP, true);
+		}
+		else {
+			burnTimeStringTicks = null;
+			burnTimeStringItems = null;
+			burnTimeStringSeconds = null;
+			burnTimeStringItemsFull = null;
+			burnTimeStringSecondsFull = null;
+			burnTimeStringItemsWidth = 0;
+			burnTimeStringItemsTooltipChecker = null;
+			burnTimeStringSecondsTooltipChecker = null;
+			flame = null;
+		}
 	}
 
 	@Nonnull

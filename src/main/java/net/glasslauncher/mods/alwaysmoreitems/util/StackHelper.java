@@ -1,5 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
@@ -182,6 +184,10 @@ public class StackHelper implements IStackHelper {
 		if (subItems.isEmpty()) {
 			subItems = new ArrayList<>();
 			List<String> keyCache = new ArrayList<>();
+			if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER)) {
+				subItems.add(new ItemStack(item, stackSize, 0));
+				return subItems;
+			}
 			for (int i = 0; i < 16; i++) {
 				try { // Shitcoders go brrr
 					ItemStack itemStack = new ItemStack(item, stackSize, i);
