@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
@@ -33,7 +34,9 @@ public class RecipeTransferUtil {
 				if (doTransfer) {
 					AlwaysMoreItems.LOGGER.error("No Recipe Transfer handler for container {}", container.getClass());
 				}
-				AlwaysMoreItems.LOGGER.warn("No Recipe Transfer handler for container {}", container.getClass());
+				else if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+					AlwaysMoreItems.LOGGER.warn("No Recipe Transfer handler for container {}", container.getClass());
+				}
 				return RecipeTransferErrorInternal.instance;
 			}
 
