@@ -12,6 +12,9 @@ public class AMISettingsButton extends ActionButtonWidget {
 
     @Override
     public void render(Minecraft minecraft, int mouseX, int mouseY) {
+        if(!visible) {
+            return;
+        }
         texture = "/assets/alwaysmoreitems/stationapi/textures/gui/settings%s.png".formatted(AMIConfig.INSTANCE.cheatMode ? "_cheat" : "");
         super.render(minecraft, mouseX, mouseY);
         RenderHelper.bindTexture(texture);

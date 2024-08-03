@@ -371,6 +371,9 @@ public class OverlayScreen extends Screen {
         // Toggle Overlay
         if (keyCode == KeybindListener.toggleOverlay.code && !searchField.isSelected()) {
             AlwaysMoreItems.overlayEnabled = !AlwaysMoreItems.overlayEnabled;
+            previousButton.visible = previousButton.active = AlwaysMoreItems.overlayEnabled;
+            nextButton.visible = nextButton.active = AlwaysMoreItems.overlayEnabled;
+            settingsButton.visible = settingsButton.active = AlwaysMoreItems.overlayEnabled;
         }
 
         if (recipesGui.recipeKeyPressed(keyCode)) {
