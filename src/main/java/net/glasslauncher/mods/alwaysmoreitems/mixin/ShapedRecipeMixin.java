@@ -4,14 +4,11 @@ import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.minecraft.ShapedRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-
-import java.util.*;
 
 @Mixin(ShapedRecipe.class)
 public class ShapedRecipeMixin implements IAMISyncableRecipe {

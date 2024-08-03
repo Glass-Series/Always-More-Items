@@ -1,22 +1,18 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.init;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.api.IModRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.TestMod;
-import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipeHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.util.Identifier;
-
-import java.util.*;
 
 public class DebugPlugin implements IModPlugin {
 

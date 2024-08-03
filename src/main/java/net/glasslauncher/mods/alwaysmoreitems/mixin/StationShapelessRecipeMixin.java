@@ -7,16 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
-import net.minecraft.recipe.ShapelessRecipe;
 import net.modificationstation.stationapi.api.tag.TagKey;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.impl.recipe.StationShapelessRecipe;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-
-import java.util.*;
 
 @Mixin(StationShapelessRecipe.class)
 public class StationShapelessRecipeMixin implements IAMISyncableRecipe {
@@ -38,7 +34,7 @@ public class StationShapelessRecipeMixin implements IAMISyncableRecipe {
             }
             else {
                 NbtCompound id = new NbtCompound();
-                id.putString("identifier", either.left().get().toString());
+                id.putString("identifier", either.left().get().id().toString());
                 inputs.add(id);
             }
         }

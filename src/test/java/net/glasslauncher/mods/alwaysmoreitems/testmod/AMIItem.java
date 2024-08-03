@@ -3,7 +3,6 @@ package net.glasslauncher.mods.alwaysmoreitems.testmod;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIRarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.IAMIRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;

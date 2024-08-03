@@ -3,7 +3,6 @@ package net.glasslauncher.mods.alwaysmoreitems.mixin;
 import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.ShapelessRecipe;

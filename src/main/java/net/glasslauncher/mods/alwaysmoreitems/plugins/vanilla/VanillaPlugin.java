@@ -17,6 +17,7 @@ import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapedOre
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapedRecipesHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapelessOreRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapelessRecipesHandler;
+import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.FuelRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.FuelRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.FuelRecipeMaker;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.FurnaceFuelCategory;
@@ -29,12 +30,8 @@ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtInt;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.recipe.CraftingRecipeManager;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.screen.CraftingScreenHandler;
@@ -131,7 +128,7 @@ public class VanillaPlugin implements IModPlugin {
 	public static ItemStack[] parseInputs(NbtList inputs) {
 		ItemStack[] outputs = new ItemStack[inputs.size()];
 		for (int i = 0; i < inputs.size(); i++) {
-			if (((NbtCompound) inputs.get(i)).getInt("count") == 0) {
+			if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {
 				continue;
 			}
 			outputs[i] = new ItemStack((NbtCompound) inputs.get(i));
@@ -144,14 +141,13 @@ public class VanillaPlugin implements IModPlugin {
         Either<TagKey<Item>, ItemStack>[] outputs = new Either[inputs.size()];
 		for (int i = 0; i < inputs.size(); i++) {
 			NbtCompound input = (NbtCompound) inputs.get(i);
-            if (input.getString("identifier").contains(":")) {
+            if (!input.getString("identifier").isEmpty()) {
 				outputs[i] = Either.left(TagKey.of(ItemRegistry.KEY, Identifier.of(input.getString("identifier"))));
 				continue;
 			}
-			if (((NbtCompound) inputs.get(i)).getInt("count") == 0) {
+			if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {
 				continue;
 			}
-            //noinspection DataFlowIssue
             outputs[i] = Either.right(new ItemStack(input));
 		}
 		return outputs;
