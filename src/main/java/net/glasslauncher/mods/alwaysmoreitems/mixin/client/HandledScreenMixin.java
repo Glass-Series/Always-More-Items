@@ -2,7 +2,10 @@ package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
+import net.glasslauncher.mods.alwaysmoreitems.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.api.IAMIRarity;
+import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
+import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -10,18 +13,26 @@ import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import uk.co.benjiweber.expressions.tuple.TriTuple;
 
 import java.util.*;
 
 @Mixin(HandledScreen.class)
-public class HandledScreenMixin extends Screen {
+public abstract class HandledScreenMixin extends Screen {
 
     @Shadow public int backgroundWidth;
 
     @Shadow public int backgroundHeight;
+
+    @Shadow protected abstract Slot getSlotAt(int x, int y);
+
+    @Unique private int mouseX = 0;
+    @Unique private int mouseY = 0;
 
     @SuppressWarnings("SameReturnValue") // Fuck off, this is a mixin that replaces vanilla behaviour.
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/slot/Slot;hasStack()Z"))
@@ -53,5 +64,30 @@ public class HandledScreenMixin extends Screen {
         AMITooltipSystem.drawTooltip(tooltip, result.one() + tooltipX, result.two() + tooltipY, result.three());
 
         return false;
+    }
+
+    @Inject(method = "render", at = @At("HEAD"))
+    private void mouseCatcher(int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        this.mouseX = mouseX;
+        this.mouseY = mouseY;
+    }
+
+    @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
+    private void nowSoAreYourInputs(char chr, int keyCode, CallbackInfo ci) {
+        Slot hoveredItem = getSlotAt(mouseX, mouseY);
+        // Item Actions
+        if (hoveredItem != null && hoveredItem.hasStack()) {
+            // Show Recipes
+            if (keyCode == KeybindListener.showRecipe.code) {
+                OverlayScreen.INSTANCE.recipesGui.showRecipes(new Focus(hoveredItem.getStack()));
+                ci.cancel();
+            }
+
+            // Show Uses
+            else if (keyCode == KeybindListener.showUses.code) {
+                OverlayScreen.INSTANCE.recipesGui.showUses(new Focus(hoveredItem.getStack()));
+                ci.cancel();
+            }
+        }
     }
 }
