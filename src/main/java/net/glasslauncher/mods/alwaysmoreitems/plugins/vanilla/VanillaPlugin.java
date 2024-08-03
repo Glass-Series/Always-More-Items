@@ -121,6 +121,8 @@ public class VanillaPlugin implements IModPlugin {
                     (IAMISyncableRecipe) new StationShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseStapiInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
             case 5 -> // Furnace
                     new SmeltingRecipe(Collections.singletonList(new ItemStack(recipe.getCompound("input"))), new ItemStack(recipe.getCompound("output")));
+			case 6 -> // Furnace fuel
+					new FuelRecipe(List.of(parseInputs(recipe.getList("input"))), recipe.getInt("burnTime"));
             default -> null;
         };
     }

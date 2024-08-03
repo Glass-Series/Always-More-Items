@@ -4,13 +4,18 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableAnimated;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableStatic;
+import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.*;
@@ -19,7 +24,7 @@ import java.text.*;
 import java.util.List;
 import java.util.*;
 
-public class FuelRecipe extends VanillaRecipeWrapper {
+public class FuelRecipe extends VanillaRecipeWrapper implements IAMISyncableRecipe {
 	public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("0.##");
 	@Nonnull
 	private final List<List<ItemStack>> inputs;
@@ -36,10 +41,12 @@ public class FuelRecipe extends VanillaRecipeWrapper {
 	private final HoverChecker burnTimeStringSecondsTooltipChecker;
 	@Nonnull
 	private final IDrawableAnimated flame;
+	private final int burnTime;
 
 	public FuelRecipe(@Nonnull Collection<ItemStack> input, int burnTime) {
 		List<ItemStack> inputList = new ArrayList<>(input);
 		inputs = Collections.singletonList(inputList);
+		this.burnTime = burnTime;
 		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
 			burnTimeStringTicks = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime", burnTime);
 			burnTimeStringItems = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.fuel.burnTime.items", NUMBER_FORMAT.format(burnTime / 200f));
@@ -96,5 +103,25 @@ public class FuelRecipe extends VanillaRecipeWrapper {
 		}
 
 		return null;
+	}
+
+	@Override
+	public NbtCompound exportRecipe() {
+		NbtCompound recipe = new NbtCompound();
+		NbtList items = new NbtList();
+		recipe.put("input", items);
+		for (ItemStack itemStack : inputs.get(0)) {
+			NbtCompound item = new NbtCompound();
+			itemStack.writeNbt(item);
+			items.add(item);
+		}
+		recipe.putInt("burnTime", burnTime);
+		recipe.putByte("type", (byte) 6);
+		return recipe;
+	}
+
+	@Override
+	public Identifier getPlugin() {
+		return VanillaPlugin.ID;
 	}
 }
