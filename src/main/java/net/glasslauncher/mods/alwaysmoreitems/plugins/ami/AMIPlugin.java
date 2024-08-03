@@ -59,7 +59,7 @@ public class AMIPlugin implements IModPlugin {
 
 	@Override
 	public IAMISyncableRecipe deserializeRecipe(NbtCompound recipe) {
-		return new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
+		return (IAMISyncableRecipe) new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
 	}
 
 	public static <T> ArrayList<T> nbtListToArrayList(NbtList nbtList) {
