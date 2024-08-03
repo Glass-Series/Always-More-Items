@@ -79,7 +79,7 @@ public class ItemDescriptionRecipe extends BlankRecipeWrapper {
 		return descriptionLinesWrapped;
 	}
 
-	private ItemDescriptionRecipe(@Nonnull List<ItemStack> itemStacks, @Nonnull List<String> description) {
+	public ItemDescriptionRecipe(@Nonnull List<ItemStack> itemStacks, @Nonnull List<String> description) {
 		this.description = description;
 		this.outputs = Collections.singletonList(itemStacks);
 		slotDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 55, 16, 18, 18);
@@ -114,4 +114,26 @@ public class ItemDescriptionRecipe extends BlankRecipeWrapper {
 	public List<String> getDescription() {
 		return description;
 	}
+
+	// TODO: Post 1.0, implement our own serverside translationstorage so we can send these. Might want to make the client send it's current translation.
+//	@Override
+//	public NbtCompound exportRecipe() {
+//		NbtCompound recipe = new NbtCompound();
+//		NbtList items = new NbtList();
+//		recipe.put("output", items);
+//		for (ItemStack itemStack : outputs.get(0)) {
+//			NbtCompound item = new NbtCompound();
+//			itemStack.writeNbt(item);
+//			items.add(item);
+//		}
+//		NbtList description = new NbtList();
+//		this.description.forEach(string -> description.add(new NbtString(string)));
+//		recipe.put("description", description);
+//		return recipe;
+//	}
+//
+//	@Override
+//	public Identifier getPlugin() {
+//		return AMIPlugin.ID;
+//	}
 }
