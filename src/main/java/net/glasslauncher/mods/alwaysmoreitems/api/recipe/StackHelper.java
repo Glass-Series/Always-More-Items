@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Helps get ItemStacks from common formats used in recipes.
  */
-public interface IStackHelper {
+public interface StackHelper {
     /**
      * Returns all the subtypes of itemStack if it has a wildcard meta value.
      */

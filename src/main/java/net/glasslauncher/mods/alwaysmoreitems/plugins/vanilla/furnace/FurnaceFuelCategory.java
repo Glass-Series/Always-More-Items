@@ -1,10 +1,10 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -13,7 +13,7 @@ import javax.annotation.*;
 
 public class FurnaceFuelCategory extends FurnaceRecipeCategory {
 	@Nonnull
-	private final IDrawable background;
+	private final AMIDrawable background;
 	@Nonnull
 	private final String localizedName;
 
@@ -25,7 +25,7 @@ public class FurnaceFuelCategory extends FurnaceRecipeCategory {
 
 	@Override
 	@Nonnull
-	public IDrawable getBackground() {
+	public AMIDrawable getBackground() {
 		return background;
 	}
 
@@ -52,8 +52,8 @@ public class FurnaceFuelCategory extends FurnaceRecipeCategory {
 	}
 
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+	public void setRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull RecipeWrapper recipeWrapper) {
+		GuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		guiItemStacks.init(fuelSlot, true, 0, 14);
 		guiItemStacks.setFromRecipe(fuelSlot, recipeWrapper.getInputs());

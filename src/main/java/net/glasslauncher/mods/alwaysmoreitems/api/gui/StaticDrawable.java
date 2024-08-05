@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 
 import javax.annotation.*;
 
-public interface IDrawableStatic extends IDrawable {
+public interface StaticDrawable extends AMIDrawable {
     /**
      * Draw only part of the image, by masking off parts of it
      */

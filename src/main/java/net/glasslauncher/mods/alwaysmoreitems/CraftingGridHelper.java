@@ -1,13 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ICraftingGridHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class CraftingGridHelper implements ICraftingGridHelper {
+public class CraftingGridHelper implements net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper {
 
 	private final int craftInputSlot1;
 	private final int craftOutputSlot;
@@ -18,7 +17,7 @@ public class CraftingGridHelper implements ICraftingGridHelper {
 	}
 
 	@Override
-	public void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List input) {
+	public void setInput(@Nonnull GuiItemStackGroup guiItemStacks, @Nonnull List input) {
 		int width, height;
 		if (input.size() > 4) {
 			width = height = 3;
@@ -32,7 +31,7 @@ public class CraftingGridHelper implements ICraftingGridHelper {
 	}
 
 	@Override
-	public void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List input, int width, int height) {
+	public void setInput(@Nonnull GuiItemStackGroup guiItemStacks, @Nonnull List input, int width, int height) {
 		for (int i = 0; i < input.size(); i++) {
 			Object recipeItem = input.get(i);
 			int index = getCraftingIndex(i, width, height);
@@ -71,11 +70,11 @@ public class CraftingGridHelper implements ICraftingGridHelper {
 	}
 
 	@Override
-	public void setOutput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List<ItemStack> output) {
+	public void setOutput(@Nonnull GuiItemStackGroup guiItemStacks, @Nonnull List<ItemStack> output) {
 		guiItemStacks.set(craftOutputSlot, output);
 	}
 
-	private void setInput(@Nonnull IGuiItemStackGroup guiItemStacks, int inputIndex, @Nonnull Collection<ItemStack> input) {
+	private void setInput(@Nonnull GuiItemStackGroup guiItemStacks, int inputIndex, @Nonnull Collection<ItemStack> input) {
 		guiItemStacks.set(craftInputSlot1 + inputIndex, input);
 	}
 

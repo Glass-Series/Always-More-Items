@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenHandler;
 
@@ -12,7 +12,7 @@ import javax.annotation.*;
  * Implementing this interface gives full control over the recipe transfer process.
  * Mods that use a regular slotted inventory can use IRecipeTransferInfo instead, which is much simpler.
  */
-public interface IRecipeTransferHandler {
+public interface RecipeTransferHandler {
     /**
      * The container that this recipe transfer handler can use.
      */
@@ -33,5 +33,5 @@ public interface IRecipeTransferHandler {
      * @since AMI 2.20.0
      */
     @Nullable
-    IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull IRecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer);
+    RecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer);
 }

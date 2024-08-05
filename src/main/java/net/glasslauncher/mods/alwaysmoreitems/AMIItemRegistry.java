@@ -2,17 +2,16 @@ package net.glasslauncher.mods.alwaysmoreitems;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.recipe.FuelRegistry;
-import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class AMIItemRegistry implements IItemRegistry {
+public class AMIItemRegistry implements ItemRegistry {
 
     @Nonnull
     private final Set<String> itemNameSet = new HashSet<>();
@@ -27,7 +26,7 @@ public class AMIItemRegistry implements IItemRegistry {
         List<ItemStack> itemListMutable = new ArrayList<>();
         List<ItemStack> fuelsMutable = new ArrayList<>();
 
-        Item[] items = ItemRegistry.INSTANCE.stream().toArray(Item[]::new);
+        Item[] items = net.modificationstation.stationapi.api.registry.ItemRegistry.INSTANCE.stream().toArray(Item[]::new);
         for (Item item : items) {
             addItemAndSubItems(item, itemListMutable, fuelsMutable);
         }
@@ -39,7 +38,7 @@ public class AMIItemRegistry implements IItemRegistry {
         for (ItemStack itemStack : itemListMutable) {
             Item item = itemStack.getItem();
             if (item != null) {
-                Identifier itemResourceLocation = ItemRegistry.INSTANCE.getId(itemStack.getItem());
+                Identifier itemResourceLocation = net.modificationstation.stationapi.api.registry.ItemRegistry.INSTANCE.getId(itemStack.getItem());
                 if (itemResourceLocation == null) {
                     AlwaysMoreItems.LOGGER.warn("Item has no associated mod id", new NullPointerException());
                     continue;
@@ -66,7 +65,7 @@ public class AMIItemRegistry implements IItemRegistry {
     @Nonnull
     @Override
     public String getModNameForItem(@Nullable Item item) {
-        Identifier identifier = ItemRegistry.INSTANCE.getId(item);
+        Identifier identifier = net.modificationstation.stationapi.api.registry.ItemRegistry.INSTANCE.getId(item);
         if (identifier == null) {
             AlwaysMoreItems.LOGGER.error("Null item", new NullPointerException());
             return "";

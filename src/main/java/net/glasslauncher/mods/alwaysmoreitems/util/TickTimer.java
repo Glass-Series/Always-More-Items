@@ -1,9 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ITickTimer;
 import net.minecraft.client.Minecraft;
 
-public class TickTimer implements ITickTimer {
+public class TickTimer implements net.glasslauncher.mods.alwaysmoreitems.api.gui.TickTimer {
 	private final int ticksPerCycle;
 	private final int maxValue;
 	private final boolean countDown;

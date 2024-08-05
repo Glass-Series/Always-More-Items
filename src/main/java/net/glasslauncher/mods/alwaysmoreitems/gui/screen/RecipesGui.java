@@ -5,8 +5,8 @@ import lombok.Setter;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.RecipeTransferButton;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
@@ -278,12 +278,12 @@ public class RecipesGui extends Screen {
     }
 
     private void updateLayout() {
-        IRecipeCategory recipeCategory = logic.getRecipeCategory();
+        RecipeCategory recipeCategory = logic.getRecipeCategory();
         if (recipeCategory == null) {
             return;
         }
 
-        IDrawable recipeBackground = recipeCategory.getBackground();
+        AMIDrawable recipeBackground = recipeCategory.getBackground();
 
         final int recipesPerPage = Math.max(1, (ySize - headerHeight) / (recipeBackground.getHeight() + borderPadding));
         final int recipeXOffset = (xSize - recipeBackground.getWidth()) / 2;

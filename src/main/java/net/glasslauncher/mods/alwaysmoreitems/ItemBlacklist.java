@@ -1,12 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemBlacklist;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class ItemBlacklist implements IItemBlacklist {
+public class ItemBlacklist implements net.glasslauncher.mods.alwaysmoreitems.api.ItemBlacklist {
 	@Nonnull
 	private final Set<String> itemBlacklist = new HashSet<>();
 

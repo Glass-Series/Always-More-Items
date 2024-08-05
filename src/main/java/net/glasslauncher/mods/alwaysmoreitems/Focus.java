@@ -1,8 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
 import lombok.Getter;
-import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
@@ -93,8 +93,8 @@ public class Focus {
 	}
 
 	@Nonnull
-	public List<IRecipeCategory> getCategories() {
-		IRecipeRegistry recipeRegistry = AlwaysMoreItems.getRecipeRegistry();
+	public List<RecipeCategory> getCategories() {
+		RecipeRegistry recipeRegistry = AlwaysMoreItems.getRecipeRegistry();
 		if (mode == Mode.INPUT) {
 			return getInputCategories(recipeRegistry);
 		} else if (mode == Mode.OUTPUT) {
@@ -104,7 +104,7 @@ public class Focus {
 		}
 	}
 
-	private List<IRecipeCategory> getInputCategories(IRecipeRegistry recipeRegistry) {
+	private List<RecipeCategory> getInputCategories(RecipeRegistry recipeRegistry) {
 //		if (stack != null && fluid != null) {
 //			List<IRecipeCategory> categories = new ArrayList<>(recipeRegistry.getRecipeCategoriesWithInput(stack));
 //			categories.addAll(recipeRegistry.getRecipeCategoriesWithInput(fluid));
@@ -119,7 +119,7 @@ public class Focus {
 		return null;
 	}
 
-	private List<IRecipeCategory> getOutputCategories(IRecipeRegistry recipeRegistry) {
+	private List<RecipeCategory> getOutputCategories(RecipeRegistry recipeRegistry) {
 //		if (stack != null && fluid != null) {
 //			List<IRecipeCategory> categories = new ArrayList<>(recipeRegistry.getRecipeCategoriesWithOutput(stack));
 //			categories.addAll(recipeRegistry.getRecipeCategoriesWithOutput(fluid));
@@ -135,8 +135,8 @@ public class Focus {
 	}
 
 	@Nonnull
-	public List<Object> getRecipes(IRecipeCategory recipeCategory) {
-		IRecipeRegistry recipeRegistry = AlwaysMoreItems.getRecipeRegistry();
+	public List<Object> getRecipes(RecipeCategory recipeCategory) {
+		RecipeRegistry recipeRegistry = AlwaysMoreItems.getRecipeRegistry();
 		if (mode == Mode.INPUT) {
 			return getInputRecipes(recipeRegistry, recipeCategory);
 		} else if (mode == Mode.OUTPUT) {
@@ -146,7 +146,7 @@ public class Focus {
 		}
 	}
 
-	private List<Object> getInputRecipes(IRecipeRegistry recipeRegistry, IRecipeCategory recipeCategory) {
+	private List<Object> getInputRecipes(RecipeRegistry recipeRegistry, RecipeCategory recipeCategory) {
 //		if (stack != null && fluid != null) {
 //			List<Object> recipes = new ArrayList<>(recipeRegistry.getRecipesWithInput(recipeCategory, stack));
 //			recipes.addAll(recipeRegistry.getRecipesWithInput(recipeCategory, fluid));
@@ -161,7 +161,7 @@ public class Focus {
 		return null;
 	}
 
-	private List<Object> getOutputRecipes(IRecipeRegistry recipeRegistry, IRecipeCategory recipeCategory) {
+	private List<Object> getOutputRecipes(RecipeRegistry recipeRegistry, RecipeCategory recipeCategory) {
 //		if (stack != null && fluid != null) {
 //			List<Object> recipes = new ArrayList<>(recipeRegistry.getRecipesWithOutput(recipeCategory, stack));
 //			recipes.addAll(recipeRegistry.getRecipesWithOutput(recipeCategory, fluid));

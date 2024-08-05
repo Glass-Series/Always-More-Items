@@ -1,12 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferHandlerHelper;
 import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
 
 import javax.annotation.*;
 
-public class AMIHelpers implements IAMIHelpers {
+public class AMIHelpers implements net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers {
 	private final StackHelper stackHelper;
 	private final ItemBlacklist itemBlacklist;
 	private final NbtIgnoreList nbtIgnoreList;

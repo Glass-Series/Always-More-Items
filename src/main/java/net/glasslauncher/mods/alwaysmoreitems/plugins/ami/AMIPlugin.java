@@ -1,24 +1,23 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.ami;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.*;
 
-public class AMIPlugin implements IModPlugin {
+public class AMIPlugin implements ModPluginProvider {
 	public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("always_more_items");
 
     @Override
@@ -32,16 +31,16 @@ public class AMIPlugin implements IModPlugin {
 	}
 
 	@Override
-	public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
+	public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
     }
 
 	@Override
-	public void onItemRegistryAvailable(IItemRegistry itemRegistry) {
+	public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
 
 	}
 
 	@Override
-	public void register(IModRegistry registry) {
+	public void register(ModRegistry registry) {
 
 		registry.addRecipeCategories(
 				new ItemDescriptionRecipeCategory()
@@ -53,13 +52,13 @@ public class AMIPlugin implements IModPlugin {
 	}
 
 	@Override
-	public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry) {
+	public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
 
 	}
 
 	@Override
-	public IAMISyncableRecipe deserializeRecipe(NbtCompound recipe) {
-		return (IAMISyncableRecipe) new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
+	public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
+		return (SyncableRecipe) new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
 	}
 
 	public static <T> ArrayList<T> nbtListToArrayList(NbtList nbtList) {

@@ -6,6 +6,9 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.CharacterUtils;
+import net.minecraft.world.PersistentState;
+import net.minecraft.world.PersistentStateManager;
+import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.util.Formatting;
 import org.lwjgl.opengl.GL11;
 
@@ -203,6 +206,7 @@ public class AMITextRenderer extends TextRenderer {
 
     protected void doDecorations(int posX, int posY, float charWidth, boolean strikethroughStyle, boolean underlineStyle) {
         Tessellator tessellator1 = null;
+        new PersistentState();
         if (strikethroughStyle) {
             tessellator1 = Tessellator.INSTANCE;
             GL11.glDisable(GL11.GL_TEXTURE_2D);

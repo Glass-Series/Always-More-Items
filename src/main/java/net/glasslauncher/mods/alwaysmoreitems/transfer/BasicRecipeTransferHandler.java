@@ -1,12 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferInfo;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandlerHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferInfo;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.RecipeTransferPacket;
 import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
@@ -20,11 +20,11 @@ import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import javax.annotation.*;
 import java.util.*;
 
-public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
+public class BasicRecipeTransferHandler implements RecipeTransferHandler {
 	@Nonnull
-	private final IRecipeTransferInfo transferHelper;
+	private final RecipeTransferInfo transferHelper;
 
-	public BasicRecipeTransferHandler(@Nonnull IRecipeTransferInfo transferHelper) {
+	public BasicRecipeTransferHandler(@Nonnull RecipeTransferInfo transferHelper) {
 		this.transferHelper = transferHelper;
 	}
 
@@ -40,8 +40,8 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 
 	@Nullable
 	@Override
-	public IRecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull IRecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
-		IRecipeTransferHandlerHelper handlerHelper = AlwaysMoreItems.getHelpers().recipeTransferHandlerHelper();
+	public RecipeTransferError transferRecipe(@Nonnull ScreenHandler container, @Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
+		RecipeTransferHandlerHelper handlerHelper = AlwaysMoreItems.getHelpers().recipeTransferHandlerHelper();
 		StackHelper stackHelper = AlwaysMoreItems.getStackHelper();
 
 		if (!AlwaysMoreItems.isAMIOnServer()) {
@@ -59,7 +59,7 @@ public class BasicRecipeTransferHandler implements IRecipeTransferHandler {
 		}
 
 		int inputCount = 0;
-		IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
+		GuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
 		for (IGuiIngredient<ItemStack> ingredient : itemStackGroup.getGuiIngredients().values()) {
 			if (ingredient.isInput() && !ingredient.getAll().isEmpty()) {
 				inputCount++;

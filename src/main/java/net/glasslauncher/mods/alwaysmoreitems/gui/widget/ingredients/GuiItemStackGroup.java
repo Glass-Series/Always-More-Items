@@ -1,13 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class GuiItemStackGroup extends GuiIngredientGroup<ItemStack, GuiIngredient<ItemStack>> implements IGuiItemStackGroup {
+public class GuiItemStackGroup extends GuiIngredientGroup<ItemStack, GuiIngredient<ItemStack>> implements net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup {
     private static final int baseWidth = 16;
     private static final int baseHeight = 16;
     private static final ItemStackRenderer renderer = new ItemStackRenderer();

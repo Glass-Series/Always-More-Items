@@ -3,8 +3,8 @@ package net.glasslauncher.mods.alwaysmoreitems.network.s2c;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
 import net.glasslauncher.mods.alwaysmoreitems.init.CommonInit;
 import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;
@@ -29,22 +29,22 @@ public class RecipeSyncPacket extends Packet implements IdentifiablePacket {
     private static NbtList CACHED_DATA;
 
     private int outSize;
-    private ArrayList<IAMISyncableRecipe> readData;
+    private ArrayList<SyncableRecipe> readData;
 
     @Override
     public void read(DataInputStream stream) {
         NbtList nbtList = new NbtList();
         nbtList.read(stream);
-        ArrayList<IAMISyncableRecipe> recipes = new ArrayList<>();
+        ArrayList<SyncableRecipe> recipes = new ArrayList<>();
         for (int i = 0; i < nbtList.size(); i++) {
             NbtCompound nbtCompound = (NbtCompound) nbtList.get(i);
             String pluginKey = nbtCompound.getString(PLUGIN_KEY);
-            IModPlugin plugin = CommonInit.getPlugins().get(Identifier.of(pluginKey));
+            ModPluginProvider plugin = CommonInit.getPlugins().get(Identifier.of(pluginKey));
             if (plugin == null) {
                 AlwaysMoreItems.LOGGER.warn("Plugin {} not found, recipes from this plugin won't function. Are you missing a mod?", pluginKey);
                 continue;
             }
-            IAMISyncableRecipe syncableRecipe = plugin.deserializeRecipe(nbtCompound);
+            SyncableRecipe syncableRecipe = plugin.deserializeRecipe(nbtCompound);
             if (syncableRecipe != null) {
                 recipes.add(syncableRecipe);
             }

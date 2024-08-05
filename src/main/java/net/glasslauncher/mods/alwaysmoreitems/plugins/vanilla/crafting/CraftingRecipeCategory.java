@@ -1,38 +1,37 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.CraftingGridHelper;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ICraftingGridHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.ICraftingRecipeWrapper;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.CraftingRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.ShapedCraftingRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 
 import javax.annotation.*;
 
-public class CraftingRecipeCategory implements IRecipeCategory {
+public class CraftingRecipeCategory implements RecipeCategory {
 
 	private static final int craftOutputSlot = 0;
 	private static final int craftInputSlot1 = 1;
 
 	@Nonnull
-	private final IDrawable background;
+	private final AMIDrawable background;
 	@Nonnull
 	private final String localizedName;
 	@Nonnull
-	private final ICraftingGridHelper craftingGridHelper;
+	private final CraftingGridHelper craftingGridHelper;
 
 	public CraftingRecipeCategory() {
 		background = DrawableHelper.createDrawable("/gui/crafting.png", 29, 16, 116, 54);
 		localizedName = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.craftingTable");
-		craftingGridHelper = new CraftingGridHelper(craftInputSlot1, craftOutputSlot);
+		craftingGridHelper = new net.glasslauncher.mods.alwaysmoreitems.CraftingGridHelper(craftInputSlot1, craftOutputSlot);
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class CraftingRecipeCategory implements IRecipeCategory {
 
 	@Override
 	@Nonnull
-	public IDrawable getBackground() {
+	public AMIDrawable getBackground() {
 		return background;
 	}
 
@@ -64,8 +63,8 @@ public class CraftingRecipeCategory implements IRecipeCategory {
 	}
 
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+	public void setRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull RecipeWrapper recipeWrapper) {
+		GuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		guiItemStacks.init(craftOutputSlot, false, 94, 18);
 
@@ -76,12 +75,12 @@ public class CraftingRecipeCategory implements IRecipeCategory {
 			}
 		}
 
-		if (recipeWrapper instanceof IShapedCraftingRecipeWrapper) {
-			IShapedCraftingRecipeWrapper wrapper = (IShapedCraftingRecipeWrapper) recipeWrapper;
+		if (recipeWrapper instanceof ShapedCraftingRecipeWrapper) {
+			ShapedCraftingRecipeWrapper wrapper = (ShapedCraftingRecipeWrapper) recipeWrapper;
 			craftingGridHelper.setInput(guiItemStacks, wrapper.getInputs(), wrapper.getWidth(), wrapper.getHeight());
 			craftingGridHelper.setOutput(guiItemStacks, wrapper.getOutputs());
-		} else if (recipeWrapper instanceof ICraftingRecipeWrapper) {
-			ICraftingRecipeWrapper wrapper = (ICraftingRecipeWrapper) recipeWrapper;
+		} else if (recipeWrapper instanceof CraftingRecipeWrapper) {
+			CraftingRecipeWrapper wrapper = (CraftingRecipeWrapper) recipeWrapper;
 			craftingGridHelper.setInput(guiItemStacks, wrapper.getInputs());
 			craftingGridHelper.setOutput(guiItemStacks, wrapper.getOutputs());
 		} else {

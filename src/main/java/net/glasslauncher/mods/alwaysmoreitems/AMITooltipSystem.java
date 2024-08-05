@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.AMIRarity;
+import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.minecraft.client.Minecraft;
 import uk.co.benjiweber.expressions.tuple.TriTuple;
 
@@ -20,10 +20,10 @@ public class AMITooltipSystem {
                 int tooltipX = mouseX + 9;
                 int tooltipY = mouseY - 15;
                 String firstTip = tooltip.get(0);
-                boolean hasHeader = firstTip.startsWith(String.valueOf(AMIRarity.HeaderCode.PREFIX_CHARACTER));
+                boolean hasHeader = firstTip.startsWith(String.valueOf(Rarity.HeaderCode.PREFIX_CHARACTER));
                 int borderOffset;
                 if (hasHeader) {
-                    AMIRarity rarity = AMIRarity.AMI_RARITIES_BY_CODE.get(firstTip.charAt(1));
+                    Rarity rarity = Rarity.AMI_RARITIES_BY_CODE.get(firstTip.charAt(1));
                     firstTip = firstTip.substring(2);
                     tooltip.set(0, "");
 
@@ -40,7 +40,7 @@ public class AMITooltipSystem {
         }
     }
 
-    private static int drawHeader(String name, int x1, int y1, int x2, AMIRarity rarity, boolean flipped) {
+    private static int drawHeader(String name, int x1, int y1, int x2, Rarity rarity, boolean flipped) {
         boolean[][] icon = rarity.headerCode.icon;
         if (icon.length == 0) {
             AMIDrawContext.INSTANCE.fill(x1, y1, x2, y1 + 12, rarity.backgroundColor.getRGB());
@@ -102,11 +102,11 @@ public class AMITooltipSystem {
             else if (mouseY < -tooltipYOffset) {
                 tooltipYOffset = 0;
             }
-            int maxTipLength = AMITextRenderer.INSTANCE.getWidth(currentTooltip.stream().reduce((s, s2) -> s.replaceFirst(AMIRarity.HeaderCode.PREFIX_CHARACTER + ".", "").length() > s2.replaceFirst(AMIRarity.HeaderCode.PREFIX_CHARACTER + ".", "").length() ? s : s2).get());
+            int maxTipLength = AMITextRenderer.INSTANCE.getWidth(currentTooltip.stream().reduce((s, s2) -> s.replaceFirst(Rarity.HeaderCode.PREFIX_CHARACTER + ".", "").length() > s2.replaceFirst(Rarity.HeaderCode.PREFIX_CHARACTER + ".", "").length() ? s : s2).get());
             maxTipLength += 3;
             int iconWidth = 0;
-            if (currentTooltip.get(0).startsWith(String.valueOf(AMIRarity.HeaderCode.PREFIX_CHARACTER))) {
-                AMIRarity amiRarity = AMIRarity.AMI_RARITIES_BY_CODE.get(currentTooltip.get(0).charAt(1));
+            if (currentTooltip.get(0).startsWith(String.valueOf(Rarity.HeaderCode.PREFIX_CHARACTER))) {
+                Rarity amiRarity = Rarity.AMI_RARITIES_BY_CODE.get(currentTooltip.get(0).charAt(1));
                 iconWidth = amiRarity.headerCode.icon[0].length * 2;
             }
             if (mouseX + tooltipXOffset + maxTipLength + iconWidth > width) {

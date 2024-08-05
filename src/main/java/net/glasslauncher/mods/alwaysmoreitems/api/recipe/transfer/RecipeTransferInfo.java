@@ -12,7 +12,7 @@ import java.util.*;
  * Containers with slot ranges that contain gaps or other oddities can implement this interface directly.
  * Containers that need full control over the recipe transfer or do not use slots can implement IRecipeTransferHandler.
  */
-public interface IRecipeTransferInfo {
+public interface RecipeTransferInfo {
     /**
      * Return the container class that this recipe transfer helper supports
      */

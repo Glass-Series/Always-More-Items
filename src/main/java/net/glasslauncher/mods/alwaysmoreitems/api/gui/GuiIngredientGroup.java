@@ -10,9 +10,9 @@ import java.util.*;
  * <p>
  * If multiple ingredients are set for one index, they will be displayed in rotation.
  *
- * @see IGuiItemStackGroup and IGuiFluidStackGroup
+ * @see GuiItemStackGroup and IGuiFluidStackGroup
  */
-public interface IGuiIngredientGroup<T> {
+public interface GuiIngredientGroup<T> {
     /**
      * Set the ingredient at slotIndex to a rotating collection of ingredients.
      */
@@ -26,7 +26,7 @@ public interface IGuiIngredientGroup<T> {
     /**
      * Add a callback to alter the tooltip for these ingredients.
      */
-    void addTooltipCallback(@Nonnull ITooltipCallback<T> tooltipCallback);
+    void addTooltipCallback(@Nonnull TooltipCallback<T> tooltipCallback);
 
     /**
      * Get the ingredients after they have been set.

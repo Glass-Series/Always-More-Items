@@ -9,7 +9,7 @@ import javax.annotation.*;
 /**
  * The IItemRegistry is provided by AMI and has some useful functions related to items.
  */
-public interface IItemRegistry {
+public interface ItemRegistry {
 
     /**
      * Returns a list of all the Items registered.

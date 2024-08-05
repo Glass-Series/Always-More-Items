@@ -1,8 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.api;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 
@@ -12,17 +12,17 @@ import java.util.*;
 /**
  * Passed to IModPlugins so they can register themselves.
  */
-public interface IModRegistry {
+public interface ModRegistry {
 
     /**
      * Add the recipe categories provided by this plugin.
      */
-    void addRecipeCategories(IRecipeCategory... recipeCategories);
+    void addRecipeCategories(RecipeCategory... recipeCategories);
 
     /**
      * Add the recipe handlers provided by this plugin.
      */
-    void addRecipeHandlers(IRecipeHandler... recipeHandlers);
+    void addRecipeHandlers(RecipeHandler... recipeHandlers);
 
     /**
      * Add the recipes provided by the plugin.
@@ -60,5 +60,5 @@ public interface IModRegistry {
     /**
      * Get the registry for setting up recipe transfer.
      */
-    IRecipeTransferRegistry getRecipeTransferRegistry();
+    RecipeTransferRegistry getRecipeTransferRegistry();
 }

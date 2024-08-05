@@ -2,7 +2,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
 import java.util.*;
 
-public interface ITooltipCallback<T> {
+public interface TooltipCallback<T> {
     /**
      * Change the tooltip for an ingredient.
      */

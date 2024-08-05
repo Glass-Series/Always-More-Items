@@ -9,19 +9,19 @@ import java.util.*;
  * A wrapper around a normal recipe with methods that allow AMI can make sense of it.
  * Implementers will have to create a wrapper for each type of recipe they have.
  */
-public interface IRecipeWrapper {
+public interface RecipeWrapper {
 
     /**
      * Return a list of recipe inputs.
      * Each element can be an ItemStack, null, or a List of ItemStacks.
      */
-    List getInputs();
+    List<?> getInputs();
 
     /**
      * Return a list of recipe inputs.
      * Each element can be an ItemStack, null, or a List of ItemStacks.
      */
-    List getOutputs();
+    List<?> getOutputs();
 
 // TODO: Implement once StationAPI gets a fluid API.
 //	/** Return a list of recipe fluid inputs. */

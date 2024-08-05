@@ -8,19 +8,19 @@ import javax.annotation.*;
 /**
  * A reason that the recipe transfer couldn't happen. See IRecipeTransferError.Type
  */
-public interface IRecipeTransferError {
+public interface RecipeTransferError {
     enum Type {
         /**
          * Errors where the Transfer handler is broken, or does not work, or the server is not present.
          * These errors will hide the recipe transfer button, but do not display anything to the user.
          */
-        INTERNAL,
+        DEV,
 
         /**
          * Errors that the player can fix. Missing items, inventory full, etc.
          * Something informative will be shown to the player.
          */
-        USER_FACING
+        PLAYER
     }
 
     Type getType();

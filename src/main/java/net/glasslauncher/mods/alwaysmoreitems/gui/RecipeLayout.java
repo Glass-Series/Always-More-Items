@@ -5,10 +5,9 @@ import net.glasslauncher.mods.alwaysmoreitems.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.RenderHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.RecipeTransferButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.GuiIngredient;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.GuiItemStackGroup;
@@ -18,12 +17,12 @@ import org.lwjgl.opengl.GL11;
 import javax.annotation.*;
 import java.util.*;
 
-public class RecipeLayout implements IRecipeLayout {
+public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout {
 	private static final int RECIPE_BUTTON_SIZE = 12;
 	public static final int recipeTransferButtonIndex = 100;
 
 	@Nonnull
-	private final IRecipeCategory recipeCategory;
+	private final RecipeCategory recipeCategory;
 	@Nonnull
 	private final GuiItemStackGroup guiItemStackGroup;
 //	@Nonnull
@@ -31,14 +30,14 @@ public class RecipeLayout implements IRecipeLayout {
 	@Nonnull
 	private final RecipeTransferButton recipeTransferButton;
 	@Nonnull
-	private final IRecipeWrapper recipeWrapper;
+	private final RecipeWrapper recipeWrapper;
 
 	@Getter
     private final int posX;
 	@Getter
     private final int posY;
 
-	public RecipeLayout(int index, int posX, int posY, @Nonnull IRecipeCategory recipeCategory, @Nonnull IRecipeWrapper recipeWrapper, @Nonnull Focus focus) {
+	public RecipeLayout(int index, int posX, int posY, @Nonnull RecipeCategory recipeCategory, @Nonnull RecipeWrapper recipeWrapper, @Nonnull Focus focus) {
 		this.recipeCategory = recipeCategory;
 		this.guiItemStackGroup = new GuiItemStackGroup();
 //		this.guiFluidStackGroup = new GuiFluidStackGroup();
@@ -61,7 +60,7 @@ public class RecipeLayout implements IRecipeLayout {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 
-		IDrawable background = recipeCategory.getBackground();
+		AMIDrawable background = recipeCategory.getBackground();
 		background.draw(minecraft);
 		recipeCategory.drawExtras(minecraft);
 
@@ -152,12 +151,12 @@ public class RecipeLayout implements IRecipeLayout {
 	}
 
 	@Nonnull
-	public IRecipeWrapper getRecipeWrapper() {
+	public RecipeWrapper getRecipeWrapper() {
 		return recipeWrapper;
 	}
 
 	@Nonnull
-	public IRecipeCategory getRecipeCategory() {
+	public RecipeCategory getRecipeCategory() {
 		return recipeCategory;
 	}
 }

@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
-public interface IDrawableAnimated extends IDrawable {
+public interface AnimatedDrawable extends AMIDrawable {
     enum StartDirection {
         TOP, BOTTOM, LEFT, RIGHT
     }

@@ -5,13 +5,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
 import javax.annotation.*;
-import java.util.*;
 
-public interface INbtIgnoreList {
+public interface NbtIgnoreList {
     /**
      * Tell AMI to ignore NBT tags on a specific item when comparing items for recipes.
-     *
-     * @since AMI 2.22.0, NBT is automatically ignored on items that don't have subtypes.
+     * NBT is automatically ignored on items that don't have subtypes.
      */
     void ignoreNbtTagNames(@Nonnull Item item, String... nbtTagNames);
 
@@ -26,21 +24,4 @@ public interface INbtIgnoreList {
      */
     @Nullable
     NbtCompound getNbt(@Nonnull ItemStack itemStack);
-
-    /**
-     * Tell AMI to ignore NBT tags when comparing items for recipes.
-     *
-     * @deprecated use the item-specific version, to avoid nbt conflicts with other mods
-     */
-    @Deprecated
-    void ignoreNbtTagNames(String... nbtTagNames);
-
-    /**
-     * Get all the ignored tag names out of a set of NBT tag names.
-     *
-     * @deprecated use getNbt
-     */
-    @Deprecated
-    @Nonnull
-    Set<String> getIgnoredNbtTags(@Nonnull Set<String> nbtTagNames);
 }

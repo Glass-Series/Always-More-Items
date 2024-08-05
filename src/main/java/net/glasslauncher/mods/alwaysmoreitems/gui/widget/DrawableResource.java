@@ -1,14 +1,14 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
 import net.glasslauncher.mods.alwaysmoreitems.AMIDrawContext;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableStatic;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.*;
 
-public class DrawableResource implements IDrawableStatic {
+public class DrawableResource implements StaticDrawable {
 
 	@Nonnull
 	private final String resourceLocation;

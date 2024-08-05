@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.*;
 
 @Mixin(ShapelessRecipe.class)
-public class ShapelessRecipeMixin implements IAMISyncableRecipe {
+public class ShapelessRecipeMixin implements SyncableRecipe {
 
 
     @Shadow @Final private List input;

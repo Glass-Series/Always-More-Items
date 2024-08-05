@@ -1,14 +1,14 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
 import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class RecipeTransferErrorTooltip implements IRecipeTransferError {
+public class RecipeTransferErrorTooltip implements RecipeTransferError {
 	@Nonnull
 	private final String message;
 
@@ -18,7 +18,7 @@ public class RecipeTransferErrorTooltip implements IRecipeTransferError {
 
 	@Override
 	public Type getType() {
-		return Type.USER_FACING;
+		return Type.PLAYER;
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferInfo;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferInfo;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 import java.util.*;
 
-public class BasicRecipeTransferInfo implements IRecipeTransferInfo {
+public class BasicRecipeTransferInfo implements RecipeTransferInfo {
 	private final Class<? extends ScreenHandler> containerClass;
 	private final String recipeCategoryUid;
 	private final int recipeSlotStart;

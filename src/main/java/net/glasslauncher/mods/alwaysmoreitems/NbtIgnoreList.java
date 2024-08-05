@@ -3,7 +3,6 @@ package net.glasslauncher.mods.alwaysmoreitems;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Sets;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
-import net.glasslauncher.mods.alwaysmoreitems.api.INbtIgnoreList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -11,15 +10,9 @@ import net.minecraft.nbt.NbtCompound;
 import javax.annotation.*;
 import java.util.*;
 
-public class NbtIgnoreList implements INbtIgnoreList {
+public class NbtIgnoreList implements net.glasslauncher.mods.alwaysmoreitems.api.NbtIgnoreList {
 	private final Set<String> nbtTagNameBlacklist = new HashSet<>();
 	private final HashMultimap<Item, String> itemNbtTagNameBlacklist = HashMultimap.create();
-
-	@Deprecated
-	@Override
-	public void ignoreNbtTagNames(String... nbtTagNames) {
-		Collections.addAll(nbtTagNameBlacklist, nbtTagNames);
-	}
 
 	@Override
 	public void ignoreNbtTagNames(@Nullable Item item, String... nbtTagNames) {
@@ -38,18 +31,6 @@ public class NbtIgnoreList implements INbtIgnoreList {
 			return false;
 		}
 		return AMIConfig.nbtBlacklist.contains(nbtTagName) || nbtTagNameBlacklist.contains(nbtTagName);
-	}
-
-	@Override
-	@Nonnull
-	public Set<String> getIgnoredNbtTags(@Nullable Set<String> nbtTagNames) {
-		if (nbtTagNames == null) {
-			AlwaysMoreItems.LOGGER.error("Null nbtTagNames", new NullPointerException());
-			return Collections.emptySet();
-		}
-		Set<String> ignoredKeysConfig = Sets.intersection(nbtTagNames, new HashSet<>(AMIConfig.nbtBlacklist));
-		Set<String> ignoredKeysApi = Sets.intersection(nbtTagNames, nbtTagNameBlacklist);
-		return Sets.union(ignoredKeysConfig, ignoredKeysApi);
 	}
 
 	@Nullable

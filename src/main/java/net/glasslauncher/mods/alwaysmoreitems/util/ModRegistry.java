@@ -2,11 +2,10 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.RecipeRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeClickableArea;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipe;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -15,17 +14,17 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.*;
 import java.util.*;
 
-public class ModRegistry implements IModRegistry {
-	private final List<IRecipeCategory> recipeCategories;
-	private final List<IRecipeHandler> recipeHandlers;
+public class ModRegistry implements net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry {
+	private final List<RecipeCategory> recipeCategories;
+	private final List<RecipeHandler> recipeHandlers;
 	private final List<Object> recipes = new ArrayList<>();
-	private final RecipeTransferRegistry recipeTransferRegistry;
+	private final net.glasslauncher.mods.alwaysmoreitems.util.RecipeTransferRegistry recipeTransferRegistry;
 	private final Map<Class<? extends HandledScreen>, RecipeClickableArea> recipeClickableAreas;
 
 	public ModRegistry() {
         recipeCategories = new ArrayList<>();
         recipeHandlers = new ArrayList<>();
-        recipeTransferRegistry = new RecipeTransferRegistry();
+        recipeTransferRegistry = new net.glasslauncher.mods.alwaysmoreitems.util.RecipeTransferRegistry();
 		recipeClickableAreas = new HashMap<>();
     }
 
@@ -37,12 +36,12 @@ public class ModRegistry implements IModRegistry {
     }
 
 	@Override
-	public void addRecipeCategories(IRecipeCategory... recipeCategories) {
+	public void addRecipeCategories(RecipeCategory... recipeCategories) {
 		Collections.addAll(this.recipeCategories, recipeCategories);
 	}
 
 	@Override
-	public void addRecipeHandlers(IRecipeHandler... recipeHandlers) {
+	public void addRecipeHandlers(RecipeHandler... recipeHandlers) {
 		Collections.addAll(this.recipeHandlers, recipeHandlers);
 	}
 
@@ -81,13 +80,13 @@ public class ModRegistry implements IModRegistry {
 	}
 
 	@Override
-	public IRecipeTransferRegistry getRecipeTransferRegistry() {
+	public RecipeTransferRegistry getRecipeTransferRegistry() {
 		return recipeTransferRegistry;
 	}
 
 	@Nonnull
 	public RecipeRegistry createRecipeRegistry() {
-		List<IRecipeTransferHandler> recipeTransferHandlers = recipeTransferRegistry.getRecipeTransferHandlers();
+		List<RecipeTransferHandler> recipeTransferHandlers = recipeTransferRegistry.getRecipeTransferHandlers();
 		return new RecipeRegistry(recipeCategories, recipeHandlers, recipeTransferHandlers, recipes, recipeClickableAreas);
 	}
 }

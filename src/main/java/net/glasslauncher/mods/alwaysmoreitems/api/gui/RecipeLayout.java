@@ -2,13 +2,13 @@ package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
 import javax.annotation.*;
 
-public interface IRecipeLayout {
+public interface RecipeLayout {
     /**
      * Contains all the itemStacks displayed on this recipe layout.
      * Init and set them in your recipe category.
      */
     @Nonnull
-    IGuiItemStackGroup getItemStacks();
+    GuiItemStackGroup getItemStacks();
 
 // TODO: Implement once StationAPI gets a fluid API.
 //	/**

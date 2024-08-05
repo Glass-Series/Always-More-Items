@@ -1,14 +1,14 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.modificationstation.stationapi.impl.recipe.StationShapedRecipe;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class ShapedOreRecipeHandler implements IRecipeHandler<StationShapedRecipe> {
+public class ShapedOreRecipeHandler implements RecipeHandler<StationShapedRecipe> {
 
 	@Override
 	@Nonnull
@@ -24,7 +24,7 @@ public class ShapedOreRecipeHandler implements IRecipeHandler<StationShapedRecip
 
 	@Override
 	@Nonnull
-	public IRecipeWrapper getRecipeWrapper(@Nonnull StationShapedRecipe recipe) {
+	public RecipeWrapper getRecipeWrapper(@Nonnull StationShapedRecipe recipe) {
 		return new ShapedOreRecipeWrapper(recipe);
 	}
 

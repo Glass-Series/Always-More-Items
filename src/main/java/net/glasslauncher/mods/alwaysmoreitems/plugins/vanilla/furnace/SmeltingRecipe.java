@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import javax.annotation.*;
 import java.util.*;
 
-public class SmeltingRecipe extends VanillaRecipeWrapper implements IAMISyncableRecipe {
+public class SmeltingRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 	@Nonnull
 	private final List<List<ItemStack>> input;
 	@Nonnull

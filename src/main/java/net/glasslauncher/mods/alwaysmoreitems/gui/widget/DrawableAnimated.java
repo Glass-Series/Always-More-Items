@@ -1,18 +1,18 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableAnimated;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableStatic;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ITickTimer;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.TickTimer;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.*;
 
-public class DrawableAnimated implements IDrawableAnimated {
-	private final IDrawableStatic drawable;
-	private final ITickTimer tickTimer;
+public class DrawableAnimated implements AnimatedDrawable {
+	private final StaticDrawable drawable;
+	private final TickTimer tickTimer;
 	private final StartDirection startDirection;
 
-	public DrawableAnimated(IDrawableStatic drawable, ITickTimer tickTimer, StartDirection startDirection) {
+	public DrawableAnimated(StaticDrawable drawable, TickTimer tickTimer, StartDirection startDirection) {
 		this.drawable = drawable;
 		this.tickTimer = tickTimer;
 		this.startDirection = startDirection;

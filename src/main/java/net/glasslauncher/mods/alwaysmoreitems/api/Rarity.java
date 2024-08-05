@@ -6,7 +6,7 @@ import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import java.awt.*;
 import java.util.*;
 
-public enum AMIRarity {
+public enum Rarity {
     BAD("Bad", 'a', -1, new Color(AMITextRenderer.getColorFromCode('7')), HeaderCode.BAD),
     NONE("None", 'b', 0, new Color(AMITextRenderer.getColorFromCode('f')), HeaderCode.NONE),
     COMMON("Common", 'c', 1, new Color(AMITextRenderer.getColorFromCode('a')), HeaderCode.NONE),
@@ -17,8 +17,8 @@ public enum AMIRarity {
     ARTEFACT("Artefact", 'h', 6, new Color(208, 75, 18), new Color(AMITextRenderer.getColorFromCode('6')), Color.GRAY, HeaderCode.ARTEFACT),
     ;
 
-    public static final Map<Character, AMIRarity> AMI_RARITIES_BY_CODE = new HashMap<>() {{
-        Arrays.stream(AMIRarity.values()).forEach(rarity -> put(rarity.injectionCode, rarity));
+    public static final Map<Character, Rarity> AMI_RARITIES_BY_CODE = new HashMap<>() {{
+        Arrays.stream(Rarity.values()).forEach(rarity -> put(rarity.injectionCode, rarity));
     }};
 
     public final String name;
@@ -30,7 +30,7 @@ public enum AMIRarity {
     public final HeaderCode headerCode;
     public final String code;
 
-    AMIRarity(String name, char injectionCode, Integer value, Color color, HeaderCode headerCode) {
+    Rarity(String name, char injectionCode, Integer value, Color color, HeaderCode headerCode) {
         this.name = name;
         this.value = value;
         this.textColor = color;
@@ -47,7 +47,7 @@ public enum AMIRarity {
         code = String.valueOf(HeaderCode.PREFIX_CHARACTER) + injectionCode;
     }
 
-    AMIRarity(String name, char injectionCode, Integer value, Color textColor, Color backgroundColor, Color iconColor, HeaderCode headerCode) {
+    Rarity(String name, char injectionCode, Integer value, Color textColor, Color backgroundColor, Color iconColor, HeaderCode headerCode) {
         this.name = name;
         this.value = value;
         this.textColor = textColor;

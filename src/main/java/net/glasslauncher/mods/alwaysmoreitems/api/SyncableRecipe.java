@@ -6,14 +6,14 @@ import net.modificationstation.stationapi.api.util.Identifier;
 /**
  * Required to be implemented in your recipe classes.
  * If you don't do this: Your. Recipes. Won't. Sync.
- * @see IModPlugin#deserializeRecipe(NbtCompound)
+ * @see ModPluginProvider#deserializeRecipe(NbtCompound)
  */
-public interface IAMISyncableRecipe {
+public interface SyncableRecipe {
 
     /**
      * Serialize your recipe to NbtCompund.
      * @return Your recipe in NbtCompound form.
-     * @see IModPlugin#deserializeRecipe(NbtCompound)
+     * @see ModPluginProvider#deserializeRecipe(NbtCompound)
      */
     NbtCompound exportRecipe();
 

@@ -1,12 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableAnimated;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableStatic;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.*;
 
-public class DrawableBlank implements IDrawableStatic, IDrawableAnimated {
+public class DrawableBlank implements StaticDrawable, AnimatedDrawable {
     private final int width;
     private final int height;
 

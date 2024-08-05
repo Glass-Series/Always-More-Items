@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.api;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
@@ -12,31 +12,31 @@ import java.util.*;
  * The IRecipeManager instance is provided in AMIManager.
  * Available to IModPlugins
  */
-public interface IRecipeRegistry {
+public interface RecipeRegistry {
 
     /**
      * Returns the IRecipeHandler associated with the recipeClass or null if there is none
      */
     @Nullable
-    IRecipeHandler getRecipeHandler(@Nonnull Class recipeClass);
+    RecipeHandler<?> getRecipeHandler(@Nonnull Class<?> recipeClass);
 
     /**
      * Returns an unmodifiable list of all Recipe Categories
      */
     @Nonnull
-    List<IRecipeCategory> getRecipeCategories();
+    List<RecipeCategory> getRecipeCategories();
 
     /**
      * Returns an unmodifiable list of Recipe Categories
      */
     @Nonnull
-    List<IRecipeCategory> getRecipeCategories(@Nonnull List<String> recipeCategoryUids);
+    List<RecipeCategory> getRecipeCategories(@Nonnull List<String> recipeCategoryUids);
 
     /**
      * Returns an unmodifiable list of Recipe Categories that have the ItemStack as an input
      */
     @Nonnull
-    List<IRecipeCategory> getRecipeCategoriesWithInput(@Nonnull ItemStack input);
+    List<RecipeCategory> getRecipeCategoriesWithInput(@Nonnull ItemStack input);
 
 // TODO: Implement once StationAPI gets a fluid API.
 //	/** Returns an unmodifiable list of Recipe Categories that have the Fluid as an input */
@@ -47,7 +47,7 @@ public interface IRecipeRegistry {
      * Returns an unmodifiable list of Recipe Categories that have the ItemStack as an output
      */
     @Nonnull
-    List<IRecipeCategory> getRecipeCategoriesWithOutput(@Nonnull ItemStack output);
+    List<RecipeCategory> getRecipeCategoriesWithOutput(@Nonnull ItemStack output);
 
 // TODO: Implement once StationAPI gets a fluid API.
 //	/** Returns an unmodifiable list of Recipe Categories that have the Fluid as an output */
@@ -58,7 +58,7 @@ public interface IRecipeRegistry {
      * Returns an unmodifiable list of Recipes of recipeCategory that have the ItemStack as an input
      */
     @Nonnull
-    List<Object> getRecipesWithInput(@Nonnull IRecipeCategory recipeCategory, @Nonnull ItemStack input);
+    List<Object> getRecipesWithInput(@Nonnull RecipeCategory recipeCategory, @Nonnull ItemStack input);
 
 // TODO: Implement once StationAPI gets a fluid API.
 //	/** Returns an unmodifiable list of Recipes of recipeCategory that have the Fluid as an input */
@@ -69,7 +69,7 @@ public interface IRecipeRegistry {
      * Returns an unmodifiable list of Recipes of recipeCategory that have the ItemStack as an output
      */
     @Nonnull
-    List<Object> getRecipesWithOutput(@Nonnull IRecipeCategory recipeCategory, @Nonnull ItemStack output);
+    List<Object> getRecipesWithOutput(@Nonnull RecipeCategory recipeCategory, @Nonnull ItemStack output);
 
 // TODO: Implement once StationAPI gets a fluid API.
 //	/** Returns an unmodifiable list of Recipes of recipeCategory that have the Fluid as an output */
@@ -80,7 +80,7 @@ public interface IRecipeRegistry {
      * Returns an unmodifiable list of Recipes in recipeCategory
      */
     @Nonnull
-    List<Object> getRecipes(@Nonnull IRecipeCategory recipeCategory);
+    List<Object> getRecipes(@Nonnull RecipeCategory recipeCategory);
 
     /**
      * Add a new recipe while the game is running.

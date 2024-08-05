@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Table;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
@@ -19,19 +19,19 @@ import java.util.*;
 public class RecipeMap {
 
 	@Nonnull
-	private final Table<IRecipeCategory, String, List<Object>> recipeTable = HashBasedTable.create();
+	private final Table<RecipeCategory, String, List<Object>> recipeTable = HashBasedTable.create();
 	@Nonnull
-	private final ArrayListMultimap<String, IRecipeCategory> categoryMap = ArrayListMultimap.create();
+	private final ArrayListMultimap<String, RecipeCategory> categoryMap = ArrayListMultimap.create();
 	@Nonnull
-	private final Ordering<IRecipeCategory> recipeCategoryOrdering;
+	private final Ordering<RecipeCategory> recipeCategoryOrdering;
 
 	public RecipeMap(final RecipeCategoryComparator recipeCategoryComparator) {
 		this.recipeCategoryOrdering = Ordering.from(recipeCategoryComparator);
 	}
 
 	@Nonnull
-	public ImmutableList<IRecipeCategory> getRecipeCategories(@Nonnull ItemStack itemStack) {
-		Set<IRecipeCategory> recipeCategories = new HashSet<>();
+	public ImmutableList<RecipeCategory> getRecipeCategories(@Nonnull ItemStack itemStack) {
+		Set<RecipeCategory> recipeCategories = new HashSet<>();
 		for (String stackKey : AlwaysMoreItems.getStackHelper().getUniqueIdentifiersWithWildcard(itemStack)) {
 			recipeCategories.addAll(categoryMap.get(stackKey));
 		}
@@ -44,9 +44,9 @@ public class RecipeMap {
 //		return recipeCategoryOrdering.immutableSortedCopy(categoryMap.get(key));
 //	}
 
-	private void addRecipeCategory(@Nonnull IRecipeCategory recipeCategory, @Nonnull ItemStack itemStack) {
+	private void addRecipeCategory(@Nonnull RecipeCategory recipeCategory, @Nonnull ItemStack itemStack) {
 		String stackKey = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack);
-		List<IRecipeCategory> recipeCategories = categoryMap.get(stackKey);
+		List<RecipeCategory> recipeCategories = categoryMap.get(stackKey);
 		if (!recipeCategories.contains(recipeCategory)) {
 			recipeCategories.add(recipeCategory);
 		}
@@ -66,7 +66,7 @@ public class RecipeMap {
 //	}
 
 	@Nonnull
-	public ImmutableList<Object> getRecipes(@Nonnull IRecipeCategory recipeCategory, @Nonnull ItemStack stack) {
+	public ImmutableList<Object> getRecipes(@Nonnull RecipeCategory recipeCategory, @Nonnull ItemStack stack) {
 		Map<String, List<Object>> recipesForType = recipeTable.row(recipeCategory);
 
 		ImmutableList.Builder<Object> listBuilder = ImmutableList.builder();
@@ -79,7 +79,7 @@ public class RecipeMap {
 		return listBuilder.build();
 	}
 
-	public void addRecipe(@Nonnull Object recipe, @Nonnull IRecipeCategory recipeCategory, @Nonnull Iterable<ItemStack> itemStacks) {
+	public void addRecipe(@Nonnull Object recipe, @Nonnull RecipeCategory recipeCategory, @Nonnull Iterable<ItemStack> itemStacks) {
 		Map<String, List<Object>> recipesForType = recipeTable.row(recipeCategory);
 		StackHelper stackHelper = AlwaysMoreItems.getStackHelper();
 

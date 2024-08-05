@@ -9,12 +9,11 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import lombok.Getter;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemBlacklist;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemBlacklist;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.util.ItemStackElement;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +28,7 @@ public class ItemFilter {
 	/** A cache for fast searches while typing or using backspace. Maps filterText to filteredItemMaps */
 	private final LoadingCache<String, ImmutableList<ItemStackElement>> filteredItemMapsCache;
 
-	public ItemFilter(final IItemRegistry itemRegistry) {
+	public ItemFilter(final ItemRegistry itemRegistry) {
 		filteredItemMapsCache = CacheBuilder.newBuilder()
 				.maximumWeight(16)
 				.weigher(new SearchFilterWeigher())
@@ -80,7 +79,7 @@ public class ItemFilter {
 		return getItemList().size();
 	}
 
-	private static ImmutableList<ItemStackElement> createBaseList(IItemRegistry itemRegistry) {
+	private static ImmutableList<ItemStackElement> createBaseList(ItemRegistry itemRegistry) {
 		ItemStackChecker itemStackChecker = new ItemStackChecker();
 
 		ImmutableList.Builder<ItemStackElement> baseList = ImmutableList.builder();
@@ -103,7 +102,7 @@ public class ItemFilter {
 			int count = brokenItem.getCount();
 			if (count > 1) {
 				Item item = brokenItem.getElement();
-				Identifier identifier = ItemRegistry.INSTANCE.getId(item);
+				Identifier identifier = net.modificationstation.stationapi.api.registry.ItemRegistry.INSTANCE.getId(item);
 				if (identifier == null) {
 					AlwaysMoreItems.LOGGER.error("Null modId", new NullPointerException());
 					continue;
@@ -124,9 +123,9 @@ public class ItemFilter {
 	}
 
 	private class ItemFilterCacheLoader extends CacheLoader<String, ImmutableList<ItemStackElement>> {
-		private final IItemRegistry itemRegistry;
+		private final ItemRegistry itemRegistry;
 
-		public ItemFilterCacheLoader(IItemRegistry itemRegistry) {
+		public ItemFilterCacheLoader(ItemRegistry itemRegistry) {
 			this.itemRegistry = itemRegistry;
 		}
 
@@ -158,7 +157,7 @@ public class ItemFilter {
 	}
 
 	private static class ItemStackChecker {
-		private final IItemBlacklist itemBlacklist;
+		private final ItemBlacklist itemBlacklist;
 		@Getter
         private final Multiset<Item> brokenItems = HashMultiset.create();
 

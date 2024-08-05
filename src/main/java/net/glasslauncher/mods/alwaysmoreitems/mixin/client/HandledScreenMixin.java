@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIRarity;
+import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.minecraft.client.gui.screen.Screen;
@@ -53,7 +53,7 @@ public abstract class HandledScreenMixin extends Screen {
         else {
             tooltip = new ArrayList<>(){{add(itemName);}};
         }
-        if (slot.getStack().getItem() instanceof IAMIRarity rarity) {
+        if (slot.getStack().getItem() instanceof RarityProvider rarity) {
             tooltip.set(0, rarity.getRarity(slot.getStack()) + tooltip.get(0));
         }
         int tooltipX = mouseX - offsetX;

@@ -3,10 +3,10 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 import com.google.common.collect.ImmutableList;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
-import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
 import net.minecraft.screen.ScreenHandler;
@@ -39,7 +39,7 @@ public class RecipeGuiLogic {
 
 	/* List of Recipe Categories that involve the focus */
 	@Nonnull
-	private List<IRecipeCategory> recipeCategories = ImmutableList.of();
+	private List<RecipeCategory> recipeCategories = ImmutableList.of();
 
 	/* List of recipes for the currently selected recipeClass */
 	@Nonnull
@@ -68,7 +68,7 @@ public class RecipeGuiLogic {
 			return true;
 		}
 
-		List<IRecipeCategory> types = focus.getCategories();
+		List<RecipeCategory> types = focus.getCategories();
 		if (types.isEmpty()) {
 			return false;
 		}
@@ -79,7 +79,7 @@ public class RecipeGuiLogic {
 		ScreenHandler container = Minecraft.INSTANCE.player.container;
 		if (container != null) {
 			for (int i = 0; i < recipeCategories.size(); i++) {
-				IRecipeCategory recipeCategory = recipeCategories.get(i);
+				RecipeCategory recipeCategory = recipeCategories.get(i);
 				if (AlwaysMoreItems.getRecipeRegistry().getRecipeTransferHandler(container, recipeCategory) != null) {
 					recipeCategoryIndex = i;
 					break;
@@ -98,7 +98,7 @@ public class RecipeGuiLogic {
 	}
 
 	public boolean setCategoryFocus() {
-		IRecipeCategory recipeCategory = getRecipeCategory();
+		RecipeCategory recipeCategory = getRecipeCategory();
 		if (recipeCategory == null) {
 			return false;
 		}
@@ -119,7 +119,7 @@ public class RecipeGuiLogic {
 	}
 
 	public boolean setCategoryFocus(List<String> recipeCategoryUids) {
-		List<IRecipeCategory> recipeCategories = AlwaysMoreItems.getRecipeRegistry().getRecipeCategories(recipeCategoryUids);
+		List<RecipeCategory> recipeCategories = AlwaysMoreItems.getRecipeRegistry().getRecipeCategories(recipeCategoryUids);
 		if (recipeCategories.isEmpty()) {
 			return false;
 		}
@@ -161,11 +161,11 @@ public class RecipeGuiLogic {
 		if (state == null) {
 			return;
 		}
-		IRecipeCategory recipeCategory = getRecipeCategory();
+		RecipeCategory recipeCategory = getRecipeCategory();
 		recipes = state.focus.getRecipes(recipeCategory);
 	}
 
-	public IRecipeCategory getRecipeCategory() {
+	public RecipeCategory getRecipeCategory() {
 		if (state == null || recipeCategories.isEmpty()) {
 			return null;
 		}
@@ -180,24 +180,24 @@ public class RecipeGuiLogic {
 
 		List<RecipeLayout> recipeWidgets = new ArrayList<>();
 
-		IRecipeCategory recipeCategory = getRecipeCategory();
+		RecipeCategory recipeCategory = getRecipeCategory();
 		if (recipeCategory == null) {
 			return recipeWidgets;
 		}
 
-		IRecipeRegistry recipeRegistry = AlwaysMoreItems.getRecipeRegistry();
+		RecipeRegistry recipeRegistry = AlwaysMoreItems.getRecipeRegistry();
 
 		int recipeWidgetIndex = 0;
 		for (int recipeIndex = state.pageIndex * recipesPerPage; recipeIndex < recipes.size() && recipeWidgets.size() < recipesPerPage; recipeIndex++) {
 			Object recipe = recipes.get(recipeIndex);
-			IRecipeHandler recipeHandler = recipeRegistry.getRecipeHandler(recipe.getClass());
+			RecipeHandler recipeHandler = recipeRegistry.getRecipeHandler(recipe.getClass());
 			if (recipeHandler == null) {
 				AlwaysMoreItems.LOGGER.error("Couldn't find recipe handler for recipe: {}", recipe);
 				continue;
 			}
 
 			@SuppressWarnings("unchecked")
-			IRecipeWrapper recipeWrapper = recipeHandler.getRecipeWrapper(recipe);
+			RecipeWrapper recipeWrapper = recipeHandler.getRecipeWrapper(recipe);
 
 			RecipeLayout recipeWidget = new RecipeLayout(recipeWidgetIndex++, posX, posY, recipeCategory, recipeWrapper, state.focus);
 			recipeWidgets.add(recipeWidget);

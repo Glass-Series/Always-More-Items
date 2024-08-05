@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 
-public interface IItemBlacklist {
+public interface ItemBlacklist {
     /**
      * Stop AMI from displaying a specific item in the item list.
      * Use OreDictionary.WILDCARD_VALUE meta for wildcard.

@@ -1,26 +1,26 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.recipe;
 
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiItemStackGroup;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeCategory;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 
-public class DebugRecipeCategory implements IRecipeCategory {
+public class DebugRecipeCategory implements RecipeCategory {
 	public static final int recipeWidth = 160;
 	public static final int recipeHeight = 60;
 	@Nonnull
-	private final IDrawable background;
+	private final AMIDrawable background;
 	@Nonnull
 	private final String localizedName;
 	@Nonnull
-	private final IDrawable tankBackground;
+	private final AMIDrawable tankBackground;
 //	@Nonnull
 //	private final IDrawable tankOverlay;
 
@@ -46,7 +46,7 @@ public class DebugRecipeCategory implements IRecipeCategory {
 
 	@Nonnull
 	@Override
-	public IDrawable getBackground() {
+	public AMIDrawable getBackground() {
 		return background;
 	}
 
@@ -61,8 +61,8 @@ public class DebugRecipeCategory implements IRecipeCategory {
 	}
 
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+	public void setRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull RecipeWrapper recipeWrapper) {
+		GuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		guiItemStacks.addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
             if (input) {

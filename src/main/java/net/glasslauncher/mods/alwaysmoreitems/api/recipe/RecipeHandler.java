@@ -5,7 +5,7 @@ import javax.annotation.*;
 /**
  * An IRecipeHandler provides information about one Recipe Class.
  */
-public interface IRecipeHandler<T> {
+public interface RecipeHandler<T> {
 
     /**
      * Returns the class of the Recipe handled by this IRecipeHandler.
@@ -23,7 +23,7 @@ public interface IRecipeHandler<T> {
      * Returns a recipe wrapper for the given recipe.
      */
     @Nonnull
-    IRecipeWrapper getRecipeWrapper(@Nonnull T recipe);
+    RecipeWrapper getRecipeWrapper(@Nonnull T recipe);
 
     /**
      * Returns true if a recipe is valid and can be used.

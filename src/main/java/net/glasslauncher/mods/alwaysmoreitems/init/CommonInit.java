@@ -8,7 +8,7 @@ import net.glasslauncher.mods.alwaysmoreitems.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.AMIItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.RecipeRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.ActionButtonPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.GiveItemPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.RecipeTransferPacket;
@@ -28,7 +28,7 @@ import java.util.*;
 @Entrypoint(eventBus = @EventBusPolicy(registerInstance = false))
 public class CommonInit {
     @Getter
-    private static ImmutableMap<Identifier, IModPlugin> plugins;
+    private static ImmutableMap<Identifier, ModPluginProvider> plugins;
     @Getter
     private static ModRegistry modRegistry;
 
@@ -37,10 +37,10 @@ public class CommonInit {
         AlwaysMoreItems.LOGGER.info("Hello");
         AlwaysMoreItems.setHelpers(new AMIHelpers());
 
-        LinkedHashMap<Identifier, IModPlugin> pluginsMap = new LinkedHashMap<>();
-        FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:plugin", IModPlugin.class).stream().map(EntrypointContainer::getEntrypoint).forEach(iModPlugin -> pluginsMap.put(iModPlugin.getId(), iModPlugin));
+        LinkedHashMap<Identifier, ModPluginProvider> pluginsMap = new LinkedHashMap<>();
+        FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:plugin", ModPluginProvider.class).stream().map(EntrypointContainer::getEntrypoint).forEach(iModPlugin -> pluginsMap.put(iModPlugin.getId(), iModPlugin));
 
-        LinkedHashMap<Identifier, IModPlugin> oldPlugins = new LinkedHashMap<>(pluginsMap);
+        LinkedHashMap<Identifier, ModPluginProvider> oldPlugins = new LinkedHashMap<>(pluginsMap);
         pluginsMap.clear();
 
         pluginsMap.put(AlwaysMoreItems.NAMESPACE.id("vanilla"), oldPlugins.remove(AlwaysMoreItems.NAMESPACE.id("vanilla")));
@@ -70,7 +70,7 @@ public class CommonInit {
         AlwaysMoreItems.setStarted(true);
         AMIItemRegistry itemRegistry = new AMIItemRegistry();
         AlwaysMoreItems.setItemRegistry(itemRegistry);
-        ImmutableMap<Identifier, IModPlugin> plugins = CommonInit.getPlugins();
+        ImmutableMap<Identifier, ModPluginProvider> plugins = CommonInit.getPlugins();
 
         plugins.values().forEach(iModPlugin -> {
             try {

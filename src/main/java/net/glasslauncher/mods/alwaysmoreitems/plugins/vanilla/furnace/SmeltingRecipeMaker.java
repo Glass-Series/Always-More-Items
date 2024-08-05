@@ -1,8 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IStackHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.SmeltingRecipeManager;
@@ -16,8 +16,8 @@ import java.util.*;
 public class SmeltingRecipeMaker {
 
 	@Nonnull
-	public static List<SmeltingRecipe> getFurnaceRecipes(IAMIHelpers helpers) {
-		IStackHelper stackHelper = helpers.getStackHelper();
+	public static List<SmeltingRecipe> getFurnaceRecipes(AMIHelpers helpers) {
+		StackHelper stackHelper = helpers.getStackHelper();
         //noinspection unchecked
         Map<?, ItemStack> smeltingMap = SmeltingRecipeManager.getInstance().getRecipes();
 

@@ -11,7 +11,7 @@ import java.util.*;
  * If multiple ItemStacks are set, they will be displayed in rotation.
  * ItemStacks with subtypes and wildcard metadata will be displayed as multiple ItemStacks.
  */
-public interface IGuiItemStackGroup extends IGuiIngredientGroup<ItemStack> {
+public interface GuiItemStackGroup extends GuiIngredientGroup<ItemStack> {
 
     /**
      * Initialize the itemStack at slotIndex.
@@ -40,5 +40,5 @@ public interface IGuiItemStackGroup extends IGuiIngredientGroup<ItemStack> {
     void set(int slotIndex, @Nonnull ItemStack itemStack);
 
     @Override
-    void addTooltipCallback(@Nonnull ITooltipCallback<ItemStack> tooltipCallback);
+    void addTooltipCallback(@Nonnull TooltipCallback<ItemStack> tooltipCallback);
 }

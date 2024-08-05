@@ -1,53 +1,51 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableAnimated;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableStatic;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ITickTimer;
-import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableAnimated;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.TickTimer;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableBlank;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableResource;
-import net.glasslauncher.mods.alwaysmoreitems.util.TickTimer;
 
 import javax.annotation.*;
 
 public class DrawableHelper {
 
     @Nonnull
-    public static IDrawableAnimated createAnimatedDrawable(@Nullable IDrawableStatic drawable, int ticksPerCycle, @Nullable IDrawableAnimated.StartDirection startDirection, boolean inverted) {
+    public static AnimatedDrawable createAnimatedDrawable(@Nullable StaticDrawable drawable, int ticksPerCycle, @Nullable AnimatedDrawable.StartDirection startDirection, boolean inverted) {
         if (drawable == null) {
             AlwaysMoreItems.LOGGER.error("Null drawable, returning blank drawable", new NullPointerException());
             return new DrawableBlank(0, 0);
         }
         if (startDirection == null) {
             AlwaysMoreItems.LOGGER.error("Null startDirection, defaulting to Top", new NullPointerException());
-            startDirection = IDrawableAnimated.StartDirection.TOP;
+            startDirection = AnimatedDrawable.StartDirection.TOP;
         }
 
         if (inverted) {
-            if (startDirection == IDrawableAnimated.StartDirection.TOP) {
-                startDirection = IDrawableAnimated.StartDirection.BOTTOM;
-            } else if (startDirection == IDrawableAnimated.StartDirection.BOTTOM) {
-                startDirection = IDrawableAnimated.StartDirection.TOP;
-            } else if (startDirection == IDrawableAnimated.StartDirection.LEFT) {
-                startDirection = IDrawableAnimated.StartDirection.RIGHT;
+            if (startDirection == AnimatedDrawable.StartDirection.TOP) {
+                startDirection = AnimatedDrawable.StartDirection.BOTTOM;
+            } else if (startDirection == AnimatedDrawable.StartDirection.BOTTOM) {
+                startDirection = AnimatedDrawable.StartDirection.TOP;
+            } else if (startDirection == AnimatedDrawable.StartDirection.LEFT) {
+                startDirection = AnimatedDrawable.StartDirection.RIGHT;
             } else {
-                startDirection = IDrawableAnimated.StartDirection.LEFT;
+                startDirection = AnimatedDrawable.StartDirection.LEFT;
             }
         }
 
         int tickTimerMaxValue;
-        if (startDirection == IDrawableAnimated.StartDirection.TOP || startDirection == IDrawableAnimated.StartDirection.BOTTOM) {
+        if (startDirection == AnimatedDrawable.StartDirection.TOP || startDirection == AnimatedDrawable.StartDirection.BOTTOM) {
             tickTimerMaxValue = drawable.getHeight();
         } else {
             tickTimerMaxValue = drawable.getWidth();
         }
-        ITickTimer tickTimer = new TickTimer(ticksPerCycle, tickTimerMaxValue, !inverted);
-        return new DrawableAnimated(drawable, tickTimer, startDirection);
+        TickTimer tickTimer = new net.glasslauncher.mods.alwaysmoreitems.util.TickTimer(ticksPerCycle, tickTimerMaxValue, !inverted);
+        return new net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableAnimated(drawable, tickTimer, startDirection);
     }
 
     @Nonnull
-    public static IDrawableStatic createDrawable(@Nullable String resourceLocation, int u, int v, int width, int height, int paddingTop, int paddingBottom, int paddingLeft, int paddingRight) {
+    public static StaticDrawable createDrawable(@Nullable String resourceLocation, int u, int v, int width, int height, int paddingTop, int paddingBottom, int paddingLeft, int paddingRight) {
         if (resourceLocation == null) {
             AlwaysMoreItems.LOGGER.error("Null resourceLocation, returning blank drawable", new NullPointerException());
             return new DrawableBlank(width, height);
@@ -56,7 +54,7 @@ public class DrawableHelper {
     }
 
     @Nonnull
-    public static IDrawableStatic createDrawable(@Nullable String resourceLocation, int u, int v, int width, int height) {
+    public static StaticDrawable createDrawable(@Nullable String resourceLocation, int u, int v, int width, int height) {
         if (resourceLocation == null) {
             AlwaysMoreItems.LOGGER.error("Null resourceLocation, returning blank drawable", new NullPointerException());
             return new DrawableBlank(width, height);
@@ -64,7 +62,7 @@ public class DrawableHelper {
         return new DrawableResource(resourceLocation, u, v, width, height);
     }
 
-    public static IDrawable createBlankDrawable(int width, int height) {
+    public static AMIDrawable createBlankDrawable(int width, int height) {
         return new DrawableBlank(width, height);
     }
 }

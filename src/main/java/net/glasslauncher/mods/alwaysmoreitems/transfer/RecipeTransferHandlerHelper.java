@@ -1,21 +1,20 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class RecipeTransferHandlerHelper implements IRecipeTransferHandlerHelper {
+public class RecipeTransferHandlerHelper implements net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandlerHelper {
 	@Override
-	public IRecipeTransferError createInternalError() {
+	public RecipeTransferError createInternalError() {
 		AlwaysMoreItems.LOGGER.warn("Internal error created", new Throwable());
 		return RecipeTransferErrorInternal.instance;
 	}
 
 	@Override
-	public IRecipeTransferError createUserErrorWithTooltip(@Nullable String tooltipMessage) {
+	public RecipeTransferError createUserErrorWithTooltip(@Nullable String tooltipMessage) {
 		if (tooltipMessage == null) {
 			AlwaysMoreItems.LOGGER.error("Null tooltipMessage", new NullPointerException());
 			return RecipeTransferErrorInternal.instance;
@@ -24,7 +23,7 @@ public class RecipeTransferHandlerHelper implements IRecipeTransferHandlerHelper
 	}
 
 	@Override
-	public IRecipeTransferError createUserErrorForSlots(@Nullable String tooltipMessage, @Nullable Collection<Integer> missingItemSlots) {
+	public RecipeTransferError createUserErrorForSlots(@Nullable String tooltipMessage, @Nullable Collection<Integer> missingItemSlots) {
 		if (tooltipMessage == null) {
 			AlwaysMoreItems.LOGGER.error("Null tooltipMessage", new NullPointerException());
 			return RecipeTransferErrorInternal.instance;

@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShapelessRecipe;
@@ -9,7 +9,7 @@ import net.modificationstation.stationapi.api.recipe.StationRecipe;
 
 import javax.annotation.*;
 
-public class ShapelessRecipesHandler implements IRecipeHandler<ShapelessRecipe> {
+public class ShapelessRecipesHandler implements RecipeHandler<ShapelessRecipe> {
 
 	@Override
 	@Nonnull
@@ -25,7 +25,7 @@ public class ShapelessRecipesHandler implements IRecipeHandler<ShapelessRecipe> 
 
 	@Override
 	@Nonnull
-	public IRecipeWrapper getRecipeWrapper(@Nonnull ShapelessRecipe recipe) {
+	public RecipeWrapper getRecipeWrapper(@Nonnull ShapelessRecipe recipe) {
 		return new ShapelessRecipesWrapper(recipe);
 	}
 

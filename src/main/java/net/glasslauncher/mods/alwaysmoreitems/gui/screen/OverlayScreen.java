@@ -9,7 +9,7 @@ import net.glasslauncher.mods.alwaysmoreitems.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.mods.alwaysmoreitems.RenderHelper;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIRarity;
+import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
@@ -31,6 +31,7 @@ import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
+import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import uk.co.benjiweber.expressions.tuple.TriTuple;
@@ -89,13 +90,17 @@ public class OverlayScreen extends Screen {
         init(Minecraft.INSTANCE, width, height);
     }
 
-    @Deprecated
+    /**
+     * Use init(Screen, int, int) instead.
+     * @see #init(Screen, int, int)
+     */
+    @ApiStatus.Internal
     @Override
     public void init(Minecraft minecraft, int width, int height) {
         super.init(minecraft, width, height);
     }
 
-    @Deprecated
+    @ApiStatus.Internal
     @Override
     public void init() {
         int id = 100;
@@ -214,7 +219,7 @@ public class OverlayScreen extends Screen {
             } else {
                 currentTooltip = new ArrayList<>(Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name")));
             }
-            if (hoveredItem.item.getItem() instanceof IAMIRarity rarity) {
+            if (hoveredItem.item.getItem() instanceof RarityProvider rarity) {
                 currentTooltip.set(0, rarity.getRarity(hoveredItem.item) + currentTooltip.get(0));
             }
         }

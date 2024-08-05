@@ -1,18 +1,19 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 import java.util.*;
 
-public abstract class BlankRecipeWrapper implements IRecipeWrapper {
+public abstract class BlankRecipeWrapper implements RecipeWrapper {
     @Override
-    public List getInputs() {
+    public List<?> getInputs() {
         return Collections.emptyList();
     }
 
     @Override
-    public List getOutputs() {
+    public List<ItemStack> getOutputs() {
         return Collections.emptyList();
     }
 

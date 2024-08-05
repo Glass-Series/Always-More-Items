@@ -5,7 +5,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IStackHelper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +17,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import javax.annotation.*;
 import java.util.*;
 
-public class StackHelper implements IStackHelper {
+public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper {
 	/**
 	 * Returns a list of items in slots that complete the recipe defined by requiredStacksList.
 	 * Returns a result that contains missingItems if there are not enough items in availableItemStacks.

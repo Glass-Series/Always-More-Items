@@ -4,26 +4,29 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.BlankRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.*;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-public class ItemDescriptionRecipe extends BlankRecipeWrapper {
+public class ItemDescriptionRecipe implements RecipeWrapper {
 	private static final int lineSpacing = 2;
 	@Nonnull
 	private final List<String> description;
 	@Nonnull
 	private final List<List<ItemStack>> outputs;
 	@Nonnull
-	private final IDrawable slotDrawable;
+	private final AMIDrawable slotDrawable;
 
 	public static List<ItemDescriptionRecipe> create(@Nonnull List<ItemStack> itemStacks, String... descriptionKeys) {
 		List<ItemDescriptionRecipe> recipes = new ArrayList<>();
@@ -85,6 +88,11 @@ public class ItemDescriptionRecipe extends BlankRecipeWrapper {
 		slotDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 55, 16, 18, 18);
 	}
 
+	@Override
+	public List<?> getInputs() {
+		return Collections.emptyList();
+	}
+
 	@Nonnull
 	@Override
 	public List<List<ItemStack>> getOutputs() {
@@ -108,6 +116,22 @@ public class ItemDescriptionRecipe extends BlankRecipeWrapper {
 			AMITextRenderer.INSTANCE.draw(descriptionLine, xPos, yPos, Color.black.getRGB());
 			yPos += AMITextRenderer.FONT_HEIGHT + lineSpacing;
 		}
+	}
+
+	@Override
+	public void drawAnimations(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+
+	}
+
+	@Nullable
+	@Override
+	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean handleClick(@NotNull Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
+		return false;
 	}
 
 	@Nonnull

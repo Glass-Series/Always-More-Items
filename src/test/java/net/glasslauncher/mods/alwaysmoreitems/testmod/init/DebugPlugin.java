@@ -1,11 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.init;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.TestMod;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.recipe.DebugRecipeHandler;
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-public class DebugPlugin implements IModPlugin {
+public class DebugPlugin implements ModPluginProvider {
 
     @Override
     public String getName() {
@@ -27,17 +27,17 @@ public class DebugPlugin implements IModPlugin {
     }
 
     @Override
-    public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
+    public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
 
     }
 
     @Override
-    public void onItemRegistryAvailable(IItemRegistry itemRegistry) {
+    public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
 
     }
 
     @Override
-    public void register(IModRegistry registry) {
+    public void register(ModRegistry registry) {
 
         registry.addDescription(
                 new ItemStack(Item.WOODEN_DOOR),
@@ -55,12 +55,12 @@ public class DebugPlugin implements IModPlugin {
     }
 
     @Override
-    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry) {
+    public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
 
     }
 
     @Override
-    public IAMISyncableRecipe deserializeRecipe(NbtCompound recipe) {
+    public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
         return null;
     }
 }

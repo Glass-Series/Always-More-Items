@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.api;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IStackHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferHandlerHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandlerHelper;
 
 import javax.annotation.*;
 
@@ -9,31 +9,31 @@ import javax.annotation.*;
  * IAMIHelpers provides helpers and tools for addon mods.
  * Available to IModPlugins
  */
-public interface IAMIHelpers {
+public interface AMIHelpers {
 
     /**
      * Helps with getting itemStacks from recipes.
      */
     @Nonnull
-    IStackHelper getStackHelper();
+    StackHelper getStackHelper();
 
     /**
      * Used to stop AMI from displaying a specific item in the item list.
      */
     @Nonnull
-    IItemBlacklist getItemBlacklist();
+    ItemBlacklist getItemBlacklist();
 
     /**
      * Used to tell AMI to ignore NBT tags when comparing items for recipes.
      */
     @Nonnull
-    INbtIgnoreList getNbtIgnoreList();
+    NbtIgnoreList getNbtIgnoreList();
 
     /**
      * Helps with the implementation of Recipe Transfer Handlers
      */
     @Nonnull
-    IRecipeTransferHandlerHelper recipeTransferHandlerHelper();
+    RecipeTransferHandlerHelper recipeTransferHandlerHelper();
 
     /**
      * Reload AMI at runtime.

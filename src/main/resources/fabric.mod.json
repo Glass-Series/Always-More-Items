@@ -58,9 +58,6 @@
       ],
       "net/minecraft/class_8": [
         "net/glasslauncher/mods/alwaysmoreitems/api/AMINbt"
-      ],
-      "net/minecraft/class_67": [
-        "net/glasslauncher/mods/alwaysmoreitems/api/AMIFancyFont"
       ]
     }
   }

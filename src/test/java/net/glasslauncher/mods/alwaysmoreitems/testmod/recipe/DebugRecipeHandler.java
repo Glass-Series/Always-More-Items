@@ -1,11 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.recipe;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 
 import javax.annotation.*;
 
-public class DebugRecipeHandler implements IRecipeHandler<DebugRecipe> {
+public class DebugRecipeHandler implements RecipeHandler<DebugRecipe> {
 	@Nonnull
 	@Override
 	public Class<DebugRecipe> getRecipeClass() {
@@ -20,7 +20,7 @@ public class DebugRecipeHandler implements IRecipeHandler<DebugRecipe> {
 
 	@Nonnull
 	@Override
-	public IRecipeWrapper getRecipeWrapper(@Nonnull DebugRecipe recipe) {
+	public RecipeWrapper getRecipeWrapper(@Nonnull DebugRecipe recipe) {
 		return recipe;
 	}
 

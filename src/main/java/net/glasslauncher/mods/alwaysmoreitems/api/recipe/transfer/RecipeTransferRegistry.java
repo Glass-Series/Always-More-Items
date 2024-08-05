@@ -7,7 +7,7 @@ import javax.annotation.*;
 /**
  * Register recipe transfer handlers here to give AMI the information it needs to transfer recipes into the crafting area.
  */
-public interface IRecipeTransferRegistry {
+public interface RecipeTransferRegistry {
     /**
      * Basic method for adding a recipe transfer handler.
      *
@@ -25,12 +25,12 @@ public interface IRecipeTransferRegistry {
      * <p>
      * Use this when recipe slots or inventory slots are spread out in different number ranges.
      */
-    void addRecipeTransferHandler(@Nonnull IRecipeTransferInfo recipeTransferInfo);
+    void addRecipeTransferHandler(@Nonnull RecipeTransferInfo recipeTransferInfo);
 
     /**
      * Complete control over recipe transfer.
      * <p>
      * Use this when the container has a non-standard inventory or crafting area.
      */
-    void addRecipeTransferHandler(@Nonnull IRecipeTransferHandler recipeTransferHandler);
+    void addRecipeTransferHandler(@Nonnull RecipeTransferHandler recipeTransferHandler);
 }

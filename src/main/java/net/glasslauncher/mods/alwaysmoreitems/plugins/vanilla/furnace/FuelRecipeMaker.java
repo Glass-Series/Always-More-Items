@@ -1,8 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IStackHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.recipe.FuelRegistry;
 
@@ -12,8 +12,8 @@ import java.util.*;
 public class FuelRecipeMaker {
 
 	@Nonnull
-	public static List<FuelRecipe> getFuelRecipes(IItemRegistry itemRegistry, IAMIHelpers helpers) {
-		IStackHelper stackHelper = helpers.getStackHelper();
+	public static List<FuelRecipe> getFuelRecipes(ItemRegistry itemRegistry, AMIHelpers helpers) {
+		StackHelper stackHelper = helpers.getStackHelper();
 		List<ItemStack> fuelStacks = itemRegistry.getFuels();
 		List<FuelRecipe> fuelRecipes = new ArrayList<>();
 		for (ItemStack fuelStack : fuelStacks) {

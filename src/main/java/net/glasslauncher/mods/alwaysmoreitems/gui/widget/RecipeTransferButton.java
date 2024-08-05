@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
 import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferUtil;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,7 @@ public class RecipeTransferButton extends ButtonWidget {
 	private static final String transferTooltip = TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.transfer");
 	private static final String transferMaxTooltip = TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.transfer.max");
 	private RecipeLayout recipeLayout;
-	private IRecipeTransferError recipeTransferError;
+	private RecipeTransferError recipeTransferError;
 
 	public RecipeTransferButton(int id, int xPos, int yPos, int width, int height, String displayString) {
 		super(id, xPos, yPos, width, height, displayString);
@@ -31,8 +31,8 @@ public class RecipeTransferButton extends ButtonWidget {
 			this.visible = true;
 		} else {
 			this.active = false;
-			IRecipeTransferError.Type type = this.recipeTransferError.getType();
-			this.visible = (type == IRecipeTransferError.Type.USER_FACING);
+			RecipeTransferError.Type type = this.recipeTransferError.getType();
+			this.visible = (type == RecipeTransferError.Type.PLAYER);
 		}
 	}
 

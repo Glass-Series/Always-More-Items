@@ -4,14 +4,14 @@ import com.mojang.datafixers.util.Either;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
-import net.glasslauncher.mods.alwaysmoreitems.api.IItemRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModPlugin;
-import net.glasslauncher.mods.alwaysmoreitems.api.IModRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.IRecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.CraftingRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapedOreRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapedRecipesHandler;
@@ -36,7 +36,6 @@ import net.minecraft.recipe.CraftingRecipeManager;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.FurnaceScreenHandler;
-import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.tag.TagKey;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.impl.recipe.StationShapedRecipe;
@@ -44,11 +43,11 @@ import net.modificationstation.stationapi.impl.recipe.StationShapelessRecipe;
 
 import java.util.*;
 
-public class VanillaPlugin implements IModPlugin {
+public class VanillaPlugin implements ModPluginProvider {
 	public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("vanilla");
 
-	private IItemRegistry itemRegistry;
-	private IAMIHelpers amiHelpers;
+	private ItemRegistry itemRegistry;
+	private AMIHelpers amiHelpers;
 
 	@Override
 	public String getName() {
@@ -61,17 +60,17 @@ public class VanillaPlugin implements IModPlugin {
 	}
 
 	@Override
-	public void onAMIHelpersAvailable(IAMIHelpers amiHelpers) {
+	public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
 		this.amiHelpers = amiHelpers;
 	}
 
 	@Override
-	public void onItemRegistryAvailable(IItemRegistry itemRegistry) {
+	public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
 		this.itemRegistry = itemRegistry;
 	}
 
 	@Override
-	public void register(IModRegistry registry) {
+	public void register(ModRegistry registry) {
 		registry.addRecipeCategories(
 				new CraftingRecipeCategory(),
 				new FurnaceFuelCategory(),
@@ -92,7 +91,7 @@ public class VanillaPlugin implements IModPlugin {
 			registry.addRecipeClickArea(FurnaceScreen.class, 78, 32, 28, 23, VanillaRecipeCategoryUid.SMELTING, VanillaRecipeCategoryUid.FUEL);
 		}
 
-		IRecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
+		RecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
 
 		recipeTransferRegistry.addRecipeTransferHandler(CraftingScreenHandler.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
 		recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.SMELTING, 0, 1, 3, 36);
@@ -104,21 +103,21 @@ public class VanillaPlugin implements IModPlugin {
 	}
 
 	@Override
-	public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry) {
+	public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
 
 	}
 
 	@Override
-	public IAMISyncableRecipe deserializeRecipe(NbtCompound recipe) {
+	public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
         return switch (recipe.getByte("type")) {
             case 1 -> // Vanilla shapeless
-                    (IAMISyncableRecipe) new ShapelessRecipe(new ItemStack(recipe.getCompound("output")), Arrays.asList(parseInputs(recipe.getList("input"))));
+                    (SyncableRecipe) new ShapelessRecipe(new ItemStack(recipe.getCompound("output")), Arrays.asList(parseInputs(recipe.getList("input"))));
             case 2 -> // Vanilla shaped
-                    (IAMISyncableRecipe) new ShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
+                    (SyncableRecipe) new ShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
             case 3 -> // StAPI shapeless
-                    (IAMISyncableRecipe) new StationShapelessRecipe(new ItemStack(recipe.getCompound("output")), parseStapiInputs(recipe.getList("input")));
+                    (SyncableRecipe) new StationShapelessRecipe(new ItemStack(recipe.getCompound("output")), parseStapiInputs(recipe.getList("input")));
             case 4 -> // StAPI shaped
-                    (IAMISyncableRecipe) new StationShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseStapiInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
+                    (SyncableRecipe) new StationShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseStapiInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
             case 5 -> // Furnace
                     new SmeltingRecipe(Collections.singletonList(new ItemStack(recipe.getCompound("input"))), new ItemStack(recipe.getCompound("output")));
 			case 6 -> // Furnace fuel
@@ -144,7 +143,7 @@ public class VanillaPlugin implements IModPlugin {
 		for (int i = 0; i < inputs.size(); i++) {
 			NbtCompound input = (NbtCompound) inputs.get(i);
             if (!input.getString("identifier").isEmpty()) {
-				outputs[i] = Either.left(TagKey.of(ItemRegistry.KEY, Identifier.of(input.getString("identifier"))));
+				outputs[i] = Either.left(TagKey.of(net.modificationstation.stationapi.api.registry.ItemRegistry.KEY, Identifier.of(input.getString("identifier"))));
 				continue;
 			}
 			if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {

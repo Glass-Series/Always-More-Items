@@ -1,12 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeHandler;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 
 import javax.annotation.*;
 
-public class FuelRecipeHandler implements IRecipeHandler<FuelRecipe> {
+public class FuelRecipeHandler implements RecipeHandler<FuelRecipe> {
 	@Override
 	@Nonnull
 	public Class<FuelRecipe> getRecipeClass() {
@@ -21,7 +21,7 @@ public class FuelRecipeHandler implements IRecipeHandler<FuelRecipe> {
 
 	@Override
 	@Nonnull
-	public IRecipeWrapper getRecipeWrapper(@Nonnull FuelRecipe recipe) {
+	public RecipeWrapper getRecipeWrapper(@Nonnull FuelRecipe recipe) {
 		return recipe;
 	}
 

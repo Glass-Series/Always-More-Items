@@ -1,8 +1,10 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IRecipeLayout;
+import com.mojang.datafixers.util.Either;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 
@@ -10,7 +12,7 @@ import javax.annotation.*;
  * Defines a category of recipe, (i.e. Crafting Table Recipe, Furnace Recipe)
  * and handles setting up the GUI for its recipe category.
  */
-public interface IRecipeCategory {
+public interface RecipeCategory {
 
     /**
      * Returns a unique ID for this recipe category.
@@ -27,12 +29,18 @@ public interface IRecipeCategory {
     @Nonnull
     String getTitle();
 
+//    /**
+//     * Returns the item or the path to an image to render on the category's tab.
+//     * Images should be square.
+//     */
+//    Either<ItemStack, String> getTabIcon();
+
     /**
      * Returns the drawable background for a single recipe in this category.
      * Called multiple times per frame, so make sure to store it in a field.
      */
     @Nonnull
-    IDrawable getBackground();
+    AMIDrawable getBackground();
 
     /**
      * Optionally draw anything else that might be necessary, icons or extra slots.
@@ -47,6 +55,6 @@ public interface IRecipeCategory {
     /**
      * Set the IRecipeLayout properties from the RecipeWrapper.
      */
-    void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper);
+    void setRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull RecipeWrapper recipeWrapper);
 
 }

@@ -1,21 +1,20 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IGuiIngredientGroup;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ITooltipCallback;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.*;
 import java.util.*;
 
-public abstract class GuiIngredientGroup<V, T extends GuiIngredient<V>> implements IGuiIngredientGroup<V> {
+public abstract class GuiIngredientGroup<V, T extends GuiIngredient<V>> implements net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiIngredientGroup<V> {
     protected final int itemCycleOffset = (int) (Math.random() * 1000);
     @Nonnull
     protected final Map<Integer, T> guiIngredients = new HashMap<>();
     @Nonnull
     protected Focus focus = new Focus();
     @Nullable
-    private ITooltipCallback<V> tooltipCallback;
+    private TooltipCallback<V> tooltipCallback;
 
     /**
      * If focus is set and any of the guiIngredients contains focus
@@ -36,7 +35,7 @@ public abstract class GuiIngredientGroup<V, T extends GuiIngredient<V>> implemen
     }
 
     @Override
-    public void addTooltipCallback(@Nonnull ITooltipCallback<V> tooltipCallback) {
+    public void addTooltipCallback(@Nonnull TooltipCallback<V> tooltipCallback) {
         this.tooltipCallback = tooltipCallback;
     }
 

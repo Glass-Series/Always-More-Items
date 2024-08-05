@@ -5,7 +5,7 @@ import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.RenderHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.ITooltipCallback;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
 import net.glasslauncher.mods.alwaysmoreitems.util.CycleTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -37,7 +37,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
     @Nonnull
     private final IIngredientHelper<T> ingredientHelper;
     @Nullable
-    private ITooltipCallback<T> tooltipCallback;
+    private TooltipCallback<T> tooltipCallback;
 
     private boolean enabled;
 
@@ -103,7 +103,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
         enabled = !this.contained.isEmpty();
     }
 
-    public void setTooltipCallback(@Nullable ITooltipCallback<T> tooltipCallback) {
+    public void setTooltipCallback(@Nullable TooltipCallback<T> tooltipCallback) {
         this.tooltipCallback = tooltipCallback;
     }
 

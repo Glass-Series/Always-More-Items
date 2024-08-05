@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.ShapedCraftingRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.ShapedRecipe;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.modificationstation.stationapi.api.recipe.StationRecipe;
 import javax.annotation.*;
 import java.util.*;
 
-public class ShapedRecipesWrapper extends VanillaRecipeWrapper implements IShapedCraftingRecipeWrapper {
+public class ShapedRecipesWrapper extends VanillaRecipeWrapper implements ShapedCraftingRecipeWrapper {
 
 	@Nonnull
 	private final ShapedRecipe recipe;
@@ -25,7 +25,7 @@ public class ShapedRecipesWrapper extends VanillaRecipeWrapper implements IShape
 
 	@Nonnull
 	@Override
-	public List getInputs() {
+	public List<?> getInputs() {
 		return Arrays.asList(((StationRecipe) recipe).getIngredients());
 	}
 

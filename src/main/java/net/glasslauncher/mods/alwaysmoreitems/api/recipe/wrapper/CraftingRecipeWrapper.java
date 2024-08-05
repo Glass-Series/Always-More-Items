@@ -1,16 +1,16 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.IRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 import java.util.*;
 
-public interface ICraftingRecipeWrapper extends IRecipeWrapper {
+public interface CraftingRecipeWrapper extends RecipeWrapper {
 
     @Override
-    List getInputs();
+    List<?> getInputs();
 
     @Override
     List<ItemStack> getOutputs();

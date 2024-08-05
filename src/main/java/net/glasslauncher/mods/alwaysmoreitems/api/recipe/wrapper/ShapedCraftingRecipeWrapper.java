@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper;
 
-public interface IShapedCraftingRecipeWrapper extends ICraftingRecipeWrapper {
+public interface ShapedCraftingRecipeWrapper extends CraftingRecipeWrapper {
 
     int getWidth();
 

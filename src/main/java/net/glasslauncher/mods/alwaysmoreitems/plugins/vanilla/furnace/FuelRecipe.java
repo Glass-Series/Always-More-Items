@@ -4,9 +4,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.IAMISyncableRecipe;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableAnimated;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.IDrawableStatic;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
@@ -24,7 +24,7 @@ import java.text.*;
 import java.util.List;
 import java.util.*;
 
-public class FuelRecipe extends VanillaRecipeWrapper implements IAMISyncableRecipe {
+public class FuelRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 	public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("0.##");
 	@Nonnull
 	private final List<List<ItemStack>> inputs;
@@ -40,7 +40,7 @@ public class FuelRecipe extends VanillaRecipeWrapper implements IAMISyncableReci
 	private final HoverChecker burnTimeStringItemsTooltipChecker;
 	private final HoverChecker burnTimeStringSecondsTooltipChecker;
 	@Nonnull
-	private final IDrawableAnimated flame;
+	private final AnimatedDrawable flame;
 	private final int burnTime;
 
 	public FuelRecipe(@Nonnull Collection<ItemStack> input, int burnTime) {
@@ -57,8 +57,8 @@ public class FuelRecipe extends VanillaRecipeWrapper implements IAMISyncableReci
 			burnTimeStringItemsTooltipChecker = new HoverChecker(26, 35, 24, 24 + burnTimeStringItemsWidth);
 			burnTimeStringSecondsTooltipChecker = new HoverChecker(26, 35, 24 + burnTimeStringItemsWidth + 8, 24 + burnTimeStringItemsWidth + AMITextRenderer.INSTANCE.getWidth(burnTimeStringSeconds) + 8);
 
-			IDrawableStatic flameDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 176, 0, 14, 14);
-			flame = DrawableHelper.createAnimatedDrawable(flameDrawable, burnTime, IDrawableAnimated.StartDirection.TOP, true);
+			StaticDrawable flameDrawable = DrawableHelper.createDrawable("/gui/furnace.png", 176, 0, 14, 14);
+			flame = DrawableHelper.createAnimatedDrawable(flameDrawable, burnTime, AnimatedDrawable.StartDirection.TOP, true);
 		}
 		else {
 			burnTimeStringTicks = null;

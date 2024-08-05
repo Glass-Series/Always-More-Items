@@ -1,11 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.IRecipeTransferError;
+import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 
-public class RecipeTransferErrorInternal implements IRecipeTransferError {
+public class RecipeTransferErrorInternal implements RecipeTransferError {
 	public static final RecipeTransferErrorInternal instance = new RecipeTransferErrorInternal();
 
 	private RecipeTransferErrorInternal() {
@@ -14,7 +14,7 @@ public class RecipeTransferErrorInternal implements IRecipeTransferError {
 
 	@Override
 	public Type getType() {
-		return Type.INTERNAL;
+		return Type.DEV;
 	}
 
 	@Override

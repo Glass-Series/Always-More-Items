@@ -8,7 +8,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
  * IModPlugins must have the @AMIPlugin annotation to get loaded by AMI.
  * This class must not import anything that could be missing at runtime (i.e. code from any other mod).
  */
-public interface IModPlugin {
+public interface ModPluginProvider {
     String getName();
 
     Identifier getId();
@@ -17,29 +17,29 @@ public interface IModPlugin {
      * Called when the IAMIHelpers is available.
      * IModPlugins should store IAMIHelpers here if they need it.
      */
-    void onAMIHelpersAvailable(IAMIHelpers amiHelpers);
+    void onAMIHelpersAvailable(AMIHelpers amiHelpers);
 
     /**
      * Called when the IItemRegistry is available, before register.
      */
-    void onItemRegistryAvailable(IItemRegistry itemRegistry);
+    void onItemRegistryAvailable(ItemRegistry itemRegistry);
 
     /**
      * Register this mod plugin with the mod registry.
      * Called just before the game launches.
      * Will be called again if config
      */
-    void register(IModRegistry registry);
+    void register(ModRegistry registry);
 
     /**
      * Called when the IRecipeRegistry is available, after all mods have registered.
      */
-    void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry);
+    void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry);
 
     /**
      * Called on each recipe given to the client from the server.
      * Don't you _DARE_ blindly trust the contents of the nbtcompound, unless you like RCE exploits.
-     * @see IAMISyncableRecipe
+     * @see SyncableRecipe
      */
-    IAMISyncableRecipe deserializeRecipe(NbtCompound recipe);
+    SyncableRecipe deserializeRecipe(NbtCompound recipe);
 }
