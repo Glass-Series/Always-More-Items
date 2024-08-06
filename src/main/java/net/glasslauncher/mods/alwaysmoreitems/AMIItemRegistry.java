@@ -2,6 +2,8 @@ package net.glasslauncher.mods.alwaysmoreitems;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -67,10 +69,15 @@ public class AMIItemRegistry implements ItemRegistry {
     public String getModNameForItem(@Nullable Item item) {
         Identifier identifier = net.modificationstation.stationapi.api.registry.ItemRegistry.INSTANCE.getId(item);
         if (identifier == null) {
-            AlwaysMoreItems.LOGGER.error("Null item", new NullPointerException());
+            AlwaysMoreItems.LOGGER.error("Item has no identifier?", new NullPointerException());
             return "";
         }
-        return identifier.namespace.toString();
+        Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(identifier.namespace.toString());
+        if (modContainer.isEmpty()) {
+            AlwaysMoreItems.LOGGER.error("Mod namespace has no container", new NullPointerException());
+            return "";
+        }
+        return modContainer.get().getMetadata().getName();
     }
 
     @Nonnull

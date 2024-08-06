@@ -6,7 +6,7 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
+import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.*;
@@ -32,22 +32,7 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
     @Nonnull
     @Override
     public List<String> getTooltip(@Nonnull Minecraft minecraft, @Nonnull ItemStack itemStack) {
-        String tooltip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
-        List<String> list = null;
-        if (itemStack.getItem() instanceof CustomTooltipProvider tooltipProvider) {
-            list = List.of(tooltipProvider.getTooltip(itemStack, tooltip));
-        }
-        if (list == null) {
-            list = Collections.singletonList(tooltip);
-        }
-//		for (int k = 0; k < list.size(); ++k) {
-//			if (k == 0) {
-//				list.set(k, itemStack.getRarity().rarityColor + list.get(k));
-//			} else {
-//				list.set(k, Formatting.GRAY + list.get(k));
-//			}
-//		}
-
-        return list;
+        String simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
+        return TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, null);
     }
 }

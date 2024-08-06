@@ -18,6 +18,7 @@ import net.mine_diver.unsafeevents.listener.EventListener;
 import net.mine_diver.unsafeevents.listener.ListenerPriority;
 import net.modificationstation.stationapi.api.event.mod.InitEvent;
 import net.modificationstation.stationapi.api.event.network.packet.PacketRegisterEvent;
+import net.modificationstation.stationapi.api.event.registry.RegistriesFrozenEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EntrypointManager;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
@@ -66,7 +67,8 @@ public class CommonInit {
         RecipeSyncPacket.register();
     }
 
-    public static void initAMI() {
+    @EventListener
+    public static void initAMI(RegistriesFrozenEvent event) {
         AlwaysMoreItems.setStarted(true);
         AMIItemRegistry itemRegistry = new AMIItemRegistry();
         AlwaysMoreItems.setItemRegistry(itemRegistry);

@@ -5,7 +5,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
-import net.glasslauncher.mods.alwaysmoreitems.api.recipe.BlankRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.MathUtil;
 import net.minecraft.client.Minecraft;

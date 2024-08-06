@@ -2,8 +2,8 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;

@@ -8,12 +8,11 @@ import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.ItemFilter;
 import net.glasslauncher.mods.alwaysmoreitems.RenderHelper;
-import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
+import net.glasslauncher.mods.alwaysmoreitems.impl.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.ActionButtonPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.GiveItemPacket;
@@ -27,7 +26,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
+import net.modificationstation.stationapi.api.client.TooltipHelper;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
@@ -214,14 +213,7 @@ public class OverlayScreen extends Screen {
         if (hoveredItem != null) {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -2130706433);
             String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
-            if (hoveredItem.item.getItem() instanceof CustomTooltipProvider tooltipProvider) {
-                currentTooltip = new ArrayList<>(List.of(tooltipProvider.getTooltip(hoveredItem.item, simpleTip)));
-            } else {
-                currentTooltip = new ArrayList<>(Collections.singletonList(TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name")));
-            }
-            if (hoveredItem.item.getItem() instanceof RarityProvider rarity) {
-                currentTooltip.set(0, rarity.getRarity(hoveredItem.item) + currentTooltip.get(0));
-            }
+            currentTooltip = TooltipHelper.getTooltipForItemStack(simpleTip, hoveredItem.item, Minecraft.INSTANCE.player.inventory, null);
         }
 
         // Draw CAAALM

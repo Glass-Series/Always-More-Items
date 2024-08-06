@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems.action;
+package net.glasslauncher.mods.alwaysmoreitems.impl.action;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.minecraft.entity.player.PlayerEntity;

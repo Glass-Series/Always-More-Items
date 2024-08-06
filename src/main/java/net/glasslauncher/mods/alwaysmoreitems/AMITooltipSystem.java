@@ -1,13 +1,27 @@
 package net.glasslauncher.mods.alwaysmoreitems;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
+import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
+import net.mine_diver.unsafeevents.listener.EventListener;
+import net.mine_diver.unsafeevents.listener.ListenerPriority;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resource.language.TranslationStorage;
+import net.modificationstation.stationapi.api.client.TooltipHelper;
+import net.modificationstation.stationapi.api.client.event.gui.screen.container.TooltipBuildEvent;
+import net.modificationstation.stationapi.api.client.event.gui.screen.container.TooltipRenderEvent;
+import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
+import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
+import net.modificationstation.stationapi.api.registry.ItemRegistry;
+import net.modificationstation.stationapi.api.util.Formatting;
 import uk.co.benjiweber.expressions.tuple.TriTuple;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
+@Entrypoint(eventBus = @EventBusPolicy(registerInstance = false))
 public class AMITooltipSystem {
+    public static final String AMI_TOOLTIP_PHASE = "always_more_items:tooltip_phase";
 
     /**
      * Draws a tooltip for you. Adds 9 and -15 to your mouseX and Y for you, so you don't need to offset it yourself.
@@ -24,8 +38,29 @@ public class AMITooltipSystem {
                 int borderOffset;
                 if (hasHeader) {
                     Rarity rarity = Rarity.AMI_RARITIES_BY_CODE.get(firstTip.charAt(1));
+                    int headerWidth = rarity.headerCode.icon[0].length;
                     firstTip = firstTip.substring(2);
                     tooltip.set(0, "");
+                    int firstTipLen = AMITextRenderer.INSTANCE.getWidth(firstTip);
+                    AtomicInteger biggestSize = new AtomicInteger();
+                    tooltip.forEach(string -> {
+                        int textWidth; // Lazy hack lmao
+                        if (firstTipLen < (textWidth = AMITextRenderer.INSTANCE.getWidth(string))) {
+                            biggestSize.set(textWidth);
+                        }
+                    });
+                    if (biggestSize.get() != 0) {
+                        tooltipWidth -= headerWidth;
+                        tooltipX += headerWidth;
+                    }
+                    // Something's overcalculating this, and this is just the easiest way of fixing it. Please don't hurt me.
+                    tooltipWidth -= headerWidth;
+                    if (flipped) {
+                        tooltipX += headerWidth;
+                    }
+                    else {
+                        tooltipX -= headerWidth;
+                    }
 
                     borderOffset = drawHeader(firstTip, tooltipX - 3, tooltipY - 3, tooltipX + tooltipWidth + 3, rarity, flipped);
                 } else {
@@ -34,8 +69,9 @@ public class AMITooltipSystem {
                 int vertOffset = hasHeader ? 12 : 0;
                 int horiOffset = flipped ? borderOffset * 2 : 0;
                 AMIDrawContext.INSTANCE.fill(tooltipX - 3 - horiOffset, tooltipY - 3 + vertOffset, tooltipX + tooltipWidth + 3 + (borderOffset * 2) - horiOffset, tooltipY + (8 * tooltip.size()) + (3 * tooltip.size()), -1073741824);
-                IntStream.range(0, tooltip.size()).forEach(currentTooltip -> Minecraft.INSTANCE.textRenderer.draw(tooltip.get(currentTooltip), tooltipX + 1 - horiOffset, tooltipY + (8 * currentTooltip) + (3 * currentTooltip) + 1, -1, true));
-                IntStream.range(0, tooltip.size()).forEach(currentTooltip -> Minecraft.INSTANCE.textRenderer.draw(tooltip.get(currentTooltip), tooltipX - horiOffset, tooltipY + (8 * currentTooltip) + (3 * currentTooltip), -1, false));
+                int finalTooltipX = tooltipX;
+                IntStream.range(0, tooltip.size()).forEach(currentTooltip -> Minecraft.INSTANCE.textRenderer.draw(tooltip.get(currentTooltip), finalTooltipX + 1 - horiOffset, tooltipY + (8 * currentTooltip) + (3 * currentTooltip) + 1, -1, true));
+                IntStream.range(0, tooltip.size()).forEach(currentTooltip -> Minecraft.INSTANCE.textRenderer.draw(tooltip.get(currentTooltip), finalTooltipX - horiOffset, tooltipY + (8 * currentTooltip) + (3 * currentTooltip), -1, false));
             });
         }
     }
@@ -109,7 +145,7 @@ public class AMITooltipSystem {
                 Rarity amiRarity = Rarity.AMI_RARITIES_BY_CODE.get(currentTooltip.get(0).charAt(1));
                 iconWidth = amiRarity.headerCode.icon[0].length * 2;
             }
-            if (mouseX + tooltipXOffset + maxTipLength + iconWidth > width) {
+            if (mouseX + tooltipXOffset + maxTipLength + (iconWidth / 2) > width) {
                 tooltipXOffset = -tooltipXOffset - maxTipLength + 3;
                 flipped = true;
             }
@@ -118,5 +154,60 @@ public class AMITooltipSystem {
         tooltipXOffset -= 9;
         tooltipYOffset += 15;
         return TriTuple.of(tooltipXOffset, tooltipYOffset, flipped);
+    }
+
+    @EventListener(phase = AMI_TOOLTIP_PHASE)
+    private static void yourTooltipsAreNowMine(TooltipRenderEvent event) {
+        if (event.itemStack == null) { // Nothing to do here.
+            return;
+        }
+        int offsetX;
+        int offsetY;
+        int containerWidth;
+        int containerHeight;
+        if (event.container != null) {
+            containerWidth = event.container.width;
+            containerHeight = event.container.height;
+            offsetX = (containerWidth - event.container.backgroundWidth) / 2;
+            offsetY = (containerHeight - event.container.backgroundHeight) / 2;
+        }
+        else {
+            containerWidth = containerHeight = offsetX = offsetY = 0;
+        }
+
+        String itemName = (TranslationStorage.getInstance().get(event.itemStack.getTranslationKey() + ".name"));
+        List<String> tooltip = TooltipHelper.getTooltipForItemStack(itemName, event.itemStack, event.inventory, event.container);
+        int tooltipX = event.mouseX - offsetX;
+        int tooltipY = event.mouseY - offsetY;
+
+        TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(event.mouseX, event.mouseY, tooltip, containerWidth, containerHeight);
+
+        AMITooltipSystem.drawTooltip(tooltip, result.one() + tooltipX, result.two() + tooltipY, result.three());
+        event.cancel();
+    }
+
+    @EventListener(priority = ListenerPriority.LOWEST)
+    private static void yourTooltipsAreNowModified(TooltipBuildEvent event) {
+        if(event.tooltip.isEmpty()) {
+            return;
+        }
+
+        if (event.itemStack.getItem() instanceof RarityProvider rarityProvider) {
+            event.tooltip.set(0, rarityProvider.getRarity(event.itemStack) + event.tooltip.get(0));
+        }
+
+        if (AMIConfig.isDebugModeEnabled()) {
+            String extras = "";
+            if (event.itemStack.getDamage() != 0) {
+                extras += ":" + event.itemStack.getDamage();
+            }
+            event.tooltip.set(0, event.tooltip.get(0) + " " + event.itemStack.itemId + extras);
+
+            event.add(Formatting.GRAY + AMITextRenderer.ITALICS + ItemRegistry.INSTANCE.getId(event.itemStack.getItem()));
+        }
+
+        if (AMIConfig.showModNames()) {
+            event.add(Formatting.BLUE + AMITextRenderer.ITALICS + AlwaysMoreItems.getItemRegistry().getModNameForItem(event.itemStack.getItem()));
+        }
     }
 }

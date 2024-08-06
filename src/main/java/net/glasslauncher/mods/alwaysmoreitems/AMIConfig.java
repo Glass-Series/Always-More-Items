@@ -33,6 +33,9 @@ public class AMIConfig {
 
         @ConfigEntry(name = "Debug Mode")
         public Boolean debugMode = false;
+
+        @ConfigEntry(name = "Show Mod Names")
+        public Boolean showModNames = true;
     }
 
     @ConfigEntry(
@@ -82,5 +85,9 @@ public class AMIConfig {
 
     private static void updateBlacklist() {
         GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile(new File(FabricLoader.getInstance().getConfigDir().toFile(), AlwaysMoreItems.NAMESPACE + "/config.yml")));
+    }
+
+    public static boolean showModNames() {
+        return INSTANCE.showModNames;
     }
 }

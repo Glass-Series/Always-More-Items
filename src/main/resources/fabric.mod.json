@@ -27,11 +27,11 @@
     ],
     "stationapi:event_bus_client": [
       "net.glasslauncher.mods.alwaysmoreitems.init.ClientInit",
-      "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener"
+      "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener",
+      "net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem"
     ],
     "stationapi:event_bus_server": [
-      "net.glasslauncher.mods.alwaysmoreitems.PlayerJoinedListener",
-      "net.glasslauncher.mods.alwaysmoreitems.init.ServerInit"
+      "net.glasslauncher.mods.alwaysmoreitems.PlayerJoinedListener"
     ],
     "alwaysmoreitems:plugin": [
       "net.glasslauncher.mods.alwaysmoreitems.plugins.ami.AMIPlugin",

@@ -6,9 +6,6 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.CharacterUtils;
-import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateManager;
-import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.util.Formatting;
 import org.lwjgl.opengl.GL11;
 

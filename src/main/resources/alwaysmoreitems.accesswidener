@@ -6,6 +6,7 @@ accessible method net/minecraft/client/Minecraft logGlError (Ljava/lang/String;)
 
 accessible field net/minecraft/client/gui/screen/ingame/HandledScreen backgroundWidth I
 accessible field net/minecraft/client/gui/screen/ingame/HandledScreen backgroundHeight I
+accessible method net/minecraft/client/gui/screen/ingame/HandledScreen getSlotAt (II)Lnet/minecraft/screen/slot/Slot;
 
 accessible field net/minecraft/server/network/ServerPlayNetworkHandler player Lnet/minecraft/entity/player/ServerPlayerEntity;
 accessible field net/minecraft/server/network/ServerPlayNetworkHandler server Lnet/minecraft/server/MinecraftServer;

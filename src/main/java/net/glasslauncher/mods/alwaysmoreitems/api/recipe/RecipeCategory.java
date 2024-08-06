@@ -1,10 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 
-import com.mojang.datafixers.util.Either;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;
 

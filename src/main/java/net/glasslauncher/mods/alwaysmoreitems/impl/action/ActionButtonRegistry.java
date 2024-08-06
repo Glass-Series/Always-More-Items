@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems.action;
+package net.glasslauncher.mods.alwaysmoreitems.impl.action;
 
 import com.mojang.serialization.Lifecycle;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
