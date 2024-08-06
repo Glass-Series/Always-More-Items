@@ -145,7 +145,7 @@ public class AMITooltipSystem {
                 Rarity amiRarity = Rarity.AMI_RARITIES_BY_CODE.get(currentTooltip.get(0).charAt(1));
                 iconWidth = amiRarity.headerCode.icon[0].length * 2;
             }
-            if (mouseX + tooltipXOffset + maxTipLength + (iconWidth / 2) > width) {
+            if (mouseX + tooltipXOffset + maxTipLength + iconWidth > width) {
                 tooltipXOffset = -tooltipXOffset - maxTipLength + 3;
                 flipped = true;
             }

@@ -28,6 +28,10 @@ repositories {
 //		name = 'Glass Releases'
 		url = "https://maven.glass-launcher.net/releases"
 	)
+	maven (
+//		name = 'Glass Releases'
+		url = "https://maven.glass-launcher.net/snapshots"
+	)
 	// Used for a StationAPI dependency.
 	maven (
 //		name = 'Froge'
