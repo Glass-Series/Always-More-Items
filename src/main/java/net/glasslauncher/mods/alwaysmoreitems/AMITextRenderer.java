@@ -206,7 +206,6 @@ public class AMITextRenderer extends TextRenderer {
 
     protected void doDecorations(int posX, int posY, float charWidth, boolean strikethroughStyle, boolean underlineStyle) {
         Tessellator tessellator1 = null;
-        new PersistentState();
         if (strikethroughStyle) {
             tessellator1 = Tessellator.INSTANCE;
             GL11.glDisable(GL11.GL_TEXTURE_2D);
