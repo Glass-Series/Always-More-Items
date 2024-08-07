@@ -1,8 +1,9 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.recipe;
 
 import lombok.Getter;
 import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;

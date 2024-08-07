@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod.recipe;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;

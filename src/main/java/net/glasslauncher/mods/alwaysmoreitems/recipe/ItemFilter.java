@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.recipe;
 
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheBuilder;
@@ -9,8 +9,10 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import lombok.Getter;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.api.ItemBlacklist;
 import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ItemStackElement;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

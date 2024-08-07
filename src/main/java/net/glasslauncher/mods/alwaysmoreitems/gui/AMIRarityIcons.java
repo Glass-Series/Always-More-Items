@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 public class AMIRarityIcons {
 

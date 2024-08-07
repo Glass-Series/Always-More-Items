@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla;
 import com.mojang.datafixers.util.Either;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;

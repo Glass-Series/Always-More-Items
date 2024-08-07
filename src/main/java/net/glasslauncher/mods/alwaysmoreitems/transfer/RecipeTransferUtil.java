@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandler;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;

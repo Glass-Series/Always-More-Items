@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import net.minecraft.class_583;
 import net.minecraft.client.Minecraft;

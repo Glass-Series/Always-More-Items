@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.ami;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;

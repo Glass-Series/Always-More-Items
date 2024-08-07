@@ -2,7 +2,6 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.minecraft.item.Item;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;

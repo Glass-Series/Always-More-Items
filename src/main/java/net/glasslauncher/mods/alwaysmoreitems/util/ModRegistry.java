@@ -1,7 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.RecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.registry.RecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandler;

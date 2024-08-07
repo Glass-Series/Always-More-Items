@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.minecraft.item.ItemStack;

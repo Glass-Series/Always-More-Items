@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;

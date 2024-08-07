@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.impl.action;
 
 import com.mojang.serialization.Lifecycle;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.modificationstation.stationapi.api.registry.Registry;
 import net.modificationstation.stationapi.api.registry.RegistryKey;

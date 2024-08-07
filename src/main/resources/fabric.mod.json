@@ -20,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems",
+      "net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems",
       "net.glasslauncher.mods.alwaysmoreitems.init.CommonInit",
       "net.glasslauncher.mods.alwaysmoreitems.init.AfterBlockAndItemListener",
       "net.glasslauncher.mods.alwaysmoreitems.init.ActionButtonListener"
@@ -28,17 +28,17 @@
     "stationapi:event_bus_client": [
       "net.glasslauncher.mods.alwaysmoreitems.init.ClientInit",
       "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener",
-      "net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem"
+      "net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem"
     ],
     "stationapi:event_bus_server": [
-      "net.glasslauncher.mods.alwaysmoreitems.PlayerJoinedListener"
+      "net.glasslauncher.mods.alwaysmoreitems.event.PlayerJoinedListener"
     ],
     "alwaysmoreitems:plugin": [
       "net.glasslauncher.mods.alwaysmoreitems.plugins.ami.AMIPlugin",
       "net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
     ],
     "gcapi": [
-      "net.glasslauncher.mods.alwaysmoreitems.AMIConfig"
+      "net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig"
     ]
   },
   "mixins": [

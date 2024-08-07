@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.api;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMIRarityIcons;
-import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMIRarityIcons;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 
 import java.awt.*;
 import java.util.*;

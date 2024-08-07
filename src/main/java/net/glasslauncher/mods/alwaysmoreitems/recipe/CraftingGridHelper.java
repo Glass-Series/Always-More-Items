@@ -1,6 +1,7 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.recipe;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.*;

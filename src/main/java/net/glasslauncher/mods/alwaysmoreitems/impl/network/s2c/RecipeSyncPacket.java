@@ -1,12 +1,12 @@
-package net.glasslauncher.mods.alwaysmoreitems.network.s2c;
+package net.glasslauncher.mods.alwaysmoreitems.impl.network.s2c;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
 import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.impl.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.init.CommonInit;
-import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;

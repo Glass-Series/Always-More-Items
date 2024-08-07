@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;

@@ -1,7 +1,8 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.util;
 
+import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemBlacklist;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.NbtIgnoreList;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferHandlerHelper;
-import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
 
 import javax.annotation.*;
 

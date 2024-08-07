@@ -2,8 +2,8 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
-import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.MathUtil;

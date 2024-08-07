@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
-import net.glasslauncher.mods.alwaysmoreitems.Focus;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 
 import javax.annotation.*;
 import java.util.*;

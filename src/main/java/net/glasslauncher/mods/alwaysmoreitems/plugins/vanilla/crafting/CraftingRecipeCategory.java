@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.DrawableHelper;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
@@ -31,7 +31,7 @@ public class CraftingRecipeCategory implements RecipeCategory {
 	public CraftingRecipeCategory() {
 		background = DrawableHelper.createDrawable("/gui/crafting.png", 29, 16, 116, 54);
 		localizedName = TranslationStorage.getInstance().get("gui.alwaysmoreitems.category.craftingTable");
-		craftingGridHelper = new net.glasslauncher.mods.alwaysmoreitems.CraftingGridHelper(craftInputSlot1, craftOutputSlot);
+		craftingGridHelper = new net.glasslauncher.mods.alwaysmoreitems.recipe.CraftingGridHelper(craftInputSlot1, craftOutputSlot);
 	}
 
 	@Override

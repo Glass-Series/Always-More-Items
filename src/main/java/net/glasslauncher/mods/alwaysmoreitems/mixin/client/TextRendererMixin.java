@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 import net.minecraft.client.font.TextRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

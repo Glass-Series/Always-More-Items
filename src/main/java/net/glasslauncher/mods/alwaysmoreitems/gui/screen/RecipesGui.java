@@ -2,9 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.screen;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.glasslauncher.mods.alwaysmoreitems.AMITextRenderer;
-import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.Focus;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;

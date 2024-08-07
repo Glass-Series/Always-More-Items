@@ -1,7 +1,7 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.config;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.config.ConfigItemBlacklist;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.gcapi.api.ConfigEntry;
 import net.glasslauncher.mods.gcapi.api.ConfigRoot;
 import net.glasslauncher.mods.gcapi.api.GCAPI;

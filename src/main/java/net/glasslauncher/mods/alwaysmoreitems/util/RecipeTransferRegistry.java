@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandler;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferInfo;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.BasicRecipeTransferHandler;

@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 
 import javax.annotation.*;

@@ -1,8 +1,8 @@
-package net.glasslauncher.mods.alwaysmoreitems.network.c2s;
+package net.glasslauncher.mods.alwaysmoreitems.impl.network.c2s;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.impl.action.ActionButtonRegistry;
 import net.minecraft.network.NetworkHandler;

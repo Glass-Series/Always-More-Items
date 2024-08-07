@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems.network;
+package net.glasslauncher.mods.alwaysmoreitems.impl.network;
 
 import net.minecraft.nbt.NbtElement;
 

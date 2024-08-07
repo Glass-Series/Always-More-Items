@@ -1,10 +1,10 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMIDrawContext;
-import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.Focus;
-import net.glasslauncher.mods.alwaysmoreitems.RenderHelper;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMIDrawContext;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
+import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
 import net.glasslauncher.mods.alwaysmoreitems.util.CycleTimer;
 import net.minecraft.client.Minecraft;

@@ -1,8 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.init;
 
-import net.glasslauncher.mods.alwaysmoreitems.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.ItemFilter;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemFilter;
 import net.mine_diver.unsafeevents.event.PhaseOrdering;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.mine_diver.unsafeevents.listener.ListenerPriority;

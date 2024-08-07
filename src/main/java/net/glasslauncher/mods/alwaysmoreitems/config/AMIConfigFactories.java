@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.config;
 
 import com.google.common.collect.ImmutableMap;
 import net.glasslauncher.mods.gcapi.api.ConfigEntry;

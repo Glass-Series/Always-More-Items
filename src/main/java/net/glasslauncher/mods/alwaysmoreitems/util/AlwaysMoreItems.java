@@ -1,8 +1,10 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.util;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
+import net.glasslauncher.mods.alwaysmoreitems.registry.AMIItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemFilter;
+import net.glasslauncher.mods.alwaysmoreitems.registry.RecipeRegistry;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.Null;

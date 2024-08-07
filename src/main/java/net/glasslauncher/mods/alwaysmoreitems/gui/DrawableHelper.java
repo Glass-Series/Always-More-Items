@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems;
+package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
@@ -6,6 +6,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.TickTimer;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableBlank;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableResource;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 
 import javax.annotation.*;
 

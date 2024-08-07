@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.event;
 
-import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.impl.action.ActionButtonRegistry;
 import net.mine_diver.unsafeevents.Event;
