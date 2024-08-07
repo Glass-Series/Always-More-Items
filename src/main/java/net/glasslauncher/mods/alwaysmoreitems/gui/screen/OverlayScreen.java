@@ -16,6 +16,7 @@ import net.glasslauncher.mods.alwaysmoreitems.impl.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.ActionButtonPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.GiveItemPacket;
+import net.glasslauncher.mods.alwaysmoreitems.util.Commands;
 import net.glasslauncher.mods.alwaysmoreitems.util.ItemStackElement;
 import net.glasslauncher.mods.gcapi.api.GCAPI;
 import net.glasslauncher.mods.gcapi.impl.GlassYamlFile;
@@ -26,6 +27,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
@@ -315,31 +317,26 @@ public class OverlayScreen extends Screen {
                 }
                 return;
             }
-            if (minecraft.world.isRemote) {
+            if (AlwaysMoreItems.isAMIOnServer()) {
+                NbtCompound itemNbt = new NbtCompound();
+                hoveredItem.item.writeNbt(itemNbt);
+
                 if (button == 0) { // LMB - Give Stack
-                    PacketHelper.send(new GiveItemPacket(
-                                    ItemRegistry.INSTANCE.getId(hoveredItem.item.getItem()),
-                                    hoveredItem.item.getDamage(),
-                                    Math.min(hoveredItem.item.getMaxCount(), leftClickGiveAmount)
-                            )
-                    );
-                } else if (button == 1) { // RMB - Give One
-                    PacketHelper.send(new GiveItemPacket(
-                                    ItemRegistry.INSTANCE.getId(hoveredItem.item.getItem()),
-                                    hoveredItem.item.getDamage(),
-                                    rightClickGiveAmount
-                            )
-                    );
+                    itemNbt.putByte("Count", (byte) Math.min(rightClickGiveAmount, hoveredItem.item.getMaxCount()));
                 }
+                else if (button == 1) { // RMB - Give One
+                    itemNbt.putByte("Count", (byte) leftClickGiveAmount);
+                }
+                else {
+                    return; // Some other mouse button was pressed
+                }
+
+                PacketHelper.send(new GiveItemPacket(itemNbt));
             } else {
                 if (button == 0) { // LMB - Give Stack
-                    ItemStack itemStack = hoveredItem.item.copy();
-                    itemStack.count = Math.min(leftClickGiveAmount, itemStack.getMaxCount());
-                    minecraft.player.inventory.method_671(itemStack);
+                    Commands.giveStack(hoveredItem.item, Math.min(rightClickGiveAmount, hoveredItem.item.getMaxCount()));
                 } else if (button == 1) { // RMB - Give One
-                    ItemStack itemStack = hoveredItem.item.copy();
-                    itemStack.count = rightClickGiveAmount;
-                    minecraft.player.inventory.method_671(itemStack);
+                    Commands.giveStack(hoveredItem.item, leftClickGiveAmount);
                 }
             }
         }
