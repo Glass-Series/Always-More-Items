@@ -1,14 +1,14 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
-import net.glasslauncher.mods.gcapi.impl.screen.widget.ExtensibleTextFieldWidget;
+import net.glasslauncher.mods.gcapi3.impl.screen.widget.ExtensibleTextFieldWidget;
 import net.minecraft.client.font.TextRenderer;
 
 public class SearchTextFieldWidget extends ExtensibleTextFieldWidget {
 
     public SearchTextFieldWidget(TextRenderer textRenderer, int x, int y, int width, int height) {
         super(textRenderer);
-        glass_config_api$setXYWH(x, y, width, height);
+        setXYWH(x, y, width, height);
     }
 
     @Override

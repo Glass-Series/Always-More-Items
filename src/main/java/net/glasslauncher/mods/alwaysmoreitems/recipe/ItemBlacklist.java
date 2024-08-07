@@ -1,6 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.recipe;
 
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfigObject;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
@@ -43,7 +44,7 @@ public class ItemBlacklist implements net.glasslauncher.mods.alwaysmoreitems.api
 		}
 		List<String> uids = AlwaysMoreItems.getStackHelper().getUniqueIdentifiersWithWildcard(itemStack);
 		for (String uid : uids) {
-			if (itemBlacklist.contains(uid) || AMIConfig.itemBlacklist.contains(uid)) {
+			if (itemBlacklist.contains(uid) || AMIConfig.INSTANCE.itemBlacklist.contains(uid)) {
 				return true;
 			}
 		}

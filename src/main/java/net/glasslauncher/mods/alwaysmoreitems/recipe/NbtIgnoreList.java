@@ -32,7 +32,7 @@ public class NbtIgnoreList implements net.glasslauncher.mods.alwaysmoreitems.api
 			AlwaysMoreItems.LOGGER.error("Null nbtTagName", new NullPointerException());
 			return false;
 		}
-		return AMIConfig.nbtBlacklist.contains(nbtTagName) || nbtTagNameBlacklist.contains(nbtTagName);
+		return AMIConfig.INSTANCE.nbtBlacklist.contains(nbtTagName) || nbtTagNameBlacklist.contains(nbtTagName);
 	}
 
 	@Nullable
@@ -52,7 +52,7 @@ public class NbtIgnoreList implements net.glasslauncher.mods.alwaysmoreitems.api
 
 		Set<String> allIgnoredKeysForItem = itemNbtTagNameBlacklist.get(itemStack.getItem());
 
-		Set<String> ignoredKeysConfig = Sets.intersection(keys, new HashSet<>(AMIConfig.nbtBlacklist));
+		Set<String> ignoredKeysConfig = Sets.intersection(keys, new HashSet<>(AMIConfig.INSTANCE.nbtBlacklist));
 		Set<String> ignoredKeysApi = Sets.intersection(keys, nbtTagNameBlacklist);
 		Set<String> ignoredKeysApiForItem = Sets.intersection(keys, allIgnoredKeysForItem);
 

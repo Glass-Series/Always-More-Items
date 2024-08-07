@@ -37,8 +37,11 @@
       "net.glasslauncher.mods.alwaysmoreitems.plugins.ami.AMIPlugin",
       "net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
     ],
-    "gcapi": [
+    "gcapi3": [
       "net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig"
+    ],
+    "gcapi3:factory_provider": [
+      "net.glasslauncher.mods.alwaysmoreitems.config.AMIConfigFactories"
     ]
   },
   "mixins": [

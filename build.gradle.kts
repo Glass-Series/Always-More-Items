@@ -87,6 +87,7 @@ dependencies {
 	modImplementation("net.glasslauncher.mods:ModMenu:${project.properties["modmenu_version"]}") {
 		isTransitive = false
 	}
+
 	implementation("me.carleslc:Simple-Yaml:1.8.4")
 	modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") {
 		isTransitive = false

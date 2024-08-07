@@ -2,10 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.config;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
-import net.glasslauncher.mods.gcapi.api.ConfigEntry;
-import net.glasslauncher.mods.gcapi.api.ConfigRoot;
-import net.glasslauncher.mods.gcapi.api.GCAPI;
-import net.glasslauncher.mods.gcapi.impl.GlassYamlFile;
+import net.glasslauncher.mods.gcapi3.api.ConfigRoot;
+import net.glasslauncher.mods.gcapi3.api.GCAPI;
+import net.glasslauncher.mods.gcapi3.impl.GlassYamlFile;
 import net.minecraft.item.ItemStack;
 
 import java.io.*;
@@ -16,46 +15,18 @@ public class AMIConfig {
             value = "config",
             visibleName = "Main Config"
     )
-    public static final AMIConfigInstance INSTANCE = new AMIConfigInstance();
+    public static final AMIConfigObject INSTANCE = new AMIConfigObject();
 
     public static boolean isRecipeAnimationsEnabled() {
         return true;
     }
-
-    // TODO: Hide item blacklist?
-    public static class AMIConfigInstance {
-
-        @ConfigEntry(name = "Cheat Mode")
-        public Boolean cheatMode = false;
-
-        @ConfigEntry(name = "Edit Mode")
-        public Boolean editMode = false;
-
-        @ConfigEntry(name = "Debug Mode")
-        public Boolean debugMode = false;
-
-        @ConfigEntry(name = "Show Mod Names")
-        public Boolean showModNames = true;
-    }
-
-    @ConfigEntry(
-            name = "Item Blacklist",
-            description = ""// todo: do the desc
-    )
-    public static ConfigItemBlacklist itemBlacklist = new ConfigItemBlacklist();
-
-    @ConfigEntry(
-            name = "NBT Blacklist",
-            description = ""// todo: do the desc
-    )
-    public static ConfigItemBlacklist nbtBlacklist = new ConfigItemBlacklist();
 
     public static void addItemToConfigBlacklist(ItemStack itemStack, boolean wildcard) {
         if (itemStack == null) {
             return;
         }
         String uid = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack, wildcard);
-        if (itemBlacklist.add(uid)) {
+        if (INSTANCE.itemBlacklist.add(uid)) {
             updateBlacklist();
         }
     }
@@ -65,14 +36,14 @@ public class AMIConfig {
             return;
         }
         String uid = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack, wildcard);
-        if (itemBlacklist.remove(uid)) {
+        if (INSTANCE.itemBlacklist.remove(uid)) {
             updateBlacklist();
         }
     }
 
     public static boolean isItemOnConfigBlacklist(ItemStack itemStack, boolean wildcard) {
         String uid = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(itemStack, wildcard);
-        return itemBlacklist.contains(uid);
+        return INSTANCE.itemBlacklist.contains(uid);
     }
 
     public static boolean isDebugModeEnabled() {
