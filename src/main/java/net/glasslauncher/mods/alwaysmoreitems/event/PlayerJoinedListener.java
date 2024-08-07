@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.event;
 
-import net.glasslauncher.mods.alwaysmoreitems.impl.network.s2c.RecipeSyncPacket;
+import net.glasslauncher.mods.alwaysmoreitems.network.s2c.RecipeSyncPacket;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.server.event.network.PlayerLoginEvent;

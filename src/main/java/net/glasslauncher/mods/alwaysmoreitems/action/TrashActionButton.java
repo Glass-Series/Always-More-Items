@@ -1,4 +1,4 @@
-package net.glasslauncher.mods.alwaysmoreitems.impl.action;
+package net.glasslauncher.mods.alwaysmoreitems.action;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
