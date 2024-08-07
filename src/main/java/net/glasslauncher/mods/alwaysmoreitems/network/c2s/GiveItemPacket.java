@@ -4,12 +4,19 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
+import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.modificationstation.stationapi.api.StationAPI;
 import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
+import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
@@ -19,55 +26,46 @@ import java.io.*;
 @SuppressWarnings("CallToPrintStackTrace")
 public class GiveItemPacket extends Packet implements IdentifiablePacket {
     private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("give_item");
+    private static final String STATION_ID = StationAPI.NAMESPACE.id("id").toString();
 
-    //    public int id;
-    public int damage;
-    public int count;
-    public Identifier itemIdentifier;
+    private NbtCompound itemNbt;
+    private int dataLength;
 
     public GiveItemPacket() {
     }
 
-    public GiveItemPacket(Identifier itemIdentifier, int damage, int count) {
-        this.itemIdentifier = itemIdentifier;
-        this.damage = damage;
-        this.count = count;
+    public GiveItemPacket(NbtCompound nbt) {
+        itemNbt = nbt;
     }
 
     @Override
     public void read(DataInputStream stream) {
-        try {
-            count = stream.readInt();
-            damage = stream.readInt();
-            itemIdentifier = Identifier.of(stream.readUTF());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        itemNbt = new NbtCompound();
+        ((NbtElement) itemNbt).read(stream);
     }
 
     @Override
     public void write(DataOutputStream stream) {
-        try {
-            stream.writeInt(count);
-            stream.writeInt(damage);
-            stream.writeUTF(itemIdentifier.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        dataLength = NetworkHelper.writeAndGetNbtLength(itemNbt, stream);
     }
 
     @Override
     public void apply(NetworkHandler networkHandler) {
-        handleServer(networkHandler);
+        try {
+            handleServer(networkHandler);
+        } catch (NoSuchMethodError ignored) {
+            handleClient();
+        }
     }
 
     @Environment(EnvType.SERVER)
     public void handleServer(NetworkHandler networkHandler) {
         if (networkHandler instanceof ServerPlayNetworkHandler serverPlay) {
-            Item item = ItemRegistry.INSTANCE.get(itemIdentifier);
+            String id = itemNbt.getString(STATION_ID);
+            Item item = ItemRegistry.INSTANCE.get(Identifier.of(id));
 
             if (item == null) {
-                AlwaysMoreItems.LOGGER.warn("{} tried to give an invalid item with id {}", serverPlay.getName(), itemIdentifier);
+                AlwaysMoreItems.LOGGER.warn("{} tried to give an invalid item with id {}", serverPlay.getName(), id);
                 return;
             }
 
@@ -76,8 +74,9 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
                 return;
             }
 
-            serverPlay.player.inventory.method_671(new ItemStack(ItemRegistry.INSTANCE.getRawId(item), count, damage));
-            serverPlay.player.method_490("Gave " + count + " " + item.getTranslatedName() + "@" + damage);
+            ItemStack itemStack = new ItemStack(itemNbt);
+            serverPlay.player.inventory.method_671(itemStack);
+            serverPlay.player.method_490("Gave " + itemStack.count + " " + itemStack.getItem().getTranslatedName() + "@" + itemStack.getDamage());
 
             // Mark the inventory dirty
             serverPlay.player.inventory.markDirty();
@@ -91,9 +90,23 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
         }
     }
 
+    @Environment(EnvType.CLIENT)
+    public void handleClient() {
+            String id = itemNbt.getString(STATION_ID);
+            Item item = ItemRegistry.INSTANCE.get(Identifier.of(id));
+            if (item == null) {
+                AlwaysMoreItems.LOGGER.warn("Invalid item id {}", id);
+                return;
+            }
+
+            ItemStack itemStack = new ItemStack(itemNbt);
+            itemStack.count = Math.min(OverlayScreen.leftClickGiveAmount, itemStack.getMaxCount());
+            Minecraft.INSTANCE.player.inventory.method_671(itemStack);
+    }
+
     @Override
     public int size() {
-        return 8 + itemIdentifier.toString().length();
+        return dataLength;
     }
 
     @Override
@@ -103,14 +116,5 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
 
     public static void register() {
         IdentifiablePacket.register(IDENTIFIER, false, true, GiveItemPacket::new);
-    }
-
-    @Override
-    public String toString() {
-        return "GiveItemC2SPacket{" +
-                "count=" + count +
-                ", damage=" + damage +
-                ", itemIdentifier=" + itemIdentifier +
-                '}';
     }
 }
