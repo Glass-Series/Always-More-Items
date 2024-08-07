@@ -12,27 +12,21 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class ConfigItemBlackListHandler extends ConfigEntryHandler<ConfigItemBlacklist> implements ConfigEntryWithButton {
-    private ConfigItemBlacklist blacklist;
+public abstract class BaseBlackListHandler<T extends ArrayList<String>> extends ConfigEntryHandler<T> implements ConfigEntryWithButton {
+    protected T blacklist;
 
-    public ConfigItemBlackListHandler(String id, ConfigEntry configEntry, Field parentField, Object parentObject, boolean multiplayerSynced, ConfigItemBlacklist value, ConfigItemBlacklist defaultValue) {
+    public BaseBlackListHandler(String id, ConfigEntry configEntry, Field parentField, Object parentObject, boolean multiplayerSynced, T value, T defaultValue) {
         super(id, configEntry, parentField, parentObject, multiplayerSynced, value, defaultValue);
         blacklist = value;
     }
 
     @Override
-    public ConfigItemBlacklist getDrawableValue() {
+    public T getDrawableValue() {
         return blacklist;
     }
 
     @Override
-    public boolean isValueValid() {
-        blacklist = blacklist.stream().filter(string -> ItemRegistry.INSTANCE.containsId(Identifier.of(string))).collect(Collectors.toCollection(ConfigItemBlacklist::new));
-        return true;
-    }
-
-    @Override
-    public void setDrawableValue(ConfigItemBlacklist value) {
+    public void setDrawableValue(T value) {
         blacklist = value;
     }
 
@@ -43,7 +37,7 @@ public class ConfigItemBlackListHandler extends ConfigEntryHandler<ConfigItemBla
 
     @Override
     public void reset(Object defaultValue) throws IllegalAccessException {
-        value = (ConfigItemBlacklist) ((ConfigItemBlacklist) defaultValue).clone();
+        value = (T) ((T) defaultValue).clone();
         saveToField();
     }
 
