@@ -208,6 +208,9 @@ public class AMITooltipSystem {
             event.add(Formatting.GRAY + AMITextRenderer.ITALICS + ItemRegistry.INSTANCE.getId(event.itemStack.getItem()));
         }
 
+        if (AMIConfig.showNbtCount()) {
+            event.add(Formatting.GRAY + AMITextRenderer.ITALICS + event.itemStack.getStationNbt().values().size());
+        }
         if (AMIConfig.showModNames()) {
             event.add(Formatting.BLUE + AMITextRenderer.ITALICS + AlwaysMoreItems.getItemRegistry().getModNameForItem(event.itemStack.getItem()));
         }

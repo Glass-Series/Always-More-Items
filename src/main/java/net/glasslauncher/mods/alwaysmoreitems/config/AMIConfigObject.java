@@ -16,6 +16,9 @@ public class AMIConfigObject {
     @ConfigEntry(name = "Show Mod Names")
     public Boolean showModNames = true;
 
+    @ConfigEntry(name = "Show Nbt Counts")
+    public Boolean showNbtCount = true;
+
     @ConfigEntry(
             name = "Item Blacklist",
             description = "", // todo: do the desc
