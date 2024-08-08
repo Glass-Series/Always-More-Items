@@ -51,7 +51,7 @@ public class TooltipInstance {
             containerScreen = null;
             screenWidth = screenHeight = backgroundWidth = backgroundHeight = 0;
             setupTooltip();
-            screenIsNull();
+            onScreenIsNull();
             return;
         }
         screenWidth = screen.width;
@@ -81,7 +81,7 @@ public class TooltipInstance {
         int xStart = bounds.one();
         int yStart = bounds.two();
 
-        int xPos = xStart + textXOffset(false);
+        int xPos = xStart + getTextXOffset(false);
         int yOffset = getPadding(TooltipEdge.BOTTOM) + AMITextRenderer.FONT_HEIGHT;
 
         for (int i = 0; i < tooltip.size() - 1; i++) {
@@ -99,7 +99,7 @@ public class TooltipInstance {
         QuadTuple<Integer, Integer, Integer, Integer> bounds = getBounds(true);
         renderBackground(bounds, true);
 
-        int leftPadding = textXOffset(true);
+        int leftPadding = getTextXOffset(true);
         int topPadding = getPadding(TooltipEdge.LEFT);
         int xPos = bounds.one() + leftPadding;
         int yPos = bounds.two() + topPadding;
@@ -163,7 +163,7 @@ public class TooltipInstance {
     }
 
     // To allow for people to not crash the game if they're intentionally running this outside the default location (on a screen.)
-    public void screenIsNull() {
+    public void onScreenIsNull() {
         throw new RuntimeException("Screen is null when it shouldn't be");
     }
 
@@ -174,7 +174,7 @@ public class TooltipInstance {
         return edge.padding;
     }
 
-    public int textXOffset(boolean header) {
+    public int getTextXOffset(boolean header) {
         if(!header) {
             return getPadding(TooltipEdge.LEFT);
         }
