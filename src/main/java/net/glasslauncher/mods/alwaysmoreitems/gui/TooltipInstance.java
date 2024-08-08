@@ -2,10 +2,14 @@ package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
+import net.glasslauncher.mods.alwaysmoreitems.init.ClientInit;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
@@ -22,6 +26,7 @@ import java.util.List;
  * Extra note, you can render multiple tooltips, if absolutely required, by using a negative priority.
  */
 public class TooltipInstance {
+    private static final ItemRenderer ITEM_RENDERER = new ItemRenderer();
     public static final Color DEFAULT_FONT_COLOR = new Color(255, 255, 255, 255);
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(0, 0, 0, 192);
 
@@ -88,6 +93,13 @@ public class TooltipInstance {
             int yPos = yStart + (yOffset * i) + getPadding(TooltipEdge.TOP);
             AMITextRenderer.INSTANCE.drawWithShadow(tooltip.get(i + 1), xPos, yPos, DEFAULT_FONT_COLOR.getRGB());
         }
+
+        int itemX = bounds.one() + ((bounds.three() - bounds.one()) / 2) - 8;
+        int itemY = bounds.two() - 24;
+
+        RenderHelper.enableItemLighting();
+        ITEM_RENDERER.method_1487(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, itemStack, itemX, itemY);
+        RenderHelper.disableItemLighting();
     }
 
     public void renderHeader() {
