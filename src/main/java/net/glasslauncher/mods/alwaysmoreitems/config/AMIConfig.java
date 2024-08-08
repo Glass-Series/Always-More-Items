@@ -62,6 +62,10 @@ public class AMIConfig {
         return INSTANCE.showModNames;
     }
 
+    public static int getRightClickGiveAmount() {
+        return INSTANCE.rightClickGiveAmount;
+    }
+
     public static boolean showNbtCount() {
         return INSTANCE.showNbtCount;
     }

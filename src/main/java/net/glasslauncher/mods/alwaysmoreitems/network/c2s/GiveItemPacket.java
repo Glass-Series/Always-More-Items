@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +21,6 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.io.*;
 
-@SuppressWarnings("CallToPrintStackTrace")
 public class GiveItemPacket extends Packet implements IdentifiablePacket {
     private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("give_item");
     private static final String STATION_ID = StationAPI.NAMESPACE.id("id").toString();
@@ -74,8 +72,9 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
             }
 
             ItemStack itemStack = new ItemStack(itemNbt);
-            serverPlay.player.inventory.method_671(itemStack);
+            itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
             serverPlay.player.method_490("Gave " + itemStack.count + " " + itemStack.getItem().getTranslatedName() + "@" + itemStack.getDamage());
+            serverPlay.player.inventory.method_671(itemStack);
 
             // Mark the inventory dirty
             serverPlay.player.inventory.markDirty();
@@ -99,7 +98,7 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
             }
 
             ItemStack itemStack = new ItemStack(itemNbt);
-            itemStack.count = Math.min(OverlayScreen.leftClickGiveAmount, itemStack.getMaxCount());
+            itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
             Minecraft.INSTANCE.player.inventory.method_671(itemStack);
     }
 
