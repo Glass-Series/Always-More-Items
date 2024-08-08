@@ -17,6 +17,12 @@ public class AMIConfigObject {
     public Boolean showModNames = true;
 
     @ConfigEntry(
+            name = "Right Click Give Amount",
+            maxLength = 64
+    )
+    public Integer rightClickGiveAmount = 1;
+
+    @ConfigEntry(
             name = "Item Blacklist",
             description = "", // todo: do the desc
             hidden = true

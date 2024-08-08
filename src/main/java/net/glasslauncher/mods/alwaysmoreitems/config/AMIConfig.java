@@ -61,4 +61,8 @@ public class AMIConfig {
     public static boolean showModNames() {
         return INSTANCE.showModNames;
     }
+
+    public static int getRightClickGiveAmount() {
+        return INSTANCE.rightClickGiveAmount;
+    }
 }

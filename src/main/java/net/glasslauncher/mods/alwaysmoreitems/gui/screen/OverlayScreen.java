@@ -75,8 +75,6 @@ public class OverlayScreen extends Screen {
     boolean rolloverPage = true;
     public boolean flipScrollDirection = false;
     public ItemRenderEntry hoveredItem = null;
-    public static int leftClickGiveAmount = 64;
-    public static int rightClickGiveAmount = 1;
 
     // Screen Rescaling Stuff
     private int lastWidth = 0;
@@ -321,10 +319,10 @@ public class OverlayScreen extends Screen {
                 hoveredItem.item.writeNbt(itemNbt);
 
                 if (button == 0) { // LMB - Give Stack
-                    itemNbt.putByte("Count", (byte) Math.min(rightClickGiveAmount, hoveredItem.item.getMaxCount()));
+                    itemNbt.putByte("Count", (byte) hoveredItem.item.getMaxCount());
                 }
                 else if (button == 1) { // RMB - Give One
-                    itemNbt.putByte("Count", (byte) leftClickGiveAmount);
+                    itemNbt.putByte("Count", (byte) Math.min(AMIConfig.getRightClickGiveAmount(), hoveredItem.item.getMaxCount()));
                 }
                 else {
                     return; // Some other mouse button was pressed
@@ -333,9 +331,9 @@ public class OverlayScreen extends Screen {
                 PacketHelper.send(new GiveItemPacket(itemNbt));
             } else {
                 if (button == 0) { // LMB - Give Stack
-                    Commands.giveStack(hoveredItem.item, Math.min(rightClickGiveAmount, hoveredItem.item.getMaxCount()));
+                    Commands.giveStack(hoveredItem.item, hoveredItem.item.getMaxCount());
                 } else if (button == 1) { // RMB - Give One
-                    Commands.giveStack(hoveredItem.item, leftClickGiveAmount);
+                    Commands.giveStack(hoveredItem.item, Math.min(AMIConfig.getRightClickGiveAmount(), hoveredItem.item.getMaxCount()));
                 }
             }
         }
