@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.*;
 
 public enum Rarity {
+    VANILLA("Vanilla", 'z', 0, new Color(255, 255, 255), new Color(0, 0, 0, 192), new Color(0, 0, 0, 192), HeaderCode.NONE),
     BAD("Bad", 'a', -1, new Color(AMITextRenderer.getColorFromCode('7')), HeaderCode.BAD),
     NONE("None", 'b', 0, new Color(AMITextRenderer.getColorFromCode('f')), HeaderCode.NONE),
     COMMON("Common", 'c', 1, new Color(AMITextRenderer.getColorFromCode('a')), HeaderCode.NONE),

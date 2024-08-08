@@ -7,6 +7,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.CharacterUtils;
 import net.modificationstation.stationapi.api.util.Formatting;
+import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -85,6 +86,10 @@ public class AMITextRenderer extends TextRenderer {
         return 0;
     }
 
+    /**
+     * Use {@link #draw(String, int, int, int, boolean)} instead.
+     */
+    @ApiStatus.Internal
     public void renderStringAtPos(String text, int posX, int posY, Color color, boolean shadow) {
         boolean randomStyle = false;
         boolean boldStyle = false;

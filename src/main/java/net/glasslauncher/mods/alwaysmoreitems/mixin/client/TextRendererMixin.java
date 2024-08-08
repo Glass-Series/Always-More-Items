@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
+import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 import net.minecraft.client.font.TextRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +18,9 @@ public class TextRendererMixin {
         if (string == null) {
             ci.cancel();
             return;
+        }
+        if (!string.isEmpty() && string.charAt(0) == Rarity.HeaderCode.PREFIX_CHARACTER) {
+            string = string.substring(2); // Rarities didn't process on this string for some reason, skip it.
         }
         if (shadow) {
             int shadowOffset = color & -16777216;

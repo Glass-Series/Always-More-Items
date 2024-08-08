@@ -15,6 +15,7 @@ import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
+import net.modificationstation.stationapi.api.util.math.Vec2f;
 import uk.co.benjiweber.expressions.tuple.TriTuple;
 
 import java.util.*;
@@ -43,7 +44,7 @@ public class AMITooltipSystem {
                     int headerWidth = rarity.headerCode.icon[0].length;
                     firstTip = firstTip.substring(2);
                     tooltip.set(0, "");
-                    int firstTipLen = AMITextRenderer.INSTANCE.getWidth(firstTip);
+                    int firstTipLen = AMITextRenderer.INSTANCE.getWidth(firstTip) + (headerWidth * 2);
                     AtomicInteger biggestSize = new AtomicInteger();
                     tooltip.forEach(string -> {
                         int textWidth; // Lazy hack lmao
@@ -53,7 +54,6 @@ public class AMITooltipSystem {
                     });
                     if (biggestSize.get() != 0) {
                         tooltipWidth -= headerWidth;
-                        tooltipX += headerWidth;
                     }
                     // Something's overcalculating this, and this is just the easiest way of fixing it. Please don't hurt me.
                     tooltipWidth -= headerWidth;
@@ -163,28 +163,29 @@ public class AMITooltipSystem {
         if (event.itemStack == null) { // Nothing to do here.
             return;
         }
-        int offsetX;
-        int offsetY;
-        int containerWidth;
-        int containerHeight;
-        if (event.container != null) {
-            containerWidth = event.container.width;
-            containerHeight = event.container.height;
-            offsetX = (containerWidth - event.container.backgroundWidth) / 2;
-            offsetY = (containerHeight - event.container.backgroundHeight) / 2;
-        }
-        else {
-            containerWidth = containerHeight = offsetX = offsetY = 0;
-        }
-
-        String itemName = (TranslationStorage.getInstance().get(event.itemStack.getTranslationKey() + ".name"));
-        List<String> tooltip = TooltipHelper.getTooltipForItemStack(itemName, event.itemStack, event.inventory, event.container);
-        int tooltipX = event.mouseX - offsetX;
-        int tooltipY = event.mouseY - offsetY;
-
-        TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(event.mouseX, event.mouseY, tooltip, containerWidth, containerHeight);
-
-        AMITooltipSystem.drawTooltip(tooltip, result.one() + tooltipX, result.two() + tooltipY, result.three());
+//        int offsetX;
+//        int offsetY;
+//        int containerWidth;
+//        int containerHeight;
+//        if (event.container != null) {
+//            containerWidth = event.container.width;
+//            containerHeight = event.container.height;
+//            offsetX = (containerWidth - event.container.backgroundWidth) / 2;
+//            offsetY = (containerHeight - event.container.backgroundHeight) / 2;
+//        }
+//        else {
+//            containerWidth = containerHeight = offsetX = offsetY = 0;
+//        }
+//
+//        String itemName = (TranslationStorage.getInstance().get(event.itemStack.getTranslationKey() + ".name"));
+//        List<String> tooltip = TooltipHelper.getTooltipForItemStack(itemName, event.itemStack, event.inventory, event.container);
+//        int tooltipX = event.mouseX - offsetX;
+//        int tooltipY = event.mouseY - offsetY;
+//
+//        TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(event.mouseX, event.mouseY, tooltip, containerWidth, containerHeight);
+//
+//        AMITooltipSystem.drawTooltip(tooltip, result.one() + tooltipX, result.two() + tooltipY, result.three());
+        new TooltipInstance(TranslationStorage.getInstance().get(event.itemStack.getTranslationKey() + ".name"), event.itemStack, event.mouseX, event.mouseY).render();
         event.cancel();
     }
 
