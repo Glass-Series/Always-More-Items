@@ -10,7 +10,6 @@ import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 import uk.co.benjiweber.expressions.tuple.BiTuple;
-import uk.co.benjiweber.expressions.tuple.QuadTuple;
 
 import java.awt.*;
 import java.util.*;
@@ -38,6 +37,7 @@ public class TooltipInstance {
     protected final HandledScreen containerScreen;
 
     protected List<String> tooltip;
+
     protected int cachedTooltipWidth = 0;
 
     public TooltipInstance(@NotNull String simpleTip, @NotNull ItemStack itemStack, int cursorX, int cursorY) {
@@ -74,12 +74,12 @@ public class TooltipInstance {
 
     public void render() {
         GL11.glEnable(GL11.GL_BLEND);
-        QuadTuple<Integer, Integer, Integer, Integer> bounds = getBounds(false);
+        Bounds bounds = getBounds(false);
         renderBackground(bounds, false);
         renderHeader();
 
-        int xStart = bounds.one();
-        int yStart = bounds.two();
+        int xStart = bounds.x1();
+        int yStart = bounds.y1();
 
         int xPos = xStart + getTextXOffset(false);
         int yOffset = getPadding(TooltipEdge.BOTTOM) + AMITextRenderer.FONT_HEIGHT;
@@ -96,31 +96,31 @@ public class TooltipInstance {
             throw new RuntimeException("Header text is null or empty somehow");
         }
 
-        QuadTuple<Integer, Integer, Integer, Integer> bounds = getBounds(true);
+        Bounds bounds = getBounds(true);
         renderBackground(bounds, true);
 
         int leftPadding = getTextXOffset(true);
         int topPadding = getPadding(TooltipEdge.LEFT);
-        int xPos = bounds.one() + leftPadding;
-        int yPos = bounds.two() + topPadding;
+        int xPos = bounds.x1() + leftPadding;
+        int yPos = bounds.y1() + topPadding;
         AMITextRenderer.INSTANCE.drawWithShadow(headerText, xPos, yPos, rarity.textColor.getRGB());
     }
 
-    public void renderBackground(QuadTuple<Integer, Integer, Integer, Integer> bounds, boolean header) {
-        AMIDrawContext.INSTANCE.fill(bounds.one(), bounds.two(), bounds.three(), bounds.four(), header ? rarity.backgroundColor.getRGB() : DEFAULT_BACKGROUND_COLOR.getRGB());
+    public void renderBackground(Bounds bounds, boolean header) {
+        AMIDrawContext.INSTANCE.fill(bounds.x1(), bounds.y1(), bounds.x2(), bounds.y2(), header ? rarity.backgroundColor.getRGB() : DEFAULT_BACKGROUND_COLOR.getRGB());
         if (header) {
             drawIcons(bounds);
         }
     }
 
-    public void drawIcons(QuadTuple<Integer, Integer, Integer, Integer> bounds) {
+    public void drawIcons(Bounds bounds) {
         boolean[][] icon = rarity.headerCode.icon;
         int templateWidth = icon[0].length;
         List<Integer> edgesToStretch = new ArrayList<>();
 
-        int x1 = bounds.one();
-        int y1 = bounds.two();
-        int x2 = bounds.three();
+        int x1 = bounds.x1();
+        int y1 = bounds.y1();
+        int x2 = bounds.x2();
 
         for (int y = 0; y < icon.length; y++) {
             for (int x = 0; x < icon[y].length; x++) {
@@ -139,18 +139,23 @@ public class TooltipInstance {
         edgesToStretch.forEach(edge -> AMIDrawContext.INSTANCE.fill(x1 + templateWidth, y1 + edge, x2 - templateWidth, y1 + 1 + edge, rarity.iconColor.getRGB()));
     }
 
-    public QuadTuple<Integer, Integer, Integer, Integer> getBounds(boolean header) {
+    public Bounds getBounds(boolean header) {
         BiTuple<Integer, Integer> offsets = getOffset(isFlipped());
-        int xContainerOffset = containerScreen == null ? 0 : -((containerScreen.width - containerScreen.backgroundWidth) / 2);
-        int yContainerOffset = containerScreen == null ? 0 : -((containerScreen.height - containerScreen.backgroundHeight) / 2);
+        int xOffset = containerScreen == null ? 0 : -((containerScreen.width - containerScreen.backgroundWidth) / 2);
+        int yOffset = containerScreen == null ? 0 : -((containerScreen.height - containerScreen.backgroundHeight) / 2);
         if (!header) {
-            yContainerOffset += getHeight(true);
+            yOffset += getHeight(true);
         }
-        return QuadTuple.of(
-                cursorX + offsets.one() + xContainerOffset,
-                cursorY + offsets.two() + yContainerOffset,
-                cursorX + offsets.one() + xContainerOffset + getWidth(),
-                cursorY + offsets.two() + yContainerOffset + getHeight(header)
+        yOffset += Math.min(0,
+                screenHeight - (
+                                cursorY + offsets.two() + getHeight(false) + getHeight(true)
+                )
+        );
+        return new Bounds(
+                cursorX + offsets.one() + xOffset,
+                cursorY + offsets.two() + yOffset,
+                cursorX + offsets.one() + xOffset + getWidth(),
+                cursorY + offsets.two() + yOffset + getHeight(header)
         );
     }
 
@@ -215,7 +220,7 @@ public class TooltipInstance {
     }
 
     public boolean isFlipped() {
-        return getOffset(false).one() + cursorX + getWidth() >= screenWidth;
+        return getOffset(false).one() + cursorX + getWidth() > screenWidth;
     }
 
     public BiTuple<Integer, Integer> getOffset(boolean flipped) {
@@ -224,4 +229,6 @@ public class TooltipInstance {
         }
         return BiTuple.of(9, -15);
     }
+
+    public record Bounds(int x1, int y1, int x2, int y2) {}
 }
