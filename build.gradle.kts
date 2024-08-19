@@ -28,8 +28,9 @@ repositories {
 //		name = 'Glass Releases'
 		url = "https://maven.glass-launcher.net/releases"
 	)
+	// Used for StationAPI dev builds.
 	maven (
-//		name = 'Glass Releases'
+//		name = 'Glass Snapshots'
 		url = "https://maven.glass-launcher.net/snapshots"
 	)
 	// Used for a StationAPI dependency.
