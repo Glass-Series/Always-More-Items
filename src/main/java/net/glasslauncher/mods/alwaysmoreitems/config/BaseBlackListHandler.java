@@ -4,13 +4,10 @@ import net.glasslauncher.mods.gcapi3.api.ConfigEntry;
 import net.glasslauncher.mods.gcapi3.api.ConfigEntryWithButton;
 import net.glasslauncher.mods.gcapi3.api.HasDrawable;
 import net.glasslauncher.mods.gcapi3.impl.object.ConfigEntryHandler;
-import net.modificationstation.stationapi.api.registry.ItemRegistry;
-import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.stream.*;
 
 public abstract class BaseBlackListHandler<T extends ArrayList<String>> extends ConfigEntryHandler<T> implements ConfigEntryWithButton {
     protected T blacklist;

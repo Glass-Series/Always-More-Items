@@ -2,11 +2,11 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
-import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;

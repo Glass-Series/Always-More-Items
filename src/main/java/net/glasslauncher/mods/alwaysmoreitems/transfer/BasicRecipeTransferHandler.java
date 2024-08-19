@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
-import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
@@ -9,6 +8,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransfer
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferInfo;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.RecipeTransferPacket;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.StackHelper;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;

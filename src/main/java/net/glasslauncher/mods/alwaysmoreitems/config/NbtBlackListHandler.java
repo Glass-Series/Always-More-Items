@@ -1,8 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.config;
 
 import net.glasslauncher.mods.gcapi3.api.ConfigEntry;
-import net.modificationstation.stationapi.api.registry.ItemRegistry;
-import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.lang.reflect.*;
 import java.util.stream.*;

@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.ami;
 
-import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
@@ -11,6 +10,7 @@ import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescri
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;

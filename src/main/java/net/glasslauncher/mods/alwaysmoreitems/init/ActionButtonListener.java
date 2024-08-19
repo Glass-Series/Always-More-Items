@@ -1,10 +1,10 @@
 package net.glasslauncher.mods.alwaysmoreitems.init;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.event.ActionButtonRegisterEvent;
 import net.glasslauncher.mods.alwaysmoreitems.action.HealActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.action.SetTimeActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.action.ToggleWeatherActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.action.TrashActionButton;
+import net.glasslauncher.mods.alwaysmoreitems.api.event.ActionButtonRegisterEvent;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;

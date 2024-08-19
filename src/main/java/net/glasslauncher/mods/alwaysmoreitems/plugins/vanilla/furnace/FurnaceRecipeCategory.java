@@ -1,9 +1,9 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
-import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 
 import javax.annotation.*;
 

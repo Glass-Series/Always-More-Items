@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
-import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.*;

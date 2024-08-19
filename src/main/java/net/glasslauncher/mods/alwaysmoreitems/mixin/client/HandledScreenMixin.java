@@ -1,8 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
-import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.screen.slot.Slot;

@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMIDrawContext;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMIDrawContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
 import org.lwjgl.opengl.GL11;
