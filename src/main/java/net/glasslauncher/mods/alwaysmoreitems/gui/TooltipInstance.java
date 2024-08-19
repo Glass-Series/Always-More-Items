@@ -174,6 +174,7 @@ public class TooltipInstance {
                                 cursorY + offsets.two() + getHeight(false) + getHeight(true)
                 )
         );
+        yOffset += Math.max(0, -(cursorY + offsets.two())); // But it could also be too high up, so account for that too.
         return new Bounds(
                 cursorX + offsets.one(),
                 cursorY + offsets.two() + yOffset,
