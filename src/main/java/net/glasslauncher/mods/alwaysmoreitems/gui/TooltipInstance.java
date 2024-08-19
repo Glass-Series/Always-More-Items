@@ -8,12 +8,13 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 import uk.co.benjiweber.expressions.tuple.BiTuple;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * This is a special class that renders AFTER the whole GUI has been rendered. This garuantees no weird item overlapping.
@@ -24,17 +25,21 @@ public class TooltipInstance {
     public static final Color DEFAULT_FONT_COLOR = new Color(255, 255, 255, 255);
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(0, 0, 0, 192);
 
-    protected final String simpleTip;
-    protected final ItemStack itemStack;
-    protected final int cursorX;
-    protected final int cursorY;
-    protected final Rarity rarity;
-    protected final int screenWidth;
-    protected final int screenHeight;
-    protected final int backgroundWidth;
-    protected final int backgroundHeight;
-    protected final Screen screen;
-    protected final HandledScreen containerScreen;
+    @Nullable
+    protected String simpleTip;
+    @Nullable
+    protected ItemStack itemStack;
+    protected int cursorX;
+    protected int cursorY;
+    protected Rarity rarity;
+    protected int screenWidth;
+    protected int screenHeight;
+    @Nullable
+    protected Screen screen;
+    @Nullable
+    protected HandledScreen containerScreen;
+
+    private int priority = 0;
 
     protected List<String> tooltip;
 
@@ -46,10 +51,30 @@ public class TooltipInstance {
         this.cursorX = cursorX;
         this.cursorY = cursorY;
         rarity = itemStack.getItem() instanceof RarityProvider rarityProvider ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
+        commonInit();
+    }
+
+    public TooltipInstance(@NotNull List<String> tooltip, int cursorX, int cursorY, Rarity rarity) {
+        this.tooltip = tooltip;
+        this.cursorX = cursorX;
+        this.cursorY = cursorY;
+        this.rarity = rarity;
+        commonInit();
+    }
+
+    public TooltipInstance(@NotNull List<String> tooltip, int cursorX, int cursorY) {
+        this.tooltip = tooltip;
+        this.cursorX = cursorX;
+        this.cursorY = cursorY;
+        this.rarity = Rarity.VANILLA;
+        commonInit();
+    }
+
+    public void commonInit() {
         screen = Minecraft.INSTANCE.currentScreen;
         if (screen == null) {
             containerScreen = null;
-            screenWidth = screenHeight = backgroundWidth = backgroundHeight = 0;
+            screenWidth = screenHeight = 0;
             setupTooltip();
             onScreenIsNull();
             return;
@@ -58,18 +83,17 @@ public class TooltipInstance {
         screenHeight = screen.height;
         if (screen instanceof HandledScreen handledScreen) {
             containerScreen = handledScreen;
-            backgroundWidth = containerScreen.backgroundWidth;
-            backgroundHeight = containerScreen.backgroundHeight;
         }
         else {
             containerScreen = null;
-            backgroundWidth = backgroundHeight = 0;
         }
         setupTooltip();
     }
 
     public void setupTooltip() {
-        tooltip = TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen);
+        if (itemStack != null) {
+            tooltip = TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen);
+        }
     }
 
     public void render() {
@@ -141,8 +165,7 @@ public class TooltipInstance {
 
     public Bounds getBounds(boolean header) {
         BiTuple<Integer, Integer> offsets = getOffset(isFlipped());
-        int xOffset = containerScreen == null ? 0 : -((containerScreen.width - containerScreen.backgroundWidth) / 2);
-        int yOffset = containerScreen == null ? 0 : -((containerScreen.height - containerScreen.backgroundHeight) / 2);
+        int yOffset = 0;
         if (!header) {
             yOffset += getHeight(true);
         }
@@ -152,19 +175,15 @@ public class TooltipInstance {
                 )
         );
         return new Bounds(
-                cursorX + offsets.one() + xOffset,
+                cursorX + offsets.one(),
                 cursorY + offsets.two() + yOffset,
-                cursorX + offsets.one() + xOffset + getWidth(),
+                cursorX + offsets.one() + getWidth(),
                 cursorY + offsets.two() + yOffset + getHeight(header)
         );
     }
 
     public int getHeaderHeight() {
         return AMITextRenderer.FONT_HEIGHT + getPadding(rarity.equals(Rarity.VANILLA) ? TooltipEdge.HEADER_BOTTOM : TooltipEdge.HEADER_TOP_BOTTOM);
-    }
-
-    public void register() {
-        // Queue the tooltip for rendering.
     }
 
     // To allow for people to not crash the game if they're intentionally running this outside the default location (on a screen.)
@@ -228,6 +247,14 @@ public class TooltipInstance {
             return BiTuple.of(-9 - getWidth(), -15);
         }
         return BiTuple.of(9, -15);
+    }
+
+    public @Nullable ItemStack getItemStack() {
+        return itemStack;
+    }
+
+    public @Nullable HandledScreen getContainerScreen() {
+        return containerScreen;
     }
 
     public record Bounds(int x1, int y1, int x2, int y2) {}

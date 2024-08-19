@@ -1,14 +1,14 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import lombok.Getter;
-import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
-import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.RecipeTransferButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.GuiIngredient;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.GuiItemStackGroup;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -102,7 +102,7 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
 				// older wrappers don't have this method
 			}
 			if (tooltipStrings != null && !tooltipStrings.isEmpty()) {
-				AMITooltipSystem.drawTooltip(tooltipStrings, recipeMouseX, recipeMouseY, false);
+				AMITooltipSystem.queueTooltip(tooltipStrings);
 			}
 		}
 

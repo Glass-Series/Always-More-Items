@@ -11,7 +11,8 @@
     "ShapedRecipeMixin",
     "ShapelessRecipeMixin",
     "StationShapedRecipeMixin",
-    "StationShapelessRecipeMixin"
+    "StationShapelessRecipeMixin",
+    "client.HijackStapiTooltipsMixin"
   ],
   "server": [
   ],

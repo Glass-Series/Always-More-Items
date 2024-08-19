@@ -2,14 +2,14 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.screen;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.RecipeTransferButton;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferUtil;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
 import net.glasslauncher.mods.alwaysmoreitems.util.RecipeGuiLogic;
@@ -382,7 +382,7 @@ public class RecipesGui extends Screen {
         if (titleHoverChecker.isOver(mouseX, mouseY)) {
             Focus focus = logic.getFocus();
             if (focus != null && !focus.isBlank()) {
-                AMITooltipSystem.drawTooltip(Collections.singletonList(TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.show.all.recipes")), mouseX, mouseY, false);
+                AMITooltipSystem.queueTooltip(Collections.singletonList(TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.show.all.recipes")));
             }
         }
     }

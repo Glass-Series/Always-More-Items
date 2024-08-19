@@ -2,20 +2,20 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.screen;
 
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
+import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
-import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemFilter;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
-import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.ActionButtonPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.GiveItemPacket;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemFilter;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.Commands;
 import net.glasslauncher.mods.alwaysmoreitems.util.ItemStackElement;
 import net.glasslauncher.mods.gcapi3.api.GCAPI;
@@ -34,7 +34,6 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import uk.co.benjiweber.expressions.tuple.TriTuple;
 
 import javax.management.*;
 import java.util.*;
@@ -256,12 +255,9 @@ public class OverlayScreen extends Screen {
             currentTooltip = new ArrayList<>(){{add(TranslationStorage.getInstance().get("button.alwaysmoreitems.trash.cursor", TranslationStorage.getInstance().get(Minecraft.INSTANCE.player.inventory.getCursorStack().getTranslationKey() + ".name")));}};
         }
 
-        // Tooltip offsets
-        TriTuple<Integer, Integer, Boolean> result = AMITooltipSystem.getTooltipOffsets(mouseX, mouseY, currentTooltip, width, height);
-
-        // Draw Tooltip
+        // Queue Tooltip
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            AMITooltipSystem.drawTooltip(currentTooltip, mouseX + result.one(), mouseY + result.two(), result.three());
+            AMITooltipSystem.queueTooltip(currentTooltip);
         }
     }
 

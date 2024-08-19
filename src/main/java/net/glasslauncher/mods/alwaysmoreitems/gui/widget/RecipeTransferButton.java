@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferUtil;
 import net.minecraft.client.Minecraft;
@@ -43,7 +43,7 @@ public class RecipeTransferButton extends ButtonWidget {
 			if (recipeTransferError != null) {
 				recipeTransferError.showError(mc, mouseX, mouseY, 0, 0, recipeLayout);
 			} else {
-				AMITooltipSystem.drawTooltip(Collections.singletonList(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? transferMaxTooltip : transferTooltip), mouseX, mouseY, false);
+				AMITooltipSystem.queueTooltip(Collections.singletonList(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? transferMaxTooltip : transferTooltip));
 			}
 		}
 	}

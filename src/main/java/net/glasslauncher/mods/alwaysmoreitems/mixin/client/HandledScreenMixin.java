@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
+import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
@@ -11,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HandledScreen.class)
@@ -44,5 +46,15 @@ public abstract class HandledScreenMixin extends Screen {
                 ci.cancel();
             }
         }
+    }
+
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/slot/Slot;hasStack()Z"))
+    private boolean yourTooltipsAreMineAgain(Slot slot) {
+        if (!slot.hasStack()) { // Nothing to do here.
+            return false;
+        }
+
+        AMITooltipSystem.queueTooltip(slot.getStack());
+        return false;
     }
 }

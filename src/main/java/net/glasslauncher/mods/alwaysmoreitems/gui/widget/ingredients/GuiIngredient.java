@@ -1,11 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
+import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMIDrawContext;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
-import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.CycleTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -146,7 +146,7 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
                 tooltipCallback.onTooltip(slotIndex, input, value, tooltip);
             }
 
-            AMITooltipSystem.drawTooltip(tooltip, mouseX, mouseY, false);
+            AMITooltipSystem.queueTooltip(tooltip);
 
             GL11.glEnable(GL11.GL_DEPTH_TEST);
         } catch (RuntimeException e) {
