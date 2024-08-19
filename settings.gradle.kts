@@ -1,3 +1,5 @@
+rootProject.name = "AlwaysMoreItems"
+
 pluginManagement {
     repositories {
         maven (

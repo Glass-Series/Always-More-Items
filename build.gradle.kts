@@ -12,7 +12,7 @@ project.java {
 	targetCompatibility = JavaVersion.VERSION_17
 }
 
-//base.archivesName = project.properties["archives_base_name"]
+base.archivesName.set(project.properties["archives_base_name"] as String)
 version = project.properties["mod_version"]!!
 group = project.properties["maven_group"]!!
 
