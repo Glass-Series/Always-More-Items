@@ -19,11 +19,11 @@ public class StationShapedRecipeMixin implements SyncableRecipe {
 
     @Shadow @Final private ItemStack output;
 
-    @Shadow @Final private Either<TagKey<Item>, ItemStack>[] grid;
+    @Shadow(remap = false) @Final private Either<TagKey<Item>, ItemStack>[] grid;
 
-    @Shadow @Final private int width;
+    @Shadow(remap = false) @Final private int width;
 
-    @Shadow @Final private int height;
+    @Shadow(remap = false) @Final private int height;
 
     @Override
     public NbtCompound exportRecipe() {

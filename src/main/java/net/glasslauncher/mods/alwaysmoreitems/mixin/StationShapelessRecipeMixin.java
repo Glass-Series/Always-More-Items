@@ -19,7 +19,7 @@ public class StationShapelessRecipeMixin implements SyncableRecipe {
 
     @Shadow @Final private ItemStack output;
 
-    @Shadow @Final private Either<TagKey<Item>, ItemStack>[] ingredients;
+    @Shadow(remap = false) @Final private Either<TagKey<Item>, ItemStack>[] ingredients;
 
     @Override
     public NbtCompound exportRecipe() {
