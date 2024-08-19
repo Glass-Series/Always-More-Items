@@ -4,7 +4,6 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.ShapedCraftingR
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.ShapedRecipe;
 import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.recipe.StationRecipe;
 
 import javax.annotation.*;
 import java.util.*;
@@ -16,7 +15,7 @@ public class ShapedRecipesWrapper extends VanillaRecipeWrapper implements Shaped
 
 	public ShapedRecipesWrapper(@Nonnull ShapedRecipe recipe) {
 		this.recipe = recipe;
-		for (ItemStack itemStack : ((StationRecipe) recipe).getIngredients()) {
+		for (ItemStack itemStack : recipe.input) {
 			if (itemStack != null && itemStack.count != 1) {
 				itemStack.count = 1;
 			}
@@ -26,13 +25,13 @@ public class ShapedRecipesWrapper extends VanillaRecipeWrapper implements Shaped
 	@Nonnull
 	@Override
 	public List<?> getInputs() {
-		return Arrays.asList(((StationRecipe) recipe).getIngredients());
+		return Arrays.asList(recipe.input);
 	}
 
 	@Nonnull
 	@Override
 	public List<ItemStack> getOutputs() {
-		return Arrays.asList(((StationRecipe) recipe).getOutputs());
+		return Arrays.asList(recipe.getOutput());
 	}
 
 	@Override

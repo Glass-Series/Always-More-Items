@@ -14,3 +14,7 @@ accessible field net/minecraft/server/network/ServerPlayNetworkHandler server Ln
 accessible field net/minecraft/client/font/TextRenderer field_2462 [I
 
 accessible field net/minecraft/inventory/CraftingInventory stacks [Lnet/minecraft/item/ItemStack;
+
+accessible field net/minecraft/recipe/ShapelessRecipe input Ljava/util/List;
+
+accessible field net/minecraft/ShapedRecipe input [Lnet/minecraft/item/ItemStack;

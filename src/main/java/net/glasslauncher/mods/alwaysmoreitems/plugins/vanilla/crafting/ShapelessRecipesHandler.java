@@ -5,7 +5,6 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShapelessRecipe;
-import net.modificationstation.stationapi.api.recipe.StationRecipe;
 
 import javax.annotation.*;
 
@@ -31,11 +30,11 @@ public class ShapelessRecipesHandler implements RecipeHandler<ShapelessRecipe> {
 
 	@Override
 	public boolean isRecipeValid(@Nonnull ShapelessRecipe recipe) {
-		if (((StationRecipe) recipe).getOutputs() == null) {
+		if (recipe.getOutput() == null) {
 			return false;
 		}
 		int inputCount = 0;
-		for (Object input : ((StationRecipe) recipe).getIngredients()) {
+		for (Object input : recipe.input) {
 			if (input instanceof ItemStack) {
 				inputCount++;
 			} else {

@@ -4,7 +4,6 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.CraftingRecipeW
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShapelessRecipe;
-import net.modificationstation.stationapi.api.recipe.StationRecipe;
 
 import javax.annotation.*;
 import java.util.*;
@@ -16,10 +15,9 @@ public class ShapelessRecipesWrapper extends VanillaRecipeWrapper implements Cra
 
 	public ShapelessRecipesWrapper(@Nonnull ShapelessRecipe recipe) {
 		this.recipe = recipe;
-		for (Object input : ((StationRecipe) recipe).getIngredients()) {
-			if (input instanceof ItemStack) {
-				ItemStack itemStack = (ItemStack) input;
-				if (itemStack.count != 1) {
+		for (Object input : recipe.input) {
+			if (input instanceof ItemStack itemStack) {
+                if (itemStack.count != 1) {
 					itemStack.count = 1;
 				}
 			}
@@ -28,13 +26,13 @@ public class ShapelessRecipesWrapper extends VanillaRecipeWrapper implements Cra
 
 	@Nonnull
 	@Override
-	public List getInputs() {
-		return Arrays.asList(((StationRecipe) recipe).getIngredients());
+	public List<?> getInputs() {
+		return recipe.input;
 	}
 
 	@Nonnull
 	@Override
 	public List<ItemStack> getOutputs() {
-		return Arrays.asList(((StationRecipe) recipe).getOutputs());
+		return Collections.singletonList(recipe.getOutput());
 	}
 }
