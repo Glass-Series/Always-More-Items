@@ -33,7 +33,7 @@ public class AMITooltipSystem {
     }
 
     public static void queueTooltip(List<String> tooltip) {
-        map.put(0, ((screen, mouseX, mouseY) -> new TooltipInstance(tooltip, mouseX, mouseY)));
+        map.put(0, ((screen, mouseX, mouseY) -> new TooltipInstance(new ArrayList<>(tooltip), mouseX, mouseY)));
     }
 
     public static void queueTooltip(TriFunction<Screen, Integer, Integer, TooltipInstance> tooltipProvider, int priority) {
@@ -91,7 +91,7 @@ public class AMITooltipSystem {
         }
 
         if (AMIConfig.showNbtCount()) {
-            event.add(Formatting.GRAY + AMITextRenderer.ITALICS + event.itemStack.getStationNbt().values().size());
+            event.add(Formatting.GRAY + AMITextRenderer.ITALICS + "NBT Count: " + event.itemStack.getStationNbt().values().size());
         }
         if (AMIConfig.showModNames()) {
             event.add(Formatting.BLUE + AMITextRenderer.ITALICS + AlwaysMoreItems.getItemRegistry().getModNameForItem(event.itemStack.getItem()));

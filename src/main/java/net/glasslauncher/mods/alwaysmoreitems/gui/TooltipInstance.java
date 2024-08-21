@@ -2,6 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
+import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.ItemStackRenderer;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
+import net.glasslauncher.mods.alwaysmoreitems.util.ImageUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -10,11 +13,12 @@ import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
-import uk.co.benjiweber.expressions.tuple.BiTuple;
 
 import java.awt.*;
+import java.nio.file.*;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 /**
  * This is a special class that renders AFTER the whole GUI has been rendered. This garuantees no weird item overlapping.
@@ -24,6 +28,8 @@ import java.util.*;
 public class TooltipInstance {
     public static final Color DEFAULT_FONT_COLOR = new Color(255, 255, 255, 255);
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(0, 0, 0, 192);
+    public static final Dimension DEFAULT_OFFSET = new Dimension(9, -15);
+    private static final ItemStackRenderer ITEM_STACK_RENDERER = new ItemStackRenderer();
 
     @Nullable
     protected String simpleTip;
@@ -39,9 +45,7 @@ public class TooltipInstance {
     @Nullable
     protected HandledScreen containerScreen;
 
-    private int priority = 0;
-
-    protected List<String> tooltip;
+    protected List<Object> tooltip;
 
     protected int cachedTooltipWidth = 0;
 
@@ -54,7 +58,7 @@ public class TooltipInstance {
         commonInit();
     }
 
-    public TooltipInstance(@NotNull List<String> tooltip, int cursorX, int cursorY, Rarity rarity) {
+    public TooltipInstance(@NotNull List<Object> tooltip, int cursorX, int cursorY, Rarity rarity) {
         this.tooltip = tooltip;
         this.cursorX = cursorX;
         this.cursorY = cursorY;
@@ -62,8 +66,8 @@ public class TooltipInstance {
         commonInit();
     }
 
-    public TooltipInstance(@NotNull List<String> tooltip, int cursorX, int cursorY) {
-        this.tooltip = tooltip;
+    public TooltipInstance(@NotNull List<Object> tooltip, int cursorX, int cursorY) {
+        this.tooltip = new ArrayList<>(tooltip);
         this.cursorX = cursorX;
         this.cursorY = cursorY;
         this.rarity = Rarity.VANILLA;
@@ -92,7 +96,11 @@ public class TooltipInstance {
 
     public void setupTooltip() {
         if (itemStack != null) {
-            tooltip = TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen);
+            tooltip = new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen));
+            tooltip.add(Divider.INSTANCE);
+            tooltip.add(itemStack);
+            tooltip.add(Divider.INSTANCE);
+            tooltip.add(new Image("/assets/alwaysmoreitems/icon.png"));
         }
     }
 
@@ -106,16 +114,78 @@ public class TooltipInstance {
         int yStart = bounds.y1();
 
         int xPos = xStart + getTextXOffset(false);
-        int yOffset = getPadding(TooltipEdge.BOTTOM) + AMITextRenderer.FONT_HEIGHT;
+        int spacing = getPadding(TooltipEdge.SPACING);
+
+        int yPos = yStart + getPadding(TooltipEdge.TOP);
 
         for (int i = 0; i < tooltip.size() - 1; i++) {
-            int yPos = yStart + (yOffset * i) + getPadding(TooltipEdge.TOP);
-            AMITextRenderer.INSTANCE.drawWithShadow(tooltip.get(i + 1), xPos, yPos, DEFAULT_FONT_COLOR.getRGB());
+            Object line = tooltip.get(i + 1);
+            renderLine(line, xPos, yPos, DEFAULT_FONT_COLOR);
+            yPos += getLineHeight(line) + spacing;
+        }
+    }
+
+    public int getLineHeight(Object line) {
+        if (line instanceof String) {
+            return AMITextRenderer.FONT_HEIGHT;
+        }
+        if (line instanceof Divider) {
+            return 1;
+        }
+        if (line instanceof ItemStack) {
+            return 16;
+        }
+        if (line instanceof Image image) {
+            return image.height;
+        }
+
+        return 0;
+    }
+
+    public int getLineWidth(Object line) {
+        if (line instanceof String string) {
+            return AMITextRenderer.INSTANCE.getWidth(string);
+        }
+        if (line instanceof Divider) {
+            return 1;
+        }
+        if (line instanceof ItemStack) {
+            return 16;
+        }
+        if (line instanceof Image image) {
+            try {
+                return image.width;
+            }
+            catch (Exception e) {
+                AlwaysMoreItems.LOGGER.error(e);
+                return 0;
+            }
+        }
+
+        return 0;
+    }
+
+    public void renderLine(Object line, int x, int y, Color color) {
+        if (line instanceof String string) {
+            AMITextRenderer.INSTANCE.drawWithShadow(string, x, y, color.getRGB());
+        }
+        else if (line instanceof Divider) {
+            AMIDrawContext.INSTANCE.fill(x, y, x + getMaxLineWidth(), y + 1, color.getRGB());
+        }
+        else if (line instanceof ItemStack lineStack) {
+            RenderHelper.enableItemLighting();
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            ITEM_STACK_RENDERER.draw(Minecraft.INSTANCE, x, y, lineStack);
+            RenderHelper.disableItemLighting();
+        }
+        else if (line instanceof Image image) {
+            RenderHelper.bindTexture(image.image);
+            AMIDrawContext.INSTANCE.drawTexture(x, y, 1, 1, image.width, image.height);
         }
     }
 
     public void renderHeader() {
-        String headerText = tooltip.get(0);
+        String headerText = (String) tooltip.get(0); // Header should always be a string.
         if (headerText == null || headerText.isEmpty()) {
             throw new RuntimeException("Header text is null or empty somehow");
         }
@@ -164,27 +234,27 @@ public class TooltipInstance {
     }
 
     public Bounds getBounds(boolean header) {
-        BiTuple<Integer, Integer> offsets = getOffset(isFlipped());
+        Dimension offsets = getOffset(isFlipped());
         int yOffset = 0;
         if (!header) {
             yOffset += getHeight(true);
         }
         yOffset += Math.min(0,
                 screenHeight - (
-                                cursorY + offsets.two() + getHeight(false) + getHeight(true)
+                                cursorY + offsets.height + getHeight(false) + getHeight(true)
                 )
         );
-        yOffset += Math.max(0, -(cursorY + offsets.two())); // But it could also be too high up, so account for that too.
+        yOffset += Math.max(0, -(cursorY + offsets.height)); // But it could also be too high up, so account for that too.
         return new Bounds(
-                cursorX + offsets.one(),
-                cursorY + offsets.two() + yOffset,
-                cursorX + offsets.one() + getWidth(),
-                cursorY + offsets.two() + yOffset + getHeight(header)
+                cursorX + offsets.width,
+                cursorY + offsets.height + yOffset,
+                cursorX + offsets.width + getWidth(),
+                cursorY + offsets.height + yOffset + getHeight(header)
         );
     }
 
     public int getHeaderHeight() {
-        return AMITextRenderer.FONT_HEIGHT + getPadding(rarity.equals(Rarity.VANILLA) ? TooltipEdge.HEADER_BOTTOM : TooltipEdge.HEADER_TOP_BOTTOM);
+        return AMITextRenderer.FONT_HEIGHT + getPadding(rarity.equals(Rarity.VANILLA) ? TooltipEdge.HEADER_VANILLA : TooltipEdge.HEADER_WITH_RARITY);
     }
 
     // To allow for people to not crash the game if they're intentionally running this outside the default location (on a screen.)
@@ -219,7 +289,11 @@ public class TooltipInstance {
         if (header) {
             return getHeaderHeight();
         }
-        return getPadding(TooltipEdge.TOP) + (lines * getPadding(TooltipEdge.BOTTOM)) + (lines * AMITextRenderer.FONT_HEIGHT);
+        ArrayList<Object> headerlessTip = new ArrayList<>(tooltip);
+        headerlessTip.remove(0);
+        AtomicInteger atomicInteger = new AtomicInteger();
+        headerlessTip.forEach(entry -> atomicInteger.addAndGet(getLineHeight(entry)));
+        return getPadding(TooltipEdge.TOP) + (lines * getPadding(TooltipEdge.BOTTOM)) + atomicInteger.get();
     }
 
     public int getWidth() {
@@ -227,27 +301,31 @@ public class TooltipInstance {
             return cachedTooltipWidth;
         }
 
-        OptionalInt potentialWidth = tooltip.stream().mapToInt(AMITextRenderer.INSTANCE::getWidth).max();
-        if (potentialWidth.isEmpty()) {
-            return 0;
-        }
-
-        int headerWidth = AMITextRenderer.INSTANCE.getWidth(tooltip.get(0)) + rarity.headerCode.icon[0].length;
-
-        int maxWidth = Math.max(potentialWidth.getAsInt(), headerWidth);
+        int maxWidth = getMaxLineWidth();
 
         return cachedTooltipWidth = maxWidth + getPadding(TooltipEdge.LEFT_RIGHT);
     }
 
-    public boolean isFlipped() {
-        return getOffset(false).one() + cursorX + getWidth() > screenWidth;
+    public int getMaxLineWidth() {
+        OptionalInt potentialWidth = tooltip.stream().mapToInt(this::getLineWidth).max();
+        if (potentialWidth.isEmpty()) {
+            return 0;
+        }
+
+        int headerWidth = AMITextRenderer.INSTANCE.getWidth((String) tooltip.get(0)) + rarity.headerCode.icon[0].length;
+
+        return Math.max(potentialWidth.getAsInt(), headerWidth);
     }
 
-    public BiTuple<Integer, Integer> getOffset(boolean flipped) {
+    public boolean isFlipped() {
+        return getOffset(false).width + cursorX + getWidth() > screenWidth;
+    }
+
+    public Dimension getOffset(boolean flipped) {
         if (flipped) {
-            return BiTuple.of(-9 - getWidth(), -15);
+            return new Dimension(-9 - getWidth(), -15);
         }
-        return BiTuple.of(9, -15);
+        return DEFAULT_OFFSET;
     }
 
     public @Nullable ItemStack getItemStack() {
@@ -259,4 +337,29 @@ public class TooltipInstance {
     }
 
     public record Bounds(int x1, int y1, int x2, int y2) {}
+
+    public record Dimension(int width, int height) {}
+
+    public static class Image {
+        public final String image;
+        public final int width;
+        public final int height;
+
+        public Image(String image) {
+            this.image = image;
+            try {
+                Dimension dimension = ImageUtil.getImageDimension(Paths.get(this.getClass().getResource(image).toURI()).toFile());
+                width = dimension.width;
+                height = dimension.height;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static class Divider {
+        @SuppressWarnings("InstantiationOfUtilityClass")
+        public static final Divider INSTANCE = new Divider();
+        private Divider() {}
+    }
 }

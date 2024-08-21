@@ -6,9 +6,10 @@ public enum TooltipEdge {
     LEFT_RIGHT(2, 6),
     TOP(0, 3),
     BOTTOM(0, 2),
-    HEADER_BOTTOM(0, 1),
     TOP_BOTTOM(0, 5),
-    HEADER_TOP_BOTTOM(0, 4),
+    HEADER_VANILLA(0, 1),
+    HEADER_WITH_RARITY(0, 4),
+    SPACING(0,2),
     ;
 
     public final int rarityIconCount;
