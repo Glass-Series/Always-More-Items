@@ -32,8 +32,8 @@ public class DebugRecipe extends BlankRecipeWrapper {
 
 	@Nullable
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		List<String> tooltipStrings = new ArrayList<>();
+	public ArrayList<Object> getTooltip(int mouseX, int mouseY) {
+		ArrayList<Object> tooltipStrings = new ArrayList<>();
 		if (button.isMouseOver(Minecraft.INSTANCE, mouseX, mouseY)) {
 			tooltipStrings.add("button tooltip!");
 		} else {

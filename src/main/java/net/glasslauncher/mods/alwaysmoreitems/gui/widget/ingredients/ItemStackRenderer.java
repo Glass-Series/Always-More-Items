@@ -31,8 +31,8 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
 
     @Nonnull
     @Override
-    public List<String> getTooltip(@Nonnull Minecraft minecraft, @Nonnull ItemStack itemStack) {
+    public ArrayList<Object> getTooltip(@Nonnull Minecraft minecraft, @Nonnull ItemStack itemStack) {
         String simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
-        return TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, null);
+        return new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, null));
     }
 }

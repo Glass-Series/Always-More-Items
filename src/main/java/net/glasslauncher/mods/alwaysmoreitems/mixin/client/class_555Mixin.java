@@ -1,10 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
-import net.glasslauncher.mods.alwaysmoreitems.gui.HijackedStapiTip;
-import net.glasslauncher.mods.alwaysmoreitems.gui.TooltipInstance;
+import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
-import net.mine_diver.spasm.impl.util.TriFunction;
 import net.minecraft.class_555;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -29,14 +26,9 @@ public class class_555Mixin {
             instance.render(mouseX, mouseY, delta);
         }
 
-        TriFunction<Screen, Integer, Integer, TooltipInstance> mainTip = AMITooltipSystem.getMainTip();
-        AMITooltipSystem.clearTooltip();
-
-        if (mainTip == null) {
+        if (Tooltip.INSTANCE.isEmpty()) {
             return;
         }
-
-        TooltipInstance tooltipInstance = mainTip.apply(instance, mouseX, mouseY);
 
         TooltipRenderEvent.TooltipRenderEventBuilder<?, ?> builder = TooltipRenderEvent.builder()
                 .mouseX(mouseX)
@@ -46,7 +38,7 @@ public class class_555Mixin {
                 .inventory(Minecraft.INSTANCE.player.inventory)
                 ;
 
-        ItemStack itemStack = tooltipInstance.getItemStack();
+        ItemStack itemStack = Tooltip.INSTANCE.getItemStack();
         if (itemStack != null) {
                 builder
                         .originalTooltip(TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name"))
@@ -57,12 +49,11 @@ public class class_555Mixin {
             builder.originalTooltip("");
         }
 
-        builder.container(tooltipInstance.getContainerScreen());
+        builder.container(Tooltip.INSTANCE.getContainerScreen());
 
         TooltipRenderEvent event = builder.build();
 
-        ((HijackedStapiTip) event).alwaysMoreItems$setTooltip(tooltipInstance);
-
         StationAPI.EVENT_BUS.post(event);
+        Tooltip.INSTANCE.clear();
     }
 }

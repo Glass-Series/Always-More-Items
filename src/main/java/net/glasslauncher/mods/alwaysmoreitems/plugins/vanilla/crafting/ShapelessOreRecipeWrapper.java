@@ -27,7 +27,7 @@ public class ShapelessOreRecipeWrapper extends VanillaRecipeWrapper implements C
 
 	@Nonnull
 	@Override
-	public List getInputs() {
+	public List<?> getInputs() {
 		return Arrays.asList(recipe.getIngredients());
 	}
 

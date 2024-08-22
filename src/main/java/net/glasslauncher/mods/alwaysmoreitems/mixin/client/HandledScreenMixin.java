@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
+import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
@@ -54,7 +54,7 @@ public abstract class HandledScreenMixin extends Screen {
             return false;
         }
 
-        AMITooltipSystem.queueTooltip(slot.getStack());
+        Tooltip.INSTANCE.setTooltip(slot.getStack(), mouseX, mouseY);
         return false;
     }
 }

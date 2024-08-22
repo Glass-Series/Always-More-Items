@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.*;
 import java.awt.*;
@@ -61,6 +60,7 @@ public class FuelRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 			flame = DrawableHelper.createAnimatedDrawable(flameDrawable, burnTime, AnimatedDrawable.StartDirection.TOP, true);
 		}
 		else {
+			flame = null;
 			burnTimeStringTicks = null;
 			burnTimeStringItems = null;
 			burnTimeStringSeconds = null;
@@ -69,7 +69,6 @@ public class FuelRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 			burnTimeStringItemsWidth = 0;
 			burnTimeStringItemsTooltipChecker = null;
 			burnTimeStringSecondsTooltipChecker = null;
-			flame = null;
 		}
 	}
 
@@ -91,15 +90,14 @@ public class FuelRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 		flame.draw(minecraft, 2, 0);
 	}
 
-	@Nullable
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+	public ArrayList<Object> getTooltip(int mouseX, int mouseY) {
 		if(burnTimeStringItemsTooltipChecker.isOver(mouseX, mouseY)) {
-			return Collections.singletonList(burnTimeStringItemsFull);
+			return new ArrayList<>(){{add(burnTimeStringItemsFull);}};
 		}
 
 		if (burnTimeStringSecondsTooltipChecker.isOver(mouseX, mouseY)) {
-			return Collections.singletonList(burnTimeStringSecondsFull);
+			return new ArrayList<>(){{add(burnTimeStringSecondsFull);}};
 		}
 
 		return null;

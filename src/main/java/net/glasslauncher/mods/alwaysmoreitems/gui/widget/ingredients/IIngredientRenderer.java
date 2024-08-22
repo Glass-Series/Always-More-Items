@@ -9,5 +9,5 @@ public interface IIngredientRenderer<T> {
     void draw(@Nonnull Minecraft minecraft, int xPosition, int yPosition, @Nullable T value);
 
     @Nonnull
-    List<String> getTooltip(@Nonnull Minecraft minecraft, @Nonnull T value);
+    ArrayList<Object> getTooltip(@Nonnull Minecraft minecraft, @Nonnull T value);
 }

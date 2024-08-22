@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.*;
 import java.awt.*;
@@ -122,10 +121,9 @@ public class ItemDescriptionRecipe implements RecipeWrapper {
 
 	}
 
-	@Nullable
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		return Collections.emptyList();
+	public ArrayList<Object> getTooltip(int mouseX, int mouseY) {
+		return null;
 	}
 
 	@Override

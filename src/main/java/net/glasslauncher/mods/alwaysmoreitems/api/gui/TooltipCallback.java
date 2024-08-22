@@ -6,5 +6,5 @@ public interface TooltipCallback<T> {
     /**
      * Change the tooltip for an ingredient.
      */
-    void onTooltip(int slotIndex, boolean input, T ingredient, List<String> tooltip);
+    void onTooltip(int slotIndex, boolean input, T ingredient, ArrayList<Object> tooltip);
 }

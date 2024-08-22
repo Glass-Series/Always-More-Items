@@ -40,7 +40,7 @@ public abstract class BlankRecipeWrapper implements RecipeWrapper {
 
     @Nullable
     @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY) {
+    public ArrayList<Object> getTooltip(int mouseX, int mouseY) {
         return null;
     }
 

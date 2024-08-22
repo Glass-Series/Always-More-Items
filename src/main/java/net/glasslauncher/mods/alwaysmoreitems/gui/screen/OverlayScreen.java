@@ -5,8 +5,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
-import net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
+import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.SearchTextFieldWidget;
@@ -257,7 +257,7 @@ public class OverlayScreen extends Screen {
 
         // Queue Tooltip
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            AMITooltipSystem.queueTooltip(currentTooltip);
+            Tooltip.INSTANCE.setTooltip(new ArrayList<>(currentTooltip), mouseX, mouseY);
         }
     }
 

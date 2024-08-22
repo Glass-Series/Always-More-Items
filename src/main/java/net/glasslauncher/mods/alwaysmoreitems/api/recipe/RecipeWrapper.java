@@ -55,7 +55,7 @@ public interface RecipeWrapper {
      * @return tooltip strings. If there is no tooltip at this position, return null or an empty list.
      */
     @Nullable
-    List<String> getTooltipStrings(int mouseX, int mouseY);
+    ArrayList<Object> getTooltip(int mouseX, int mouseY);
 
     /**
      * Called when a player clicks the recipe.

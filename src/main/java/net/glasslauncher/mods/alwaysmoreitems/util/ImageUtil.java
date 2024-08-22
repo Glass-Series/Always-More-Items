@@ -1,10 +1,9 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
-import net.glasslauncher.mods.alwaysmoreitems.gui.TooltipInstance;
+import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 
 import javax.imageio.*;
 import javax.imageio.stream.*;
-import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -16,7 +15,7 @@ public class ImageUtil {
      * @return dimensions of image
      * @throws IOException if the file is not a known image
      */
-    public static TooltipInstance.Dimension getImageDimension(File imgFile) throws IOException {
+    public static Tooltip.Dimension getImageDimension(File imgFile) throws IOException {
         int pos = imgFile.getName().lastIndexOf(".");
         if (pos == -1) {
             throw new IOException("No extension for file: " + imgFile.getAbsolutePath());
@@ -35,7 +34,7 @@ public class ImageUtil {
             int width = reader.getWidth(reader.getMinIndex());
             int height = reader.getHeight(reader.getMinIndex());
             reader.dispose();
-            return new TooltipInstance.Dimension(width, height);
+            return new Tooltip.Dimension(width, height);
         } catch (IOException e) {
             reader.dispose();
             throw e;

@@ -95,14 +95,14 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
 //		} else if (hoveredFluidStack != null) {
 //			hoveredFluidStack.drawHovered(minecraft, recipeMouseX, recipeMouseY);
 		} else if (recipeMouseX >= 0 && recipeMouseX < background.getWidth() && recipeMouseY >= 0 && recipeMouseY < background.getHeight()) {
-			List<String> tooltipStrings = null;
+			List<Object> tooltipStrings = null;
 			try {
-				tooltipStrings = recipeWrapper.getTooltipStrings(recipeMouseX, recipeMouseY);
+				tooltipStrings = recipeWrapper.getTooltip(recipeMouseX, recipeMouseY);
 			} catch (AbstractMethodError ignored) {
 				// older wrappers don't have this method
 			}
 			if (tooltipStrings != null && !tooltipStrings.isEmpty()) {
-				AMITooltipSystem.queueTooltip(tooltipStrings);
+				Tooltip.INSTANCE.setTooltip(tooltipStrings, mouseX, mouseY);
 			}
 		}
 
