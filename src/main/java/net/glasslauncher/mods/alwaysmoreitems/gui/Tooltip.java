@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
+import lombok.Getter;
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.ItemStackRenderer;
@@ -8,6 +9,7 @@ import net.glasslauncher.mods.alwaysmoreitems.util.ImageUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.jetbrains.annotations.NotNull;
@@ -21,20 +23,30 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 /**
- * This is a special class that renders AFTER the whole GUI has been rendered. This garuantees no weird item overlapping.
- * Note that the last mod to register an instance of this with the controller takes precedent if there's multiple tooltips with the same priority.
- * Extra note, you can render multiple tooltips, if absolutely required, by using a negative priority.
+ * This is a special class that renders AFTER the whole GUI has been rendered. This garuantees no weird overlapping.
+ * Note that the last mod to set the instance is the one that controls the tooltip.
  */
-public class TooltipInstance {
+public class Tooltip {
+    public static final Tooltip INSTANCE = new Tooltip();
+
     public static final Color DEFAULT_FONT_COLOR = new Color(255, 255, 255, 255);
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(0, 0, 0, 192);
     public static final Dimension DEFAULT_OFFSET = new Dimension(9, -15);
     private static final ItemStackRenderer ITEM_STACK_RENDERER = new ItemStackRenderer();
 
+    /**
+     * The original "vanilla" tooltip. Typically the item name.
+     */
     @Nullable
     protected String simpleTip;
+    /**
+     * The itemstack that this tooltip is rendering for. This is not garuanteed to exist, due to
+     */
     @Nullable
     protected ItemStack itemStack;
+    /**
+     *
+     */
     protected int cursorX;
     protected int cursorY;
     protected Rarity rarity;
@@ -49,16 +61,21 @@ public class TooltipInstance {
 
     protected int cachedTooltipWidth = 0;
 
-    public TooltipInstance(@NotNull String simpleTip, @NotNull ItemStack itemStack, int cursorX, int cursorY) {
-        this.simpleTip = simpleTip;
+    private Tooltip() {}
+
+    public void setTooltip(@NotNull ItemStack itemStack, int cursorX, int cursorY) {
+        this.simpleTip = null;
         this.itemStack = itemStack;
+        this.tooltip = null;
         this.cursorX = cursorX;
         this.cursorY = cursorY;
-        rarity = itemStack.getItem() instanceof RarityProvider rarityProvider ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
+        this.rarity = itemStack.getItem() instanceof RarityProvider rarityProvider ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
         commonInit();
     }
 
-    public TooltipInstance(@NotNull List<Object> tooltip, int cursorX, int cursorY, Rarity rarity) {
+    public void setTooltip(@NotNull List<Object> tooltip, int cursorX, int cursorY, Rarity rarity) {
+        this.simpleTip = null;
+        this.itemStack = null;
         this.tooltip = tooltip;
         this.cursorX = cursorX;
         this.cursorY = cursorY;
@@ -66,7 +83,9 @@ public class TooltipInstance {
         commonInit();
     }
 
-    public TooltipInstance(@NotNull List<Object> tooltip, int cursorX, int cursorY) {
+    public void setTooltip(@NotNull List<Object> tooltip, int cursorX, int cursorY) {
+        this.simpleTip = null;
+        this.itemStack = null;
         this.tooltip = new ArrayList<>(tooltip);
         this.cursorX = cursorX;
         this.cursorY = cursorY;
@@ -96,15 +115,19 @@ public class TooltipInstance {
 
     public void setupTooltip() {
         if (itemStack != null) {
-            tooltip = new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen));
-            tooltip.add(Divider.INSTANCE);
-            tooltip.add(itemStack);
-            tooltip.add(Divider.INSTANCE);
-            tooltip.add(new Image("/assets/alwaysmoreitems/icon.png"));
+            tooltip = new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name"), itemStack, Minecraft.INSTANCE.player.inventory, containerScreen));
         }
     }
 
+    public void clear() {
+        tooltip = null;
+        cachedTooltipWidth = 0;
+    }
+
     public void render() {
+        if (isEmpty()) {
+            return;
+        }
         GL11.glEnable(GL11.GL_BLEND);
         Bounds bounds = getBounds(false);
         renderBackground(bounds, false);
@@ -136,7 +159,7 @@ public class TooltipInstance {
             return 16;
         }
         if (line instanceof Image image) {
-            return image.height;
+            return image.getHeight();
         }
 
         return 0;
@@ -154,7 +177,7 @@ public class TooltipInstance {
         }
         if (line instanceof Image image) {
             try {
-                return image.width;
+                return image.getWidth();
             }
             catch (Exception e) {
                 AlwaysMoreItems.LOGGER.error(e);
@@ -179,8 +202,7 @@ public class TooltipInstance {
             RenderHelper.disableItemLighting();
         }
         else if (line instanceof Image image) {
-            RenderHelper.bindTexture(image.image);
-            AMIDrawContext.INSTANCE.drawTexture(x, y, 1, 1, image.width, image.height);
+            image.draw(x, y, getMaxLineWidth(), color);
         }
     }
 
@@ -298,15 +320,19 @@ public class TooltipInstance {
 
     public int getWidth() {
         if (cachedTooltipWidth != 0) {
-            return cachedTooltipWidth;
+            return cachedTooltipWidth + getPadding(TooltipEdge.LEFT_RIGHT);
         }
 
         int maxWidth = getMaxLineWidth();
 
-        return cachedTooltipWidth = maxWidth + getPadding(TooltipEdge.LEFT_RIGHT);
+        return maxWidth + getPadding(TooltipEdge.LEFT_RIGHT);
     }
 
     public int getMaxLineWidth() {
+        if (cachedTooltipWidth != 0) {
+            return cachedTooltipWidth;
+        }
+
         OptionalInt potentialWidth = tooltip.stream().mapToInt(this::getLineWidth).max();
         if (potentialWidth.isEmpty()) {
             return 0;
@@ -314,7 +340,7 @@ public class TooltipInstance {
 
         int headerWidth = AMITextRenderer.INSTANCE.getWidth((String) tooltip.get(0)) + rarity.headerCode.icon[0].length;
 
-        return Math.max(potentialWidth.getAsInt(), headerWidth);
+        return cachedTooltipWidth = Math.max(potentialWidth.getAsInt(), headerWidth);
     }
 
     public boolean isFlipped() {
@@ -336,14 +362,24 @@ public class TooltipInstance {
         return containerScreen;
     }
 
+    public boolean isEmpty() {
+        return tooltip == null || tooltip.isEmpty();
+    }
+
     public record Bounds(int x1, int y1, int x2, int y2) {}
 
     public record Dimension(int width, int height) {}
 
+    /**
+     * Used for caching information about images. You should only instantiate this class once, ideally, though I have used a hacky solution to get a guestimate of the image size.
+     * NOTE: There seems to be a limit of 32x32 due to limitations, but frankly, if you need an image larger than this, you shouldn't be putting it in a tooltip.
+     */
     public static class Image {
         public final String image;
-        public final int width;
-        public final int height;
+        @Getter
+        private final int width;
+        @Getter
+        private final int height;
 
         public Image(String image) {
             this.image = image;
@@ -355,11 +391,21 @@ public class TooltipInstance {
                 throw new RuntimeException(e);
             }
         }
+
+        /**
+         * Made as its own method so people could in theory render literally anything they want.
+         */
+        public void draw(int x, int y, int maxTipWidth, Color color) {
+            RenderHelper.bindTexture(image);
+            AMIDrawContext.INSTANCE.drawTexture(x, y, 1, 1, width, height);
+        }
     }
 
-    public static class Divider {
-        @SuppressWarnings("InstantiationOfUtilityClass")
+    /**
+     * When inserted into a tooltip, a horizonal line is rendered.
+     * Don't instantiate, use the instance.
+     */
+    public record Divider() {
         public static final Divider INSTANCE = new Divider();
-        private Divider() {}
     }
 }

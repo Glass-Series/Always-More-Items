@@ -29,3 +29,11 @@ gui.@.category.itemDescription=Description
 @.tooltip.transfer.max=Transfer Maximum Items
 @.tooltip.error.recipe.transfer.missing=Missing Items
 @.tooltip.error.recipe.transfer.inventory.full=Inventory is too full
+
+# Minecraft name fixes
+
+tile.pistonHead.name=Piston Head
+tile.tallgrass.name=Tall Grass
+tile.deadbush.name=Dead Bush
+tile.pistonMoving.name=Moving Piston
+tile.diode.name=Redstone Repeater
