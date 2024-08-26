@@ -90,7 +90,7 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
 
 		if (hoveredItemStack != null) {
 			RenderHelper.enableItemLighting();
-			hoveredItemStack.drawHovered(minecraft, recipeMouseX, recipeMouseY);
+			hoveredItemStack.drawHovered(minecraft, mouseX, mouseY);
 			RenderHelper.disableItemLighting();
 //		} else if (hoveredFluidStack != null) {
 //			hoveredFluidStack.drawHovered(minecraft, recipeMouseX, recipeMouseY);
