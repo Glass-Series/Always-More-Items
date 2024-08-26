@@ -35,8 +35,10 @@ import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import javax.management.*;
-import java.util.*;
+import javax.management.AttributeNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class OverlayScreen extends Screen {
     public static final OverlayScreen INSTANCE = new OverlayScreen();
@@ -89,6 +91,7 @@ public class OverlayScreen extends Screen {
 
     /**
      * Use init(Screen, int, int) instead.
+     *
      * @see #init(Screen, int, int)
      */
     @ApiStatus.Internal
@@ -252,7 +255,9 @@ public class OverlayScreen extends Screen {
         }
 
         if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
-            currentTooltip = new ArrayList<>(){{add(TranslationStorage.getInstance().get("button.alwaysmoreitems.trash.cursor", TranslationStorage.getInstance().get(Minecraft.INSTANCE.player.inventory.getCursorStack().getTranslationKey() + ".name")));}};
+            currentTooltip = new ArrayList<>() {{
+                add(TranslationStorage.getInstance().get("button.alwaysmoreitems.trash.cursor", TranslationStorage.getInstance().get(Minecraft.INSTANCE.player.inventory.getCursorStack().getTranslationKey() + ".name")));
+            }};
         }
 
         // Queue Tooltip
@@ -263,14 +268,18 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
-        // Do not process if not enabled
+        // Pass thru clicks to recipes gui
         recipesGui.mouseClicked(mouseX, mouseY, button);
 
+        // Do not process if not enabled
         if (!AlwaysMoreItems.overlayEnabled) {
             return;
         }
 
-        super.mouseClicked(mouseX, mouseY, button);
+        // Dont pass clicks to inventory if Recipes Screen is actiev
+        if (!recipesGui.isActive()) {
+            super.mouseClicked(mouseX, mouseY, button);
+        }
 
         if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
             if (!minecraft.world.isRemote) {
@@ -316,11 +325,9 @@ public class OverlayScreen extends Screen {
 
                 if (button == 0) { // LMB - Give Stack
                     itemNbt.putByte("Count", (byte) hoveredItem.item.getMaxCount());
-                }
-                else if (button == 1) { // RMB - Give One
+                } else if (button == 1) { // RMB - Give One
                     itemNbt.putByte("Count", (byte) Math.min(AMIConfig.getRightClickGiveAmount(), hoveredItem.item.getMaxCount()));
-                }
-                else {
+                } else {
                     return; // Some other mouse button was pressed
                 }
 
@@ -426,7 +433,9 @@ public class OverlayScreen extends Screen {
 
         if (button.id == settingsButton.id) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile() {{set("cheatMode", !AMIConfig.INSTANCE.cheatMode);}});
+                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile() {{
+                    set("cheatMode", !AMIConfig.INSTANCE.cheatMode);
+                }});
                 return;
             }
             try {
@@ -458,11 +467,9 @@ public class OverlayScreen extends Screen {
         int possibleOverlayStartX;
         if (parent instanceof HandledScreen handledScreen) {
             possibleOverlayStartX = ((parent.width - handledScreen.backgroundWidth) / 2) + handledScreen.backgroundWidth + 10;
-        }
-        else if (parent instanceof RecipesGui recipesGui) {
+        } else if (parent instanceof RecipesGui recipesGui) {
             possibleOverlayStartX = ((parent.width - recipesGui.getXSize()) / 2) + recipesGui.getXSize() + 10;
-        }
-        else {
+        } else {
             throw new RuntimeException("Unsupported Screen fed to OverlayScreen!");
         }
         return Math.min(((width - possibleOverlayStartX) / itemSize), maxItemListWidth);
@@ -551,5 +558,6 @@ public class OverlayScreen extends Screen {
         rebuildRenderList();
     }
 
-    public record ItemRenderEntry (int x, int y, ItemStack item) {}
+    public record ItemRenderEntry(int x, int y, ItemStack item) {
+    }
 }
