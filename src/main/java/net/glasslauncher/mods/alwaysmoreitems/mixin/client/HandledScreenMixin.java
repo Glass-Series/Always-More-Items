@@ -29,7 +29,7 @@ public abstract class HandledScreenMixin extends Screen {
         this.mouseY = mouseY;
     }
 
-    @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
+    //@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
     private void nowSoAreYourInputs(char chr, int keyCode, CallbackInfo ci) {
         Slot hoveredItem = getSlotAt(mouseX, mouseY);
         // Item Actions

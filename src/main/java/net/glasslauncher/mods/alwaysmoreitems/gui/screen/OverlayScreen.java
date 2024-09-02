@@ -28,6 +28,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
@@ -80,6 +81,10 @@ public class OverlayScreen extends Screen {
     // Screen Rescaling Stuff
     private int lastWidth = 0;
     private int lastHeight = 0;
+
+    // Mouse Pos
+    int lastMouseX = 0;
+    int lastMouseY = 0;
 
     private OverlayScreen() {
     }
@@ -181,6 +186,9 @@ public class OverlayScreen extends Screen {
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        lastMouseX = mouseX;
+        lastMouseY = mouseY;
+
         if (recipesGui.isActive()) {
             recipesGui.drawBackground();
         }
@@ -388,6 +396,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Item Actions
+        // Check items from item menu
         if (hoveredItem != null) {
             // Show Recipes
             if (keyCode == KeybindListener.showRecipe.code) {
@@ -399,6 +408,25 @@ public class OverlayScreen extends Screen {
             if (keyCode == KeybindListener.showUses.code) {
                 showUses(new Focus(hoveredItem.item));
                 return true;
+            }
+        }
+
+        // Check Inventory Items
+        if (parent instanceof HandledScreen handled) {
+            Slot hoveredSlot = handled.getSlotAt(lastMouseX, lastMouseY);
+
+            if(hoveredSlot != null && hoveredSlot.hasStack()){
+                // Show Recipes
+                if (keyCode == KeybindListener.showRecipe.code) {
+                    recipesGui.showRecipes(new Focus(hoveredSlot.getStack()));
+                    return true;
+                }
+
+                // Show Uses
+                else if (keyCode == KeybindListener.showUses.code) {
+                    recipesGui.showUses(new Focus(hoveredSlot.getStack()));
+                    return true;
+                }
             }
         }
 
