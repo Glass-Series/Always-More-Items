@@ -369,6 +369,7 @@ public class OverlayScreen extends Screen {
         }
     }
 
+    @Override
     public void keyPressed(char character, int keyCode) {
         if (OverlayScreen.INSTANCE.overlayKeyPressed(character, keyCode)) {
             return;
