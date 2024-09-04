@@ -316,7 +316,7 @@ public class OverlayScreen extends Screen {
 
         // Hovered Item
         if (hoveredItem != null) {
-            if (!AMIConfig.INSTANCE.cheatMode) {
+            if (!AMIConfig.INSTANCE.cheatMode || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));
                 } else if (button == 1) { // RMB - Show Uses
