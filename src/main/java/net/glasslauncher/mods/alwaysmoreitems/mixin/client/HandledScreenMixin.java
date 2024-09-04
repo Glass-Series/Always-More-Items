@@ -18,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HandledScreen.class)
 public abstract class HandledScreenMixin extends Screen {
 
-    @Shadow public abstract Slot getSlotAt(int x, int y);
-
     @Unique private int mouseX = 0;
     @Unique private int mouseY = 0;
 
@@ -27,25 +25,6 @@ public abstract class HandledScreenMixin extends Screen {
     private void mouseCatcher(int mouseX, int mouseY, float delta, CallbackInfo ci) {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-    }
-
-    //@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
-    private void nowSoAreYourInputs(char chr, int keyCode, CallbackInfo ci) {
-        Slot hoveredItem = getSlotAt(mouseX, mouseY);
-        // Item Actions
-        if (hoveredItem != null && hoveredItem.hasStack()) {
-            // Show Recipes
-            if (keyCode == KeybindListener.showRecipe.code) {
-                OverlayScreen.INSTANCE.recipesGui.showRecipes(new Focus(hoveredItem.getStack()));
-                ci.cancel();
-            }
-
-            // Show Uses
-            else if (keyCode == KeybindListener.showUses.code) {
-                OverlayScreen.INSTANCE.recipesGui.showUses(new Focus(hoveredItem.getStack()));
-                ci.cancel();
-            }
-        }
     }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/slot/Slot;hasStack()Z"))
