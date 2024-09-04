@@ -65,8 +65,8 @@ public class OverlayScreen extends Screen {
     public List<String> currentTooltip;
 
     // Item Overlay
-    public static int maxItemListWidth = 10;
-    public static int maxItemListHeight = 100;
+    public static int maxItemListWidth = 200;
+    public static int maxItemListHeight = 400;
     public static int itemSize = 18;
     ArrayList<ItemRenderEntry> renderedItems;
     public ButtonWidget nextButton;
@@ -81,6 +81,8 @@ public class OverlayScreen extends Screen {
     // Screen Rescaling Stuff
     private int lastWidth = 0;
     private int lastHeight = 0;
+    private int lastItemWidth = 0;
+    private int lastItemHeight = 0;
 
     // Mouse Pos
     int lastMouseX = 0;
@@ -484,12 +486,23 @@ public class OverlayScreen extends Screen {
      * recalculates the scaled width and height
      */
     public void rescale() {
-        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight) {
+        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight) {
+            // Get the item list dimensions
+            maxItemListWidth = AMIConfig.INSTANCE.maxItemListWidth;
+            maxItemListHeight = AMIConfig.INSTANCE.maxItemListHeight;
+
+            // Run screen scaler
             class_564 screenScaler = new class_564(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
             width = screenScaler.method_1857();
             height = screenScaler.method_1858();
+
+            // Store Last values
             lastWidth = minecraft.displayWidth;
             lastHeight = minecraft.displayHeight;
+            lastItemWidth = maxItemListWidth;
+            lastItemHeight = maxItemListHeight;
+
+            // Rebuild the screen
             init();
             rebuildRenderList();
             currentPage = 0;

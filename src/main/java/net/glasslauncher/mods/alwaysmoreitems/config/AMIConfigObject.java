@@ -20,6 +20,20 @@ public class AMIConfigObject {
     public Boolean showNbtCount = true;
 
     @ConfigEntry(
+            name = "Max Item List Width",
+            maxLength = 100L,
+            minLength = 5L
+    )
+    public Integer maxItemListWidth = 250;
+
+    @ConfigEntry(
+            name = "Max Item List Height",
+            maxLength = 200L,
+            minLength = 10L
+    )
+    public Integer maxItemListHeight = 1000;
+
+    @ConfigEntry(
             name = "Right Click Give Amount",
             maxLength = 64
     )
