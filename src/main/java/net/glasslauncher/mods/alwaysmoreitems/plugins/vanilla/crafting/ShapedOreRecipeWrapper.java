@@ -39,12 +39,12 @@ public class ShapedOreRecipeWrapper extends VanillaRecipeWrapper implements Shap
 
 	@Override
 	public int getWidth() {
-        return 3;
+        return recipe.width;
 	}
 
 	@Override
 	public int getHeight() {
-        return 3;
+        return recipe.height;
 	}
 
 }
