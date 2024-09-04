@@ -41,7 +41,7 @@ public class RenderHelper {
         GL11.glPopMatrix();
     }
 
-    private static void enableLighting() {
+    public static void enableLighting() {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glEnable(2896 /*GL_LIGHTING*/);
         GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
