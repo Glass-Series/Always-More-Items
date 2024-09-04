@@ -369,6 +369,13 @@ public class OverlayScreen extends Screen {
         }
     }
 
+    public void keyPressed(char character, int keyCode) {
+        if (OverlayScreen.INSTANCE.overlayKeyPressed(character, keyCode)) {
+            return;
+        }
+        super.keyPressed(character, keyCode);
+    }
+
     public boolean overlayKeyPressed(char character, int keyCode) {
         // Toggle Overlay
         if (keyCode == KeybindListener.toggleOverlay.code && !searchField.isSelected()) {
