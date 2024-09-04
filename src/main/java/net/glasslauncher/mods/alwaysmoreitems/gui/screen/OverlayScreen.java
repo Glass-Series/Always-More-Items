@@ -284,10 +284,7 @@ public class OverlayScreen extends Screen {
             return;
         }
 
-        // Dont pass clicks to inventory if Recipes Screen is actiev
-        if (!recipesGui.isActive()) {
-            super.mouseClicked(mouseX, mouseY, button);
-        }
+        super.mouseClicked(mouseX, mouseY, button);
 
         if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
             if (!minecraft.world.isRemote) {
@@ -503,8 +500,8 @@ public class OverlayScreen extends Screen {
         int possibleOverlayStartX;
         if (parent instanceof HandledScreen handledScreen) {
             possibleOverlayStartX = ((parent.width - handledScreen.backgroundWidth) / 2) + handledScreen.backgroundWidth + 10;
-        } else if (parent instanceof RecipesGui recipesGui) {
-            possibleOverlayStartX = ((parent.width - recipesGui.getXSize()) / 2) + recipesGui.getXSize() + 10;
+        } else if (parent instanceof RecipesGui recipesGuiParent) {
+            possibleOverlayStartX = ((parent.width - recipesGuiParent.getXSize()) / 2) + recipesGuiParent.getXSize() + 10;
         } else {
             throw new RuntimeException("Unsupported Screen fed to OverlayScreen!");
         }
