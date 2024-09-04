@@ -24,6 +24,10 @@ gui.@.category.fuel.burnTime.items=I: %s
 gui.@.category.fuel.burnTime.items.full=Items
 gui.@.category.itemDescription=Description
 
+gui.@.nextCharacter=>
+gui.@.previousCharacter=<
+gui.@.transferRecipesCharacter=+
+
 @.tooltip.show.all.recipes=Show all recipes
 @.tooltip.transfer=Transfer Items
 @.tooltip.transfer.max=Transfer Maximum Items

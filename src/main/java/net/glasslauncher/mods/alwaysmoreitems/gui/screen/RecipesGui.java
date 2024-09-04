@@ -7,6 +7,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
+import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ActionButtonWidget;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.RecipeTransferButton;
 import net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
@@ -54,10 +55,10 @@ public class RecipesGui extends Screen {
     private String backgroundTexture;
     private HoverChecker titleHoverChecker;
 
-    private ButtonWidget nextRecipeCategory;
-    private ButtonWidget previousRecipeCategory;
-    private ButtonWidget nextPage;
-    private ButtonWidget previousPage;
+    private ActionButtonWidget nextRecipeCategory;
+    private ActionButtonWidget previousRecipeCategory;
+    private ActionButtonWidget nextPage;
+    private ActionButtonWidget previousPage;
 
 	@Nullable
     private RecipeLayout hovered;
@@ -110,12 +111,12 @@ public class RecipesGui extends Screen {
         int leftButtonX = guiLeft + borderPadding;
 
         int recipeClassButtonTop = guiTop + borderPadding - 2;
-        nextRecipeCategory = new ButtonWidget(2, rightButtonX, recipeClassButtonTop, buttonWidth, buttonHeight, ">");
-        previousRecipeCategory = new ButtonWidget(3, leftButtonX, recipeClassButtonTop, buttonWidth, buttonHeight, "<");
+        nextRecipeCategory = new ActionButtonWidget(2, rightButtonX, recipeClassButtonTop, buttonWidth, buttonHeight, "gui.alwaysmoreitems.nextCharacter", "gui.alwaysmoreitems.nextCharacter");
+        previousRecipeCategory = new ActionButtonWidget(3, leftButtonX, recipeClassButtonTop, buttonWidth, buttonHeight, "gui.alwaysmoreitems.previousCharacter", "gui.alwaysmoreitems.previousCharacter");
 
         int pageButtonTop = guiTop + titleHeight + 3;
-        nextPage = new ButtonWidget(4, rightButtonX, pageButtonTop, buttonWidth, buttonHeight, ">");
-        previousPage = new ButtonWidget(5, leftButtonX, pageButtonTop, buttonWidth, buttonHeight, "<");
+        nextPage = new ActionButtonWidget(4, rightButtonX, pageButtonTop, buttonWidth, buttonHeight, "gui.alwaysmoreitems.nextCharacter", "gui.alwaysmoreitems.nextCharacter");
+        previousPage = new ActionButtonWidget(5, leftButtonX, pageButtonTop, buttonWidth, buttonHeight, "gui.alwaysmoreitems.previousCharacter", "gui.alwaysmoreitems.previousCharacter");
 
         addButtons();
 

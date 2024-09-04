@@ -5,21 +5,20 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
-public class RecipeTransferButton extends ButtonWidget {
+public class RecipeTransferButton extends ActionButtonWidget {
 	private static final String transferTooltip = TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.transfer");
 	private static final String transferMaxTooltip = TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.transfer.max");
 	private RecipeLayout recipeLayout;
 	private RecipeTransferError recipeTransferError;
 
 	public RecipeTransferButton(int id, int xPos, int yPos, int width, int height, String displayString) {
-		super(id, xPos, yPos, width, height, displayString);
+		super(id, xPos, yPos, width, height, displayString, displayString);
 	}
 
 	public void init(RecipeLayout recipeLayout, PlayerEntity player) {

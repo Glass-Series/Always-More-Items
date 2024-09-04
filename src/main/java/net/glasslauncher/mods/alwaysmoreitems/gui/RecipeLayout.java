@@ -41,7 +41,7 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
 //		this.guiFluidStackGroup = new GuiFluidStackGroup();
 		int width = recipeCategory.getBackground().getWidth();
 		int height = recipeCategory.getBackground().getHeight();
-		this.recipeTransferButton = new RecipeTransferButton(recipeTransferButtonIndex + index, posX + width + 2, posY + height - RECIPE_BUTTON_SIZE, RECIPE_BUTTON_SIZE, RECIPE_BUTTON_SIZE, "+");
+		this.recipeTransferButton = new RecipeTransferButton(recipeTransferButtonIndex + index, posX + width + 2, posY + height - RECIPE_BUTTON_SIZE, RECIPE_BUTTON_SIZE, RECIPE_BUTTON_SIZE, "gui.alwaysmoreitems.transferRecipesCharacter");
 		this.posX = posX;
 		this.posY = posY;
 
