@@ -24,14 +24,14 @@ public class AMIConfigObject {
             maxLength = 100L,
             minLength = 5L
     )
-    public Integer maxItemListWidth = 250;
+    public Integer maxItemListWidth = 100;
 
     @ConfigEntry(
             name = "Max Item List Height",
             maxLength = 200L,
             minLength = 10L
     )
-    public Integer maxItemListHeight = 1000;
+    public Integer maxItemListHeight = 200;
 
     @ConfigEntry(
             name = "Right Click Give Amount",
