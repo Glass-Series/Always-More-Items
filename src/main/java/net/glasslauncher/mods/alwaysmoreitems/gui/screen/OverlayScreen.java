@@ -20,12 +20,12 @@ import net.glasslauncher.mods.alwaysmoreitems.util.Commands;
 import net.glasslauncher.mods.alwaysmoreitems.util.ItemStackElement;
 import net.glasslauncher.mods.gcapi3.api.GCAPI;
 import net.glasslauncher.mods.gcapi3.impl.GlassYamlFile;
-import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.client.util.ScreenScaler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
@@ -487,16 +487,16 @@ public class OverlayScreen extends Screen {
      * recalculates the scaled width and height
      */
     public void rescale() {
-        class_564 screenScaler = new class_564(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+        ScreenScaler screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
 
-        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight || screenScaler.method_1857() != lastScaledWidth) {
+        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight || screenScaler.getScaledWidth() != lastScaledWidth) {
             // Get the item list dimensions
             maxItemListWidth = AMIConfig.INSTANCE.maxItemListWidth;
             maxItemListHeight = AMIConfig.INSTANCE.maxItemListHeight;
 
             // Run screen scaler
-            width = screenScaler.method_1857();
-            height = screenScaler.method_1858();
+            width = screenScaler.getScaledWidth();
+            height = screenScaler.getScaledHeight();
 
             // Store Last values
             lastWidth = minecraft.displayWidth;

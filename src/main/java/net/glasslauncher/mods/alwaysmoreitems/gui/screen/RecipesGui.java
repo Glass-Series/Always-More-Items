@@ -16,11 +16,11 @@ import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
 import net.glasslauncher.mods.alwaysmoreitems.util.RecipeGuiLogic;
 import net.glasslauncher.mods.alwaysmoreitems.util.StringUtil;
 import net.minecraft.class_35;
-import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.client.util.ScreenScaler;
 import net.minecraft.entity.player.PlayerEntity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -406,11 +406,11 @@ public class RecipesGui extends Screen {
             return false;
         }
 
-        class_564 var13 = new class_564(Minecraft.INSTANCE.options, Minecraft.INSTANCE.displayWidth, Minecraft.INSTANCE.displayHeight);
-        int var14 = var13.method_1857();
-        int var15 = var13.method_1858();
-        int mouseX = Mouse.getX() * var14 / Minecraft.INSTANCE.displayWidth;
-        int mouseY = var15 - Mouse.getY() * var15 / Minecraft.INSTANCE.displayHeight - 1;
+        ScreenScaler screenScaler = new ScreenScaler(Minecraft.INSTANCE.options, Minecraft.INSTANCE.displayWidth, Minecraft.INSTANCE.displayHeight);
+        int scaledWidth = screenScaler.getScaledWidth();
+        int scaledHeight = screenScaler.getScaledHeight();
+        int mouseX = Mouse.getX() * scaledWidth / Minecraft.INSTANCE.displayWidth;
+        int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.INSTANCE.displayHeight - 1;
 
         if (keyCode == Keyboard.KEY_ESCAPE || keyCode == minecraft.options.inventoryKey.code) {
             close();

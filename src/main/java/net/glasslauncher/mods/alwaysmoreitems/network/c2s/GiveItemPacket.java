@@ -74,7 +74,7 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
             ItemStack itemStack = new ItemStack(itemNbt);
             itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
             serverPlay.player.method_490("Gave " + itemStack.count + " " + itemStack.getItem().getTranslatedName() + "@" + itemStack.getDamage());
-            serverPlay.player.inventory.method_671(itemStack);
+            serverPlay.player.inventory.addStack(itemStack);
 
             // Mark the inventory dirty
             serverPlay.player.inventory.markDirty();
@@ -99,7 +99,7 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
 
             ItemStack itemStack = new ItemStack(itemNbt);
             itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
-            Minecraft.INSTANCE.player.inventory.method_671(itemStack);
+            Minecraft.INSTANCE.player.inventory.addStack(itemStack);
     }
 
     @Override
