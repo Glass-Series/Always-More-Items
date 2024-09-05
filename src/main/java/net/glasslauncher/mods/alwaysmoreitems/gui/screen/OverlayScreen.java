@@ -83,6 +83,7 @@ public class OverlayScreen extends Screen {
     private int lastHeight = 0;
     private int lastItemWidth = 0;
     private int lastItemHeight = 0;
+    private int lastScaledWidth = 0;
 
     // Mouse Pos
     int lastMouseX = 0;
@@ -486,13 +487,14 @@ public class OverlayScreen extends Screen {
      * recalculates the scaled width and height
      */
     public void rescale() {
-        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight) {
+        class_564 screenScaler = new class_564(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+
+        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight || screenScaler.method_1857() != lastScaledWidth) {
             // Get the item list dimensions
             maxItemListWidth = AMIConfig.INSTANCE.maxItemListWidth;
             maxItemListHeight = AMIConfig.INSTANCE.maxItemListHeight;
 
             // Run screen scaler
-            class_564 screenScaler = new class_564(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
             width = screenScaler.method_1857();
             height = screenScaler.method_1858();
 
@@ -501,6 +503,7 @@ public class OverlayScreen extends Screen {
             lastHeight = minecraft.displayHeight;
             lastItemWidth = maxItemListWidth;
             lastItemHeight = maxItemListHeight;
+            lastScaledWidth = width;
 
             // Rebuild the screen
             init();
