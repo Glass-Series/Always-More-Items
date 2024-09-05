@@ -53,12 +53,6 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/class_17": [
-        "net/glasslauncher/mods/alwaysmoreitems/api/SubProvider"
-      ],
-      "net/minecraft/class_124": [
-        "net/glasslauncher/mods/alwaysmoreitems/api/SubProvider"
-      ],
       "net/minecraft/class_8": [
         "net/glasslauncher/mods/alwaysmoreitems/api/AMINbt"
       ]
