@@ -31,7 +31,7 @@ public class Tooltip {
 
     public static final Color DEFAULT_FONT_COLOR = new Color(255, 255, 255, 255);
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(0, 0, 0, 192);
-    public static final Dimension DEFAULT_OFFSET = new Dimension(9, -15);
+    public static final Dimension DEFAULT_OFFSET = new Dimension(12, -12);
     private static final ItemStackRenderer ITEM_STACK_RENDERER = new ItemStackRenderer();
 
     /**
