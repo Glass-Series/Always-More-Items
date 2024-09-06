@@ -349,7 +349,7 @@ public class Tooltip {
 
     public Dimension getOffset(boolean flipped) {
         if (flipped) {
-            return new Dimension(-9 - getWidth(), -15);
+            return new Dimension(-12 - getWidth(), -12);
         }
         return DEFAULT_OFFSET;
     }
