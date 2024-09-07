@@ -49,6 +49,14 @@
   ],
   "accessWidener": "alwaysmoreitems.accesswidener",
   "depends": {
+    "gcapi3": "3.*",
+    "glassnetworking": "1.*",
+    "stationapi": [
+      "2.0-alpha.2",
+      "2.0-alpha.2.1",
+      "2.0-alpha.2.2",
+      "2.0-alpha.2.3"
+    ],
     "minecraft": "1.0.0-beta.7.3"
   },
   "custom": {
