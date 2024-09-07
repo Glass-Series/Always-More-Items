@@ -469,13 +469,13 @@ public class OverlayScreen extends Screen {
 
         if (button.id == settingsButton.id) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile() {{
+                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
                     set("cheatMode", !AMIConfig.INSTANCE.cheatMode);
                 }});
                 return;
             }
             try {
-                Minecraft.INSTANCE.setScreen(GCAPI.getRootConfigScreen(AlwaysMoreItems.NAMESPACE.id("config"), parent));
+                Minecraft.INSTANCE.setScreen(GCAPI.getRootConfigScreen(AlwaysMoreItems.NAMESPACE.id("config").toString(), parent));
             } catch (AttributeNotFoundException e) {
                 throw new RuntimeException(e);
             }

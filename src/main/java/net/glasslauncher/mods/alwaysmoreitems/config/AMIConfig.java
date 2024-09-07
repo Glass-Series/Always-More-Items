@@ -55,7 +55,7 @@ public class AMIConfig {
     }
 
     private static void updateBlacklist() {
-        GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config"), new GlassYamlFile(new File(FabricLoader.getInstance().getConfigDir().toFile(), AlwaysMoreItems.NAMESPACE + "/config.yml")));
+        GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile(new File(FabricLoader.getInstance().getConfigDir().toFile(), AlwaysMoreItems.NAMESPACE + "/config.yml")));
     }
 
     public static boolean showModNames() {

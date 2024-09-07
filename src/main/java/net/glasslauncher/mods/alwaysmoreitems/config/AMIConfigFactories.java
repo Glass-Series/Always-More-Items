@@ -3,8 +3,8 @@ package net.glasslauncher.mods.alwaysmoreitems.config;
 import com.google.common.collect.ImmutableMap;
 import net.glasslauncher.mods.gcapi3.api.ConfigEntry;
 import net.glasslauncher.mods.gcapi3.api.ConfigFactoryProvider;
+import net.glasslauncher.mods.gcapi3.impl.SeptFunction;
 import net.glasslauncher.mods.gcapi3.impl.object.ConfigEntryHandler;
-import uk.co.benjiweber.expressions.function.SeptFunction;
 
 import java.lang.reflect.*;
 import java.util.*;

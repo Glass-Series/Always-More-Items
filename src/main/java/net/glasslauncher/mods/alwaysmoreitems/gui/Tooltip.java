@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.*;
 /**
  * This is a special class that renders AFTER the whole GUI has been rendered. This garuantees no weird overlapping.
  * Note that the last mod to set the instance is the one that controls the tooltip.
+ * TODO: Add a formatting system, AMI 1.0 has taken long enough to release. The way I plan do to it will be backwards compatible in the API, so I'm not worried - calm
  */
 public class Tooltip {
     public static final Tooltip INSTANCE = new Tooltip();
