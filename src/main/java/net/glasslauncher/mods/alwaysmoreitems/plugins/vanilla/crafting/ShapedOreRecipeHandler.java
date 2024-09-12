@@ -30,12 +30,12 @@ public class ShapedOreRecipeHandler implements RecipeHandler<StationShapedRecipe
 
 	@Override
 	public boolean isRecipeValid(@Nonnull StationShapedRecipe recipe) {
-		if (recipe.getIngredients() == null) {
+		if (recipe.getGrid() == null) {
 			return false;
 		}
 		int inputCount = 0;
 		try {
-			for (Object input : recipe.getIngredients()) {
+			for (Object input : recipe.getGrid()) {
 				if (input instanceof List) {
 					if (((List) input).isEmpty()) {
 						return false;
