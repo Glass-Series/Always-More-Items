@@ -30,7 +30,7 @@ public class ShapedOreRecipeHandler implements RecipeHandler<StationShapedRecipe
 
 	@Override
 	public boolean isRecipeValid(@Nonnull StationShapedRecipe recipe) {
-		if (recipe.getOutputs() == null) {
+		if (recipe.getIngredients() == null) {
 			return false;
 		}
 		int inputCount = 0;

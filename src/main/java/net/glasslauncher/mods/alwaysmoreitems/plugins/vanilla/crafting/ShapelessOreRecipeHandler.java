@@ -30,7 +30,7 @@ public class ShapelessOreRecipeHandler implements RecipeHandler<StationShapeless
 
 	@Override
 	public boolean isRecipeValid(@Nonnull StationShapelessRecipe recipe) {
-		if (recipe.getOutputs() == null) {
+		if (recipe.getIngredients() == null) {
 			return false;
 		}
 		int inputCount = 0;
