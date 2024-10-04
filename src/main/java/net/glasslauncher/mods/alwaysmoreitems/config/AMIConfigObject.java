@@ -17,7 +17,7 @@ public class AMIConfigObject {
     public Boolean showModNames = true;
 
     @ConfigEntry(name = "Show Nbt Counts")
-    public Boolean showNbtCount = true;
+    public Boolean showNbtCount = false;
 
     @ConfigEntry(
             name = "Max Item List Width",
