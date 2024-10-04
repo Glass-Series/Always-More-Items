@@ -423,7 +423,7 @@ public class OverlayScreen extends Screen {
         if (parent instanceof HandledScreen handled) {
             Slot hoveredSlot = handled.getSlotAt(lastMouseX, lastMouseY);
 
-            if(hoveredSlot != null && hoveredSlot.hasStack()){
+            if (hoveredSlot != null && hoveredSlot.hasStack()) {
                 // Show Recipes
                 if (keyCode == KeybindListener.showRecipe.code) {
                     recipesGui.showRecipes(new Focus(hoveredSlot.getStack()));
@@ -487,6 +487,10 @@ public class OverlayScreen extends Screen {
      * recalculates the scaled width and height
      */
     public void rescale() {
+        if (minecraft == null) {
+            minecraft = Minecraft.INSTANCE;
+        }
+
         ScreenScaler screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
 
         if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight || screenScaler.getScaledWidth() != lastScaledWidth) {
