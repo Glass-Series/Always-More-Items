@@ -69,4 +69,8 @@ public class AMIConfig {
     public static boolean showNbtCount() {
         return INSTANCE.showNbtCount;
     }
+
+    public static boolean ignoreBadNames() {
+        return INSTANCE.ignoreBadNames;
+    }
 }

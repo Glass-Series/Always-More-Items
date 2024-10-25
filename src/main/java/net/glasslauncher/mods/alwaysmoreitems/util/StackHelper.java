@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -190,7 +191,7 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
 				try { // Shitcoders go brrr
 					ItemStack itemStack = new ItemStack(item, stackSize, i);
 					String translationKey = itemStack.getTranslationKey();
-					if (keyCache.contains(translationKey)) {
+					if (keyCache.contains(translationKey) || (!AMIConfig.ignoreBadNames() && Objects.equals(translationKey, itemStack.getItem().getTranslatedName()))) {
 						break;
 					}
 					keyCache.add(translationKey);

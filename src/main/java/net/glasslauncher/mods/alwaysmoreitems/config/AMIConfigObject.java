@@ -19,6 +19,9 @@ public class AMIConfigObject {
     @ConfigEntry(name = "Show Nbt Counts")
     public Boolean showNbtCount = false;
 
+    @ConfigEntry(name = "Ignore Bad Names", description = "Should AMI show untranslated names? Modders might want to enable this in dev.")
+    public Boolean ignoreBadNames = false;
+
     @ConfigEntry(
             name = "Max Item List Width",
             maxLength = 100L,
