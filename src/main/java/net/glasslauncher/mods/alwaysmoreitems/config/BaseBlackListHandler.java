@@ -6,8 +6,9 @@ import net.glasslauncher.mods.gcapi3.api.HasDrawable;
 import net.glasslauncher.mods.gcapi3.impl.object.ConfigEntryHandler;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseBlackListHandler<T extends ArrayList<String>> extends ConfigEntryHandler<T> implements ConfigEntryWithButton {
     protected T blacklist;

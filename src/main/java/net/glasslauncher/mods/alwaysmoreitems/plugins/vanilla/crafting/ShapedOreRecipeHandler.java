@@ -5,8 +5,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.modificationstation.stationapi.impl.recipe.StationShapedRecipe;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ShapedOreRecipeHandler implements RecipeHandler<StationShapedRecipe> {
 

@@ -5,7 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Mixin(Block.class)
 public class BlockMixin implements SubProvider {

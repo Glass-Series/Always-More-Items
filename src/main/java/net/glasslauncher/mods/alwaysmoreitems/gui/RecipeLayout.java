@@ -12,8 +12,8 @@ import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout {
 	private static final int RECIPE_BUTTON_SIZE = 12;

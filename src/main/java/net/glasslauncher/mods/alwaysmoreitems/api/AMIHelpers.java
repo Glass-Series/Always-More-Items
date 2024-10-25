@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandlerHelper;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * IAMIHelpers provides helpers and tools for addon mods.

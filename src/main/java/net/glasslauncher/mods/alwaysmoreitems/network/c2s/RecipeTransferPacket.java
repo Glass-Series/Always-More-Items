@@ -19,8 +19,9 @@ import net.modificationstation.stationapi.api.nbt.NbtIntArray;
 import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import javax.annotation.*;
-import java.io.*;
+import javax.annotation.Nonnull;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.util.*;
 
 public class RecipeTransferPacket extends Packet implements IdentifiablePacket {

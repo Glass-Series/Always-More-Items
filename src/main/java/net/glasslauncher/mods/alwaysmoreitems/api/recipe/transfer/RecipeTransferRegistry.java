@@ -2,7 +2,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer;
 
 import net.minecraft.screen.ScreenHandler;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * Register recipe transfer handlers here to give AMI the information it needs to transfer recipes into the crafting area.

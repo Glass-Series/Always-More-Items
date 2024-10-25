@@ -4,8 +4,9 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.List;
 
 public class CraftingGridHelper implements net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper {
 

@@ -15,8 +15,9 @@ import net.minecraft.network.packet.Packet;
 import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.util.ArrayList;
 
 /**
  * This is a LARGE packet, so don't resend it, instead make a blacklist plugin instead of fucking with this packet.

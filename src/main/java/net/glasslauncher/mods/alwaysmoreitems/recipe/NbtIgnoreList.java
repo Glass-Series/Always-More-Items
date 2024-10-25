@@ -9,8 +9,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class NbtIgnoreList implements net.glasslauncher.mods.alwaysmoreitems.api.NbtIgnoreList {
 	private final Set<String> nbtTagNameBlacklist = new HashSet<>();

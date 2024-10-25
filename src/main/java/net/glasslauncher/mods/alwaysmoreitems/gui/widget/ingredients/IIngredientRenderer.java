@@ -2,8 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public interface IIngredientRenderer<T> {
     void draw(@Nonnull Minecraft minecraft, int xPosition, int yPosition, @Nullable T value);

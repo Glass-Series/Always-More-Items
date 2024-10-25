@@ -11,7 +11,9 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class ActionButtonPacket extends Packet implements IdentifiablePacket {

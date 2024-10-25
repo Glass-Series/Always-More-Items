@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * An IRecipeHandler provides information about one Recipe Class.

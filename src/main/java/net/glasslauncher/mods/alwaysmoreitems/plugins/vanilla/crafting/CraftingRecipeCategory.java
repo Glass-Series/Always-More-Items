@@ -14,7 +14,7 @@ import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class CraftingRecipeCategory implements RecipeCategory {
 

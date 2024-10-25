@@ -5,7 +5,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public abstract class FurnaceRecipeCategory implements RecipeCategory {
 	protected static final int inputSlot = 0;

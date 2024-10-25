@@ -6,7 +6,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUi
 import net.minecraft.ShapedRecipe;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class ShapedRecipesHandler implements RecipeHandler<ShapedRecipe> {
 

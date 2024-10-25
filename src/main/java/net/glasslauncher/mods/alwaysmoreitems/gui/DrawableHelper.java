@@ -8,7 +8,8 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableBlank;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.DrawableResource;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class DrawableHelper {
 

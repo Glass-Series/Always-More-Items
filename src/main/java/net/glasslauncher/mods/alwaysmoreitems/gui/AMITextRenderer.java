@@ -11,8 +11,10 @@ import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
-import java.util.*;
+import java.util.Locale;
+import java.util.Random;
 
 public class AMITextRenderer extends TextRenderer {
     public static final String OBFUSCATED = Formatting.FORMATTING_CODE_PREFIX + "k";

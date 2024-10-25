@@ -2,7 +2,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api;
 
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public interface ItemBlacklist {
     /**

@@ -3,8 +3,9 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 import com.google.common.collect.ImmutableList;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Comparator;
+import java.util.List;
 
 public class RecipeCategoryComparator implements Comparator<RecipeCategory> {
 	@Nonnull

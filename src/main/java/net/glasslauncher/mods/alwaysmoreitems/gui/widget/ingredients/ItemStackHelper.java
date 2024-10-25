@@ -4,8 +4,8 @@ import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Collection;
 
 public class ItemStackHelper implements IIngredientHelper<ItemStack> {
     @Override

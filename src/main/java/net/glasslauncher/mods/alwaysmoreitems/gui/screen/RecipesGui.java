@@ -26,10 +26,11 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
 
 public class RecipesGui extends Screen {
     private static final int borderPadding = 8;

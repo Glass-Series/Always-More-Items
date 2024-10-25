@@ -17,10 +17,11 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.nio.file.*;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
-import java.util.concurrent.atomic.*;
+import java.util.OptionalInt;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This is a special class that renders AFTER the whole GUI has been rendered. This garuantees no weird overlapping.

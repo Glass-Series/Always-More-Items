@@ -6,8 +6,10 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.recipe.FuelRegistry;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class FuelRecipeMaker {
 

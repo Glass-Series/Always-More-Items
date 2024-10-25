@@ -2,8 +2,10 @@ package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A wrapper around a normal recipe with methods that allow AMI can make sense of it.

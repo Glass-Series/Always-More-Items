@@ -3,8 +3,11 @@ package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class BlankRecipeWrapper implements RecipeWrapper {
     @Override

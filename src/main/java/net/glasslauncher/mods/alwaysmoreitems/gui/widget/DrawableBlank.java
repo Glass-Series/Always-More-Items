@@ -4,7 +4,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.AnimatedDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class DrawableBlank implements StaticDrawable, AnimatedDrawable {
     private final int width;

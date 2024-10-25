@@ -6,8 +6,9 @@ import net.glasslauncher.mods.alwaysmoreitems.transfer.BasicRecipeTransferHandle
 import net.glasslauncher.mods.alwaysmoreitems.transfer.BasicRecipeTransferInfo;
 import net.minecraft.screen.ScreenHandler;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeTransferRegistry implements net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferRegistry {
 	private final List<RecipeTransferHandler> recipeTransferHandlers = new ArrayList<>();

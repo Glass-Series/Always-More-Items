@@ -17,7 +17,8 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class BasicRecipeTransferHandler implements RecipeTransferHandler {

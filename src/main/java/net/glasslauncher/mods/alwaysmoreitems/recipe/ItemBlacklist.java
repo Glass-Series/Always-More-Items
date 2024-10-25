@@ -4,8 +4,11 @@ import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ItemBlacklist implements net.glasslauncher.mods.alwaysmoreitems.api.ItemBlacklist {
 	@Nonnull

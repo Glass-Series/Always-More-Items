@@ -2,8 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * IGuiItemStackGroup displays ItemStacks in a gui.

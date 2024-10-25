@@ -3,10 +3,11 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.Collection;
 import java.util.List;
-import java.util.*;
 
 public interface IGuiIngredient<T> {
     void set(@Nonnull T contained, @Nonnull Focus focus);

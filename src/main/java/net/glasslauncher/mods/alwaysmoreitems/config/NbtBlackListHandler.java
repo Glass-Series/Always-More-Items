@@ -2,8 +2,8 @@ package net.glasslauncher.mods.alwaysmoreitems.config;
 
 import net.glasslauncher.mods.gcapi3.api.ConfigEntry;
 
-import java.lang.reflect.*;
-import java.util.stream.*;
+import java.lang.reflect.Field;
+import java.util.stream.Collectors;
 
 public class NbtBlackListHandler extends BaseBlackListHandler<ConfigNbtBlacklist> {
 

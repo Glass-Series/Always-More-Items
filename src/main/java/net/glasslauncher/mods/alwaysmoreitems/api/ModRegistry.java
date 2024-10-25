@@ -6,8 +6,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransfer
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Passed to IModPlugins so they can register themselves.

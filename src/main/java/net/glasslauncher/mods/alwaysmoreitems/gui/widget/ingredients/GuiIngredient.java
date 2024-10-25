@@ -11,10 +11,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.*;
 
 public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
     private final int slotIndex;

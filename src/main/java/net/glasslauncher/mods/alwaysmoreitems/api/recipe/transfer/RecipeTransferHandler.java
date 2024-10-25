@@ -4,7 +4,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenHandler;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A recipe transfer handler moves items into a crafting area, based on the items in a recipe.

@@ -5,8 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Locale;
 
 /**
  * For getting properties of ItemStacks efficiently

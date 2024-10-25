@@ -10,7 +10,7 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class ItemDescriptionRecipeCategory implements RecipeCategory {
 	public static final int recipeWidth = 160;

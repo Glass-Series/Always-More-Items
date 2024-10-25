@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public interface TooltipCallback<T> {
     /**

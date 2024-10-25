@@ -6,9 +6,10 @@ import net.glasslauncher.mods.gcapi3.api.ConfigFactoryProvider;
 import net.glasslauncher.mods.gcapi3.impl.SeptFunction;
 import net.glasslauncher.mods.gcapi3.impl.object.ConfigEntryHandler;
 
-import java.lang.reflect.*;
-import java.util.*;
-import java.util.function.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.function.Function;
 
 public class AMIConfigFactories implements ConfigFactoryProvider {
     @Override

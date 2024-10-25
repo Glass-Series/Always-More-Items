@@ -19,8 +19,10 @@ import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemFilter {
 	/** The currently active filter text */

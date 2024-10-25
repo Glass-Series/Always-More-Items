@@ -4,7 +4,9 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.AMIRarityIcons;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum Rarity {
     VANILLA("Vanilla", 'z', 0, new Color(255, 255, 255), new Color(0, 0, 0, 192), new Color(0, 0, 0, 192), HeaderCode.NONE),

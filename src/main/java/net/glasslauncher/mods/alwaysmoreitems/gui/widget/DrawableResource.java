@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class DrawableResource implements StaticDrawable {
 

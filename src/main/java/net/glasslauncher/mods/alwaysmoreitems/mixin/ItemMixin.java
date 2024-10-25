@@ -5,7 +5,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Mixin(Item.class)
 public class ItemMixin implements SubProvider {

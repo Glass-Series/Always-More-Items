@@ -5,7 +5,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.StaticDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.TickTimer;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class DrawableAnimated implements AnimatedDrawable {
 	private final StaticDrawable drawable;

@@ -4,8 +4,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public interface CraftingRecipeWrapper extends RecipeWrapper {
 

@@ -10,7 +10,7 @@ import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.registry.RegistryEntryList;
 import net.modificationstation.stationapi.api.tag.TagKey;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class SmeltingRecipeMaker {

@@ -14,7 +14,8 @@ import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper {

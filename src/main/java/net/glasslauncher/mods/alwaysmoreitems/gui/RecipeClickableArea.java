@@ -1,8 +1,9 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Something something make modder's lives easier.

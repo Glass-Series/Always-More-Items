@@ -2,8 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * IGuiIngredientGroup displays recipe ingredients in a gui.

@@ -7,8 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.List;
 
 public class SmeltingRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 	@Nonnull

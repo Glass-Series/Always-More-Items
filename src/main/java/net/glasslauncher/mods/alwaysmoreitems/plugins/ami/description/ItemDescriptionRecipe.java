@@ -12,10 +12,11 @@ import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.*;
 
 public class ItemDescriptionRecipe implements RecipeWrapper {
 	private static final int lineSpacing = 2;

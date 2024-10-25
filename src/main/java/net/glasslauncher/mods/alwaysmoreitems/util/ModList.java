@@ -7,8 +7,10 @@ import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.apache.commons.lang3.text.WordUtils;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class ModList {
 

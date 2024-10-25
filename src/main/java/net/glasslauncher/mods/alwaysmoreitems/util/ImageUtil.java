@@ -2,10 +2,13 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 
 import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 
-import javax.imageio.*;
-import javax.imageio.stream.*;
-import java.io.*;
-import java.util.*;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 public class ImageUtil {
     /**

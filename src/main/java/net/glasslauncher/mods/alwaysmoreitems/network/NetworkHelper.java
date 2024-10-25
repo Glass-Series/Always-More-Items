@@ -2,7 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.network;
 
 import net.minecraft.nbt.NbtElement;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class NetworkHelper {
 

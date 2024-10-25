@@ -9,7 +9,7 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class FurnaceFuelCategory extends FurnaceRecipeCategory {
 	@Nonnull

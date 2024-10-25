@@ -10,7 +10,7 @@ import net.glasslauncher.mods.alwaysmoreitems.registry.RecipeRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ModRegistry implements net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry {

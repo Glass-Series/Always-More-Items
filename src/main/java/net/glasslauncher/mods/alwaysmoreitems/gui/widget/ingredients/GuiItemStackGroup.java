@@ -3,8 +3,8 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class GuiItemStackGroup extends GuiIngredientGroup<ItemStack, GuiIngredient<ItemStack>> implements net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup {
     private static final int baseWidth = 16;

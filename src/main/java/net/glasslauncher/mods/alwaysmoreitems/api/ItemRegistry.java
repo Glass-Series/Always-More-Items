@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * The IItemRegistry is provided by AMI and has some useful functions related to items.

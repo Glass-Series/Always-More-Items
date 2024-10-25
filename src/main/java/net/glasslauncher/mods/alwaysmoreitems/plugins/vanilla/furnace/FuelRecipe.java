@@ -17,11 +17,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import java.awt.*;
-import java.text.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.*;
 
 public class FuelRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
 	public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("0.##");

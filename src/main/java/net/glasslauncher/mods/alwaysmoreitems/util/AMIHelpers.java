@@ -4,7 +4,7 @@ import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemBlacklist;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.NbtIgnoreList;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferHandlerHelper;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class AMIHelpers implements net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers {
 	private final StackHelper stackHelper;

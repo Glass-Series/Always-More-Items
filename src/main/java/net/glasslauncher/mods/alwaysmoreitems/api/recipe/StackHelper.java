@@ -2,8 +2,9 @@ package net.glasslauncher.mods.alwaysmoreitems.api.recipe;
 
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * Helps get ItemStacks from common formats used in recipes.

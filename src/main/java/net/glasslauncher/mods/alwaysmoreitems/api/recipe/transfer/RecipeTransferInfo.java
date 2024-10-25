@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Gives AMI the information it needs to transfer recipes from a slotted inventory into the crafting area.

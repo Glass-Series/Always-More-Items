@@ -4,8 +4,9 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * The IRecipeManager offers several functions for retrieving and handling recipes.

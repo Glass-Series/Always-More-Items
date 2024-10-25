@@ -19,7 +19,8 @@ import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 public class GiveItemPacket extends Packet implements IdentifiablePacket {
     private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("give_item");

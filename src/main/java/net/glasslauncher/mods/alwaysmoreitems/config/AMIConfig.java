@@ -7,7 +7,7 @@ import net.glasslauncher.mods.gcapi3.api.GCAPI;
 import net.glasslauncher.mods.gcapi3.impl.GlassYamlFile;
 import net.minecraft.item.ItemStack;
 
-import java.io.*;
+import java.io.File;
 
 public class AMIConfig {
 

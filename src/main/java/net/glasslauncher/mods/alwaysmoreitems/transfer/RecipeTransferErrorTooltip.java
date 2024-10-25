@@ -5,8 +5,8 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
 public class RecipeTransferErrorTooltip implements RecipeTransferError {
 	@Nonnull

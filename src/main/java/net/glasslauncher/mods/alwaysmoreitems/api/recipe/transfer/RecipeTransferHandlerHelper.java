@@ -1,7 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Collection;
 
 /**
  * Helper functions for implementing an IRecipeTransferHandler

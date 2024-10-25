@@ -9,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
     private static final ItemRenderer itemRenderer = new ItemRenderer();

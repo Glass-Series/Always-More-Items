@@ -9,7 +9,7 @@ import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import org.lwjgl.input.Keyboard;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class RecipeTransferButton extends ActionButtonWidget {
 	private static final String transferTooltip = TranslationStorage.getInstance().get("alwaysmoreitems.tooltip.transfer");

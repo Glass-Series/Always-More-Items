@@ -4,8 +4,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemDescriptionRecipeHandler implements RecipeHandler<ItemDescriptionRecipe> {
 	@Nonnull

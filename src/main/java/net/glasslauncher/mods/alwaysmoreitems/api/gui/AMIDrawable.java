@@ -2,7 +2,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public interface AMIDrawable {
 

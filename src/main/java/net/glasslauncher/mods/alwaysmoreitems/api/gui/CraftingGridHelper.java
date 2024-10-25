@@ -2,8 +2,8 @@ package net.glasslauncher.mods.alwaysmoreitems.api.gui;
 
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Helps set crafting-grid-style GuiItemStackGroup.

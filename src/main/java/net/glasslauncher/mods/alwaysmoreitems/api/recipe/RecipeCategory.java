@@ -4,7 +4,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * Defines a category of recipe, (i.e. Crafting Table Recipe, Furnace Recipe)

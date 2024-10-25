@@ -10,8 +10,12 @@ import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.screen.ScreenHandler;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
 
 public class RecipeGuiLogic {
 	private static class State {

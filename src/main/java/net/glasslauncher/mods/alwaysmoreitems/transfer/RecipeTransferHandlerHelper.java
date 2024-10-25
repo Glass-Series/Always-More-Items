@@ -3,8 +3,8 @@ package net.glasslauncher.mods.alwaysmoreitems.transfer;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.Collection;
 
 public class RecipeTransferHandlerHelper implements net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandlerHelper {
 	@Override

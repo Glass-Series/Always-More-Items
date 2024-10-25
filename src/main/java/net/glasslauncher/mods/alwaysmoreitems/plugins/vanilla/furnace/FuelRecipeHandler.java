@@ -4,7 +4,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 public class FuelRecipeHandler implements RecipeHandler<FuelRecipe> {
 	@Override

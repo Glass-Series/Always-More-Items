@@ -2,7 +2,8 @@ package net.glasslauncher.mods.alwaysmoreitems.config;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ConfigItemBlacklist extends ArrayList<String> {
     public ConfigItemBlacklist(int initialCapacity) {

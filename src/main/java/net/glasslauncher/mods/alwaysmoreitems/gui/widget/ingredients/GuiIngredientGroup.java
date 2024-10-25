@@ -4,8 +4,11 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.TooltipCallback;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.Focus;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class GuiIngredientGroup<V, T extends GuiIngredient<V>> implements net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiIngredientGroup<V> {
     protected final int itemCycleOffset = (int) (Math.random() * 1000);

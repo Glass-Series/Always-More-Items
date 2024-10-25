@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SlabBlockItem;
 import org.spongepowered.asm.mixin.Mixin;
 
-import java.util.*;
+import java.util.List;
 
 @Mixin(SlabBlockItem.class)
 public class MixinSlab implements SubProvider {

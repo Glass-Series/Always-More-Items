@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * A reason that the recipe transfer couldn't happen. See IRecipeTransferError.Type
