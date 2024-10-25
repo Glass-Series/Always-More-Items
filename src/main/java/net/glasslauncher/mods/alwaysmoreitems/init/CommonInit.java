@@ -15,8 +15,6 @@ import net.glasslauncher.mods.alwaysmoreitems.util.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.mine_diver.unsafeevents.listener.ListenerPriority;
-import net.modificationstation.stationapi.api.event.mod.InitEvent;
 import net.modificationstation.stationapi.api.event.network.packet.PacketRegisterEvent;
 import net.modificationstation.stationapi.api.event.registry.RegistriesFrozenEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
@@ -24,7 +22,10 @@ import net.modificationstation.stationapi.api.mod.entrypoint.EntrypointManager;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Entrypoint(eventBus = @EventBusPolicy(registerInstance = false))
 public class CommonInit {
@@ -33,11 +34,15 @@ public class CommonInit {
     @Getter
     private static ModRegistry modRegistry;
 
-    @EventListener(priority = ListenerPriority.HIGHEST, phase = InitEvent.PRE_INIT_PHASE)
-    public static void preInit(InitEvent event) {
-        AlwaysMoreItems.LOGGER.info("Hello");
+    @EventListener
+    public static void init(RegistriesFrozenEvent event) {
         AlwaysMoreItems.setHelpers(new AMIHelpers());
+        initPlugins();
+        FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:action", Object.class).forEach(EntrypointManager::setup);
+        initAMI();
+    }
 
+    public static void initPlugins() {
         LinkedHashMap<Identifier, ModPluginProvider> pluginsMap = new LinkedHashMap<>();
         FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:plugin", ModPluginProvider.class).stream().map(EntrypointContainer::getEntrypoint).forEach(iModPlugin -> pluginsMap.put(iModPlugin.getId(), iModPlugin));
 
@@ -56,7 +61,6 @@ public class CommonInit {
             }
         });
         plugins = ImmutableMap.copyOf(pluginsMap);
-        FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:action", Object.class).forEach(EntrypointManager::setup);
     }
 
     @EventListener
@@ -67,12 +71,11 @@ public class CommonInit {
         RecipeSyncPacket.register();
     }
 
-    @EventListener
-    public static void initAMI(RegistriesFrozenEvent event) {
+    public static void initAMI() {
         AlwaysMoreItems.setStarted(true);
         AMIItemRegistry itemRegistry = new AMIItemRegistry();
         AlwaysMoreItems.setItemRegistry(itemRegistry);
-        ImmutableMap<Identifier, ModPluginProvider> plugins = CommonInit.getPlugins();
+        HashMap<Identifier, ModPluginProvider> plugins = (HashMap<Identifier, ModPluginProvider>) CommonInit.getPlugins().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         plugins.values().forEach(iModPlugin -> {
             try {
@@ -107,5 +110,6 @@ public class CommonInit {
                 plugins.remove(iModPlugin.getId());
             }
         });
+        CommonInit.plugins = ImmutableMap.copyOf(plugins);
     }
 }
