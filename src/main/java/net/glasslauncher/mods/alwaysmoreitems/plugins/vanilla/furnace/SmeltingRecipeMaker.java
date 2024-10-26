@@ -1,7 +1,8 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.SubItemHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.SubItemProvider;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,10 @@ public class SmeltingRecipeMaker {
 				inputs = new ArrayList<>();
 				instanceEntryList.ifPresent(
 						registryEntries -> registryEntries.forEach(itemRegistryEntry -> {
-							inputs.addAll(((SubProvider) itemRegistryEntry.value()).getSubItems());
+							List<ItemStack> items = SubItemHelper.getSubItems(itemRegistryEntry.value());
+							if (items != null) {
+								inputs.addAll(items);
+							}
 						})
 				);
 			}

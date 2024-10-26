@@ -3,7 +3,8 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
-import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.SubItemHelper;
+import net.glasslauncher.mods.alwaysmoreitems.api.SubItemProvider;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.minecraft.item.Item;
@@ -179,9 +180,12 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
 //				}
 //			}
 //		}
-		List<ItemStack> subItems = ((SubProvider) item).getSubItems().stream().peek(itemStack -> itemStack.count = stackSize).toList();
+		List<ItemStack> subItems = SubItemHelper.getSubItems(item);
 
-		if (subItems.isEmpty()) {
+		if (subItems != null && !subItems.isEmpty()) {
+			subItems = subItems.stream().peek(itemStack -> itemStack.count = stackSize).toList();
+		}
+		else {
 			subItems = new ArrayList<>();
 			List<String> keyCache = new ArrayList<>();
 			if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER)) {

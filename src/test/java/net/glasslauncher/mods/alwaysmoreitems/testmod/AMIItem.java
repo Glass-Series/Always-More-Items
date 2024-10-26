@@ -1,6 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.testmod;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.SubProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.SubItemProvider;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
@@ -12,7 +12,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.*;
 
-public class AMIItem extends TemplateItem implements CustomTooltipProvider, RarityProvider, SubProvider {
+public class AMIItem extends TemplateItem implements CustomTooltipProvider, RarityProvider, SubItemProvider {
 
     public AMIItem(Identifier identifier) {
         super(identifier);
