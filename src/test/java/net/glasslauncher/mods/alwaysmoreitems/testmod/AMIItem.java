@@ -12,7 +12,7 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.*;
 
-public class AMIItem extends TemplateItem implements CustomTooltipProvider, RarityProvider, SubItemProvider {
+public class AMIItem extends TemplateItem implements CustomTooltipProvider, RarityProvider {
 
     public AMIItem(Identifier identifier) {
         super(identifier);
@@ -38,7 +38,7 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider, Rari
         };
     }
 
-    @Override
+    @SubItemProvider
     public List<ItemStack> getSubItems() {
         ArrayList<ItemStack> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
