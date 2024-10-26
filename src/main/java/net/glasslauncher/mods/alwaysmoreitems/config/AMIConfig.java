@@ -75,4 +75,8 @@ public class AMIConfig {
     public static boolean ignoreBadNames() {
         return INSTANCE.ignoreBadNames;
     }
+
+    public static boolean showRedundantItems() {
+        return INSTANCE.showRedundantItems;
+    }
 }

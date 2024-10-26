@@ -3,14 +3,10 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla;
 import com.mojang.datafixers.util.Either;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
-import net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
-import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.api.*;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.CraftingRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapedOreRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting.ShapedRecipesHandler;
@@ -26,6 +22,7 @@ import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRe
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRecipeMaker;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.ShapedRecipe;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.item.Item;
@@ -100,6 +97,10 @@ public class VanillaPlugin implements ModPluginProvider {
 		registry.addRecipes(CraftingRecipeManager.getInstance().getRecipes());
 		registry.addRecipes(SmeltingRecipeMaker.getFurnaceRecipes(amiHelpers));
 		registry.addRecipes(FuelRecipeMaker.getFuelRecipes(itemRegistry, amiHelpers));
+
+		if (!AMIConfig.showRedundantItems()) {
+			hideRedundantItems(amiHelpers);
+		}
 	}
 
 	@Override
@@ -152,5 +153,36 @@ public class VanillaPlugin implements ModPluginProvider {
             outputs[i] = Either.right(new ItemStack(input));
 		}
 		return outputs;
+	}
+
+	private void hideRedundantItems(AMIHelpers amiHelpers) {
+		ItemBlacklist itemBlacklist = amiHelpers.getItemBlacklist();
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.SAPLING));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_WATER));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_LAVA));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOG));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LEAVES));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.GRASS));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.BED));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.PISTON_HEAD));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.MOVING_PISTON));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.FIRE));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.REDSTONE_WIRE));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.WHEAT));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_FURNACE));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.SIGN));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOOR));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.WALL_SIGN));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.IRON_DOOR));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_ORE));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_TORCH));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.SUGAR_CANE));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.REPEATER));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.POWERED_REPEATER));
+		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOCKED_CHEST));
 	}
 }

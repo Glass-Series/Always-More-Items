@@ -22,6 +22,9 @@ public class AMIConfigObject {
     @ConfigEntry(name = "Ignore Bad Names", description = "Should AMI show untranslated names? Modders might want to enable this in dev.")
     public Boolean ignoreBadNames = false;
 
+    @ConfigEntry(name = "Show Redundant/Internal Items", description = "Shows hidden stuff like the lit furnace and wheat crop block.")
+    public Boolean showRedundantItems = false;
+
     @ConfigEntry(
             name = "Max Item List Width",
             maxLength = 100L,
