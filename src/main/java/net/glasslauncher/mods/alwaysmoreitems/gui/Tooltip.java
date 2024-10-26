@@ -91,7 +91,12 @@ public class Tooltip {
         this.tooltip = new ArrayList<>(tooltip);
         this.cursorX = cursorX;
         this.cursorY = cursorY;
-        this.rarity = Rarity.VANILLA;
+        if (!tooltip.isEmpty() && tooltip.get(0) instanceof String tooltipString && tooltipString.startsWith(String.valueOf(Rarity.HeaderCode.PREFIX_CHARACTER))) {
+            rarity = Rarity.AMI_RARITIES_BY_CODE.get(tooltipString.charAt(1));
+        }
+        if (rarity == null) {
+            rarity = Rarity.VANILLA;
+        }
         commonInit();
     }
 
