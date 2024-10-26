@@ -3,6 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.recipe;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,11 +46,16 @@ public class ItemBlacklist implements net.glasslauncher.mods.alwaysmoreitems.api
 			return false;
 		}
 		List<String> uids = AlwaysMoreItems.getStackHelper().getUniqueIdentifiersWithWildcard(itemStack);
-		for (String uid : uids) {
-			if (itemBlacklist.contains(uid) || AMIConfig.INSTANCE.itemBlacklist.contains(uid)) {
-				return true;
-			}
+        return uids.stream().anyMatch(uid -> itemBlacklist.contains(uid) || AMIConfig.INSTANCE.itemBlacklist.contains(uid));
+    }
+
+	@Override
+	public boolean isItemAPIBlacklisted(@Nullable ItemStack itemStack) {
+		if (itemStack == null) {
+			AlwaysMoreItems.LOGGER.error("Null itemStack", new NullPointerException());
+			return false;
 		}
-		return false;
+		List<String> uids = AlwaysMoreItems.getStackHelper().getUniqueIdentifiersWithWildcard(itemStack);
+		return uids.stream().anyMatch(itemBlacklist::contains);
 	}
 }

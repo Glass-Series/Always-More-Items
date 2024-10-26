@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemFilter {
 	/** The currently active filter text */
@@ -68,11 +69,11 @@ public class ItemFilter {
 
 		if (filters.length == 1) {
 			String filter = filters[0];
-			return filteredItemMapsCache.getUnchecked(filter);
+			return ImmutableList.copyOf(filteredItemMapsCache.getUnchecked(filter).stream().filter(itemStackElement -> (AMIConfig.isEditModeEnabled() && !AlwaysMoreItems.getHelpers().getItemBlacklist().isItemAPIBlacklisted(itemStackElement.getItemStack())) || !AlwaysMoreItems.getHelpers().getItemBlacklist().isItemBlacklisted(itemStackElement.getItemStack())).collect(Collectors.toList()));
 		} else {
 			ImmutableList.Builder<ItemStackElement> itemList = ImmutableList.builder();
 			for (String filter : filters) {
-				List<ItemStackElement> itemStackElements = filteredItemMapsCache.getUnchecked(filter);
+				List<ItemStackElement> itemStackElements = filteredItemMapsCache.getUnchecked(filter).stream().filter(itemStackElement -> (AMIConfig.isEditModeEnabled() && !AlwaysMoreItems.getHelpers().getItemBlacklist().isItemAPIBlacklisted(itemStackElement.getItemStack())) || !AlwaysMoreItems.getHelpers().getItemBlacklist().isItemBlacklisted(itemStackElement.getItemStack())).toList();
 				itemList.addAll(itemStackElements);
 			}
 			return itemList.build();
@@ -92,7 +93,7 @@ public class ItemFilter {
 				continue;
 			}
 
-			if (itemStackChecker.isItemStackHidden(itemStack)) {
+			if (itemStackChecker.isItemHiddenByAPIBlacklist(itemStack)) {
 				continue;
 			}
 
@@ -170,21 +171,16 @@ public class ItemFilter {
 		}
 
 		public boolean isItemStackHidden(@Nonnull ItemStack itemStack) {
-			return isItemHiddenByBlacklist(itemStack);
-		}
-
-        private boolean isItemHiddenByBlacklist(@Nonnull ItemStack itemStack) {
-			if (!itemBlacklist.isItemBlacklisted(itemStack)) {
+			// edit mode can only change the config blacklist, not things blacklisted through the API
+			if (!AMIConfig.isEditModeEnabled() && !AMIConfig.isItemOnConfigBlacklist(itemStack, true) && !AMIConfig.isItemOnConfigBlacklist(itemStack, false)) {
 				return false;
 			}
-
-			if (AMIConfig.isEditModeEnabled()) {
-				// edit mode can only change the config blacklist, not things blacklisted through the API
-				return !AMIConfig.isItemOnConfigBlacklist(itemStack, true) && !AMIConfig.isItemOnConfigBlacklist(itemStack, false);
-			}
-
-			return true;
+			return isItemHiddenByAPIBlacklist(itemStack);
 		}
+
+        private boolean isItemHiddenByAPIBlacklist(@Nonnull ItemStack itemStack) {
+            return itemBlacklist.isItemAPIBlacklisted(itemStack);
+        }
 	}
 
 	private static class FilterPredicate implements Predicate<ItemStackElement> {

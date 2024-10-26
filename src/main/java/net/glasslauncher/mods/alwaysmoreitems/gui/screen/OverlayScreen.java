@@ -32,6 +32,7 @@ import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.client.TooltipHelper;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.api.util.math.ColorHelper;
 import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -215,6 +216,17 @@ public class OverlayScreen extends Screen {
         if (renderedItems != null) {
             RenderHelper.enableItemLighting();
             for (ItemRenderEntry item : renderedItems) {
+                if (AMIConfig.isEditModeEnabled()) {
+                    if (AMIConfig.isItemOnConfigBlacklist(item.item, false)) { // This exact item is user blacklisted.
+                        RenderHelper.disableItemLighting();
+                        fill(item.x - 1, item.y - 1, item.x + 17, item.y + 17, ColorHelper.Argb.getArgb(255, 255, 0, 0));
+                        RenderHelper.enableItemLighting();
+                    } else if (AMIConfig.isItemOnConfigBlacklist(item.item, true)) { // This item's ID is user blacklisted.
+                        RenderHelper.disableItemLighting();
+                        fill(item.x - 1, item.y - 1, item.x + 17, item.y + 17, ColorHelper.Argb.getArgb(255, 255, 255, 0));
+                        RenderHelper.enableItemLighting();
+                    }
+                }
                 RenderHelper.drawItemStack(item.x, item.y, item.item, false);
             }
             RenderHelper.disableItemLighting();
@@ -226,11 +238,6 @@ public class OverlayScreen extends Screen {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -2130706433);
             String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
             currentTooltip = TooltipHelper.getTooltipForItemStack(simpleTip, hoveredItem.item, Minecraft.INSTANCE.player.inventory, null);
-        }
-
-        // Draw CAAALM
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            textRenderer.drawWithShadow("CAALM", 120, 0, 16722100);
         }
 
         // Draw Page Number
@@ -319,6 +326,16 @@ public class OverlayScreen extends Screen {
 
         // Hovered Item
         if (hoveredItem != null) {
+            if (AMIConfig.isEditModeEnabled() && button == 0) {
+                boolean isCtrl = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL);
+                if (!AMIConfig.isItemOnConfigBlacklist(hoveredItem.item, isCtrl)) {
+                    AMIConfig.addItemToConfigBlacklist(hoveredItem.item, isCtrl);
+                }
+                else {
+                    AMIConfig.removeItemFromConfigBlacklist(hoveredItem.item, isCtrl);
+                }
+                return;
+            }
             if (!AMIConfig.INSTANCE.cheatMode || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));

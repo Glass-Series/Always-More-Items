@@ -23,4 +23,9 @@ public interface ItemBlacklist {
      * Returns true if the item is blacklisted and will not be displayed in the item list.
      */
     boolean isItemBlacklisted(@Nonnull ItemStack itemStack);
+
+    /**
+     * Returns true if the item is blacklisted in the api and will not be displayed in the item list ever.
+     */
+    boolean isItemAPIBlacklisted(@Nonnull ItemStack itemStack);
 }

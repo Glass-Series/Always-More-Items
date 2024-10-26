@@ -15,7 +15,6 @@ public class ItemBlackListHandler extends BaseBlackListHandler<ConfigItemBlackli
 
     @Override
     public boolean isValueValid() {
-        blacklist = blacklist.stream().filter(string -> ItemRegistry.INSTANCE.containsId(Identifier.of(string))).collect(Collectors.toCollection(ConfigItemBlacklist::new));
         return true;
     }
 }

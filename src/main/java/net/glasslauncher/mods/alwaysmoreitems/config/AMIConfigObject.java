@@ -7,10 +7,10 @@ public class AMIConfigObject {
     @ConfigEntry(name = "Cheat Mode")
     public Boolean cheatMode = false;
 
-    @ConfigEntry(name = "Edit Mode")
+    @ConfigEntry(name = "Edit Mode", description = "Click on items to hide them, CTRL to hide all of the same item ID.")
     public Boolean editMode = false;
 
-    @ConfigEntry(name = "Debug Mode")
+    @ConfigEntry(name = "Debug Mode", description = "Shows item IDs and damage values.")
     public Boolean debugMode = false;
 
     @ConfigEntry(name = "Show Mod Names")
