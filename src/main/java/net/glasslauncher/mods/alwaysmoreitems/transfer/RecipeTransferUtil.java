@@ -14,34 +14,34 @@ import net.minecraft.screen.ScreenHandler;
 import javax.annotation.*;
 
 public class RecipeTransferUtil {
-	public static RecipeTransferError getTransferRecipeError(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player) {
-		return transferRecipe(recipeLayout, player, false, false);
-	}
+    public static RecipeTransferError getTransferRecipeError(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player) {
+        return transferRecipe(recipeLayout, player, false, false);
+    }
 
-	public static boolean transferRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer) {
-		RecipeTransferError error = transferRecipe(recipeLayout, player, maxTransfer, true);
-		return error == null;
-	}
+    public static boolean transferRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer) {
+        RecipeTransferError error = transferRecipe(recipeLayout, player, maxTransfer, true);
+        return error == null;
+    }
 
-	@Nullable
-	private static RecipeTransferError transferRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
-		Screen parentScreen = OverlayScreen.INSTANCE.parent;
-		if (parentScreen instanceof HandledScreen handledScreen) {
-			ScreenHandler container = handledScreen.container;
+    @Nullable
+    private static RecipeTransferError transferRecipe(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
+        Screen parentScreen = OverlayScreen.INSTANCE.parent;
+        if (parentScreen instanceof HandledScreen handledScreen) {
+            ScreenHandler container = handledScreen.container;
 
-			RecipeTransferHandler transferHandler = AlwaysMoreItems.getRecipeRegistry().getRecipeTransferHandler(container, recipeLayout.getRecipeCategory());
-			if (transferHandler == null) {
-				if (doTransfer) {
-					AlwaysMoreItems.LOGGER.error("No Recipe Transfer handler for container {}", container.getClass());
-				}
-				else if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-					AlwaysMoreItems.LOGGER.warn("No Recipe Transfer handler for container {}", container.getClass());
-				}
-				return RecipeTransferErrorInternal.instance;
-			}
+            RecipeTransferHandler transferHandler = AlwaysMoreItems.getRecipeRegistry().getRecipeTransferHandler(container, recipeLayout.getRecipeCategory());
+            if (transferHandler == null) {
+                if (doTransfer) {
+                    AlwaysMoreItems.LOGGER.error("No Recipe Transfer handler for container {}", container.getClass());
+                }
+                else if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+                    AlwaysMoreItems.LOGGER.warn("No Recipe Transfer handler for container {}", container.getClass());
+                }
+                return RecipeTransferErrorInternal.instance;
+            }
 
-			return transferHandler.transferRecipe(container, recipeLayout, player, maxTransfer, doTransfer);
-		}
-		return RecipeTransferErrorInternal.instance;
-	}
+            return transferHandler.transferRecipe(container, recipeLayout, player, maxTransfer, doTransfer);
+        }
+        return RecipeTransferErrorInternal.instance;
+    }
 }

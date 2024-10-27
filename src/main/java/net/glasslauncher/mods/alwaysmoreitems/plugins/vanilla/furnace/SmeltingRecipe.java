@@ -12,45 +12,45 @@ import java.util.Collections;
 import java.util.List;
 
 public class SmeltingRecipe extends VanillaRecipeWrapper implements SyncableRecipe {
-	@Nonnull
-	private final List<List<ItemStack>> input;
-	@Nonnull
-	private final List<ItemStack> outputs;
+    @Nonnull
+    private final List<List<ItemStack>> input;
+    @Nonnull
+    private final List<ItemStack> outputs;
 
-	public SmeltingRecipe(@Nonnull List<ItemStack> input, @Nonnull ItemStack output) {
-		this.input = Collections.singletonList(input);
-		this.outputs = Collections.singletonList(output);
-	}
+    public SmeltingRecipe(@Nonnull List<ItemStack> input, @Nonnull ItemStack output) {
+        this.input = Collections.singletonList(input);
+        this.outputs = Collections.singletonList(output);
+    }
 
-	@Nonnull
-	public List<List<ItemStack>> getInputs() {
-		return input;
-	}
+    @Nonnull
+    public List<List<ItemStack>> getInputs() {
+        return input;
+    }
 
-	@Nonnull
-	public List<ItemStack> getOutputs() {
-		return outputs;
-	}
+    @Nonnull
+    public List<ItemStack> getOutputs() {
+        return outputs;
+    }
 
-	@Override
-	public NbtCompound exportRecipe() {
-		NbtCompound nbtCompound = new NbtCompound();
+    @Override
+    public NbtCompound exportRecipe() {
+        NbtCompound nbtCompound = new NbtCompound();
 
-		NbtCompound itemNbt = new NbtCompound();
-		input.get(0).get(0).writeNbt(itemNbt);
-		nbtCompound.put("input", itemNbt);
+        NbtCompound itemNbt = new NbtCompound();
+        input.get(0).get(0).writeNbt(itemNbt);
+        nbtCompound.put("input", itemNbt);
 
-		itemNbt = new NbtCompound();
-		outputs.get(0).writeNbt(itemNbt);
-		nbtCompound.put("output", itemNbt);
+        itemNbt = new NbtCompound();
+        outputs.get(0).writeNbt(itemNbt);
+        nbtCompound.put("output", itemNbt);
 
-		nbtCompound.putByte("type", (byte) 5);
+        nbtCompound.putByte("type", (byte) 5);
 
-		return nbtCompound;
-	}
+        return nbtCompound;
+    }
 
-	@Override
-	public Identifier getPlugin() {
-		return VanillaPlugin.ID;
-	}
+    @Override
+    public Identifier getPlugin() {
+        return VanillaPlugin.ID;
+    }
 }

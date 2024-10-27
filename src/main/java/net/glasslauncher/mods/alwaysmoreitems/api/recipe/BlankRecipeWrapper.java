@@ -21,15 +21,15 @@ public abstract class BlankRecipeWrapper implements RecipeWrapper {
     }
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	@Override
-//	public List<FluidStack> getFluidInputs() {
-//		return Collections.emptyList();
-//	}
+//    @Override
+//    public List<FluidStack> getFluidInputs() {
+//        return Collections.emptyList();
+//    }
 //
-//	@Override
-//	public List<FluidStack> getFluidOutputs() {
-//		return Collections.emptyList();
-//	}
+//    @Override
+//    public List<FluidStack> getFluidOutputs() {
+//        return Collections.emptyList();
+//    }
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {

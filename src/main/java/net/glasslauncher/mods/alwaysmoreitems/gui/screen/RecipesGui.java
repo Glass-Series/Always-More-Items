@@ -61,7 +61,7 @@ public class RecipesGui extends Screen {
     private ActionButtonWidget nextPage;
     private ActionButtonWidget previousPage;
 
-	@Nullable
+    @Nullable
     private RecipeLayout hovered;
 
     private int guiLeft;

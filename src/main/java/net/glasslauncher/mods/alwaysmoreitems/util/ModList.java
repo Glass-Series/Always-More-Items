@@ -14,30 +14,30 @@ import java.util.Map;
 
 public class ModList {
 
-	private final Map<String, String> modNamesForIds = new HashMap<>();
+    private final Map<String, String> modNamesForIds = new HashMap<>();
 
-	public ModList() {
-		for (ModContainer modEntry : FabricLoader.getInstance().getAllMods()) {
-			String lowercaseId = modEntry.getMetadata().getId().toLowerCase(Locale.ENGLISH);
-			String modName = modEntry.getMetadata().getName();
-			modNamesForIds.put(lowercaseId, modName);
-		}
-	}
+    public ModList() {
+        for (ModContainer modEntry : FabricLoader.getInstance().getAllMods()) {
+            String lowercaseId = modEntry.getMetadata().getId().toLowerCase(Locale.ENGLISH);
+            String modName = modEntry.getMetadata().getName();
+            modNamesForIds.put(lowercaseId, modName);
+        }
+    }
 
-	@Nonnull
-	public String getModNameForItem(@Nonnull Item item) {
-		Identifier itemResourceLocation = ItemRegistry.INSTANCE.getId(item);
-		if(itemResourceLocation == null) {
-			AlwaysMoreItems.LOGGER.error("Null modId", new NullPointerException());
-			return "";
-		}
-		String modId = itemResourceLocation.namespace.toString();
-		String lowercaseModId = modId.toLowerCase(Locale.ENGLISH);
-		String modName = modNamesForIds.get(lowercaseModId);
-		if (modName == null) {
-			modName = WordUtils.capitalize(modId);
-			modNamesForIds.put(lowercaseModId, modName);
-		}
-		return modName;
-	}
+    @Nonnull
+    public String getModNameForItem(@Nonnull Item item) {
+        Identifier itemResourceLocation = ItemRegistry.INSTANCE.getId(item);
+        if(itemResourceLocation == null) {
+            AlwaysMoreItems.LOGGER.error("Null modId", new NullPointerException());
+            return "";
+        }
+        String modId = itemResourceLocation.namespace.toString();
+        String lowercaseModId = modId.toLowerCase(Locale.ENGLISH);
+        String modName = modNamesForIds.get(lowercaseModId);
+        if (modName == null) {
+            modName = WordUtils.capitalize(modId);
+            modNamesForIds.put(lowercaseModId, modName);
+        }
+        return modName;
+    }
 }

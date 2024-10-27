@@ -13,62 +13,62 @@ import java.util.Locale;
  * For getting properties of ItemStacks efficiently
  */
 public class ItemStackElement {
-	@Nonnull
-	private final ItemStack itemStack;
-	@Nonnull
-	private final String searchString;
-	@Nonnull
-	private final String modName;
+    @Nonnull
+    private final ItemStack itemStack;
+    @Nonnull
+    private final String searchString;
+    @Nonnull
+    private final String modName;
 
-	@Nullable
-	public static ItemStackElement create(@Nonnull ItemStack itemStack) {
-		try {
-			return new ItemStackElement(itemStack);
-		} catch (RuntimeException e) {
-			AlwaysMoreItems.LOGGER.warn("Found broken itemStack.", e);
-			return null;
-		}
-	}
+    @Nullable
+    public static ItemStackElement create(@Nonnull ItemStack itemStack) {
+        try {
+            return new ItemStackElement(itemStack);
+        } catch (RuntimeException e) {
+            AlwaysMoreItems.LOGGER.warn("Found broken itemStack.", e);
+            return null;
+        }
+    }
 
-	private ItemStackElement(@Nonnull ItemStack itemStack) {
-		this.itemStack = itemStack;
+    private ItemStackElement(@Nonnull ItemStack itemStack) {
+        this.itemStack = itemStack;
 
-		Identifier itemResourceLocation = ItemRegistry.INSTANCE.getId(itemStack.getItem());
-		if (itemResourceLocation == null) {
-			throw new NullPointerException("Null item id for #" + itemStack.getItem().id);
-		}
-		String modId = itemResourceLocation.getNamespace().toString().toLowerCase(Locale.ENGLISH);
+        Identifier itemResourceLocation = ItemRegistry.INSTANCE.getId(itemStack.getItem());
+        if (itemResourceLocation == null) {
+            throw new NullPointerException("Null item id for #" + itemStack.getItem().id);
+        }
+        String modId = itemResourceLocation.getNamespace().toString().toLowerCase(Locale.ENGLISH);
 
-		String modName = itemResourceLocation.getNamespace().getName().toLowerCase(Locale.ENGLISH);
+        String modName = itemResourceLocation.getNamespace().getName().toLowerCase(Locale.ENGLISH);
 
-		String displayName = TranslationStorage.getInstance().getClientTranslation(itemStack.getTranslationKey());
-		if (displayName == null) {
-			throw new NullPointerException("No display name for item. " + itemResourceLocation + ' ' + itemStack.getItem().getClass());
-		}
+        String displayName = TranslationStorage.getInstance().getClientTranslation(itemStack.getTranslationKey());
+        if (displayName == null) {
+            throw new NullPointerException("No display name for item. " + itemResourceLocation + ' ' + itemStack.getItem().getClass());
+        }
 
-		String searchString = displayName.toLowerCase();
+        String searchString = displayName.toLowerCase();
 
-		this.modName = modId + ' ' + modName;
+        this.modName = modId + ' ' + modName;
 
-//		if (Config.isAtPrefixRequiredForModName()) {
-			this.searchString = searchString;
-//		} else {
-//			this.searchString = searchString + ' ' + this.modName;
-//		}
-	}
+//        if (Config.isAtPrefixRequiredForModName()) {
+            this.searchString = searchString;
+//        } else {
+//            this.searchString = searchString + ' ' + this.modName;
+//        }
+    }
 
-	@Nonnull
-	public ItemStack getItemStack() {
-		return itemStack;
-	}
+    @Nonnull
+    public ItemStack getItemStack() {
+        return itemStack;
+    }
 
-	@Nonnull
-	public String getSearchString() {
-		return searchString;
-	}
+    @Nonnull
+    public String getSearchString() {
+        return searchString;
+    }
 
-	@Nonnull
-	public String getModName() {
-		return modName;
-	}
+    @Nonnull
+    public String getModName() {
+        return modName;
+    }
 }

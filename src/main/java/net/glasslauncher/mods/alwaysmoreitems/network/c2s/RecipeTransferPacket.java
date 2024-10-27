@@ -25,97 +25,97 @@ import java.io.DataOutputStream;
 import java.util.*;
 
 public class RecipeTransferPacket extends Packet implements IdentifiablePacket {
-	private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("transfer");
+    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("transfer");
 
-	private int outSize;
+    private int outSize;
 
-	private Map<Integer, ItemStack> recipeMap;
-	private List<Integer> craftingSlots;
-	private List<Integer> inventorySlots;
-	private boolean maxTransfer;
+    private Map<Integer, ItemStack> recipeMap;
+    private List<Integer> craftingSlots;
+    private List<Integer> inventorySlots;
+    private boolean maxTransfer;
 
-	public RecipeTransferPacket() {
+    public RecipeTransferPacket() {
 
-	}
+    }
 
-	public RecipeTransferPacket(@Nonnull Map<Integer, ItemStack> recipeMap, @Nonnull List<Integer> craftingSlots, @Nonnull List<Integer> inventorySlots, boolean maxTransfer) {
-		this.recipeMap = recipeMap;
-		this.craftingSlots = craftingSlots;
-		this.inventorySlots = inventorySlots;
-		this.maxTransfer = maxTransfer;
-	}
+    public RecipeTransferPacket(@Nonnull Map<Integer, ItemStack> recipeMap, @Nonnull List<Integer> craftingSlots, @Nonnull List<Integer> inventorySlots, boolean maxTransfer) {
+        this.recipeMap = recipeMap;
+        this.craftingSlots = craftingSlots;
+        this.inventorySlots = inventorySlots;
+        this.maxTransfer = maxTransfer;
+    }
 
-	@Override
-	public Identifier getId() {
-		return IDENTIFIER;
-	}
+    @Override
+    public Identifier getId() {
+        return IDENTIFIER;
+    }
 
-	@Override
-	public void read(DataInputStream buf) {
-		NbtCompound data = new NbtCompound();
-		((NbtElement) data).read(buf);
+    @Override
+    public void read(DataInputStream buf) {
+        NbtCompound data = new NbtCompound();
+        ((NbtElement) data).read(buf);
 
-		NbtCompound nbtRecipeMap = data.getCompound("recipeMap");
-		recipeMap = new HashMap<>();
-		((AMINbt) nbtRecipeMap).always_More_Items$entrySet().forEach(entry -> recipeMap.put(Integer.parseInt((String) entry.getKey()), new ItemStack((NbtCompound) entry.getValue())));
+        NbtCompound nbtRecipeMap = data.getCompound("recipeMap");
+        recipeMap = new HashMap<>();
+        ((AMINbt) nbtRecipeMap).always_More_Items$entrySet().forEach(entry -> recipeMap.put(Integer.parseInt((String) entry.getKey()), new ItemStack((NbtCompound) entry.getValue())));
 
-		craftingSlots = new ArrayList<>();
-		Arrays.stream(data.getIntArray("craftingSlots")).forEach(i -> craftingSlots.add(i));
+        craftingSlots = new ArrayList<>();
+        Arrays.stream(data.getIntArray("craftingSlots")).forEach(i -> craftingSlots.add(i));
 
-		inventorySlots = new ArrayList<>();
-		Arrays.stream(data.getIntArray("inventorySlots")).forEach(i -> inventorySlots.add(i));
+        inventorySlots = new ArrayList<>();
+        Arrays.stream(data.getIntArray("inventorySlots")).forEach(i -> inventorySlots.add(i));
 
-		maxTransfer = data.getBoolean("maxTransfer");
-	}
+        maxTransfer = data.getBoolean("maxTransfer");
+    }
 
-	@Override
-	public void write(DataOutputStream buf) {
-		NbtCompound outData = new NbtCompound();
+    @Override
+    public void write(DataOutputStream buf) {
+        NbtCompound outData = new NbtCompound();
 
-		NbtCompound nbtRecipeMap = new NbtCompound();
-		recipeMap.forEach((key, value) -> {
+        NbtCompound nbtRecipeMap = new NbtCompound();
+        recipeMap.forEach((key, value) -> {
             NbtCompound item = new NbtCompound();
             value.writeNbt(item);
             nbtRecipeMap.put(key.toString(), item);
         });
-		outData.put("recipeMap", nbtRecipeMap);
+        outData.put("recipeMap", nbtRecipeMap);
 
-		outData.put("craftingSlots", new NbtIntArray(craftingSlots.stream().mapToInt(Integer::intValue).toArray()));
-		outData.put("inventorySlots", new NbtIntArray(inventorySlots.stream().mapToInt(Integer::intValue).toArray()));
+        outData.put("craftingSlots", new NbtIntArray(craftingSlots.stream().mapToInt(Integer::intValue).toArray()));
+        outData.put("inventorySlots", new NbtIntArray(inventorySlots.stream().mapToInt(Integer::intValue).toArray()));
 
-		outData.putBoolean("maxTransfer", maxTransfer);
+        outData.putBoolean("maxTransfer", maxTransfer);
 
-		outSize = NetworkHelper.writeAndGetNbtLength(outData, buf);
+        outSize = NetworkHelper.writeAndGetNbtLength(outData, buf);
     }
 
-	@Environment(EnvType.CLIENT)
-	private PlayerEntity getClientPlayer() {
-		return Minecraft.INSTANCE.player;
-	}
+    @Environment(EnvType.CLIENT)
+    private PlayerEntity getClientPlayer() {
+        return Minecraft.INSTANCE.player;
+    }
 
-	@Environment(EnvType.SERVER)
-	private PlayerEntity getServerPlayer(NetworkHandler networkHandler) {
-		return ((ServerPlayNetworkHandler) networkHandler).player;
-	}
+    @Environment(EnvType.SERVER)
+    private PlayerEntity getServerPlayer(NetworkHandler networkHandler) {
+        return ((ServerPlayNetworkHandler) networkHandler).player;
+    }
 
-	@Override
-	public void apply(NetworkHandler networkHandler) {
-		PlayerEntity player;
-		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER)) {
-			player = getServerPlayer(networkHandler);
-		}
-		else {
-			player = getClientPlayer();
-		}
-		BasicRecipeTransferHandler.setItems(player, recipeMap, craftingSlots, inventorySlots, maxTransfer);
-	}
+    @Override
+    public void apply(NetworkHandler networkHandler) {
+        PlayerEntity player;
+        if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER)) {
+            player = getServerPlayer(networkHandler);
+        }
+        else {
+            player = getClientPlayer();
+        }
+        BasicRecipeTransferHandler.setItems(player, recipeMap, craftingSlots, inventorySlots, maxTransfer);
+    }
 
-	@Override
-	public int size() {
-		return outSize;
-	}
+    @Override
+    public int size() {
+        return outSize;
+    }
 
-	public static void register() {
-		IdentifiablePacket.register(IDENTIFIER, false, true, RecipeTransferPacket::new);
-	}
+    public static void register() {
+        IdentifiablePacket.register(IDENTIFIER, false, true, RecipeTransferPacket::new);
+    }
 }

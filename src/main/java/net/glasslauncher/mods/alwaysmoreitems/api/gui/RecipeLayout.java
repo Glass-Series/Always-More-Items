@@ -11,12 +11,12 @@ public interface RecipeLayout {
     GuiItemStackGroup getItemStacks();
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	/**
-//	 * Contains all the fluidStacks displayed on this recipe layout.
-//	 * Init and set them in your recipe category.
-//	 */
-//	@Nonnull
-//	IGuiFluidStackGroup getFluidStacks();
+//    /**
+//     * Contains all the fluidStacks displayed on this recipe layout.
+//     * Init and set them in your recipe category.
+//     */
+//    @Nonnull
+//    IGuiFluidStackGroup getFluidStacks();
 
     /**
      * Moves the recipe transfer button's position relative to the recipe layout.

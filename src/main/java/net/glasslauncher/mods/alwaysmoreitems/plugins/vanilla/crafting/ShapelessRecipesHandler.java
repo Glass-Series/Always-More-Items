@@ -10,37 +10,37 @@ import javax.annotation.Nonnull;
 
 public class ShapelessRecipesHandler implements RecipeHandler<ShapelessRecipe> {
 
-	@Override
-	@Nonnull
-	public Class<ShapelessRecipe> getRecipeClass() {
-		return ShapelessRecipe.class;
-	}
+    @Override
+    @Nonnull
+    public Class<ShapelessRecipe> getRecipeClass() {
+        return ShapelessRecipe.class;
+    }
 
-	@Nonnull
-	@Override
-	public String getRecipeCategoryUid() {
-		return VanillaRecipeCategoryUid.CRAFTING;
-	}
+    @Nonnull
+    @Override
+    public String getRecipeCategoryUid() {
+        return VanillaRecipeCategoryUid.CRAFTING;
+    }
 
-	@Override
-	@Nonnull
-	public RecipeWrapper getRecipeWrapper(@Nonnull ShapelessRecipe recipe) {
-		return new ShapelessRecipesWrapper(recipe);
-	}
+    @Override
+    @Nonnull
+    public RecipeWrapper getRecipeWrapper(@Nonnull ShapelessRecipe recipe) {
+        return new ShapelessRecipesWrapper(recipe);
+    }
 
-	@Override
-	public boolean isRecipeValid(@Nonnull ShapelessRecipe recipe) {
-		if (recipe.getOutput() == null) {
-			return false;
-		}
-		int inputCount = 0;
-		for (Object input : recipe.input) {
-			if (input instanceof ItemStack) {
-				inputCount++;
-			} else {
-				return false;
-			}
-		}
-		return inputCount > 0;
-	}
+    @Override
+    public boolean isRecipeValid(@Nonnull ShapelessRecipe recipe) {
+        if (recipe.getOutput() == null) {
+            return false;
+        }
+        int inputCount = 0;
+        for (Object input : recipe.input) {
+            if (input instanceof ItemStack) {
+                inputCount++;
+            } else {
+                return false;
+            }
+        }
+        return inputCount > 0;
+    }
 }

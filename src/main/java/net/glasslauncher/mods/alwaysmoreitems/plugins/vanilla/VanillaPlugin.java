@@ -41,75 +41,75 @@ import net.modificationstation.stationapi.impl.recipe.StationShapelessRecipe;
 import java.util.*;
 
 public class VanillaPlugin implements ModPluginProvider {
-	public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("vanilla");
+    public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("vanilla");
 
-	private ItemRegistry itemRegistry;
-	private AMIHelpers amiHelpers;
+    private ItemRegistry itemRegistry;
+    private AMIHelpers amiHelpers;
 
-	@Override
-	public String getName() {
-		return "Vanilla";
-	}
+    @Override
+    public String getName() {
+        return "Vanilla";
+    }
 
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
+    @Override
+    public Identifier getId() {
+        return ID;
+    }
 
-	@Override
-	public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
-		this.amiHelpers = amiHelpers;
-	}
+    @Override
+    public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
+        this.amiHelpers = amiHelpers;
+    }
 
-	@Override
-	public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
-		this.itemRegistry = itemRegistry;
-	}
+    @Override
+    public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
+        this.itemRegistry = itemRegistry;
+    }
 
-	@Override
-	public void register(ModRegistry registry) {
-		registry.addRecipeCategories(
-				new CraftingRecipeCategory(),
-				new FurnaceFuelCategory(),
-				new FurnaceSmeltingCategory()
-		);
+    @Override
+    public void register(ModRegistry registry) {
+        registry.addRecipeCategories(
+                new CraftingRecipeCategory(),
+                new FurnaceFuelCategory(),
+                new FurnaceSmeltingCategory()
+        );
 
-		registry.addRecipeHandlers(
-				new ShapedOreRecipeHandler(),
-				new ShapedRecipesHandler(),
-				new ShapelessOreRecipeHandler(),
-				new ShapelessRecipesHandler(),
-				new FuelRecipeHandler(),
-				new SmeltingRecipeHandler()
-		);
+        registry.addRecipeHandlers(
+                new ShapedOreRecipeHandler(),
+                new ShapedRecipesHandler(),
+                new ShapelessOreRecipeHandler(),
+                new ShapelessRecipesHandler(),
+                new FuelRecipeHandler(),
+                new SmeltingRecipeHandler()
+        );
 
-		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
-			registry.addRecipeClickArea(CraftingScreen.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
-			registry.addRecipeClickArea(FurnaceScreen.class, 78, 32, 28, 23, VanillaRecipeCategoryUid.SMELTING, VanillaRecipeCategoryUid.FUEL);
-		}
+        if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
+            registry.addRecipeClickArea(CraftingScreen.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
+            registry.addRecipeClickArea(FurnaceScreen.class, 78, 32, 28, 23, VanillaRecipeCategoryUid.SMELTING, VanillaRecipeCategoryUid.FUEL);
+        }
 
-		RecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
+        RecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
 
-		recipeTransferRegistry.addRecipeTransferHandler(CraftingScreenHandler.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
-		recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.SMELTING, 0, 1, 3, 36);
-		recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.FUEL, 1, 1, 3, 36);
+        recipeTransferRegistry.addRecipeTransferHandler(CraftingScreenHandler.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+        recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.SMELTING, 0, 1, 3, 36);
+        recipeTransferRegistry.addRecipeTransferHandler(FurnaceScreenHandler.class, VanillaRecipeCategoryUid.FUEL, 1, 1, 3, 36);
 
-		registry.addRecipes(CraftingRecipeManager.getInstance().getRecipes());
-		registry.addRecipes(SmeltingRecipeMaker.getFurnaceRecipes(amiHelpers));
-		registry.addRecipes(FuelRecipeMaker.getFuelRecipes(itemRegistry, amiHelpers));
+        registry.addRecipes(CraftingRecipeManager.getInstance().getRecipes());
+        registry.addRecipes(SmeltingRecipeMaker.getFurnaceRecipes(amiHelpers));
+        registry.addRecipes(FuelRecipeMaker.getFuelRecipes(itemRegistry, amiHelpers));
 
-		if (!AMIConfig.showRedundantItems()) {
-			hideRedundantItems(amiHelpers);
-		}
-	}
+        if (!AMIConfig.showRedundantItems()) {
+            hideRedundantItems(amiHelpers);
+        }
+    }
 
-	@Override
-	public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
+    @Override
+    public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
 
-	}
+    }
 
-	@Override
-	public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
+    @Override
+    public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
         return switch (recipe.getByte("type")) {
             case 1 -> // Vanilla shapeless
                     (SyncableRecipe) new ShapelessRecipe(new ItemStack(recipe.getCompound("output")), Arrays.asList(parseInputs(recipe.getList("input"))));
@@ -121,68 +121,68 @@ public class VanillaPlugin implements ModPluginProvider {
                     (SyncableRecipe) new StationShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseStapiInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
             case 5 -> // Furnace
                     new SmeltingRecipe(Collections.singletonList(new ItemStack(recipe.getCompound("input"))), new ItemStack(recipe.getCompound("output")));
-			case 6 -> // Furnace fuel
-					new FuelRecipe(List.of(parseInputs(recipe.getList("input"))), recipe.getInt("burnTime"));
+            case 6 -> // Furnace fuel
+                    new FuelRecipe(List.of(parseInputs(recipe.getList("input"))), recipe.getInt("burnTime"));
             default -> null;
         };
     }
 
-	public static ItemStack[] parseInputs(NbtList inputs) {
-		ItemStack[] outputs = new ItemStack[inputs.size()];
-		for (int i = 0; i < inputs.size(); i++) {
-			if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {
-				continue;
-			}
-			outputs[i] = new ItemStack((NbtCompound) inputs.get(i));
-		}
-		return outputs;
-	}
+    public static ItemStack[] parseInputs(NbtList inputs) {
+        ItemStack[] outputs = new ItemStack[inputs.size()];
+        for (int i = 0; i < inputs.size(); i++) {
+            if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {
+                continue;
+            }
+            outputs[i] = new ItemStack((NbtCompound) inputs.get(i));
+        }
+        return outputs;
+    }
 
-	public static Either<TagKey<Item>, ItemStack>[] parseStapiInputs(NbtList inputs) {
+    public static Either<TagKey<Item>, ItemStack>[] parseStapiInputs(NbtList inputs) {
         //noinspection unchecked
         Either<TagKey<Item>, ItemStack>[] outputs = new Either[inputs.size()];
-		for (int i = 0; i < inputs.size(); i++) {
-			NbtCompound input = (NbtCompound) inputs.get(i);
+        for (int i = 0; i < inputs.size(); i++) {
+            NbtCompound input = (NbtCompound) inputs.get(i);
             if (!input.getString("identifier").isEmpty()) {
-				outputs[i] = Either.left(TagKey.of(net.modificationstation.stationapi.api.registry.ItemRegistry.KEY, Identifier.of(input.getString("identifier"))));
-				continue;
-			}
-			if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {
-				continue;
-			}
+                outputs[i] = Either.left(TagKey.of(net.modificationstation.stationapi.api.registry.ItemRegistry.KEY, Identifier.of(input.getString("identifier"))));
+                continue;
+            }
+            if (((NbtCompound) inputs.get(i)).getByte("Count") == 0) {
+                continue;
+            }
             outputs[i] = Either.right(new ItemStack(input));
-		}
-		return outputs;
-	}
+        }
+        return outputs;
+    }
 
-	private void hideRedundantItems(AMIHelpers amiHelpers) {
-		ItemBlacklist itemBlacklist = amiHelpers.getItemBlacklist();
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.SAPLING));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_WATER));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_LAVA));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOG));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LEAVES));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.GRASS));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.BED));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.PISTON_HEAD));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.MOVING_PISTON));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.FIRE));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.REDSTONE_WIRE));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.WHEAT));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_FURNACE));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.SIGN));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOOR));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.WALL_SIGN));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.IRON_DOOR));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_ORE));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_TORCH));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.SUGAR_CANE));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.REPEATER));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.POWERED_REPEATER));
-		itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOCKED_CHEST));
-	}
+    private void hideRedundantItems(AMIHelpers amiHelpers) {
+        ItemBlacklist itemBlacklist = amiHelpers.getItemBlacklist();
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.SAPLING));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_WATER));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_LAVA));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOG));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LEAVES));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.GRASS));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.BED));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.PISTON_HEAD));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.MOVING_PISTON));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FIRE));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.REDSTONE_WIRE));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.WHEAT));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_FURNACE));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.SIGN));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOOR));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.WALL_SIGN));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.IRON_DOOR));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_ORE));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_TORCH));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.SUGAR_CANE));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.REPEATER));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.POWERED_REPEATER));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOCKED_CHEST));
+    }
 }

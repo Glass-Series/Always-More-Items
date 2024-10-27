@@ -12,24 +12,24 @@ import java.util.List;
 
 public class Commands {
 
-	public static void giveOneFromStack(@Nonnull ItemStack itemstack) {
-		giveStack(itemstack, 1);
-	}
+    public static void giveOneFromStack(@Nonnull ItemStack itemstack) {
+        giveStack(itemstack, 1);
+    }
 
-	/**
-	 * /give <player> <item> [amount] [data] [dataTag]
-	 */
-	public static void giveStack(@Nonnull ItemStack itemStack, int amount) {
-		ClientPlayerEntity sender = Minecraft.INSTANCE.player;
-		String senderName = sender.name;
+    /**
+     * /give <player> <item> [amount] [data] [dataTag]
+     */
+    public static void giveStack(@Nonnull ItemStack itemStack, int amount) {
+        ClientPlayerEntity sender = Minecraft.INSTANCE.player;
+        String senderName = sender.name;
 
-		List<String> commandStrings = new ArrayList<>();
-		commandStrings.add("/give");
-		commandStrings.add(senderName);
-		commandStrings.add(ItemRegistry.INSTANCE.getId(itemStack.getItem()).toString());
-		commandStrings.add(String.valueOf(amount));
+        List<String> commandStrings = new ArrayList<>();
+        commandStrings.add("/give");
+        commandStrings.add(senderName);
+        commandStrings.add(ItemRegistry.INSTANCE.getId(itemStack.getItem()).toString());
+        commandStrings.add(String.valueOf(amount));
 
-		String fullCommand = StringUtils.join(commandStrings, " ");
-		sender.sendChatMessage(fullCommand);
-	}
+        String fullCommand = StringUtils.join(commandStrings, " ");
+        sender.sendChatMessage(fullCommand);
+    }
 }

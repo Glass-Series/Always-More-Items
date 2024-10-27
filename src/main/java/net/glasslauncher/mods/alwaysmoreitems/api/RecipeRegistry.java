@@ -40,9 +40,9 @@ public interface RecipeRegistry {
     List<RecipeCategory> getRecipeCategoriesWithInput(@Nonnull ItemStack input);
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	/** Returns an unmodifiable list of Recipe Categories that have the Fluid as an input */
-//	@Nonnull
-//	List<IRecipeCategory> getRecipeCategoriesWithInput(@Nonnull Fluid input);
+//    /** Returns an unmodifiable list of Recipe Categories that have the Fluid as an input */
+//    @Nonnull
+//    List<IRecipeCategory> getRecipeCategoriesWithInput(@Nonnull Fluid input);
 
     /**
      * Returns an unmodifiable list of Recipe Categories that have the ItemStack as an output
@@ -51,9 +51,9 @@ public interface RecipeRegistry {
     List<RecipeCategory> getRecipeCategoriesWithOutput(@Nonnull ItemStack output);
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	/** Returns an unmodifiable list of Recipe Categories that have the Fluid as an output */
-//	@Nonnull
-//	List<IRecipeCategory> getRecipeCategoriesWithOutput(@Nonnull Fluid output);
+//    /** Returns an unmodifiable list of Recipe Categories that have the Fluid as an output */
+//    @Nonnull
+//    List<IRecipeCategory> getRecipeCategoriesWithOutput(@Nonnull Fluid output);
 
     /**
      * Returns an unmodifiable list of Recipes of recipeCategory that have the ItemStack as an input
@@ -62,9 +62,9 @@ public interface RecipeRegistry {
     List<Object> getRecipesWithInput(@Nonnull RecipeCategory recipeCategory, @Nonnull ItemStack input);
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	/** Returns an unmodifiable list of Recipes of recipeCategory that have the Fluid as an input */
-//	@Nonnull
-//	List<Object> getRecipesWithInput(@Nonnull IRecipeCategory recipeCategory, @Nonnull Fluid input);
+//    /** Returns an unmodifiable list of Recipes of recipeCategory that have the Fluid as an input */
+//    @Nonnull
+//    List<Object> getRecipesWithInput(@Nonnull IRecipeCategory recipeCategory, @Nonnull Fluid input);
 
     /**
      * Returns an unmodifiable list of Recipes of recipeCategory that have the ItemStack as an output
@@ -73,9 +73,9 @@ public interface RecipeRegistry {
     List<Object> getRecipesWithOutput(@Nonnull RecipeCategory recipeCategory, @Nonnull ItemStack output);
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	/** Returns an unmodifiable list of Recipes of recipeCategory that have the Fluid as an output */
-//	@Nonnull
-//	List<Object> getRecipesWithOutput(@Nonnull IRecipeCategory recipeCategory, @Nonnull Fluid output);
+//    /** Returns an unmodifiable list of Recipes of recipeCategory that have the Fluid as an output */
+//    @Nonnull
+//    List<Object> getRecipesWithOutput(@Nonnull IRecipeCategory recipeCategory, @Nonnull Fluid output);
 
     /**
      * Returns an unmodifiable list of Recipes in recipeCategory

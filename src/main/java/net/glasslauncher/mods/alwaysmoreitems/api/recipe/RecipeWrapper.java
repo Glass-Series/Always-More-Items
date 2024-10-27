@@ -26,11 +26,11 @@ public interface RecipeWrapper {
     List<?> getOutputs();
 
 // TODO: Implement once StationAPI gets a fluid API.
-//	/** Return a list of recipe fluid inputs. */
-//	List<FluidStack> getFluidInputs();
+//    /** Return a list of recipe fluid inputs. */
+//    List<FluidStack> getFluidInputs();
 //
-//	/** Return a list of recipe fluid outputs. */
-//	List<FluidStack> getFluidOutputs();
+//    /** Return a list of recipe fluid outputs. */
+//    List<FluidStack> getFluidOutputs();
 
     /**
      * Draw additional info about the recipe.

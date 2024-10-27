@@ -17,17 +17,17 @@ import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 @Entrypoint(eventBus = @EventBusPolicy(registerInstance = false))
 public class ClientInit {
 
-	@EventListener(priority = ListenerPriority.LOW)
-	public static void initAMI(RegistriesFrozenEvent event) {
+    @EventListener(priority = ListenerPriority.LOW)
+    public static void initAMI(RegistriesFrozenEvent event) {
         //noinspection UnstableApiUsage
         PhaseOrdering.of(TooltipRenderEvent.class).addPhaseOrdering(AMITooltipSystem.AMI_TOOLTIP_PHASE, StationAPI.INTERNAL_PHASE);
-		AlwaysMoreItems.setItemFilter(new ItemFilter(AlwaysMoreItems.getItemRegistry()));
-	}
+        AlwaysMoreItems.setItemFilter(new ItemFilter(AlwaysMoreItems.getItemRegistry()));
+    }
 
-	@EventListener
-	public static void fixNames(BlockRegistryEvent event) {
-		// See the lang file for more fixed names.
-		Block.PISTON_HEAD.setTranslationKey("pistonHead");
-		Block.MOVING_PISTON.setTranslationKey("pistonMoving");
-	}
+    @EventListener
+    public static void fixNames(BlockRegistryEvent event) {
+        // See the lang file for more fixed names.
+        Block.PISTON_HEAD.setTranslationKey("pistonHead");
+        Block.MOVING_PISTON.setTranslationKey("pistonMoving");
+    }
 }

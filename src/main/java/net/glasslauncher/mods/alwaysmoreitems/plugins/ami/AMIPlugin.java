@@ -14,55 +14,55 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AMIPlugin implements ModPluginProvider {
-	public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("always_more_items");
+    public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("always_more_items");
 
     @Override
-	public String getName() {
-		return "AMI";
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
+    public String getName() {
+        return "AMI";
     }
 
-	@Override
-	public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
+    @Override
+    public Identifier getId() {
+        return ID;
+    }
 
-	}
+    @Override
+    public void onAMIHelpersAvailable(AMIHelpers amiHelpers) {
+    }
 
-	@Override
-	public void register(ModRegistry registry) {
+    @Override
+    public void onItemRegistryAvailable(ItemRegistry itemRegistry) {
 
-		registry.addRecipeCategories(
-				new ItemDescriptionRecipeCategory()
-		);
+    }
 
-		registry.addRecipeHandlers(
-				new ItemDescriptionRecipeHandler()
-		);
-	}
+    @Override
+    public void register(ModRegistry registry) {
 
-	@Override
-	public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
+        registry.addRecipeCategories(
+                new ItemDescriptionRecipeCategory()
+        );
 
-	}
+        registry.addRecipeHandlers(
+                new ItemDescriptionRecipeHandler()
+        );
+    }
 
-	@Override
-	public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
-		return (SyncableRecipe) new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
-	}
+    @Override
+    public void onRecipeRegistryAvailable(RecipeRegistry recipeRegistry) {
 
-	public static <T> ArrayList<T> nbtListToArrayList(NbtList nbtList) {
-		ArrayList<T> arrayList = new ArrayList<>(nbtList.size());
-		for (int i = 0; i < nbtList.size(); i++) {
+    }
+
+    @Override
+    public SyncableRecipe deserializeRecipe(NbtCompound recipe) {
+        return (SyncableRecipe) new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
+    }
+
+    public static <T> ArrayList<T> nbtListToArrayList(NbtList nbtList) {
+        ArrayList<T> arrayList = new ArrayList<>(nbtList.size());
+        for (int i = 0; i < nbtList.size(); i++) {
             //noinspection unchecked Good. Crash.
             arrayList.add((T) nbtList.get(i));
-		}
-		return arrayList;
-	}
+        }
+        return arrayList;
+    }
 }
