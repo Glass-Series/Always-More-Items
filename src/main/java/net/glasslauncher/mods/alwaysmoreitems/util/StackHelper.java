@@ -4,14 +4,18 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.mods.alwaysmoreitems.api.SubItemHelper;
-import net.glasslauncher.mods.alwaysmoreitems.api.SubItemProvider;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.modificationstation.stationapi.api.block.HasMetaNamedBlockItem;
+import net.modificationstation.stationapi.api.block.MetaNamedBlockItemProvider;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
@@ -180,25 +184,84 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
 //				}
 //			}
 //		}
+		
+		// Try to get the mod defined sub items
 		List<ItemStack> subItems = SubItemHelper.getSubItems(item);
 
+		// If mod has defined sub items, use those
 		if (subItems != null && !subItems.isEmpty()) {
 			subItems = subItems.stream().peek(itemStack -> itemStack.count = stackSize).toList();
 		}
+		
+		// If mod hasnt defined sub items, look for them ourselves
 		else {
+			// Create a list for sub items
 			subItems = new ArrayList<>();
 			List<String> keyCache = new ArrayList<>();
+			
+			// If on server, we dont care, generate first item and return
 			if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.SERVER)) {
 				subItems.add(new ItemStack(item, stackSize, 0));
 				return subItems;
 			}
+            
+            // If item is a BlockItem and that BlockItem has MetaNamedBlockItemProvider, use that and return
+			if(item instanceof BlockItem blockItem){
+				// StationAPI interface
+				if(blockItem.getBlock() instanceof MetaNamedBlockItemProvider metaBlockItemProvider){
+					for (int i = 0; i < metaBlockItemProvider.getValidMetas().length; i++) {
+						subItems.add(new ItemStack(item, stackSize, metaBlockItemProvider.getValidMetas()[i]));
+					}
+					return subItems;
+				}
+
+				// StationAPI annotation
+				if(blockItem.getBlock() instanceof HasMetaNamedBlockItem blockItemWithMeta){
+					for (int i = 0; i < blockItemWithMeta.validMetas().length; i++) {
+						subItems.add(new ItemStack(item, stackSize, blockItemWithMeta.validMetas()[i]));
+					}
+					return subItems;
+				}
+			}
+			
+			// As a last resort try to scan all the 16 possible meta values
 			for (int i = 0; i < 16; i++) {
 				try { // Shitcoders go brrr
 					ItemStack itemStack = new ItemStack(item, stackSize, i);
 					String translationKey = itemStack.getTranslationKey();
-					if (keyCache.contains(translationKey) || (!AMIConfig.ignoreBadNames() && Objects.equals(translationKey, itemStack.getItem().getTranslatedName()))) {
-						break;
+
+					// If this Translation Key has already been observed, ignore it
+					if(keyCache.contains(translationKey)){
+						continue;
 					}
+					
+					// Check if the name and contains the meta (like the aether dart shooter)
+					if(translationKey.contains("" + i)){
+						// If meta is present, query for the translation with that meta
+						String translatedNameWithMeta = I18n.getTranslation(translationKey + ".name");
+						
+						// If translatedName is not translated and is the raw translation key, 
+						// then removing the last 5 characters will remove ".name" allowing the comparison with the translationKey 
+						if(translationKey.contains(translatedNameWithMeta.substring(0, translatedNameWithMeta.length() - 5))){
+							// This meta is not translated, avoid
+							AlwaysMoreItems.LOGGER.debug("Untranslated meta value {} hidden, translation key is {}", i, translationKey);
+							keyCache.add(translationKey);
+							continue;
+						}
+					}
+
+					// Check if the item does not have a translation key
+					if(itemStack.getItem().getTranslatedName().equals(translationKey + ".name")){
+						AlwaysMoreItems.LOGGER.debug("Item {} is not translated", translationKey);
+
+						// Check if ignoring untranslated names is enabled
+						if(AMIConfig.ignoreUntranslatedNames()){
+							// Add only the item with meta 0 and return
+							subItems.add(new ItemStack(item, stackSize, i));
+							return subItems;
+						}
+					}
+					
 					keyCache.add(translationKey);
 					subItems.add(itemStack);
 				}

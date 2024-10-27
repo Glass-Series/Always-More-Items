@@ -19,8 +19,8 @@ public class AMIConfigObject {
     @ConfigEntry(name = "Show Nbt Counts")
     public Boolean showNbtCount = false;
 
-    @ConfigEntry(name = "Ignore Bad Names", description = "Should AMI show untranslated names? Modders might want to enable this in dev.")
-    public Boolean ignoreBadNames = false;
+    @ConfigEntry(name = "Ignore Untranslated Names", description = "Requires restart. Only use if necessary.")
+    public Boolean ignoreUntranslatedNames = false;
 
     @ConfigEntry(name = "Show Redundant/Internal Items", description = "Shows hidden stuff like the lit furnace and wheat crop block.")
     public Boolean showRedundantItems = false;

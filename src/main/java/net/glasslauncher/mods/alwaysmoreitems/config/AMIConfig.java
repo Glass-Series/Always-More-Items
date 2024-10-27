@@ -72,8 +72,8 @@ public class AMIConfig {
         return INSTANCE.showNbtCount;
     }
 
-    public static boolean ignoreBadNames() {
-        return INSTANCE.ignoreBadNames;
+    public static boolean ignoreUntranslatedNames() {
+        return INSTANCE.ignoreUntranslatedNames;
     }
 
     public static boolean showRedundantItems() {
