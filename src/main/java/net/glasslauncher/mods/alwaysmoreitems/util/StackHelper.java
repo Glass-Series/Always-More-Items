@@ -225,18 +225,17 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
             }
             
             // As a last resort try to scan all the 16 possible meta values
-            for (int i = 0; i < 16; i++) {
+            for (int meta = 0; meta < 16; meta++) {
                 try { // Shitcoders go brrr
-                    ItemStack itemStack = new ItemStack(item, stackSize, i);
+                    ItemStack itemStack = new ItemStack(item, stackSize, meta);
                     String translationKey = itemStack.getTranslationKey();
 
                     // If this Translation Key has already been observed, ignore it
                     if(keyCache.contains(translationKey)){
                         continue;
                     }
-                    
-                    // Check if the name and contains the meta (like the aether dart shooter)
-                    if(translationKey.contains("" + i)){
+                    // Check if the name and ends with the meta (like the aether dart shooter)
+                    if(translationKey.endsWith(String.valueOf(meta))){
                         // If meta is present, query for the translation with that meta
                         String translatedNameWithMeta = I18n.getTranslation(translationKey + ".name");
                         
@@ -244,7 +243,7 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
                         // then removing the last 5 characters will remove ".name" allowing the comparison with the translationKey 
                         if(translationKey.contains(translatedNameWithMeta.substring(0, translatedNameWithMeta.length() - 5))){
                             // This meta is not translated, avoid
-                            AlwaysMoreItems.LOGGER.debug("Untranslated meta value {} hidden, translation key is {}", i, translationKey);
+                            AlwaysMoreItems.LOGGER.debug("Untranslated meta value {} hidden, translation key is {}", meta, translationKey);
                             keyCache.add(translationKey);
                             continue;
                         }
@@ -257,7 +256,7 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
                         // Check if ignoring untranslated names is enabled
                         if(AMIConfig.ignoreUntranslatedNames()){
                             // Add only the item with meta 0 and return
-                            subItems.add(new ItemStack(item, stackSize, i));
+                            subItems.add(new ItemStack(item, stackSize, meta));
                             return subItems;
                         }
                     }
