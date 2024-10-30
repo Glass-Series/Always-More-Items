@@ -24,6 +24,9 @@ public class AMIConfigObject {
 
     @ConfigEntry(name = "Show Redundant/Internal Items", description = "Shows hidden stuff like the lit furnace and wheat crop block.")
     public Boolean showRedundantItems = false;
+    
+    @ConfigEntry(name = "Centered Search Bar")
+    public Boolean centeredSearchBar = true;
 
     @ConfigEntry(
             name = "Max Item List Width",

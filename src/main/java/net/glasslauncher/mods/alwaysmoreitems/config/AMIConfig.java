@@ -79,4 +79,8 @@ public class AMIConfig {
     public static boolean showRedundantItems() {
         return INSTANCE.showRedundantItems;
     }
+    
+    public static boolean centeredSearchBar(){
+        return INSTANCE.centeredSearchBar;
+    }
 }

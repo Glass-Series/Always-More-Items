@@ -1,7 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.screen;
 
 import com.google.common.collect.ImmutableList;
-import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
@@ -109,6 +108,7 @@ public class OverlayScreen extends Screen {
         super.init(minecraft, width, height);
     }
 
+    @SuppressWarnings({"unchecked", "OptionalGetWithoutIsPresent"})
     @ApiStatus.Internal
     @Override
     public void init() {
@@ -120,20 +120,37 @@ public class OverlayScreen extends Screen {
         currentTooltip = null;
 
         // Search Field
-        searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2) - 10, height - 25, searchFieldWidth - 2, 20);
+        searchField = new SearchTextFieldWidget(textRenderer, 0, 0, 0, 20);
         searchField.setMaxLength(64);
         searchField.setText(AlwaysMoreItems.getItemFilter().getFilterText());
 
-        // Item Overlay
-        previousButton = new ButtonWidget(10, getOverlayStartX(), 0, 20, 20, "<");
-        //noinspection unchecked
-        buttons.add(previousButton);
-        nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
-        //noinspection unchecked
-        buttons.add(nextButton);
-        settingsButton = new AMISettingsButton(12, (width / 2) - (searchFieldWidth / 2) + searchFieldWidth - 11, height - 26);
-        //noinspection unchecked
+        // Settings Button
+        settingsButton = new AMISettingsButton(12, 0, 0);
         buttons.add(settingsButton);
+
+        // Adjust search field and settings button
+        if (AMIConfig.centeredSearchBar()) {
+            searchField.x = (width / 2) - (searchFieldWidth / 2) - 10;
+            searchField.y = height - 25;
+            searchField.width = searchFieldWidth - 2;
+
+            settingsButton.x = (width / 2) - (searchFieldWidth / 2) + searchFieldWidth - 11;
+            settingsButton.y = height - 26;
+        } else {
+            searchField.x = width - (getItemListWidth() * 18);
+            searchField.y = height - 21;
+            searchField.width = width - 23 - searchField.x;
+
+            settingsButton.x = width - 22;
+            settingsButton.y = height - 22;
+        }
+
+        // Item Overlay
+        previousButton = new ButtonWidget(10, getOverlayStartX() - 1, 0, 20, 20, "<");
+        buttons.add(previousButton);
+
+        nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
+        buttons.add(nextButton);
 
         // Action Buttons
         actionButtons = new ArrayList<>();
@@ -249,7 +266,7 @@ public class OverlayScreen extends Screen {
                 -1
         );
 
-        // Draw Search Field
+        // Draw Search Field and Settings Button
         searchField.draw(mouseX, mouseY);
 
         // Draw Action Buttons
@@ -330,12 +347,12 @@ public class OverlayScreen extends Screen {
                 boolean isCtrl = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL);
                 if (!AMIConfig.isItemOnConfigBlacklist(hoveredItem.item, isCtrl)) {
                     AMIConfig.addItemToConfigBlacklist(hoveredItem.item, isCtrl);
-                }
-                else {
+                } else {
                     AMIConfig.removeItemFromConfigBlacklist(hoveredItem.item, isCtrl);
                 }
                 return;
             }
+            
             if (!AMIConfig.INSTANCE.cheatMode || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));
@@ -344,6 +361,7 @@ public class OverlayScreen extends Screen {
                 }
                 return;
             }
+            
             if (AlwaysMoreItems.isAMIOnServer()) {
                 NbtCompound itemNbt = new NbtCompound();
                 hoveredItem.item.writeNbt(itemNbt);
@@ -398,6 +416,10 @@ public class OverlayScreen extends Screen {
         // Toggle Overlay
         if (keyCode == KeybindListener.toggleOverlay.code && !searchField.isSelected()) {
             AlwaysMoreItems.overlayEnabled = !AlwaysMoreItems.overlayEnabled;
+
+            ScreenScaler screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+            minecraft.currentScreen.init(minecraft, screenScaler.getScaledWidth(), screenScaler.getScaledHeight());
+
             previousButton.visible = previousButton.active = AlwaysMoreItems.overlayEnabled;
             nextButton.visible = nextButton.active = AlwaysMoreItems.overlayEnabled;
             settingsButton.visible = settingsButton.active = AlwaysMoreItems.overlayEnabled;
@@ -528,9 +550,9 @@ public class OverlayScreen extends Screen {
             lastScaledWidth = width;
 
             // Rebuild the screen
-            init();
-            rebuildRenderList();
             currentPage = 0;
+            minecraft.currentScreen.init(minecraft, screenScaler.getScaledWidth(), screenScaler.getScaledHeight());
+            rebuildRenderList();
         }
     }
 
@@ -547,7 +569,11 @@ public class OverlayScreen extends Screen {
     }
 
     public int getItemListHeight() {
-        return Math.min(((height - 20) / itemSize), maxItemListHeight);
+        if (AMIConfig.centeredSearchBar()) {
+            return Math.min(((height - 20) / itemSize), maxItemListHeight);
+        } else {
+            return Math.min(((height - 42) / itemSize), maxItemListHeight);
+        }
     }
 
     public int getOverlayStartX() {
