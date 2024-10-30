@@ -52,6 +52,7 @@ public class OverlayScreen extends Screen {
 
     // Search Field
     public SearchTextFieldWidget searchField;
+    public static int searchFieldWidth = 160;
 
     // Trash Button
     public ActionButtonWidget trashButton;
@@ -119,7 +120,7 @@ public class OverlayScreen extends Screen {
         currentTooltip = null;
 
         // Search Field
-        searchField = new SearchTextFieldWidget(textRenderer, 0, height - 21, 0, 20);
+        searchField = new SearchTextFieldWidget(textRenderer, (width / 2) - (searchFieldWidth / 2) - 10, height - 25, searchFieldWidth - 2, 20);
         searchField.setMaxLength(64);
         searchField.setText(AlwaysMoreItems.getItemFilter().getFilterText());
 
@@ -130,7 +131,7 @@ public class OverlayScreen extends Screen {
         nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
         //noinspection unchecked
         buttons.add(nextButton);
-        settingsButton = new AMISettingsButton(12, 0, height - 22);
+        settingsButton = new AMISettingsButton(12, (width / 2) - (searchFieldWidth / 2) + searchFieldWidth - 11, height - 26);
         //noinspection unchecked
         buttons.add(settingsButton);
 
@@ -248,9 +249,6 @@ public class OverlayScreen extends Screen {
                 -1
         );
 
-        searchField.x = width - (getItemListWidth() * 18);
-        searchField.width = width - 22 - searchField.x;
-        settingsButton.x = width - 22;
         // Draw Search Field
         searchField.draw(mouseX, mouseY);
 
@@ -549,7 +547,7 @@ public class OverlayScreen extends Screen {
     }
 
     public int getItemListHeight() {
-        return Math.min(((height - 38) / itemSize), maxItemListHeight);
+        return Math.min(((height - 20) / itemSize), maxItemListHeight);
     }
 
     public int getOverlayStartX() {
