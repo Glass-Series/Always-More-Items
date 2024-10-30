@@ -241,7 +241,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Draw Page Number
-        String pageNumberString = (currentPage + 1) + "/" + pageCount;
+        String pageNumberString = (pageCount == 0 ? 0 : (currentPage + 1)) + "/" + pageCount;
         textRenderer.drawWithShadow(
                 pageNumberString,
                 (width - ((width - getOverlayStartX()) / 2)) - (textRenderer.getWidth(pageNumberString) / 2),
