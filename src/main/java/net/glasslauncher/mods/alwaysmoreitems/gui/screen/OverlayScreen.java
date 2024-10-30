@@ -416,6 +416,7 @@ public class OverlayScreen extends Screen {
         if (searchField.isSelected()) {
             searchField.keyPressed(character, keyCode);
             ItemFilter.setFilterText(searchField.getText());
+            currentPage = 0; //Math.min(pageCount - 1, currentPage);
             rebuildRenderList();
             return true;
         }
