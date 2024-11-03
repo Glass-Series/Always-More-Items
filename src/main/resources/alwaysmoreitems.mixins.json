@@ -19,7 +19,6 @@
     "client.HandledScreenMixin",
     "client.MinecraftMixin",
     "client.OverlayScreenInjectionsMixin",
-    "client.ScreenScalerMixin",
     "client.TextRendererMixin"
   ],
   "injectors": {
