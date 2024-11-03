@@ -21,6 +21,7 @@ import net.glasslauncher.mods.gcapi3.api.GCAPI;
 import net.glasslauncher.mods.gcapi3.impl.GlassYamlFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.DoubleChestScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -84,10 +85,13 @@ public class OverlayScreen extends Screen {
     private int lastItemWidth = 0;
     private int lastItemHeight = 0;
     private int lastScaledWidth = 0;
+    private boolean lastCenteredBar = true;
 
     // Mouse Pos
     int lastMouseX = 0;
     int lastMouseY = 0;
+
+    ScreenScaler screenScaler;
 
     private OverlayScreen() {
     }
@@ -129,7 +133,7 @@ public class OverlayScreen extends Screen {
         buttons.add(settingsButton);
 
         // Adjust search field and settings button
-        if (AMIConfig.centeredSearchBar()) {
+        if (isSearchBarCentered()) {
             searchField.x = (width / 2) - (searchFieldWidth / 2) - 10;
             searchField.y = height - 25;
             searchField.width = searchFieldWidth - 2;
@@ -352,7 +356,7 @@ public class OverlayScreen extends Screen {
                 }
                 return;
             }
-            
+
             if (!AMIConfig.INSTANCE.cheatMode || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));
@@ -361,7 +365,7 @@ public class OverlayScreen extends Screen {
                 }
                 return;
             }
-            
+
             if (AlwaysMoreItems.isAMIOnServer()) {
                 NbtCompound itemNbt = new NbtCompound();
                 hoveredItem.item.writeNbt(itemNbt);
@@ -395,11 +399,12 @@ public class OverlayScreen extends Screen {
         super.onMouseEvent();
 
         int mouseX = Mouse.getEventX() * this.width / this.minecraft.displayWidth;
-        if (mouseX >= getOverlayStartX()) {
+        int dWheel = Mouse.getEventDWheel();
+        if (mouseX >= getOverlayStartX() && dWheel != 0) {
             if (flipScrollDirection) {
-                flipPage(Mouse.getEventDWheel());
+                flipPage(dWheel);
             } else {
-                flipPage(-Mouse.getEventDWheel());
+                flipPage(-dWheel);
             }
         }
     }
@@ -417,7 +422,7 @@ public class OverlayScreen extends Screen {
         if (keyCode == KeybindListener.toggleOverlay.code && !searchField.isSelected()) {
             AlwaysMoreItems.overlayEnabled = !AlwaysMoreItems.overlayEnabled;
 
-            ScreenScaler screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+            screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
             minecraft.currentScreen.init(minecraft, screenScaler.getScaledWidth(), screenScaler.getScaledHeight());
 
             previousButton.visible = previousButton.active = AlwaysMoreItems.overlayEnabled;
@@ -531,9 +536,9 @@ public class OverlayScreen extends Screen {
             minecraft = Minecraft.INSTANCE;
         }
 
-        ScreenScaler screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+        screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
 
-        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight || screenScaler.getScaledWidth() != lastScaledWidth) {
+        if (minecraft.displayWidth != lastWidth || minecraft.displayHeight != lastHeight || AMIConfig.INSTANCE.maxItemListWidth != lastItemWidth || AMIConfig.INSTANCE.maxItemListHeight != lastItemHeight || screenScaler.getScaledWidth() != lastScaledWidth || isSearchBarCentered() != lastCenteredBar) {
             // Get the item list dimensions
             maxItemListWidth = AMIConfig.INSTANCE.maxItemListWidth;
             maxItemListHeight = AMIConfig.INSTANCE.maxItemListHeight;
@@ -548,6 +553,7 @@ public class OverlayScreen extends Screen {
             lastItemWidth = maxItemListWidth;
             lastItemHeight = maxItemListHeight;
             lastScaledWidth = width;
+            lastCenteredBar = isSearchBarCentered();
 
             // Rebuild the screen
             currentPage = 0;
@@ -569,11 +575,19 @@ public class OverlayScreen extends Screen {
     }
 
     public int getItemListHeight() {
-        if (AMIConfig.centeredSearchBar()) {
+        if (isSearchBarCentered()) {
             return Math.min(((height - 20) / itemSize), maxItemListHeight);
         } else {
             return Math.min(((height - 42) / itemSize), maxItemListHeight);
         }
+    }
+
+    public boolean isSearchBarCentered() {
+        if (screenScaler == null) {
+            screenScaler = new ScreenScaler(minecraft.options, minecraft.displayWidth, minecraft.displayHeight);
+        }
+
+        return AMIConfig.centeredSearchBar() && !(screenScaler.getScaledHeight() <= 275 && minecraft.currentScreen instanceof DoubleChestScreen);
     }
 
     public int getOverlayStartX() {
