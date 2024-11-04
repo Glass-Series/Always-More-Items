@@ -157,19 +157,16 @@ public class VanillaPlugin implements ModPluginProvider {
 
     private void hideRedundantItems(AMIHelpers amiHelpers) {
         ItemBlacklist itemBlacklist = amiHelpers.getItemBlacklist();
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.SAPLING));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_WATER));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_LAVA));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.LOG));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.LEAVES));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_WATER));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_LAVA));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.GRASS));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.BED));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.PISTON_HEAD));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.MOVING_PISTON));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.FIRE));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.DOUBLE_SLAB));
+        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FIRE));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.REDSTONE_WIRE));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.WHEAT));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_FURNACE));
@@ -178,7 +175,6 @@ public class VanillaPlugin implements ModPluginProvider {
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.WALL_SIGN));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.IRON_DOOR));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_ORE));
-        //itemBlacklist.addItemToBlacklist(new ItemStack(Block.LIT_REDSTONE_TORCH));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.REDSTONE_TORCH));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.SUGAR_CANE));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.REPEATER));
