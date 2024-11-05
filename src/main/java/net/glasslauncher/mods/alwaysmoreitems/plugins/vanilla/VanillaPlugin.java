@@ -157,9 +157,7 @@ public class VanillaPlugin implements ModPluginProvider {
 
     private void hideRedundantItems(AMIHelpers amiHelpers) {
         ItemBlacklist itemBlacklist = amiHelpers.getItemBlacklist();
-        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_WATER));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
-        itemBlacklist.addItemToBlacklist(new ItemStack(Block.FLOWING_LAVA));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.GRASS));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.BED));
