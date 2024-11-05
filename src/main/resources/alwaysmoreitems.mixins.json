@@ -4,6 +4,7 @@
   "package": "net.glasslauncher.mods.alwaysmoreitems.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "LeavesBlockItemMixin",
     "MixinSlab",
     "NbtCompoundMixin",
     "ShapedRecipeMixin",
