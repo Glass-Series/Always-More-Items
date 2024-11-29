@@ -130,6 +130,7 @@ public class OverlayScreen extends Screen {
 
         // Settings Button
         settingsButton = new AMISettingsButton(12, 0, 0);
+        settingsButton.visible = AlwaysMoreItems.overlayEnabled;
         buttons.add(settingsButton);
 
         // Adjust search field and settings button
@@ -151,9 +152,11 @@ public class OverlayScreen extends Screen {
 
         // Item Overlay
         previousButton = new ButtonWidget(10, getOverlayStartX() - 1, 0, 20, 20, "<");
+        previousButton.visible = AlwaysMoreItems.overlayEnabled;
         buttons.add(previousButton);
 
         nextButton = new ButtonWidget(11, width - 20, 0, 20, 20, ">");
+        nextButton.visible = AlwaysMoreItems.overlayEnabled;
         buttons.add(nextButton);
 
         // Action Buttons
