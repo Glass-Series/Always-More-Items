@@ -1,8 +1,8 @@
 import java.net.URI
 
 plugins {
-	id("fabric-loom") version "1.7.2"
-	id("babric-loom-extension") version "1.7.3"
+	id("fabric-loom") version "1.9.2"
+	id("babric-loom-extension") version "1.9.2"
 	id("maven-publish")
 	id("io.freefair.lombok") version "8.6"
 }
