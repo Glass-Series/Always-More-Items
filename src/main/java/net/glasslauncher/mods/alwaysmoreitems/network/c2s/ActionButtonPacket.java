@@ -8,16 +8,18 @@ import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
+import net.modificationstation.stationapi.api.network.packet.ManagedPacket;
+import net.modificationstation.stationapi.api.network.packet.PacketType;
 import net.modificationstation.stationapi.api.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 @SuppressWarnings("CallToPrintStackTrace")
-public class ActionButtonPacket extends Packet implements IdentifiablePacket {
-    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("action_button");
+public class ActionButtonPacket extends Packet implements ManagedPacket<ActionButtonPacket> {
+    public static final PacketType<ActionButtonPacket> TYPE = PacketType.builder(false, true, ActionButtonPacket::new).build();
 
     public Identifier actionIdentifier;
     public int mouseButton;
@@ -84,11 +86,7 @@ public class ActionButtonPacket extends Packet implements IdentifiablePacket {
     }
 
     @Override
-    public Identifier getId() {
-        return IDENTIFIER;
-    }
-
-    public static void register() {
-        IdentifiablePacket.register(IDENTIFIER, false, true, ActionButtonPacket::new);
+    public @NotNull PacketType<ActionButtonPacket> getType() {
+        return TYPE;
     }
 }

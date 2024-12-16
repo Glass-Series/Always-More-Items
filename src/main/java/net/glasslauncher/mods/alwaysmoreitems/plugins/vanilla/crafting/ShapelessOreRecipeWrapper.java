@@ -16,8 +16,7 @@ public class ShapelessOreRecipeWrapper extends VanillaRecipeWrapper implements C
     public ShapelessOreRecipeWrapper(@Nonnull StationShapelessRecipe recipe) {
         this.recipe = recipe;
         for (Object input : this.recipe.getIngredients()) {
-            if (input instanceof ItemStack) {
-                ItemStack itemStack = (ItemStack) input;
+            if (input instanceof ItemStack itemStack) {
                 if (itemStack.count != 1) {
                     itemStack.count = 1;
                 }
@@ -34,6 +33,6 @@ public class ShapelessOreRecipeWrapper extends VanillaRecipeWrapper implements C
     @Nonnull
     @Override
     public List<ItemStack> getOutputs() {
-        return List.of(recipe.getOutputs());
+        return List.of(recipe.getOutput());
     }
 }

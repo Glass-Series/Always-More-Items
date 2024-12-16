@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.util;
 
+import com.mojang.datafixers.util.Either;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
@@ -16,6 +17,8 @@ import net.minecraft.screen.slot.Slot;
 import net.modificationstation.stationapi.api.block.HasMetaNamedBlockItem;
 import net.modificationstation.stationapi.api.block.MetaNamedBlockItemProvider;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
+import net.modificationstation.stationapi.api.registry.RegistryEntry;
+import net.modificationstation.stationapi.api.tag.TagKey;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.Nonnull;
@@ -288,12 +291,11 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
 
     private void getAllSubtypes(@Nonnull List<ItemStack> subtypesList, @Nonnull Iterable stacks) {
         for (Object obj : stacks) {
-            if (obj instanceof ItemStack) {
-                ItemStack itemStack = (ItemStack) obj;
-                List<ItemStack> subtypes = getSubtypes(itemStack);
+            if (obj instanceof ItemStack stack) {
+                List<ItemStack> subtypes = getSubtypes(stack);
                 subtypesList.addAll(subtypes);
-            } else if (obj instanceof Iterable) {
-                getAllSubtypes(subtypesList, (Iterable) obj);
+            } else if (obj instanceof Iterable iterable) {
+                getAllSubtypes(subtypesList, iterable);
             } else if (obj != null) {
                 AlwaysMoreItems.LOGGER.error("Unknown object found: {}", obj);
             }
@@ -313,15 +315,33 @@ public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.r
     }
 
     private void toItemStackList(@Nonnull List<ItemStack> itemStackList, @Nullable Object input) {
-        if (input instanceof ItemStack) {
-            itemStackList.add((ItemStack) input);
+        if (input instanceof ItemStack stack) {
+            itemStackList.add(stack);
         } else if (input instanceof String) {
 //            List<ItemStack> stacks = ItemRegistry.INSTANCE.getEntryList(TagKey.of(ItemRegistry.KEY, Identifier.of(string)));
 //            itemStackList.addAll(stacks);
-        } else if (input instanceof Iterable) {
-            for (Object obj : (Iterable) input) {
+        } else if (input instanceof Iterable iterable) {
+            for (Object obj : iterable) {
                 toItemStackList(itemStackList, obj);
             }
+        } else if (input instanceof Either<?, ?> either) {
+            if (either.left().isPresent()) { // LEFT = TagKey
+                //System.out.println("LEFT " + either.left().get().getClass().getSimpleName());
+                if (either.left().get() instanceof TagKey<?> iTagKey) {
+                    Optional<TagKey<Item>> tagKey = iTagKey.tryCast(ItemRegistry.INSTANCE.getKey());
+                    if (tagKey.isPresent()) {
+                        for (RegistryEntry<Item> entry : ItemRegistry.INSTANCE.getOrCreateEntryList(tagKey.get())) {
+                            itemStackList.add(new ItemStack(entry.value(), 1));
+                        }
+                    }
+                }
+            } else if (either.right().isPresent()) { // Right = ItemStack
+                //System.out.println("RIGHT " + either.right().get().getClass().getSimpleName());
+                if (either.right().get() instanceof ItemStack stack) {
+                    itemStackList.add(stack);
+                }
+            }
+
         } else if (input != null) {
             AlwaysMoreItems.LOGGER.error("Unknown object found: {}", input);
         }

@@ -6,7 +6,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMINbt;
 import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.transfer.BasicRecipeTransferHandler;
-import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,16 +15,17 @@ import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.modificationstation.stationapi.api.nbt.NbtIntArray;
-import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
-import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.api.network.packet.ManagedPacket;
+import net.modificationstation.stationapi.api.network.packet.PacketType;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.*;
 
-public class RecipeTransferPacket extends Packet implements IdentifiablePacket {
-    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("transfer");
+public class RecipeTransferPacket extends Packet implements ManagedPacket<RecipeTransferPacket> {
+    public static final PacketType<RecipeTransferPacket> TYPE = PacketType.builder(false, true, RecipeTransferPacket::new).build();
 
     private int outSize;
 
@@ -43,11 +43,6 @@ public class RecipeTransferPacket extends Packet implements IdentifiablePacket {
         this.craftingSlots = craftingSlots;
         this.inventorySlots = inventorySlots;
         this.maxTransfer = maxTransfer;
-    }
-
-    @Override
-    public Identifier getId() {
-        return IDENTIFIER;
     }
 
     @Override
@@ -115,7 +110,8 @@ public class RecipeTransferPacket extends Packet implements IdentifiablePacket {
         return outSize;
     }
 
-    public static void register() {
-        IdentifiablePacket.register(IDENTIFIER, false, true, RecipeTransferPacket::new);
+    @Override
+    public @NotNull PacketType<RecipeTransferPacket> getType() {
+        return TYPE;
     }
 }

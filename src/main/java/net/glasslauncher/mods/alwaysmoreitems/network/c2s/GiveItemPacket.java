@@ -14,16 +14,18 @@ import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.modificationstation.stationapi.api.StationAPI;
-import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
+import net.modificationstation.stationapi.api.network.packet.ManagedPacket;
+import net.modificationstation.stationapi.api.network.packet.PacketType;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class GiveItemPacket extends Packet implements IdentifiablePacket {
-    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("give_item");
+public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPacket> {
+    public static final PacketType<GiveItemPacket> TYPE = PacketType.builder(false, true, GiveItemPacket::new).build();
     private static final String STATION_ID = StationAPI.NAMESPACE.id("id").toString();
 
     private NbtCompound itemNbt;
@@ -109,11 +111,7 @@ public class GiveItemPacket extends Packet implements IdentifiablePacket {
     }
 
     @Override
-    public Identifier getId() {
-        return IDENTIFIER;
-    }
-
-    public static void register() {
-        IdentifiablePacket.register(IDENTIFIER, false, true, GiveItemPacket::new);
+    public @NotNull PacketType<GiveItemPacket> getType() {
+        return TYPE;
     }
 }

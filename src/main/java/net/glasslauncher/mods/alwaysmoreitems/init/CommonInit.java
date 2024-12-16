@@ -15,11 +15,13 @@ import net.glasslauncher.mods.alwaysmoreitems.util.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;
 import net.mine_diver.unsafeevents.listener.EventListener;
+import net.modificationstation.stationapi.api.event.init.InitFinishedEvent;
 import net.modificationstation.stationapi.api.event.network.packet.PacketRegisterEvent;
-import net.modificationstation.stationapi.api.event.registry.RegistriesFrozenEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EntrypointManager;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
+import net.modificationstation.stationapi.api.registry.PacketTypeRegistry;
+import net.modificationstation.stationapi.api.registry.Registry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.HashMap;
@@ -35,7 +37,7 @@ public class CommonInit {
     private static ModRegistry modRegistry;
 
     @EventListener
-    public static void init(RegistriesFrozenEvent event) {
+    public static void init(InitFinishedEvent event) {
         AlwaysMoreItems.setHelpers(new AMIHelpers());
         initPlugins();
         FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:action", Object.class).forEach(EntrypointManager::setup);
@@ -65,10 +67,10 @@ public class CommonInit {
 
     @EventListener
     public static void registerPackets(PacketRegisterEvent event){
-        ActionButtonPacket.register();
-        GiveItemPacket.register();
-        RecipeTransferPacket.register();
-        RecipeSyncPacket.register();
+        Registry.register(PacketTypeRegistry.INSTANCE, AlwaysMoreItems.NAMESPACE.id("action_button"), ActionButtonPacket.TYPE);
+        Registry.register(PacketTypeRegistry.INSTANCE, AlwaysMoreItems.NAMESPACE.id("give_item"), GiveItemPacket.TYPE);
+        Registry.register(PacketTypeRegistry.INSTANCE, AlwaysMoreItems.NAMESPACE.id("transfer"), RecipeTransferPacket.TYPE);
+        Registry.register(PacketTypeRegistry.INSTANCE, AlwaysMoreItems.NAMESPACE.id("sync"), RecipeSyncPacket.TYPE);
     }
 
     public static void initAMI() {

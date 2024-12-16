@@ -12,8 +12,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
-import net.modificationstation.stationapi.api.network.packet.IdentifiablePacket;
+import net.modificationstation.stationapi.api.network.packet.ManagedPacket;
+import net.modificationstation.stationapi.api.network.packet.PacketType;
 import net.modificationstation.stationapi.api.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -23,8 +25,8 @@ import java.util.ArrayList;
  * This is a LARGE packet, so don't resend it, instead make a blacklist plugin instead of fucking with this packet.
  * I'm not kidding, this thing's going to end up multiple megabytes in size on even a small modpack, nevermind when you load 100+ mods.
  */
-public class RecipeSyncPacket extends Packet implements IdentifiablePacket {
-    private static final Identifier IDENTIFIER = AlwaysMoreItems.NAMESPACE.id("sync");
+public class RecipeSyncPacket extends Packet implements ManagedPacket<RecipeSyncPacket> {
+    public static final PacketType<RecipeSyncPacket> TYPE = PacketType.builder(true, false, RecipeSyncPacket::new).build();
     private static final String PLUGIN_KEY = AlwaysMoreItems.NAMESPACE.id("plugin").toString();
 
     private static NbtList CACHED_DATA;
@@ -87,11 +89,7 @@ public class RecipeSyncPacket extends Packet implements IdentifiablePacket {
     }
 
     @Override
-    public Identifier getId() {
-        return IDENTIFIER;
-    }
-
-    public static void register() {
-        IdentifiablePacket.register(IDENTIFIER, true, false, RecipeSyncPacket::new);
+    public @NotNull PacketType<RecipeSyncPacket> getType() {
+        return TYPE;
     }
 }

@@ -16,9 +16,8 @@ public class ShapedOreRecipeWrapper extends VanillaRecipeWrapper implements Shap
 
     public ShapedOreRecipeWrapper(@Nonnull StationShapedRecipe recipe) {
         this.recipe = recipe;
-        for (Object input : this.recipe.getIngredients()) {
-            if (input instanceof ItemStack) {
-                ItemStack itemStack = (ItemStack) input;
+        for (Object input : this.recipe.getGrid()) {
+            if (input instanceof ItemStack itemStack) {
                 if (itemStack.count != 1) {
                     itemStack.count = 1;
                 }
@@ -29,13 +28,13 @@ public class ShapedOreRecipeWrapper extends VanillaRecipeWrapper implements Shap
     @Nonnull
     @Override
     public List getInputs() {
-        return Arrays.asList(recipe.getIngredients());
+        return Arrays.asList(recipe.getGrid());
     }
 
     @Nonnull
     @Override
     public List<ItemStack> getOutputs() {
-        return List.of(recipe.getOutputs());
+        return List.of(recipe.getOutput());
     }
 
     @Override

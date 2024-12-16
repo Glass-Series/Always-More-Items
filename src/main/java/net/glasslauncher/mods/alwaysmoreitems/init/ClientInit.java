@@ -9,8 +9,8 @@ import net.mine_diver.unsafeevents.listener.ListenerPriority;
 import net.minecraft.block.Block;
 import net.modificationstation.stationapi.api.StationAPI;
 import net.modificationstation.stationapi.api.client.event.gui.screen.container.TooltipRenderEvent;
+import net.modificationstation.stationapi.api.event.init.InitFinishedEvent;
 import net.modificationstation.stationapi.api.event.registry.BlockRegistryEvent;
-import net.modificationstation.stationapi.api.event.registry.RegistriesFrozenEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 
@@ -18,7 +18,7 @@ import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 public class ClientInit {
 
     @EventListener(priority = ListenerPriority.LOW)
-    public static void initAMI(RegistriesFrozenEvent event) {
+    public static void initAMI(InitFinishedEvent event) {
         //noinspection UnstableApiUsage
         PhaseOrdering.of(TooltipRenderEvent.class).addPhaseOrdering(AMITooltipSystem.AMI_TOOLTIP_PHASE, StationAPI.INTERNAL_PHASE);
         AlwaysMoreItems.setItemFilter(new ItemFilter(AlwaysMoreItems.getItemRegistry()));
