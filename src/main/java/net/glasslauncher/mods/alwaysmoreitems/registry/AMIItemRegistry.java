@@ -122,6 +122,9 @@ public class AMIItemRegistry implements ItemRegistry {
             if (FuelRegistry.getFuelTime(stack) > 0) {
                 fuels.add(stack);
             }
+        } catch (NullPointerException ignored) {
+            // Stapi L Moment 
+            
         } catch (RuntimeException e) {
             AlwaysMoreItems.LOGGER.error("Couldn't create unique name for itemStack {}.", stack.getClass(), e);
         }

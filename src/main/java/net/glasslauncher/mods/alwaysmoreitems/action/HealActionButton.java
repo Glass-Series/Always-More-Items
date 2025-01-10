@@ -24,6 +24,11 @@ public class HealActionButton implements ActionButton {
     }
 
     @Override
+    public boolean cheatModeOnly() {
+        return true;
+    }
+
+    @Override
     public String getTexture() {
         return "/assets/alwaysmoreitems/stationapi/textures/gui/heart.png";
     }

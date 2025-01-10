@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.event.ActionButtonRegisterEvent;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.ActionButtonPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.GiveItemPacket;
 import net.glasslauncher.mods.alwaysmoreitems.network.c2s.RecipeTransferPacket;
@@ -15,6 +16,7 @@ import net.glasslauncher.mods.alwaysmoreitems.util.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;
 import net.mine_diver.unsafeevents.listener.EventListener;
+import net.modificationstation.stationapi.api.StationAPI;
 import net.modificationstation.stationapi.api.event.init.InitFinishedEvent;
 import net.modificationstation.stationapi.api.event.network.packet.PacketRegisterEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
@@ -41,6 +43,7 @@ public class CommonInit {
         AlwaysMoreItems.setHelpers(new AMIHelpers());
         initPlugins();
         FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:action", Object.class).forEach(EntrypointManager::setup);
+        StationAPI.EVENT_BUS.post(new ActionButtonRegisterEvent());
         initAMI();
     }
 

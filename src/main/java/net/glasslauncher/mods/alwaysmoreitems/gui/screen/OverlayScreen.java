@@ -112,11 +112,12 @@ public class OverlayScreen extends Screen {
         super.init(minecraft, width, height);
     }
 
-    @SuppressWarnings({"unchecked", "OptionalGetWithoutIsPresent"})
+    int id;
+    @SuppressWarnings({"unchecked"})
     @ApiStatus.Internal
     @Override
     public void init() {
-        int id = 100;
+        id = 100;
 
         buttons.clear();
 
@@ -160,6 +161,12 @@ public class OverlayScreen extends Screen {
         buttons.add(nextButton);
 
         // Action Buttons
+        initActionButtons();
+
+        recipesGui.init();
+    }
+    
+    public void initActionButtons() {
         actionButtons = new ArrayList<>();
         int actionButtonX = 0;
         int actionButtonY = 0;
@@ -167,40 +174,48 @@ public class OverlayScreen extends Screen {
 
         for (int i = 0; i < ActionButtonRegistry.INSTANCE.size(); i++) {
             Identifier identifier = ActionButtonRegistry.INSTANCE.getId(i).get();
-            ActionButton value = ActionButtonRegistry.INSTANCE.get(identifier);
-            if (value == null) {
+            ActionButton actionButton = ActionButtonRegistry.INSTANCE.get(identifier);
+            if (actionButton == null) {
                 AlwaysMoreItems.LOGGER.error("Identifier {} somehow returned null", identifier, new Throwable());
                 continue;
             }
-            if (value.dontAddToScreen()) {
+
+            if (actionButton.dontAddToScreen()) {
                 continue;
             }
 
-            if (actionButtonX + value.getWidth() > maxActionButtonPanelWidth) {
+            if(actionButton.cheatModeOnly() && !AMIConfig.INSTANCE.cheatMode){
+                continue;
+            }
+
+            if (actionButtonX + actionButton.getWidth() > maxActionButtonPanelWidth) {
                 actionButtonX = 0;
                 actionButtonY += maxHeightForLine + actionButtonOffset;
                 maxHeightForLine = 0;
             }
 
-            if (value.getHeight() > maxHeightForLine) {
-                maxHeightForLine = value.getHeight();
+            if (actionButton.getHeight() > maxHeightForLine) {
+                maxHeightForLine = actionButton.getHeight();
             }
 
-            ActionButtonWidget widget = new ActionButtonWidget(id++, actionButtonX, actionButtonY, value.getWidth(), value.getHeight(), value.getTexture());
+            ActionButtonWidget widget = new ActionButtonWidget(id++, actionButtonX, actionButtonY, actionButton.getWidth(), actionButton.getHeight(), actionButton.getTexture());
             actionButtons.add(widget);
-            widget.action = value;
+            widget.action = actionButton;
             widget.actionIdentifier = identifier;
 
-            actionButtonX += value.getWidth() + actionButtonOffset;
+            actionButtonX += actionButton.getWidth() + actionButtonOffset;
         }
 
         // Trash Button
         trashButton = new ActionButtonWidget(id + 1, 0, height - 20, 90, 20, "button." + AlwaysMoreItems.NAMESPACE + ".trash", "button." + AlwaysMoreItems.NAMESPACE + ".trash.alt");
         trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
         trashButton.action = ActionButtonRegistry.INSTANCE.get(trashButton.actionIdentifier);
-        actionButtons.add(trashButton);
-
-        recipesGui.init();
+        
+        if(trashButton.action != null){
+            if (!trashButton.action.cheatModeOnly() || AMIConfig.INSTANCE.cheatMode) {
+                actionButtons.add(trashButton);
+            }
+        }
     }
 
     @Override
@@ -520,6 +535,7 @@ public class OverlayScreen extends Screen {
                 GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
                     set("cheatMode", !AMIConfig.INSTANCE.cheatMode);
                 }});
+                initActionButtons();
                 return;
             }
             try {

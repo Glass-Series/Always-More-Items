@@ -55,6 +55,11 @@ public class TrashActionButton implements ActionButton {
     }
 
     @Override
+    public boolean cheatModeOnly() {
+        return true;
+    }
+
+    @Override
     public boolean tooltipEnabled() {
         return false;
     }

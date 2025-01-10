@@ -66,4 +66,12 @@ public interface ActionButton {
     default boolean tooltipEnabled() {
         return true;
     }
+
+    /**
+     * If the button is only visible in cheat mode
+     * @return Whether the button is only visible in cheat mode
+     */
+    default boolean cheatModeOnly(){
+        return false;
+    }
 }

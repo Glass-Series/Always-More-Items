@@ -8,6 +8,6 @@ import net.modificationstation.stationapi.api.event.registry.AfterBlockAndItemRe
 public class AfterBlockAndItemListener {
     @EventListener
     public void listen(AfterBlockAndItemRegisterEvent event){
-        StationAPI.EVENT_BUS.post(new ActionButtonRegisterEvent());
+        
     }
 }

@@ -35,6 +35,11 @@ public class SetTimeActionButton implements ActionButton {
     }
 
     @Override
+    public boolean cheatModeOnly() {
+        return true;
+    }
+
+    @Override
     public String getTexture() {
         return texture;
     }
