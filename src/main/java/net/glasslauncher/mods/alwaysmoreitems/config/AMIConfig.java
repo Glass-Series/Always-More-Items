@@ -83,4 +83,8 @@ public class AMIConfig {
     public static boolean centeredSearchBar(){
         return INSTANCE.centeredSearchBar;
     }
+    
+    public static OverlayMode getOverlayMode(){
+        return INSTANCE.overlayMode;
+    }
 }

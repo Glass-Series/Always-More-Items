@@ -3,9 +3,9 @@ package net.glasslauncher.mods.alwaysmoreitems.config;
 import net.glasslauncher.mods.gcapi3.api.ConfigEntry;
 
 public class AMIConfigObject {
-
-    @ConfigEntry(name = "Cheat Mode")
-    public Boolean cheatMode = false;
+    
+    @ConfigEntry(name = "Overlay Mode")
+    public OverlayMode overlayMode = OverlayMode.RECIPE;
 
     @ConfigEntry(name = "Edit Mode", description = "Click on items to hide them, CTRL to hide all of the same item ID.")
     public Boolean editMode = false;

@@ -34,6 +34,11 @@ gui.@.transferRecipesCharacter=+
 @.tooltip.error.recipe.transfer.missing=Missing Items
 @.tooltip.error.recipe.transfer.inventory.full=Inventory is too full
 
+gui.config.alwaysmoreitems.overlaymode.recipe=Recipe Mode
+gui.config.alwaysmoreitems.overlaymode.cheat=Cheat Mode
+gui.config.alwaysmoreitems.overlaymode.utility=Utility Mode
+
+
 # Minecraft name fixes
 
 tile.pistonHead.name=Piston Head

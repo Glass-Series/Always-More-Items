@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
+import net.glasslauncher.mods.alwaysmoreitems.config.OverlayMode;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.AMISettingsButton;
@@ -86,6 +87,9 @@ public class OverlayScreen extends Screen {
     private int lastItemHeight = 0;
     private int lastScaledWidth = 0;
     private boolean lastCenteredBar = true;
+    
+    // Properly refresh buttons
+    private OverlayMode lastOverlayMode = OverlayMode.RECIPE;
 
     // Mouse Pos
     int lastMouseX = 0;
@@ -184,7 +188,7 @@ public class OverlayScreen extends Screen {
                 continue;
             }
 
-            if(actionButton.cheatModeOnly() && !AMIConfig.INSTANCE.cheatMode){
+            if(actionButton.cheatModeOnly() && !AMIConfig.getOverlayMode().showCheatActionButtons){
                 continue;
             }
 
@@ -212,7 +216,7 @@ public class OverlayScreen extends Screen {
         trashButton.action = ActionButtonRegistry.INSTANCE.get(trashButton.actionIdentifier);
         
         if(trashButton.action != null){
-            if (!trashButton.action.cheatModeOnly() || AMIConfig.INSTANCE.cheatMode) {
+            if (!trashButton.action.cheatModeOnly() || AMIConfig.getOverlayMode().showCheatActionButtons) {
                 actionButtons.add(trashButton);
             }
         }
@@ -223,6 +227,11 @@ public class OverlayScreen extends Screen {
         // Do not tick if not enabled
         if (AlwaysMoreItems.overlayEnabled) {
             rescale();
+            
+            if(AMIConfig.getOverlayMode() != lastOverlayMode){
+                lastOverlayMode = AMIConfig.getOverlayMode();
+                initActionButtons();
+            }
         }
         recipesGui.tick();
     }
@@ -375,7 +384,7 @@ public class OverlayScreen extends Screen {
                 return;
             }
 
-            if (!AMIConfig.INSTANCE.cheatMode || recipesGui.isActive()) {
+            if (!(AMIConfig.getOverlayMode() == OverlayMode.CHEAT)  || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));
                 } else if (button == 1) { // RMB - Show Uses
@@ -533,11 +542,20 @@ public class OverlayScreen extends Screen {
         if (button.id == settingsButton.id) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
                 GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
-                    set("cheatMode", !AMIConfig.INSTANCE.cheatMode);
+                    set("overlayMode", AMIConfig.getOverlayMode() != OverlayMode.CHEAT ? 1 : 0);
                 }});
                 initActionButtons();
                 return;
             }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
+                    set("overlayMode", AMIConfig.getOverlayMode() != OverlayMode.UTILITY ? 2 : 0);
+                }});
+                initActionButtons();
+                return;
+            }
+            
             try {
                 Minecraft.INSTANCE.setScreen(GCAPI.getRootConfigScreen(AlwaysMoreItems.NAMESPACE.id("config").toString(), parent));
             } catch (AttributeNotFoundException e) {

@@ -68,8 +68,8 @@ public interface ActionButton {
     }
 
     /**
-     * If the button is only visible in cheat mode
-     * @return Whether the button is only visible in cheat mode
+     * If the button is only visible in cheat or utility mode
+     * @return Whether the button is only visible in cheat or utility mode
      */
     default boolean cheatModeOnly(){
         return false;
