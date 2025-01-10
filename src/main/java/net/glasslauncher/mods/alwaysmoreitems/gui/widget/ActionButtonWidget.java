@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 public class ActionButtonWidget extends ButtonWidget {
     ButtonIconType iconType;
@@ -87,8 +88,10 @@ public class ActionButtonWidget extends ButtonWidget {
                 RenderHelper.disableItemLighting();
             }
             case TEXTURE -> {
+                GL11.glEnable(GL11.GL_BLEND);
                 RenderHelper.bindTexture(texture);
                 RenderHelper.drawTexture(x + 2, y + 2, width - 4, height - 4);
+                GL11.glDisable(GL11.GL_BLEND);
             }
             case TEXT -> {
                 buttonText = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) ? altText : text;
