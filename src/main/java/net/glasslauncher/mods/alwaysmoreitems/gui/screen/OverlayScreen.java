@@ -189,7 +189,7 @@ public class OverlayScreen extends Screen {
             }
 
             List<OverlayMode> allowedOverlayModes = actionButton.allowedOverlayModes();
-            if(allowedOverlayModes == null || !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
+            if(allowedOverlayModes != null && !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
                 continue;
             }
 
@@ -218,7 +218,7 @@ public class OverlayScreen extends Screen {
         
         if(trashButton.action != null){
             List<OverlayMode> allowedOverlayModes = trashButton.action.allowedOverlayModes();
-            if(allowedOverlayModes == null || !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
+            if(allowedOverlayModes == null || allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
                 actionButtons.add(trashButton);
             }
         }
