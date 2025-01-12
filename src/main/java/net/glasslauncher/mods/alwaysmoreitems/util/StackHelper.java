@@ -23,7 +23,16 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class StackHelper implements net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper {
     /**

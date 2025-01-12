@@ -18,7 +18,7 @@ import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
+import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;

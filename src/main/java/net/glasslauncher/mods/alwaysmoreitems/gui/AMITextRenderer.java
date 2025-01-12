@@ -10,7 +10,7 @@ import net.modificationstation.stationapi.api.util.Formatting;
 import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;

@@ -21,8 +21,14 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RecipeRegistry implements net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry {
     private final ImmutableMap<Class, RecipeHandler> recipeHandlers;

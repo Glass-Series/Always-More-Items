@@ -39,8 +39,9 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import javax.management.AttributeNotFoundException;
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class OverlayScreen extends Screen {
     public static final OverlayScreen INSTANCE = new OverlayScreen();

@@ -1,7 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget;
 
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
-import net.glasslauncher.mods.alwaysmoreitems.config.OverlayMode;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
 import net.minecraft.client.Minecraft;
 

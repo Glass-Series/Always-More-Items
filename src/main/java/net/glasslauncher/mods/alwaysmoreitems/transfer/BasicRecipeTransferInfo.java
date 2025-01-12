@@ -4,7 +4,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransfer
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicRecipeTransferInfo implements RecipeTransferInfo {
     private final Class<? extends ScreenHandler> containerClass;

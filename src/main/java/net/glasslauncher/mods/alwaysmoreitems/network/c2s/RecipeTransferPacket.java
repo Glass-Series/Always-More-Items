@@ -22,7 +22,11 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeTransferPacket extends Packet implements ManagedPacket<RecipeTransferPacket> {
     public static final PacketType<RecipeTransferPacket> TYPE = PacketType.builder(false, true, RecipeTransferPacket::new).build();

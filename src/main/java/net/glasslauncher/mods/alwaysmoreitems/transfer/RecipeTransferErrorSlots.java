@@ -6,9 +6,10 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.GuiItemStac
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.*;
-import java.awt.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.awt.Color;
+import java.util.Collection;
+import java.util.Map;
 
 public class RecipeTransferErrorSlots extends RecipeTransferErrorTooltip {
     private static final Color highlightColor = new Color(1.0f, 0.0f, 0.0f, 0.4f);

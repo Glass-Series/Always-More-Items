@@ -3,7 +3,13 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla;
 import com.mojang.datafixers.util.Either;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.alwaysmoreitems.api.*;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemBlacklist;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
@@ -38,7 +44,9 @@ import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.impl.recipe.StationShapedRecipe;
 import net.modificationstation.stationapi.impl.recipe.StationShapelessRecipe;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class VanillaPlugin implements ModPluginProvider {
     public static final Identifier ID = AlwaysMoreItems.NAMESPACE.id("vanilla");

@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
 

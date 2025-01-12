@@ -5,8 +5,9 @@ import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapp
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.impl.recipe.StationShapelessRecipe;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 public class ShapelessOreRecipeWrapper extends VanillaRecipeWrapper implements CraftingRecipeWrapper {
 

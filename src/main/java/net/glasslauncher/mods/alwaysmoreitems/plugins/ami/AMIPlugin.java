@@ -1,6 +1,11 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.ami;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.*;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
+import net.glasslauncher.mods.alwaysmoreitems.api.ModRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.ami.description.ItemDescriptionRecipeHandler;

@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.api;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMIRarityIcons;
 import net.glasslauncher.mods.alwaysmoreitems.gui.AMITextRenderer;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
