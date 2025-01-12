@@ -542,15 +542,7 @@ public class OverlayScreen extends Screen {
         if (button.id == settingsButton.id) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
                 GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
-                    set("overlayMode", AMIConfig.getOverlayMode() != OverlayMode.CHEAT ? 1 : 0);
-                }});
-                initActionButtons();
-                return;
-            }
-
-            if (Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
-                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
-                    set("overlayMode", AMIConfig.getOverlayMode() != OverlayMode.UTILITY ? 2 : 0);
+                    set("overlayMode", OverlayMode.values()[OverlayMode.values().length == AMIConfig.getOverlayMode().ordinal() + 1 ? 0 : AMIConfig.getOverlayMode().ordinal() + 1]);
                 }});
                 initActionButtons();
                 return;
