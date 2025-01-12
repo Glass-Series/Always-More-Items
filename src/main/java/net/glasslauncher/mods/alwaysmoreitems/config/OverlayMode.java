@@ -1,17 +1,14 @@
 package net.glasslauncher.mods.alwaysmoreitems.config;
 
 public enum OverlayMode {
-    RECIPE("gui.config.alwaysmoreitems.overlaymode.recipe", false),
-    CHEAT("gui.config.alwaysmoreitems.overlaymode.cheat", true),
-    UTILITY("gui.config.alwaysmoreitems.overlaymode.utility", true);
+    RECIPE("gui.config.alwaysmoreitems.overlaymode.recipe"),
+    CHEAT("gui.config.alwaysmoreitems.overlaymode.cheat"),
+    UTILITY("gui.config.alwaysmoreitems.overlaymode.utility");
 
     public final String translationKey;
-    
-    public final boolean showCheatActionButtons;
 
-    OverlayMode(String translationKey, boolean showCheatActionButtons) {
+    OverlayMode(String translationKey) {
         this.translationKey = translationKey;
-        this.showCheatActionButtons = showCheatActionButtons;
     }
 
     @Override

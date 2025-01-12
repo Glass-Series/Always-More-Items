@@ -39,9 +39,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import javax.management.AttributeNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.*;
 
 public class OverlayScreen extends Screen {
     public static final OverlayScreen INSTANCE = new OverlayScreen();
@@ -188,7 +187,8 @@ public class OverlayScreen extends Screen {
                 continue;
             }
 
-            if(actionButton.cheatModeOnly() && !AMIConfig.getOverlayMode().showCheatActionButtons){
+            List<OverlayMode> allowedOverlayModes = actionButton.allowedOverlayModes();
+            if(allowedOverlayModes == null || !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
                 continue;
             }
 
@@ -216,7 +216,8 @@ public class OverlayScreen extends Screen {
         trashButton.action = ActionButtonRegistry.INSTANCE.get(trashButton.actionIdentifier);
         
         if(trashButton.action != null){
-            if (!trashButton.action.cheatModeOnly() || AMIConfig.getOverlayMode().showCheatActionButtons) {
+            List<OverlayMode> allowedOverlayModes = trashButton.action.allowedOverlayModes();
+            if(allowedOverlayModes == null || !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
                 actionButtons.add(trashButton);
             }
         }

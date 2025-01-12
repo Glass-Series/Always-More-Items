@@ -1,11 +1,17 @@
 package net.glasslauncher.mods.alwaysmoreitems.action;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
+import net.glasslauncher.mods.alwaysmoreitems.config.OverlayMode;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Formatting;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ToggleWeatherActionButton implements ActionButton {
+
+    private final List<OverlayMode> allowedOverlayModes = List.of(OverlayMode.CHEAT, OverlayMode.UTILITY);
 
     public ToggleWeatherActionButton() {
     }
@@ -30,8 +36,8 @@ public class ToggleWeatherActionButton implements ActionButton {
     }
 
     @Override
-    public boolean cheatModeOnly() {
-        return true;
+    public @Nullable List<OverlayMode> allowedOverlayModes() {
+        return allowedOverlayModes;
     }
 
     @Override

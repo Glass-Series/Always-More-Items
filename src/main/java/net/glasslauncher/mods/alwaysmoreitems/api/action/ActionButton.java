@@ -1,9 +1,13 @@
 package net.glasslauncher.mods.alwaysmoreitems.api.action;
 
+import net.glasslauncher.mods.alwaysmoreitems.config.OverlayMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
 
 @SuppressWarnings("UnusedReturnValue")
 public interface ActionButton {
@@ -59,19 +63,26 @@ public interface ActionButton {
         return false;
     }
 
+    /**
+     * Should this button be hidden from the player? Good for conditional action buttons.
+     */
     default boolean dontAddToScreen() {
         return false;
     }
 
+    /**
+     * Does this have a tooltip to draw?
+     * The tooltip translation key is formatted as <code>alwaysmoreitems.actionButton.[modnamespace].[actionIdentifier]</code>
+     */
     default boolean tooltipEnabled() {
         return true;
     }
 
     /**
-     * If the button is only visible in cheat or utility mode
+     * If the button is only visible in cheat or utility mode. If this is null, defaults to cheat mode only.
      * @return Whether the button is only visible in cheat or utility mode
      */
-    default boolean cheatModeOnly(){
-        return false;
+    default @Nullable List<OverlayMode> allowedOverlayModes() {
+        return null;
     }
 }
