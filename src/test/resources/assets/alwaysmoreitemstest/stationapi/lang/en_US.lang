@@ -17,6 +17,7 @@ alwaysmoreitems.actionButton.@.dummy11=Dummy Action 11
 alwaysmoreitems.actionButton.@.dummy12=Dummy Action 12
 alwaysmoreitems.actionButton.@.dummy13=Dummy Action 13
 alwaysmoreitems.actionButton.@.dummy14=Dummy Action 14
+alwaysmoreitems.actionButton.@.cheat_dummy=Cheaty Dummy
 
 description.@.wooden.door.1=Wooden Doors allow you to block monsters from entering your building.\nTesting sentences.
 description.@.wooden.door.2=Clicking on a door changes its state from open to closed and vice versa.

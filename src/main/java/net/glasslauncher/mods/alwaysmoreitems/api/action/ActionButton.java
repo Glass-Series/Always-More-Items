@@ -79,8 +79,8 @@ public interface ActionButton {
     }
 
     /**
-     * If the button is only visible in cheat or utility mode. If this is null, defaults to cheat mode only.
-     * @return Whether the button is only visible in cheat or utility mode
+     * The whitelist for modes this button is visible in. If this is null, it is shown in all modes
+     * @return The list of modes this button is allowed in
      */
     default @Nullable List<OverlayMode> allowedOverlayModes() {
         return null;

@@ -3,6 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.testmod.init;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.event.ActionButtonRegisterEvent;
+import net.glasslauncher.mods.alwaysmoreitems.testmod.CheatyDummyActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.DummyActionButton;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
@@ -22,5 +23,7 @@ public class ActionButtonListener {
             }
             event.add(NAMESPACE.id("dummy" + i), new DummyActionButton());
         }
+        
+        event.add(NAMESPACE.id("cheat_dummy"), new CheatyDummyActionButton());
     }
 }
