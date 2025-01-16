@@ -83,7 +83,6 @@ public interface ActionButton {
      * <p>
      * <p> Utility Mode is NOT INTENDED for non-cheat buttons, thats what Recipe Mode is for
      * <p> Unless you have a real good reason, put your cheat buttons in BOTH Cheat and Utility mode
-     * <p>
      * @return The list of modes this button is allowed in
      */
     default @Nullable List<OverlayMode> allowedOverlayModes() {
