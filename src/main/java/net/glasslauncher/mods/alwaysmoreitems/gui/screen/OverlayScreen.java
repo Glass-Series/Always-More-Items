@@ -87,7 +87,7 @@ public class OverlayScreen extends Screen {
     private int lastItemHeight = 0;
     private int lastScaledWidth = 0;
     private boolean lastCenteredBar = true;
-    
+
     // Properly refresh buttons
     private OverlayMode lastOverlayMode = OverlayMode.RECIPE;
 
@@ -117,6 +117,7 @@ public class OverlayScreen extends Screen {
     }
 
     int id;
+
     @SuppressWarnings({"unchecked"})
     @ApiStatus.Internal
     @Override
@@ -169,7 +170,7 @@ public class OverlayScreen extends Screen {
 
         recipesGui.init();
     }
-    
+
     public void initActionButtons() {
         actionButtons = new ArrayList<>();
         int actionButtonX = 0;
@@ -189,7 +190,7 @@ public class OverlayScreen extends Screen {
             }
 
             List<OverlayMode> allowedOverlayModes = actionButton.allowedOverlayModes();
-            if(allowedOverlayModes != null && !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
+            if (allowedOverlayModes != null && !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
                 continue;
             }
 
@@ -215,10 +216,10 @@ public class OverlayScreen extends Screen {
         trashButton = new ActionButtonWidget(id + 1, 0, height - 20, 90, 20, "button." + AlwaysMoreItems.NAMESPACE + ".trash", "button." + AlwaysMoreItems.NAMESPACE + ".trash.alt");
         trashButton.actionIdentifier = AlwaysMoreItems.NAMESPACE.id("trash");
         trashButton.action = ActionButtonRegistry.INSTANCE.get(trashButton.actionIdentifier);
-        
-        if(trashButton.action != null){
+
+        if (trashButton.action != null) {
             List<OverlayMode> allowedOverlayModes = trashButton.action.allowedOverlayModes();
-            if(allowedOverlayModes == null || allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
+            if (allowedOverlayModes == null || allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
                 actionButtons.add(trashButton);
             }
         }
@@ -229,8 +230,8 @@ public class OverlayScreen extends Screen {
         // Do not tick if not enabled
         if (AlwaysMoreItems.overlayEnabled) {
             rescale();
-            
-            if(AMIConfig.getOverlayMode() != lastOverlayMode){
+
+            if (AMIConfig.getOverlayMode() != lastOverlayMode) {
                 lastOverlayMode = AMIConfig.getOverlayMode();
                 initActionButtons();
             }
@@ -386,7 +387,7 @@ public class OverlayScreen extends Screen {
                 return;
             }
 
-            if (!(AMIConfig.getOverlayMode() == OverlayMode.CHEAT)  || recipesGui.isActive()) {
+            if (!(AMIConfig.getOverlayMode() == OverlayMode.CHEAT) || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));
                 } else if (button == 1) { // RMB - Show Uses
@@ -544,12 +545,20 @@ public class OverlayScreen extends Screen {
         if (button.id == settingsButton.id) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
                 GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
-                    set("overlayMode", OverlayMode.values()[OverlayMode.values().length == AMIConfig.getOverlayMode().ordinal() + 1 ? 0 : AMIConfig.getOverlayMode().ordinal() + 1]);
+                    set("overlayMode", AMIConfig.getOverlayMode() != OverlayMode.CHEAT ? 1 : 0);
                 }});
                 initActionButtons();
                 return;
             }
-            
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                GCAPI.reloadConfig(AlwaysMoreItems.NAMESPACE.id("config").toString(), new GlassYamlFile() {{
+                    set("overlayMode", AMIConfig.getOverlayMode() != OverlayMode.UTILITY ? 2 : 0);
+                }});
+                initActionButtons();
+                return;
+            }
+
             try {
                 Minecraft.INSTANCE.setScreen(GCAPI.getRootConfigScreen(AlwaysMoreItems.NAMESPACE.id("config").toString(), parent));
             } catch (AttributeNotFoundException e) {
