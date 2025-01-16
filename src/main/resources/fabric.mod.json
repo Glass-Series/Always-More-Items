@@ -53,7 +53,7 @@
     "glassnetworking": "1.*",
     "stationapi": ">=2.0.0-alpha.3",
     "minecraft": "1.0.0-beta.7.3",
-    "fabricloader": ">=0.15.x"
+    "fabricloader": ">0.15.0"
   },
   "custom": {
     "loom:injected_interfaces": {
