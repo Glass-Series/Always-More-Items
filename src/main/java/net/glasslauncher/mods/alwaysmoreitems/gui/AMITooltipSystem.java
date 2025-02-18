@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
+import java.lang.invoke.MethodHandles;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
@@ -8,6 +9,7 @@ import net.mine_diver.unsafeevents.listener.ListenerPriority;
 import net.modificationstation.stationapi.api.client.event.gui.screen.container.TooltipBuildEvent;
 import net.modificationstation.stationapi.api.client.event.gui.screen.container.TooltipRenderEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
+import net.modificationstation.stationapi.api.mod.entrypoint.EntrypointManager;
 import net.modificationstation.stationapi.api.mod.entrypoint.EventBusPolicy;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
@@ -15,6 +17,10 @@ import org.lwjgl.opengl.GL11;
 
 @Entrypoint(eventBus = @EventBusPolicy(registerInstance = false))
 public class AMITooltipSystem {
+    static {
+        EntrypointManager.registerLookup(MethodHandles.lookup());
+    }
+
     public static final String AMI_TOOLTIP_PHASE = "always_more_items:tooltip_phase";
 
     @EventListener(phase = AMI_TOOLTIP_PHASE)

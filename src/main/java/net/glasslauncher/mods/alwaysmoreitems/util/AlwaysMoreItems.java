@@ -5,17 +5,12 @@ import lombok.Setter;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemFilter;
 import net.glasslauncher.mods.alwaysmoreitems.registry.AMIItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.registry.RecipeRegistry;
-import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.Null;
 import org.apache.logging.log4j.Logger;
 
 public class AlwaysMoreItems {
-    @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
-
-    @Entrypoint.Logger
-    public static final Logger LOGGER = Null.get();
+    public static final Namespace NAMESPACE = Namespace.resolve();
+    public static final Logger LOGGER = NAMESPACE.getLogger();
 
     @Getter @Setter
     private static AMIHelpers helpers;
