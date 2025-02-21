@@ -1,9 +1,9 @@
 import java.net.URI
 
 plugins {
-	id("fabric-loom") version "1.9.2"
-	id("babric-loom-extension") version "1.9.2"
 	id("maven-publish")
+	id("fabric-loom") version "1.9.2"
+	id("babric-loom-extension") version "1.9.3"
 	id("io.freefair.lombok") version "8.6"
 }
 
@@ -17,32 +17,11 @@ version = project.properties["mod_version"]!!
 group = project.properties["maven_group"]!!
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	maven(url = "https://maven.glass-launcher.net/releases")
+	maven(url = "https://maven.glass-launcher.net/snapshots")
+	maven(url = "https://maven.minecraftforge.net/")
+	maven(url = "https://jitpack.io")
 
-	// Used for mappings, ModMenu, StationAPI and GCAPI.
-	maven (
-//		name = 'Glass Releases'
-		url = "https://maven.glass-launcher.net/releases"
-	)
-	// Used for StationAPI dev builds.
-	maven (
-//		name = 'Glass Snapshots'
-		url = "https://maven.glass-launcher.net/snapshots"
-	)
-	// Used for a StationAPI dependency.
-	maven (
-//		name = 'Froge'
-		url = "https://maven.minecraftforge.net/"
-	)
-	// Used for projects that do not have a maven repository, but do have a GitHub repository with working build scripts.
-	maven (
-//		name = 'Jitpack'
-		url = "https://jitpack.io"
-	)
 	// Used for another StationAPI dependency
 	exclusiveContent {
 		forRepository {
@@ -82,20 +61,12 @@ dependencies {
 	implementation("org.slf4j:slf4j-api:1.8.0-beta4")
 	implementation("org.apache.logging.log4j:log4j-slf4j18-impl:2.17.2")
 
-	modImplementation("net.modificationstation:StationAPI:${project.properties["stapi_version"]}")
+	transitiveImplementation(modImplementation("net.modificationstation:StationAPI:${project.properties["stapi_version"]}") as Dependency)
 
 	// Optional, but convenient mods for mod creators and users alike.
-	modImplementation("net.glasslauncher.mods:ModMenu:${project.properties["modmenu_version"]}") {
-		isTransitive = false
-	}
+	modImplementation("net.glasslauncher.mods:ModMenu:${project.properties["modmenu_version"]}")
 
-	implementation("me.carleslc:Simple-Yaml:1.8.4")
-	modImplementation("net.glasslauncher.mods:glass-networking:1.0.2") {
-		isTransitive = false
-	}
-	modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") {
-		isTransitive = false
-	}
+	transitiveImplementation(modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") as Dependency)
 }
 
 tasks.withType<ProcessResources> {
