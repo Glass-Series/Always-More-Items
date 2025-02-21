@@ -3,7 +3,7 @@ import java.net.URI
 plugins {
 	id("maven-publish")
 	id("fabric-loom") version "1.9.2"
-	id("babric-loom-extension") version "1.9.3"
+	id("babric-loom-extension") version "1.9.4"
 	id("io.freefair.lombok") version "8.6"
 }
 
@@ -61,12 +61,15 @@ dependencies {
 	implementation("org.slf4j:slf4j-api:1.8.0-beta4")
 	implementation("org.apache.logging.log4j:log4j-slf4j18-impl:2.17.2")
 
-	transitiveImplementation(modImplementation("net.modificationstation:StationAPI:${project.properties["stapi_version"]}") as Dependency)
+	modImplementation(transitiveImplementation("net.modificationstation:StationAPI:${project.properties["stapi_version"]}") as Dependency)
 
 	// Optional, but convenient mods for mod creators and users alike.
 	modImplementation("net.glasslauncher.mods:ModMenu:${project.properties["modmenu_version"]}")
 
-	transitiveImplementation(modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") as Dependency)
+	modImplementation(transitiveImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}") as Dependency)
+
+	// Needed despite GCAPI cause we directly use some yaml classes.
+	implementation("me.carleslc:Simple-Yaml:1.8.4")
 }
 
 tasks.withType<ProcessResources> {
