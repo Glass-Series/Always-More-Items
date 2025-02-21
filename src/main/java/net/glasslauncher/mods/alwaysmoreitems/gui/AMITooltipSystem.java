@@ -18,7 +18,7 @@ public class AMITooltipSystem {
     public static final String AMI_TOOLTIP_PHASE = "always_more_items:tooltip_phase";
 
     @EventListener(phase = AMI_TOOLTIP_PHASE)
-    private static void yourTooltipsAreNowMine(TooltipRenderEvent event) {
+    public static void yourTooltipsAreNowMine(TooltipRenderEvent event) {
         if (event.isCanceled()) {
             return;
         }
@@ -31,7 +31,7 @@ public class AMITooltipSystem {
     }
 
     @EventListener(priority = ListenerPriority.LOWEST)
-    private static void yourTooltipsAreNowModified(TooltipBuildEvent event) {
+    public static void yourTooltipsAreNowModified(TooltipBuildEvent event) {
         if(event.tooltip.isEmpty()) {
             return;
         }

@@ -12,10 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 public class AlwaysMoreItems {
     @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
+    public static Namespace NAMESPACE = Null.get();
 
     @Entrypoint.Logger
-    public static final Logger LOGGER = Null.get();
+    public static Logger LOGGER = Null.get();
 
     @Getter @Setter
     private static AMIHelpers helpers;

@@ -13,7 +13,7 @@ import net.modificationstation.stationapi.api.util.Null;
 public class ActionButtonListener {
 
     @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
+    public static Namespace NAMESPACE = Null.get();
 
     @EventListener
     public void registerActionButtons(ActionButtonRegisterEvent event) {
