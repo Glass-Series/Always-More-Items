@@ -6,13 +6,11 @@ import net.glasslauncher.mods.alwaysmoreitems.api.event.ActionButtonRegisterEven
 import net.glasslauncher.mods.alwaysmoreitems.testmod.CheatyDummyActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.testmod.DummyActionButton;
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.Null;
 
 public class ActionButtonListener {
-    @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
+    @SuppressWarnings("UnstableApiUsage")
+    public static final Namespace NAMESPACE = Namespace.resolve();
 
     @EventListener
     public void registerActionButtons(ActionButtonRegisterEvent event){

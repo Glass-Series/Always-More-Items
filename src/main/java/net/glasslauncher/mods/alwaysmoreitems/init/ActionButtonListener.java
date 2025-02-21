@@ -6,14 +6,11 @@ import net.glasslauncher.mods.alwaysmoreitems.action.ToggleWeatherActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.action.TrashActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.api.event.ActionButtonRegisterEvent;
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.Null;
 
 public class ActionButtonListener {
-
-    @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
+    @SuppressWarnings("UnstableApiUsage")
+    public static final Namespace NAMESPACE = Namespace.resolve();
 
     @EventListener
     public void registerActionButtons(ActionButtonRegisterEvent event) {
