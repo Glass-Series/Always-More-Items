@@ -9,7 +9,7 @@ import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.util.Namespace;
 
 public class ActionButtonListener {
-
+    @SuppressWarnings("UnstableApiUsage")
     public static final Namespace NAMESPACE = Namespace.resolve();
 
     @EventListener
