@@ -117,12 +117,6 @@ public class AMIItemRegistry implements ItemRegistry {
 
     private void addItemStack(@Nonnull ItemStack stack, @Nonnull List<ItemStack> itemList, @Nonnull List<ItemStack> fuels) {
         try {
-            String itemKey = AlwaysMoreItems.getStackHelper().getUniqueIdentifierForStack(stack);
-
-            if (itemNameSet.contains(itemKey)) {
-                return;
-            }
-            itemNameSet.add(itemKey);
             itemList.add(stack);
 
             if (FuelRegistry.getFuelTime(stack) > 0) {
