@@ -105,10 +105,6 @@ public class VanillaPlugin implements ModPluginProvider {
         registry.addRecipes(CraftingRecipeManager.getInstance().getRecipes());
         registry.addRecipes(SmeltingRecipeMaker.getFurnaceRecipes(amiHelpers));
         registry.addRecipes(FuelRecipeMaker.getFuelRecipes(itemRegistry, amiHelpers));
-
-        if (!AMIConfig.showRedundantItems()) {
-            hideRedundantItems(amiHelpers);
-        }
     }
 
     @Override
@@ -163,7 +159,12 @@ public class VanillaPlugin implements ModPluginProvider {
         return outputs;
     }
 
-    private void hideRedundantItems(AMIHelpers amiHelpers) {
+    @Override
+    public void updateBlacklist(AMIHelpers amiHelpers) {
+        if (AMIConfig.showRedundantItems()) {
+            return;
+        }
+
         ItemBlacklist itemBlacklist = amiHelpers.getItemBlacklist();
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.WATER));
         itemBlacklist.addItemToBlacklist(new ItemStack(Block.LAVA));

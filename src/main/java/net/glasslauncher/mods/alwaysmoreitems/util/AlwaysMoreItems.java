@@ -2,6 +2,11 @@ package net.glasslauncher.mods.alwaysmoreitems.util;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
+import net.glasslauncher.mods.alwaysmoreitems.init.CommonInit;
+import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemBlacklist;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.ItemFilter;
 import net.glasslauncher.mods.alwaysmoreitems.registry.AMIItemRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.registry.RecipeRegistry;
@@ -33,6 +38,19 @@ public class AlwaysMoreItems {
     public static void resetItemFilter() {
         if (itemFilter != null) {
             itemFilter.reset();
+        }
+    }
+
+    public static void reloadBlacklist() {
+        ItemBlacklist.reset();
+        CommonInit.getPlugins().values().forEach(iModPlugin -> {
+            try {
+                iModPlugin.updateBlacklist(helpers);
+            } catch (NoSuchMethodError ignored) {}
+        });
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && AlwaysMoreItems.getItemFilter() != null) {
+            AlwaysMoreItems.getItemFilter().reset();
+            OverlayScreen.INSTANCE.rebuildRenderList();
         }
     }
 

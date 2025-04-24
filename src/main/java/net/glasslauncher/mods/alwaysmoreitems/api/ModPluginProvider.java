@@ -27,7 +27,6 @@ public interface ModPluginProvider {
     /**
      * Register this mod plugin with the mod registry.
      * Called just before the game launches.
-     * Will be called again if config
      */
     void register(ModRegistry registry);
 
@@ -42,4 +41,9 @@ public interface ModPluginProvider {
      * @see SyncableRecipe
      */
     SyncableRecipe deserializeRecipe(NbtCompound recipe);
+
+    /**
+     * Called when the item blacklist needs to be updated. Can be called multiple times.
+     */
+    void updateBlacklist(AMIHelpers amiHelpers);
 }

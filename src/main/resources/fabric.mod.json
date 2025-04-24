@@ -42,6 +42,9 @@
     ],
     "gcapi3:factory_provider": [
       "net.glasslauncher.mods.alwaysmoreitems.config.AMIConfigFactories"
+    ],
+    "gcapi3:presave": [
+      "net.glasslauncher.mods.alwaysmoreitems.config.ConfigChangedListener"
     ]
   },
   "mixins": [

@@ -57,4 +57,8 @@ public class ItemBlacklist implements net.glasslauncher.mods.alwaysmoreitems.api
         List<String> uids = AlwaysMoreItems.getStackHelper().getUniqueIdentifiersWithWildcard(itemStack);
         return uids.stream().anyMatch(itemBlacklist::contains);
     }
+
+    public static void reset() {
+        AlwaysMoreItems.getHelpers().getItemBlacklist().itemBlacklist.clear();
+    }
 }

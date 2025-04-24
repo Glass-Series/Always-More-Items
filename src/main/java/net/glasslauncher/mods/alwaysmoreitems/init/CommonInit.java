@@ -66,6 +66,7 @@ public class CommonInit {
             }
         });
         plugins = ImmutableMap.copyOf(pluginsMap);
+        AlwaysMoreItems.reloadBlacklist();
     }
 
     @EventListener
