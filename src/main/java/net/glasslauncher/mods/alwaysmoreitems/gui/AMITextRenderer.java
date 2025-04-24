@@ -188,7 +188,7 @@ public class AMITextRenderer extends TextRenderer {
                     ++f;
                 }
 
-                doDecorations(posX, posY, f, underlineStyle, strikethroughStyle);
+                doDecorations(posX, posY, f, strikethroughStyle, underlineStyle);
                 posX += (int) f;
             }
         }
