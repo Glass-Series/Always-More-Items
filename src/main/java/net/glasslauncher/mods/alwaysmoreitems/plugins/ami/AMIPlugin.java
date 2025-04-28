@@ -62,6 +62,11 @@ public class AMIPlugin implements ModPluginProvider {
         return (SyncableRecipe) new ItemDescriptionRecipe(Arrays.asList(VanillaPlugin.parseInputs(recipe.getList("output"))), nbtListToArrayList(recipe.getList("description")));
     }
 
+    @Override
+    public void updateBlacklist(AMIHelpers amiHelpers) {
+
+    }
+
     public static <T> ArrayList<T> nbtListToArrayList(NbtList nbtList) {
         ArrayList<T> arrayList = new ArrayList<>(nbtList.size());
         for (int i = 0; i < nbtList.size(); i++) {
