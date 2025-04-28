@@ -88,6 +88,11 @@ public class OverlayScreen extends Screen {
     private int lastScaledWidth = 0;
     private boolean lastCenteredBar = true;
 
+    // GUI Size Refresh
+    private int lastItemListWidth = 0;
+    private int lastItemListHeight = 0;
+    private int lastParent = 0;
+
     // Properly refresh buttons
     private OverlayMode lastOverlayMode = OverlayMode.RECIPE;
 
@@ -243,6 +248,12 @@ public class OverlayScreen extends Screen {
     public void render(int mouseX, int mouseY, float delta) {
         lastMouseX = mouseX;
         lastMouseY = mouseY;
+
+        if (parent.hashCode() != lastParent)
+        {
+            checkGuiSize();
+            lastParent = parent.hashCode();
+        }
 
         if (recipesGui.isActive()) {
             recipesGui.drawBackground();
@@ -602,6 +613,26 @@ public class OverlayScreen extends Screen {
         }
     }
 
+    /*
+     * Checks to see if the current GUI size is different
+     * than the cached width, if it is, rebuild the cache
+     */
+    private void checkGuiSize()
+    {
+        // Get the current item width/height
+        int itemListWidth = getItemListWidth();
+        int itemListHeight = getItemListHeight();
+
+        // Compare with the cached item width/height
+        if (itemListWidth != lastItemListWidth || itemListHeight != lastItemListHeight)
+        {
+            // Rebuild the screen
+            currentPage = 0;
+            minecraft.currentScreen.init(minecraft, screenScaler.getScaledWidth(), screenScaler.getScaledHeight());
+            rebuildRenderList();
+        }
+    }
+
     public int getItemListWidth() {
         int possibleOverlayStartX;
         if (parent instanceof HandledScreen handledScreen) {
@@ -667,6 +698,9 @@ public class OverlayScreen extends Screen {
         int overlayStartX = getOverlayStartX();
         int itemsPerPage = itemListWidth * itemListHeight;
         pageCount = (int) Math.ceil((double) filteredItems.size() / itemsPerPage);
+
+        lastItemListWidth = itemListWidth;
+        lastItemListHeight = itemListHeight;
 
         for (int yIndex = 0; yIndex < itemListHeight; yIndex++) {
             for (int xIndex = 0; xIndex < itemListWidth; xIndex++) {
