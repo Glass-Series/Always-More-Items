@@ -289,7 +289,7 @@ public class OverlayScreen extends Screen {
                         RenderHelper.enableItemLighting();
                     }
                 }
-                RenderHelper.drawItemStack(item.x, item.y, item.item, false);
+                RenderHelper.drawItemStack(item.x, item.y, item.item, true);
             }
             RenderHelper.disableItemLighting();
         }
