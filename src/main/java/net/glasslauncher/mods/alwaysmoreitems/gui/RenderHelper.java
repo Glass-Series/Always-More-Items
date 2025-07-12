@@ -1,9 +1,9 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
-import net.minecraft.class_583;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.platform.Lighting;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
@@ -26,9 +26,9 @@ public class RenderHelper {
     }
 
     public static void drawItemStack(int x, int y, ItemStack item, boolean drawOverlay) {
-        itemRenderer.method_1487(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, item, x, y);
+        itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, item, x, y);
         if (drawOverlay) {
-            itemRenderer.method_1488(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, item, x, y);
+            itemRenderer.renderGuiItemDecoration(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, item, x, y);
         }
     }
 
@@ -37,7 +37,7 @@ public class RenderHelper {
         GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/);
         GL11.glPushMatrix();
         GL11.glRotatef(120F, 1.0F, 0.0F, 0.0F);
-        class_583.method_1930();
+        Lighting.turnOn();
         GL11.glPopMatrix();
     }
 
@@ -56,6 +56,6 @@ public class RenderHelper {
     public static void disableItemLighting() {
         disableLighting();
         GL11.glDisable(32826 /*GL_RESCALE_NORMAL_EXT*/);
-        class_583.method_1927();
+        Lighting.turnOff();
     }
 }

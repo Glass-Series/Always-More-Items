@@ -25,8 +25,8 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
         TextRenderer font = Minecraft.INSTANCE.textRenderer;
         TextureManager texture = Minecraft.INSTANCE.textureManager;
 
-        itemRenderer.method_1487(font, texture, itemStack, xPosition, yPosition);
-        itemRenderer.method_1488(font, texture, itemStack, xPosition, yPosition);
+        itemRenderer.renderGuiItem(font, texture, itemStack, xPosition, yPosition);
+        itemRenderer.renderGuiItemDecoration(font, texture, itemStack, xPosition, yPosition);
         GL11.glDisable(GL11.GL_BLEND);
     }
 

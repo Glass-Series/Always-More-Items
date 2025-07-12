@@ -16,7 +16,7 @@ public class HealActionButton implements ActionButton {
     @Override
     public boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton, boolean holdingShift) {
         if (!isOperator) {
-            player.method_490(Formatting.RED + "You need to be opped to do this action!");
+            player.sendMessage(Formatting.RED + "You need to be opped to do this action!");
             return false;
         }
 

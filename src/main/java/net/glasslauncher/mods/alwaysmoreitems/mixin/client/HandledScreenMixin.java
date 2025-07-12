@@ -1,9 +1,9 @@
 package net.glasslauncher.mods.alwaysmoreitems.mixin.client;
 
 import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
-import net.minecraft.class_583;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.render.platform.Lighting;
 import net.minecraft.screen.slot.Slot;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +27,7 @@ public abstract class HandledScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At(value = "TAIL"))
     public void theSkyShallNoLongerFillTheWorldWithDarkness(int mouseY, int delta, float par3, CallbackInfo ci){
-        class_583.method_1930();
+        Lighting.turnOn();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_LIGHTING);
     }

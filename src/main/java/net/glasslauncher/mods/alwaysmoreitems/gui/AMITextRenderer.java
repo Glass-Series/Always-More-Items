@@ -83,7 +83,7 @@ public class AMITextRenderer extends TextRenderer {
     public int charWidth(int character) {
         int var4 = CharacterUtils.VALID_CHARACTERS.indexOf(character);
         if (var4 >= 0) {
-            return field_2462[var4 + 32];
+            return characterWidths[var4 + 32];
         }
         return 0;
     }
@@ -99,7 +99,7 @@ public class AMITextRenderer extends TextRenderer {
         boolean underlineStyle = false;
         boolean strikethroughStyle = false;
 
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, field_2461);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexture);
         setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
         for(int i = 0; i < text.length(); ++i) {

@@ -79,7 +79,7 @@ public class RecipeGuiLogic {
         this.recipeCategories = types;
         int recipeCategoryIndex = 0;
 
-        ScreenHandler container = Minecraft.INSTANCE.player.container;
+        ScreenHandler container = Minecraft.INSTANCE.player.currentScreenHandler;
         if (container != null) {
             for (int i = 0; i < recipeCategories.size(); i++) {
                 RecipeCategory recipeCategory = recipeCategories.get(i);

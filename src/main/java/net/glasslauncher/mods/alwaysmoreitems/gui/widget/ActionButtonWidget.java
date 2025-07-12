@@ -74,7 +74,7 @@ public class ActionButtonWidget extends ButtonWidget {
         TextRenderer fontrenderer = minecraft.textRenderer;
         RenderHelper.bindTexture("/gui/gui.png");
         boolean isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-        int k = method_1187(isHovered);
+        int k = getYImage(isHovered);
 
         drawTexture(x, y, 0, 46 + k * 20, width / 2, height);
         drawTexture(x + width / 2, y, 200 - width / 2, 46 + k * 20, width / 2, height / 2);
@@ -106,7 +106,7 @@ public class ActionButtonWidget extends ButtonWidget {
             }
         }
 
-        method_1188(minecraft, mouseX, mouseY); // postRender
+        renderBackground(minecraft, mouseX, mouseY); // postRender
     }
 
     public enum ButtonIconType {

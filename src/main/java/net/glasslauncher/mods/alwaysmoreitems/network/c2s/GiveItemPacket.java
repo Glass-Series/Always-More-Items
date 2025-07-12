@@ -69,14 +69,14 @@ public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPack
                 return;
             }
 
-            if (!serverPlay.server.field_2842.method_584(serverPlay.player.name)) {
-                serverPlay.player.method_490(Formatting.RED + "You need to be opped to do this action!");
+            if (!serverPlay.server.playerManager.isOperator(serverPlay.player.name)) {
+                serverPlay.player.sendMessage(Formatting.RED + "You need to be opped to do this action!");
                 return;
             }
 
             ItemStack itemStack = new ItemStack(itemNbt);
             itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
-            serverPlay.player.method_490("Gave " + itemStack.count + " " + itemStack.getItem().getTranslatedName() + "@" + itemStack.getDamage());
+            serverPlay.player.sendMessage("Gave " + itemStack.count + " " + itemStack.getItem().getTranslatedName() + "@" + itemStack.getDamage());
             serverPlay.player.inventory.addStack(itemStack);
 
             // Mark the inventory dirty
@@ -84,8 +84,8 @@ public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPack
 
             // Send content updates to client
             if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
-                if (serverPlay.player.container != null) {
-                    serverPlay.player.container.sendContentUpdates();
+                if (serverPlay.player.currentScreenHandler != null) {
+                    serverPlay.player.currentScreenHandler.sendContentUpdates();
                 }
             }
         }

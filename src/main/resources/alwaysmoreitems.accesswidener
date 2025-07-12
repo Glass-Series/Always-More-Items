@@ -11,12 +11,12 @@ accessible method net/minecraft/client/gui/screen/ingame/HandledScreen getSlotAt
 accessible field net/minecraft/server/network/ServerPlayNetworkHandler player Lnet/minecraft/entity/player/ServerPlayerEntity;
 accessible field net/minecraft/server/network/ServerPlayNetworkHandler server Lnet/minecraft/server/MinecraftServer;
 
-accessible field net/minecraft/client/font/TextRenderer field_2462 [I
+accessible field net/minecraft/client/font/TextRenderer characterWidths [I
 
 accessible field net/minecraft/inventory/CraftingInventory stacks [Lnet/minecraft/item/ItemStack;
 
 accessible field net/minecraft/recipe/ShapelessRecipe input Ljava/util/List;
 
-accessible field net/minecraft/ShapedRecipe input [Lnet/minecraft/item/ItemStack;
-accessible field net/minecraft/ShapedRecipe width I
-accessible field net/minecraft/ShapedRecipe height I
+accessible field net/minecraft/recipe/ShapedRecipe input [Lnet/minecraft/item/ItemStack;
+accessible field net/minecraft/recipe/ShapedRecipe width I
+accessible field net/minecraft/recipe/ShapedRecipe height I

@@ -15,8 +15,8 @@ import net.glasslauncher.mods.alwaysmoreitems.transfer.RecipeTransferUtil;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
 import net.glasslauncher.mods.alwaysmoreitems.util.RecipeGuiLogic;
 import net.glasslauncher.mods.alwaysmoreitems.util.StringUtil;
-import net.minecraft.class_35;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ParticlesGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -81,7 +81,7 @@ public class RecipesGui extends Screen {
         if (minecraft.currentScreen == null) {
             return;
         }
-        field_157 = new class_35(minecraft);
+        particlesGui = new ParticlesGui(minecraft);
         textRenderer = minecraft.textRenderer;
         buttons.clear();
 

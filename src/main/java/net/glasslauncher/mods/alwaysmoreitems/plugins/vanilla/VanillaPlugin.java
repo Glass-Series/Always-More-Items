@@ -27,7 +27,6 @@ import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRe
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace.SmeltingRecipeMaker;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
-import net.minecraft.ShapedRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
@@ -36,6 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.CraftingRecipeManager;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.FurnaceScreenHandler;

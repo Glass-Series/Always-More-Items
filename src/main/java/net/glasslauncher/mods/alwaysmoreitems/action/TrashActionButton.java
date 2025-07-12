@@ -43,8 +43,8 @@ public class TrashActionButton implements ActionButton {
         // If on server, send content updates to client
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER){
             if(player instanceof ServerPlayerEntity serverPlayer){
-                if(serverPlayer.container != null){
-                    serverPlayer.container.sendContentUpdates();
+                if(serverPlayer.currentScreenHandler != null){
+                    serverPlayer.currentScreenHandler.sendContentUpdates();
                 }
             }
         }

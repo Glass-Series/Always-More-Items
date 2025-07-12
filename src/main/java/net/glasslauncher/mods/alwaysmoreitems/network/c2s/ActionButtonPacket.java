@@ -70,7 +70,7 @@ public class ActionButtonPacket extends Packet implements ManagedPacket<ActionBu
                         serverPlay.server,
                         serverPlay.player.world,
                         serverPlay.player,
-                        serverPlay.server.field_2842.method_584(serverPlay.player.name), // serverPlay.server.ops.contains(playername)
+                        serverPlay.server.playerManager.isOperator(serverPlay.player.name),
                         mouseButton,
                         holdingShift
                 );

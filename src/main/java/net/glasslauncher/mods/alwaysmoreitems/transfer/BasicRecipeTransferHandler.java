@@ -149,7 +149,7 @@ public class BasicRecipeTransferHandler implements RecipeTransferHandler {
     }
 
     public static void setItems(@Nonnull PlayerEntity player, @Nonnull Map<Integer, ItemStack> slotMap, @Nonnull List<Integer> craftingSlots, @Nonnull List<Integer> inventorySlots, boolean maxTransfer) {
-        ScreenHandler container = player.container;
+        ScreenHandler container = player.currentScreenHandler;
         StackHelper stackHelper = AlwaysMoreItems.getStackHelper();
 
         // remove required recipe items

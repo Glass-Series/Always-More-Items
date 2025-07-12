@@ -3,8 +3,8 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeHandler;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraft.ShapedRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.ShapedRecipe;
 
 import javax.annotation.Nonnull;
 
