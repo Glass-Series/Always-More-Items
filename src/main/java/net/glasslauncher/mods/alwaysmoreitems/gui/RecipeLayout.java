@@ -81,7 +81,6 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
         } catch (AbstractMethodError ignored) {
             // older wrappers don't have this method
         }
-        recipeWrapper.drawInfo(minecraft, background.getWidth(), background.getHeight(), 0, 0);
 
         RenderHelper.enableItemLighting();
         GuiIngredient hoveredItemStack = guiItemStackGroup.draw(minecraft, recipeMouseX, recipeMouseY);
