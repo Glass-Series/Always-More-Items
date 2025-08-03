@@ -33,6 +33,15 @@ public interface RecipeWrapper {
 //    List<FluidStack> getFluidOutputs();
 
     /**
+     * Called when the RecipesGui is ticked
+     * 
+     * @param hovered if this RecipeWrapper is currently being hovered
+     */
+    default void tick(boolean hovered) {
+        
+    }
+    
+    /**
      * Draw additional info about the recipe.
      * Use the mouse position for things like button highlights.
      * Tooltips are handled by IRecipeWrapper.getTooltipStrings()
@@ -70,4 +79,27 @@ public interface RecipeWrapper {
      * @since AMI 2.19.0
      */
     boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton);
+
+    /**
+     * Called when a player scrolls the mouse
+     *
+     * @param mouseX      the X position of the mouse, relative to the recipe.
+     * @param mouseY      the Y position of the mouse, relative to the recipe.
+     * @param scrollDelta the scroll delta of the mouse
+     * @return true if the scroll was handled, false otherwise
+     */
+    default boolean handleMouseScrolled(@Nonnull Minecraft minecraft, int mouseX, int mouseY, double scrollDelta) {
+        return false;
+    }
+
+    /**
+     * Called when the player presses a key
+     * 
+     * @param character the typed character
+     * @param keyCode the keycode of the key pressed
+     * @return true if the key press was handled, false otherwise
+     */
+    default boolean handleKeyPress(@Nonnull Minecraft minecraft, char character, int keyCode) {
+        return false;
+    }
 }

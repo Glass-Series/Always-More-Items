@@ -131,7 +131,7 @@ public class RecipesGui extends Screen {
         buttons.add(nextPage);
         buttons.add(previousPage);
     }
-
+    
     public boolean isMouseOver(int mouseX, int mouseY) {
         return (mouseX >= guiLeft) && (mouseY >= guiTop) && (mouseX < guiLeft + xSize) && (mouseY < guiTop + ySize);
     }
@@ -190,6 +190,13 @@ public class RecipesGui extends Screen {
         }
 
         int scrollDelta = Mouse.getDWheel();
+        
+        if (hovered != null && scrollDelta != 0) {
+            if (hovered.handleMouseScrolled(minecraft, mouseX, mouseY, scrollDelta)) {
+                return;
+            }
+        }
+        
         if (scrollDelta < 0) {
             logic.nextPage();
             updateLayout();
@@ -207,6 +214,21 @@ public class RecipesGui extends Screen {
         }
 
         super.onMouseEvent();
+    }
+
+    @Override
+    protected void keyPressed(char character, int keyCode) {
+        if (!active) {
+            return;
+        }
+        
+        if (hovered != null) {
+            if (hovered.handleKeyPress(minecraft, character, keyCode)) {
+                return;
+            }
+        }
+        
+        super.keyPressed(character, keyCode);
     }
 
     public void open(Screen newParent) {
@@ -331,6 +353,10 @@ public class RecipesGui extends Screen {
         if (!active) {
             return;
         }
+        
+        for (RecipeLayout recipeLayout : recipeLayouts) {
+            recipeLayout.tickWrapper(recipeLayout == hovered);
+        }
 
         super.tick();
     }
@@ -378,9 +404,11 @@ public class RecipesGui extends Screen {
         if (!active) {
             return;
         }
+        
         if (hovered != null) {
             hovered.draw(minecraft, mouseX, mouseY);
         }
+        
         if (titleHoverChecker.isOver(mouseX, mouseY)) {
             Focus focus = logic.getFocus();
             if (focus != null && !focus.isBlank()) {

@@ -50,6 +50,10 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
 //        this.guiFluidStackGroup.setFocus(focus);
         this.recipeCategory.setRecipe(this, recipeWrapper);
     }
+    
+    public void tickWrapper(boolean hovered) {
+        recipeWrapper.tick(hovered);
+    }
 
     public void draw(@Nonnull Minecraft minecraft, int mouseX, int mouseY) {
         GL11.glPushMatrix();
@@ -122,6 +126,14 @@ public class RecipeLayout implements net.glasslauncher.mods.alwaysmoreitems.api.
         } catch (AbstractMethodError ignored) { // older wrappers don't have this method
             return false;
         }
+    }
+    
+    public boolean handleMouseScrolled(@Nonnull Minecraft minecraft, int mouseX, int mouseY, double scrollDelta) {
+        return recipeWrapper.handleMouseScrolled(minecraft, mouseX - posX, mouseY - posY, scrollDelta);
+    }
+
+    public boolean handleKeyPress(@Nonnull Minecraft minecraft, char character, int keyCode) {
+        return recipeWrapper.handleKeyPress(minecraft, character, keyCode);
     }
 
     @Override
