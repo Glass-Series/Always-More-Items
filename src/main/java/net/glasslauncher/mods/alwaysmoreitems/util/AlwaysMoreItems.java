@@ -46,7 +46,7 @@ public class AlwaysMoreItems {
         CommonInit.getPlugins().values().forEach(iModPlugin -> {
             try {
                 iModPlugin.updateBlacklist(helpers);
-            } catch (NoSuchMethodError ignored) {}
+            } catch (IncompatibleClassChangeError ignored) {}
         });
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && AlwaysMoreItems.getItemFilter() != null) {
             AlwaysMoreItems.getItemFilter().reset();
