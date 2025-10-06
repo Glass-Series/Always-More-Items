@@ -37,22 +37,34 @@ public class Tooltip {
     private static final ItemStackRenderer ITEM_STACK_RENDERER = new ItemStackRenderer();
 
     /**
-     * The original "vanilla" tooltip. Typically the item name.
+     * The original "vanilla" tooltip. Typically, the item name.
      */
     @Nullable
     protected String simpleTip;
     /**
-     * The itemstack that this tooltip is rendering for. This is not garuanteed to exist, due to
+     * The itemstack that this tooltip is rendering for. This is not guaranteed to exist, due to the ability to draw tooltips in any context.
      */
     @Nullable
     protected ItemStack itemStack;
     /**
-     *
+     * The mouse cursor X in minecraft GUI pixels.
      */
     protected int cursorX;
+    /**
+     * The mouse cursor Y in minecraft GUI pixels.
+     */
     protected int cursorY;
+    /**
+     * The provided rarity to draw the tooltip with.
+     */
     protected Rarity rarity;
+    /**
+     * The screen width in minecraft GUI pixels.
+     */
     protected int screenWidth;
+    /**
+     * The screen height in minecraft GUI pixels.
+     */
     protected int screenHeight;
     @Nullable
     protected Screen screen;
