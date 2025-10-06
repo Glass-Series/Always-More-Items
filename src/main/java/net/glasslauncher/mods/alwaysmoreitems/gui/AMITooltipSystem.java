@@ -72,7 +72,7 @@ public class AMITooltipSystem {
                 tooltip.add(Tooltip.Divider.INSTANCE);
             }
             else if (!tags.isEmpty()) {
-                event.add(Formatting.DARK_GRAY + AMITextRenderer.ITALICS + "Hold CTRL to see " + tags.size() + (tags.size() == 1 ? "tag..." : " tags..."));
+                event.add(Formatting.DARK_GRAY + AMITextRenderer.ITALICS + "Hold CTRL to see " + tags.size() + (tags.size() == 1 ? " tag..." : " tags..."));
             }
         }
 
