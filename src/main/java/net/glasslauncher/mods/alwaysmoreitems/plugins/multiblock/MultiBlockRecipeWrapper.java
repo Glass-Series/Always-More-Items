@@ -145,6 +145,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         float yScale = (float) minecraft.displayHeight / recipesGui.height;
 
         GL11.glEnable(GL11.GL_BLEND);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         GL11.glPushMatrix();
