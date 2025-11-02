@@ -20,7 +20,8 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "net.glasslauncher.mods.alwaysmoreitems.testmod.TestMod"
+      "net.glasslauncher.mods.alwaysmoreitems.testmod.TestMod",
+      "net.glasslauncher.mods.alwaysmoreitems.testmod.init.RecipeListener"
     ],
     "stationapi:event_bus_client": [
     ],
