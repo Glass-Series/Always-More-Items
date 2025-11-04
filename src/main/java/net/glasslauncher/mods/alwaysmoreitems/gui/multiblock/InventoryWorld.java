@@ -22,7 +22,6 @@ public class InventoryWorld extends World {
 
     public InventoryWorld() {
         super(new InventoryWorldStorage(), "inventoryWorld", Dimension.fromId(0), 0);
-        System.out.println("created world");
         blockStates = new HashMap<>();
         metas = new HashMap<>();
     }
