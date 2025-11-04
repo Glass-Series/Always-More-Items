@@ -24,3 +24,4 @@ description.@.wooden.door.2=Clicking on a door changes its state from open to cl
 description.@.wooden.door.3=Wooden Doors can be opened/closed via Redstone Circuits.
 
 multiblock.@.test=Test Multiblock
+multiblock.@.diverse_test=Diverse Test Multiblock
