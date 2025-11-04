@@ -52,7 +52,7 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
 
         int maxRows = 8;
 
-        if(minecraft.currentScreen.height > 300){
+        if(minecraft.currentScreen.height > 300) {
             y -= 45;
             maxRows =  13;
         }
@@ -70,7 +70,7 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
                 costExtensionTop.draw(minecraft, x, y);
             }
             y += 5;
-            for(int currentRow = 0; currentRow < rows; currentRow++){
+            for(int currentRow = 0; currentRow < rows; currentRow++) {
                 if(currentColumn == 0){
                     costMiddle.draw(minecraft, x, y);
                 }
@@ -84,7 +84,7 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
                 y += 18;
                 currentCostIndex++;
             }
-            if(currentColumn == 0){
+            if(currentColumn == 0) {
                 costBottom.draw(minecraft, x, y);
             } else {
                 costExtensionBottom.draw(minecraft, x, y);
