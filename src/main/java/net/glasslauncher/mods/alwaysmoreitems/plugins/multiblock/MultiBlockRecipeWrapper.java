@@ -4,7 +4,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.gui.multiblock.InventoryBlockView;
+import net.glasslauncher.mods.alwaysmoreitems.gui.multiblock.InventoryWorld;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.RecipesGui;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.BlockPatternEntry;
@@ -34,6 +34,8 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     private final MultiBlockRecipe recipe;
 
+    private static final InventoryWorld world = new InventoryWorld();
+
     private HoverChecker leftButtonHoverChecker;
     private HoverChecker rightButtonHoverChecker;
     private int leftButtonX;
@@ -59,7 +61,8 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         return List.of();
     }
 
-    private void loadRecipeStructure(InventoryBlockView blockView, MultiBlockRecipe recipe){
+    private void loadRecipeStructure(InventoryWorld world, MultiBlockRecipe recipe){
+        world.clear();
         List<String[]> layers = recipe.getLayers();
         int x = 0;
         int y = 0;
@@ -71,7 +74,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
                 for(char pattern : section.toCharArray()){
                     BlockPatternEntry entry = recipe.getEntryForPattern(pattern);
                     if(entry != null){
-                        blockView.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
+                        world.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
                     }
                     // TODO: warn for missing keys
                     else {
@@ -129,8 +132,8 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     @Override
     public void drawAnimations(@NotNull Minecraft minecraft, int i, int i1) {
-        InventoryBlockView blockView = new InventoryBlockView(minecraft.world);
-        BlockRenderManager blockRenderManager = new BlockRenderManager(blockView);
+
+        BlockRenderManager blockRenderManager = new BlockRenderManager(world);
 
         RecipesGui recipesGui = OverlayScreen.INSTANCE.recipesGui;
         List<RecipeLayout> recipeLayouts = recipesGui.getRecipeLayouts();
@@ -157,7 +160,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
         minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId("/terrain.png"));
 
-        loadRecipeStructure(blockView, recipe);
+        loadRecipeStructure(world, recipe);
 
         GL11.glScissor((int) ((recipeLayout.getPosX() + 1) * xScale), (int) (minecraft.displayHeight - ((recipeLayout.getPosY() + 128) * yScale)), (int)(160 * xScale), (int)(114 * yScale));
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -167,13 +170,13 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
         tessellator.setOffset(-(recipe.getStructureWidth() / 2f), -(recipe.getStructureHeight() / 2f), -(recipe.getStructureDepth() / 2f));
 
-        blockView.setVisibleLayer(currentLayer);
+        world.setVisibleLayer(currentLayer);
 
-        List<BlockPos> blockPositions = blockView.getBlockPositions();
+        List<BlockPos> blockPositions = world.getBlockPositions();
         for(int renderLayer = 0; renderLayer < 2; renderLayer++){
             for(BlockPos blockPos : blockPositions){
                 if(currentLayer == -1 || currentLayer == blockPos.y){
-                    BlockState blockState = blockView.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    BlockState blockState = world.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     if(blockState.getBlock().getRenderLayer() == renderLayer){
                         blockRenderManager.render(blockState.getBlock(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     }
