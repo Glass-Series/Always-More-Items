@@ -5,4 +5,4 @@ import net.modificationstation.stationapi.api.block.BlockState;
 
 import javax.annotation.Nullable;
 
-public record BlockPatternEntry(char pattern, BlockState blockstate, int meta, @Nullable ItemStack item){}
+public record BlockPatternEntry(char key, BlockState blockstate, int meta, @Nullable ItemStack item){}

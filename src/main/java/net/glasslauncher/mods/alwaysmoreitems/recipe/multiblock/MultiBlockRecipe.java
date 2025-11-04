@@ -2,18 +2,19 @@ package net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock;
 
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.block.States;
+import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiBlockRecipe {
-    private final String name;
+    private final Identifier name;
     private final List<Object> description;
     private final List<String[]> layers;
     private final List<BlockPatternEntry> blockPatterns;
 
-    public MultiBlockRecipe(String name, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns){
+    public MultiBlockRecipe(Identifier name, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns){
         this.name = name;
         this.description = description;
         this.layers = layers;
@@ -25,7 +26,7 @@ public class MultiBlockRecipe {
     }
 
     public String getName(){
-        return this.name;
+        return "multiblock." + this.name.namespace + "." + this.name.path;
     }
 
     public List<Object> getDescription(){
@@ -55,7 +56,7 @@ public class MultiBlockRecipe {
         for(BlockPatternEntry entry : blockPatterns){
             if(entry.item() == null) continue;
             ItemStack stack = entry.item().copy();
-            stack.count = getPatternCount(entry.pattern());
+            stack.count = getPatternCount(entry.key());
             cost.add(stack);
         }
         cost.sort((a, b) -> Integer.compare(b.count, a.count));
@@ -68,7 +69,7 @@ public class MultiBlockRecipe {
             return new BlockPatternEntry(' ', States.AIR.get(), 0, null);
         }
         for(BlockPatternEntry patternEntry : blockPatterns){
-            if(patternEntry.pattern() == pattern){
+            if(patternEntry.key() == pattern){
                 return patternEntry;
             }
         }

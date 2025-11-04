@@ -6,13 +6,29 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
+import net.glasslauncher.mods.gcapi3.api.CharacterUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.List;
 
 public class MultiBlockRecipeCategory implements RecipeCategory {
+
+    private static final int[] COLORS = new int[] {
+            CharacterUtils.getIntFromColour(new Color(11, 11, 11)),
+            CharacterUtils.getIntFromColour(new Color(27, 27, 27)),
+            CharacterUtils.getIntFromColour(new Color(43, 43, 43)),
+            CharacterUtils.getIntFromColour(new Color(59, 59, 59)),
+            CharacterUtils.getIntFromColour(new Color(75, 75, 75)),
+            CharacterUtils.getIntFromColour(new Color(91, 91, 91)),
+            CharacterUtils.getIntFromColour(new Color(107, 107, 107)),
+            CharacterUtils.getIntFromColour(new Color(123, 123, 123)),
+            CharacterUtils.getIntFromColour(new Color(139, 139, 139)),
+    };
+
     private final AMIDrawable background = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 0, 0, 162, 130);
 
     private final AMIDrawable costTop = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 162, 0, 25, 5);
@@ -49,7 +65,7 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
 
         int maxRows = 8;
 
-        if(minecraft.currentScreen.height > 300){
+        if(minecraft.currentScreen.height > 300) {
             y -= 45;
             maxRows =  13;
         }
@@ -59,17 +75,16 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
 
         int currentCostIndex = 0;
         int startY = y;
-        for(int i = 0; i < columns; i++){
+        for(int currentColumn = 0; currentColumn < columns; currentColumn++) {
             y = startY;
-            if(i == 0){
+            if(currentColumn == 0){
                 costTop.draw(minecraft, x, y);
-            }
-            else {
+            } else {
                 costExtensionTop.draw(minecraft, x, y);
             }
             y += 5;
-            for(int j = 0; j < rows; j++){
-                if(i == 0){
+            for(int currentRow = 0; currentRow < rows; currentRow++) {
+                if(currentColumn == 0){
                     costMiddle.draw(minecraft, x, y);
                 }
                 else {
@@ -82,37 +97,15 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
                 y += 18;
                 currentCostIndex++;
             }
-            if(i == 0){
+            if(currentColumn == 0) {
                 costBottom.draw(minecraft, x, y);
-            }
-            else {
+            } else {
                 costExtensionBottom.draw(minecraft, x, y);
             }
             x -= 18;
         }
-        int colour = switch (descriptionFade) {
-            case 0:
-                yield 0x0B0B0B;
-            case 1:
-                yield 0x1B1B1B;
-            case 2:
-                yield 0x2B2B2B;
-            case 3:
-                yield 0x3B3B3B;
-            case 4:
-                yield 0x4B4B4B;
-            case 5:
-                yield 0x5B5B5B;
-            case 6:
-                yield 0x6B6B6B;
-            case 7:
-                yield 0x7B7B7B;
-            case 8:
-                yield 0x8B8B8B;
-            default:
-                yield 0;
-        };
-        minecraft.textRenderer.draw("Hold shift for description!", 2, 118, colour);
+        int color = COLORS[descriptionFade];
+        minecraft.textRenderer.draw(TranslationStorage.getInstance().get("gui.alwaysmoreitems.multiblock.description_hint"), 2, 118, color);
         if (descriptionFadeTick >= 20) {
             descriptionFadeTick = 0;
             descriptionFade++;
