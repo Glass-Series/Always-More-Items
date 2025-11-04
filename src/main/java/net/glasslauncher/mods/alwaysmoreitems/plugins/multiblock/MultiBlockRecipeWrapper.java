@@ -4,7 +4,6 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
-import net.glasslauncher.mods.alwaysmoreitems.gui.multiblock.InventoryBlockView;
 import net.glasslauncher.mods.alwaysmoreitems.gui.multiblock.InventoryWorld;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.RecipesGui;
@@ -135,8 +134,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     @Override
     public void drawAnimations(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight) {
-        InventoryBlockView blockView = new InventoryBlockView(minecraft.world);
-        BlockRenderManager blockRenderManager = new BlockRenderManager(blockView);
+        BlockRenderManager blockRenderManager = new BlockRenderManager(world);
 
         RecipesGui recipesGui = OverlayScreen.INSTANCE.recipesGui;
         List<RecipeLayout> recipeLayouts = recipesGui.getRecipeLayouts();
@@ -163,7 +161,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
         minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId("/terrain.png"));
 
-        loadRecipeStructure(world, recipe);
+        loadRecipeStructure(MultiBlockRecipeWrapper.world, recipe);
 
         GL11.glScissor((int) ((recipeLayout.getPosX() + 1) * xScale), (int) (minecraft.displayHeight - ((recipeLayout.getPosY() + 128) * yScale)), (int)(160 * xScale), (int)(114 * yScale));
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -173,13 +171,13 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
         tessellator.setOffset(-(recipe.getStructureWidth() / 2f), -(recipe.getStructureHeight() / 2f), -(recipe.getStructureDepth() / 2f));
 
-        world.setVisibleLayer(currentLayer);
+        MultiBlockRecipeWrapper.world.setVisibleLayer(currentLayer);
 
-        List<BlockPos> blockPositions = world.getBlockPositions();
+        List<BlockPos> blockPositions = MultiBlockRecipeWrapper.world.getBlockPositions();
         for(int renderLayer = 0; renderLayer < 2; renderLayer++){
             for(BlockPos blockPos : blockPositions){
                 if(currentLayer == -1 || currentLayer == blockPos.y){
-                    BlockState blockState = world.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    BlockState blockState = MultiBlockRecipeWrapper.world.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     if(blockState.getBlock().getRenderLayer() == renderLayer){
                         blockRenderManager.render(blockState.getBlock(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     }
