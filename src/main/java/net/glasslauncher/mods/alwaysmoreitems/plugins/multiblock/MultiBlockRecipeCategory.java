@@ -8,6 +8,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.gcapi3.api.CharacterUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -114,7 +115,7 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
             default:
                 yield Color.BLACK;
         };
-        minecraft.textRenderer.draw("Hold shift for description!", 2, 118, CharacterUtils.getIntFromColour(color));
+        minecraft.textRenderer.draw(TranslationStorage.getInstance().get("gui.alwaysmoreitems.multiblock.description_hint"), 2, 118, CharacterUtils.getIntFromColour(color));
         if (descriptionFadeTick >= 20) {
             descriptionFadeTick = 0;
             descriptionFade++;
