@@ -10,9 +10,12 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.screen.RecipesGui;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.BlockPatternEntry;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.MultiBlockRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -77,6 +80,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
                     BlockPatternEntry entry = recipe.getEntryForPattern(key);
                     if(entry != null){
                         world.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
+                        if(entry.blockEntity() != null){
+                            world.setBlockEntity(x, y, z, entry.blockEntity());
+                        }
                     }
                     // TODO: warn for missing keys
                     else {
@@ -188,9 +194,16 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         }
 
         tessellator.draw();
+
         tessellator.setOffset(0.0, 0.0, 0.0);
 
+        GL11.glTranslatef(-(recipe.getStructureWidth() / 2f), -(recipe.getStructureHeight() / 2f), -(recipe.getStructureDepth() / 2f));
+
+        drawBlockEntities();
+
+
         GL11.glPopMatrix();
+
 
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
@@ -205,6 +218,16 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         minecraft.textRenderer.drawWithShadow(layerText, 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText), 2 + ARROW_Y, 0xFFFFFF);
         minecraft.textRenderer.drawWithShadow(TranslationStorage.getInstance().get(recipe.getName()), 0, 3, 0xFFFFFF);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+    }
+
+    private void drawBlockEntities(){
+        BlockEntityRenderDispatcher dispatcher = BlockEntityRenderDispatcher.INSTANCE;
+        for(BlockEntity blockEntity : world.getBlockEntities()){
+            if(dispatcher.hasRenderer(blockEntity)){
+                GL11.glColor3f(1F, 1F, 1F);
+                dispatcher.render(blockEntity, blockEntity.x, blockEntity.y, blockEntity.z, 0);
+            }
+        }
     }
 
     @Override
