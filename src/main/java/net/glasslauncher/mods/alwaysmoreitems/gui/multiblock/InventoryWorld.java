@@ -2,6 +2,7 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.multiblock;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -17,6 +18,7 @@ public class InventoryWorld extends World {
 
     private final Map<BlockPos, BlockState> blockStates;
     private final Map<BlockPos, Integer> metas;
+    private final Map<BlockPos, BlockEntity> blockEntities;
 
     private int visibleLayer = -1;
 
@@ -24,6 +26,7 @@ public class InventoryWorld extends World {
         super(new InventoryWorldStorage(), "inventoryWorld", Dimension.fromId(0), 0);
         blockStates = new HashMap<>();
         metas = new HashMap<>();
+        blockEntities = new HashMap<>();
     }
 
     public void setVisibleLayer(int layer){
@@ -34,9 +37,14 @@ public class InventoryWorld extends World {
         return blockStates.keySet().stream().toList();
     }
 
+    public List<BlockEntity> getBlockEntities() {
+        return blockEntities.values().stream().toList();
+    }
+
     public void clear(){
         blockStates.clear();
         metas.clear();
+        blockEntities.clear();
     }
 
     @Override
@@ -51,7 +59,7 @@ public class InventoryWorld extends World {
 
     @Override
     public BlockEntity getBlockEntity(int x, int y, int z) {
-        return null;
+        return blockEntities.get(new BlockPos(x, y, z));
     }
 
     @Override
@@ -130,6 +138,20 @@ public class InventoryWorld extends World {
         blockStates.put(new BlockPos(x, y, z), blockState);
         metas.put(new BlockPos(x, y, z), meta);
         return blockState;
+    }
+
+    @Override
+    public void setBlockEntity(int x, int y, int z, BlockEntity blockEntity) {
+        NbtCompound nbt = new NbtCompound();
+        blockEntity.writeNbt(nbt);
+
+        BlockEntity blockEntityInstance = BlockEntity.createFromNbt(nbt);
+        blockEntityInstance.x = x;
+        blockEntityInstance.y = y;
+        blockEntityInstance.z = z;
+        blockEntityInstance.world = this;
+
+        blockEntities.put(new BlockPos(x, y, z), blockEntityInstance);
     }
 
     @Override

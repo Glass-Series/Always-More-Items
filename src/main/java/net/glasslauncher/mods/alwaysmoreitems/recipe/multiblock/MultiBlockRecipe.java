@@ -66,7 +66,7 @@ public class MultiBlockRecipe {
     @Nullable
     public BlockPatternEntry getEntryForPattern(char pattern){
         if(pattern == ' '){
-            return new BlockPatternEntry(' ', States.AIR.get(), 0, null);
+            return new BlockPatternEntry(' ', States.AIR.get(), 0, null, null);
         }
         for(BlockPatternEntry patternEntry : blockPatterns){
             if(patternEntry.key() == pattern){
