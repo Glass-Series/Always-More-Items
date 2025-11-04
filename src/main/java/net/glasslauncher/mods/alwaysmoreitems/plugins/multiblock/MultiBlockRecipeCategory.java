@@ -62,17 +62,16 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
 
         int currentCostIndex = 0;
         int startY = y;
-        for(int i = 0; i < columns; i++){
+        for(int costDrawingStep = 0; costDrawingStep < columns; costDrawingStep++) {
             y = startY;
-            if(i == 0){
+            if(costDrawingStep == 0){
                 costTop.draw(minecraft, x, y);
-            }
-            else {
+            } else {
                 costExtensionTop.draw(minecraft, x, y);
             }
             y += 5;
             for(int j = 0; j < rows; j++){
-                if(i == 0){
+                if(costDrawingStep == 0){
                     costMiddle.draw(minecraft, x, y);
                 }
                 else {
@@ -85,10 +84,9 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
                 y += 18;
                 currentCostIndex++;
             }
-            if(i == 0){
+            if(costDrawingStep == 0){
                 costBottom.draw(minecraft, x, y);
-            }
-            else {
+            } else {
                 costExtensionBottom.draw(minecraft, x, y);
             }
             x -= 18;
