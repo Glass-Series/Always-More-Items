@@ -5,6 +5,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.gui.multiblock.InventoryBlockView;
+import net.glasslauncher.mods.alwaysmoreitems.gui.multiblock.InventoryWorld;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.RecipesGui;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.BlockPatternEntry;
@@ -133,9 +134,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     @Override
-    public void drawAnimations(@NotNull Minecraft minecraft, int i, int i1) {
-
-        BlockRenderManager blockRenderManager = new BlockRenderManager(world);
+    public void drawAnimations(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+        InventoryBlockView blockView = new InventoryBlockView(minecraft.world);
+        BlockRenderManager blockRenderManager = new BlockRenderManager(blockView);
 
         RecipesGui recipesGui = OverlayScreen.INSTANCE.recipesGui;
         List<RecipeLayout> recipeLayouts = recipesGui.getRecipeLayouts();
