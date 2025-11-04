@@ -6,5 +6,8 @@ import net.modificationstation.stationapi.api.block.BlockState;
 
 import javax.annotation.Nullable;
 
-public record BlockPatternEntry(char key, BlockState blockstate, int meta, @Nullable ItemStack item, @Nullable
-                                BlockEntity blockEntity){}
+public record BlockPatternEntry(char key, BlockState blockstate, int meta, @Nullable ItemStack item, @Nullable BlockEntity blockEntity) {
+    public BlockPatternEntry(char key, BlockState blockstate, int meta, @Nullable ItemStack item) {
+        this(key, blockstate, meta, item, null);
+    }
+}
