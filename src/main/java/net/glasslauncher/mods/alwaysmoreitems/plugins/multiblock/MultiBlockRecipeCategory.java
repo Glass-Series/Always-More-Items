@@ -6,10 +6,12 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
+import net.glasslauncher.mods.gcapi3.api.CharacterUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.List;
 
 public class MultiBlockRecipeCategory implements RecipeCategory {
@@ -90,29 +92,29 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
             }
             x -= 18;
         }
-        int colour = switch (descriptionFade) {
+        Color color = switch (descriptionFade) {
             case 0:
-                yield 0x0B0B0B;
+                yield new Color(0x0B, 0x0B, 0x0B);
             case 1:
-                yield 0x1B1B1B;
+                yield new Color(0x1B, 0x1B, 0x1B);
             case 2:
-                yield 0x2B2B2B;
+                yield new Color(0x2B, 0x2B, 0x2B);
             case 3:
-                yield 0x3B3B3B;
+                yield new Color(0x3B, 0x3B, 0x3B);
             case 4:
-                yield 0x4B4B4B;
+                yield new Color(0x4B, 0x4B, 0x4B);
             case 5:
-                yield 0x5B5B5B;
+                yield new Color(0x5B, 0x5B, 0x5B);
             case 6:
-                yield 0x6B6B6B;
+                yield new Color(0x6B, 0x6B, 0x6B);
             case 7:
-                yield 0x7B7B7B;
+                yield new Color(0x7B, 0x7B, 0x7B);
             case 8:
-                yield 0x8B8B8B;
+                yield new Color(0x8B, 0x8B, 0x8B);
             default:
-                yield 0;
+                yield Color.BLACK;
         };
-        minecraft.textRenderer.draw("Hold shift for description!", 2, 118, colour);
+        minecraft.textRenderer.draw("Hold shift for description!", 2, 118, CharacterUtils.getIntFromColour(color));
         if (descriptionFadeTick >= 20) {
             descriptionFadeTick = 0;
             descriptionFade++;
