@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultiBlockRecipeWrapper implements RecipeWrapper {
+    private static final int ARROW_Y = 13;
+
     private final AMIDrawable leftButton = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 187, 0, 7, 11);
     private final AMIDrawable leftButtonHover = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 187, 11, 7, 11);
     private final AMIDrawable rightButton = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 194, 0, 7, 11);
@@ -104,17 +106,17 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         }
 
         if(leftButtonHoverChecker.isOver(mouseX, mouseY)){
-            leftButtonHover.draw(minecraft, leftButtonX, 1);
+            leftButtonHover.draw(minecraft, leftButtonX, ARROW_Y);
         }
         else {
-            leftButton.draw(minecraft, leftButtonX, 1);
+            leftButton.draw(minecraft, leftButtonX, ARROW_Y);
         }
 
         if(rightButtonHoverChecker.isOver(mouseX, mouseY)){
-            rightButtonHover.draw(minecraft, 162 - 7, 1);
+            rightButtonHover.draw(minecraft, 162 - 7, ARROW_Y);
         }
         else {
-            rightButton.draw(minecraft, 162 - 7, 1);
+            rightButton.draw(minecraft, 162 - 7, ARROW_Y);
         }
     }
 
@@ -191,10 +193,10 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         String layerText = "Layer: " + getLayerString(currentLayer);
 
         leftButtonX = 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText) - 7 - 2;
-        leftButtonHoverChecker = new HoverChecker(1, 11, leftButtonX, leftButtonX + 6);
-        rightButtonHoverChecker = new HoverChecker(1, 11, 161 - 6, 161);
+        leftButtonHoverChecker = new HoverChecker(ARROW_Y, 10 + ARROW_Y, leftButtonX, leftButtonX + 6);
+        rightButtonHoverChecker = new HoverChecker(ARROW_Y, 10 + ARROW_Y, 161 - 6, 161);
 
-        minecraft.textRenderer.drawWithShadow(layerText, 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText), 3, 0xFFFFFF);
+        minecraft.textRenderer.drawWithShadow(layerText, 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText), 2 + ARROW_Y, 0xFFFFFF);
         minecraft.textRenderer.drawWithShadow(TranslationStorage.getInstance().get(recipe.getName()), 0, 3, 0xFFFFFF);
     }
 
