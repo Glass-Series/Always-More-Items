@@ -68,8 +68,8 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
             z = 0;
             for(String section : layer){
                 x = 0;
-                for(char pattern : section.toCharArray()){
-                    BlockPatternEntry entry = recipe.getEntryForPattern(pattern);
+                for(char key : section.toCharArray()){
+                    BlockPatternEntry entry = recipe.getEntryForPattern(key);
                     if(entry != null){
                         blockView.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
                     }
@@ -128,7 +128,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     @Override
-    public void drawAnimations(@NotNull Minecraft minecraft, int i, int i1) {
+    public void drawAnimations(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight) {
         InventoryBlockView blockView = new InventoryBlockView(minecraft.world);
         BlockRenderManager blockRenderManager = new BlockRenderManager(blockView);
 

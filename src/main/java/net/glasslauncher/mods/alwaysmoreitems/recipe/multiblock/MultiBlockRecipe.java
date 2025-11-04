@@ -55,7 +55,7 @@ public class MultiBlockRecipe {
         for(BlockPatternEntry entry : blockPatterns){
             if(entry.item() == null) continue;
             ItemStack stack = entry.item().copy();
-            stack.count = getPatternCount(entry.pattern());
+            stack.count = getPatternCount(entry.key());
             cost.add(stack);
         }
         cost.sort((a, b) -> Integer.compare(b.count, a.count));
@@ -68,7 +68,7 @@ public class MultiBlockRecipe {
             return new BlockPatternEntry(' ', States.AIR.get(), 0, null);
         }
         for(BlockPatternEntry patternEntry : blockPatterns){
-            if(patternEntry.pattern() == pattern){
+            if(patternEntry.key() == pattern){
                 return patternEntry;
             }
         }
