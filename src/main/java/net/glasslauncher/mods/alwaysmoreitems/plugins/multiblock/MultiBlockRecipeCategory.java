@@ -16,6 +16,19 @@ import java.awt.*;
 import java.util.List;
 
 public class MultiBlockRecipeCategory implements RecipeCategory {
+
+    private static final int[] COLORS = new int[] {
+            CharacterUtils.getIntFromColour(new Color(11, 11, 11)),
+            CharacterUtils.getIntFromColour(new Color(27, 27, 27)),
+            CharacterUtils.getIntFromColour(new Color(43, 43, 43)),
+            CharacterUtils.getIntFromColour(new Color(59, 59, 59)),
+            CharacterUtils.getIntFromColour(new Color(75, 75, 75)),
+            CharacterUtils.getIntFromColour(new Color(91, 91, 91)),
+            CharacterUtils.getIntFromColour(new Color(107, 107, 107)),
+            CharacterUtils.getIntFromColour(new Color(123, 123, 123)),
+            CharacterUtils.getIntFromColour(new Color(139, 139, 139)),
+    };
+
     private final AMIDrawable background = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 0, 0, 162, 130);
 
     private final AMIDrawable costTop = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 162, 0, 25, 5);
@@ -91,29 +104,8 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
             }
             x -= 18;
         }
-        Color color = switch (descriptionFade) {
-            case 0:
-                yield new Color(0x0B, 0x0B, 0x0B);
-            case 1:
-                yield new Color(0x1B, 0x1B, 0x1B);
-            case 2:
-                yield new Color(0x2B, 0x2B, 0x2B);
-            case 3:
-                yield new Color(0x3B, 0x3B, 0x3B);
-            case 4:
-                yield new Color(0x4B, 0x4B, 0x4B);
-            case 5:
-                yield new Color(0x5B, 0x5B, 0x5B);
-            case 6:
-                yield new Color(0x6B, 0x6B, 0x6B);
-            case 7:
-                yield new Color(0x7B, 0x7B, 0x7B);
-            case 8:
-                yield new Color(0x8B, 0x8B, 0x8B);
-            default:
-                yield Color.BLACK;
-        };
-        minecraft.textRenderer.draw(TranslationStorage.getInstance().get("gui.alwaysmoreitems.multiblock.description_hint"), 2, 118, CharacterUtils.getIntFromColour(color));
+        int color = COLORS[descriptionFade];
+        minecraft.textRenderer.draw(TranslationStorage.getInstance().get("gui.alwaysmoreitems.multiblock.description_hint"), 2, 118, color);
         if (descriptionFadeTick >= 20) {
             descriptionFadeTick = 0;
             descriptionFade++;
