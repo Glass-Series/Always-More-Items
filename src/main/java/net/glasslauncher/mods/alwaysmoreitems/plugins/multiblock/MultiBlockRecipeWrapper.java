@@ -223,6 +223,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     private void drawBlockEntities(){
         BlockEntityRenderDispatcher dispatcher = BlockEntityRenderDispatcher.INSTANCE;
         for(BlockEntity blockEntity : world.getBlockEntities()){
+            if(currentLayer != -1 && blockEntity.y != currentLayer){
+                continue;
+            }
             if(dispatcher.hasRenderer(blockEntity)){
                 GL11.glColor3f(1F, 1F, 1F);
                 dispatcher.render(blockEntity, blockEntity.x, blockEntity.y, blockEntity.z, 0);
