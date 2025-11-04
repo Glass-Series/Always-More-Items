@@ -2,6 +2,7 @@ package net.glasslauncher.mods.alwaysmoreitems.testmod.init;
 
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.BlockPatternEntry;
 import net.glasslauncher.mods.alwaysmoreitems.registry.multiblock.MultiBlockRecipeRegistry;
+import net.glasslauncher.mods.alwaysmoreitems.testmod.TestMod;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeListener {
+
     @EventListener
     public void registerRecipes(RecipeRegisterEvent event) {
         Identifier type = event.recipeId;
@@ -42,7 +44,7 @@ public class RecipeListener {
                     this.add("Bielefeld does exist.");
                 }
             };
-            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe("multiblock.alwaysmoreitems.test", testDescription, testMultiblockLayers, testMultiblockPatterns);
+            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "test"), testDescription, testMultiblockLayers, testMultiblockPatterns);
         }
     }
 }

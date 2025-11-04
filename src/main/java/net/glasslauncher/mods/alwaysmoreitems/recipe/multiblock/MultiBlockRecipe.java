@@ -2,18 +2,19 @@ package net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock;
 
 import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.block.States;
+import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiBlockRecipe {
-    private final String name;
+    private final Identifier name;
     private final List<Object> description;
     private final List<String[]> layers;
     private final List<BlockPatternEntry> blockPatterns;
 
-    public MultiBlockRecipe(String name, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns){
+    public MultiBlockRecipe(Identifier name, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns){
         this.name = name;
         this.description = description;
         this.layers = layers;
@@ -25,7 +26,7 @@ public class MultiBlockRecipe {
     }
 
     public String getName(){
-        return this.name;
+        return "multiblock." + this.name.namespace + "." + this.name.path;
     }
 
     public List<Object> getDescription(){
