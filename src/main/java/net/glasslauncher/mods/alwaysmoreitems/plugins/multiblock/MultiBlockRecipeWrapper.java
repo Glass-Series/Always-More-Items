@@ -93,6 +93,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     @Override
     public void drawInfo(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
         if(mouseX == 0 && mouseY == 0) return;
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
         if(!Mouse.isButtonDown(0) && leftMouseDown){
             leftMouseDown = false;
         }
@@ -121,6 +122,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         else {
             rightButton.draw(minecraft, 162 - 7, ARROW_Y);
         }
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
     public List<ItemStack> getCost(){
@@ -199,8 +201,10 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         leftButtonHoverChecker = new HoverChecker(ARROW_Y, 10 + ARROW_Y, leftButtonX, leftButtonX + 6);
         rightButtonHoverChecker = new HoverChecker(ARROW_Y, 10 + ARROW_Y, 161 - 6, 161);
 
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
         minecraft.textRenderer.drawWithShadow(layerText, 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText), 2 + ARROW_Y, 0xFFFFFF);
         minecraft.textRenderer.drawWithShadow(TranslationStorage.getInstance().get(recipe.getName()), 0, 3, 0xFFFFFF);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
     @Override
