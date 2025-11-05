@@ -9,6 +9,7 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.screen.OverlayScreen;
 import net.glasslauncher.mods.alwaysmoreitems.gui.screen.RecipesGui;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.BlockPatternEntry;
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.MultiBlockRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.Minecraft;
@@ -84,9 +85,8 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
                             world.setBlockEntity(x, y, z, entry.blockEntity());
                         }
                     }
-                    // TODO: warn for missing keys
                     else {
-
+                        AlwaysMoreItems.LOGGER.warn("Multiblock recipe '{}' attempted to access a pattern with key '{}', but no pattern with this key exists.", recipe.getName(), key);
                     }
                     x++;
                 }
@@ -234,7 +234,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     @Override
-    public @Nullable ArrayList<Object> getTooltip(int i, int i1) {
+    public @Nullable ArrayList<Object> getTooltip(int mouseX, int mouseY) {
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
             return (ArrayList<Object>) recipe.getDescription();
         }
@@ -242,21 +242,21 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     @Override
-    public boolean handleClick(@NotNull Minecraft minecraft, int i, int i1, int i2) {
-        if(i2 == 0){
+    public boolean handleClick(@NotNull Minecraft minecraft, int mouseX, int mouseY, int button) {
+        if(button == 0){
             leftMouseDown = true;
         }
-        if(i2 == 1){
+        if(button == 1){
             rightMouseDown = true;
         }
 
-        if(leftButtonHoverChecker.isOver(i, i1)){
+        if(leftButtonHoverChecker.isOver(mouseX, mouseY)){
             currentLayer--;
             if(currentLayer < -1){
                 currentLayer = recipe.getLayers().size() - 1;
             }
         }
-        if(rightButtonHoverChecker.isOver(i, i1)){
+        if(rightButtonHoverChecker.isOver(mouseX, mouseY)){
             currentLayer++;
             if(currentLayer > recipe.getLayers().size() - 1){
                 currentLayer = -1;
