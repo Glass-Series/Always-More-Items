@@ -56,6 +56,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     int currentLayer = -1;
     public MultiBlockRecipeWrapper(MultiBlockRecipe recipe){
         this.recipe = recipe;
+        loadRecipeStructure(MultiBlockRecipeWrapper.world, recipe);
     }
     @Override
     public List<?> getInputs() {
@@ -168,8 +169,6 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         GL11.glScalef(scale, scale, scale);
 
         minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId("/terrain.png"));
-
-        loadRecipeStructure(MultiBlockRecipeWrapper.world, recipe);
 
         GL11.glScissor((int) ((recipeLayout.getPosX() + 1) * xScale), (int) (minecraft.displayHeight - ((recipeLayout.getPosY() + 128) * yScale)), (int)(160 * xScale), (int)(114 * yScale));
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
