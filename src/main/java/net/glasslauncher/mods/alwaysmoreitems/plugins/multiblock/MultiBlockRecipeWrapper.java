@@ -16,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -56,8 +55,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     int currentLayer = -1;
     public MultiBlockRecipeWrapper(MultiBlockRecipe recipe){
         this.recipe = recipe;
-        loadRecipeStructure(MultiBlockRecipeWrapper.world, recipe);
+        loadRecipeStructure(recipe);
     }
+
     @Override
     public List<?> getInputs() {
         return recipe.getItems();
@@ -68,7 +68,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         return List.of();
     }
 
-    private void loadRecipeStructure(InventoryWorld world, MultiBlockRecipe recipe){
+    private void loadRecipeStructure(MultiBlockRecipe recipe){
         world.clear();
         List<String[]> layers = recipe.getLayers();
         int x = 0;
@@ -81,9 +81,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
                 for(char key : section.toCharArray()){
                     BlockPatternEntry entry = recipe.getEntryForPattern(key);
                     if(entry != null){
-                        world.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
+                        MultiBlockRecipeWrapper.world.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
                         if(entry.blockEntity() != null){
-                            world.setBlockEntity(x, y, z, entry.blockEntity());
+                            MultiBlockRecipeWrapper.world.setBlockEntity(x, y, z, entry.blockEntity());
                         }
                     }
                     else {

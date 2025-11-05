@@ -53,9 +53,19 @@ public class MultiBlockRecipe {
 
     public List<ItemStack> getCost(){
         List<ItemStack> cost = new ArrayList<>();
+
         for(BlockPatternEntry entry : blockPatterns){
             if(entry.item() == null) continue;
             ItemStack stack = entry.item().copy();
+            ItemStack existingStack = cost.stream()
+                .filter(filterstack -> filterstack.isItemEqual(stack))
+                .findFirst().orElse(null);
+
+            if(existingStack != null){
+                existingStack.count += getPatternCount(entry.key());
+                break;
+            }
+
             stack.count = getPatternCount(entry.key());
             cost.add(stack);
         }

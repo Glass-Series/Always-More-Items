@@ -38,7 +38,7 @@ public class RecipeListener {
                     new BlockPatternEntry('f', Block.CRAFTING_TABLE.getDefaultState(), 0, new ItemStack(Block.CRAFTING_TABLE.asItem()), null),
                     new BlockPatternEntry('i', Block.WOOL.getDefaultState(), 0, new ItemStack(Block.WOOL.asItem()), null),
                     new BlockPatternEntry('-', Block.WOOL.getDefaultState(), 2, new ItemStack(Block.WOOL.asItem(), 1, 2), null),
-//                    new BlockPatternEntry('.', Block.WOOL.getDefaultState(), 1, new ItemStack(Block.WOOL.asItem(), 1, 1), null),
+                    new BlockPatternEntry('.', Block.WOOL.getDefaultState(), 1, new ItemStack(Block.WOOL.asItem(), 1, 1), null),
                     new BlockPatternEntry('s', Block.SIGN.getDefaultState(), 0, new ItemStack(Block.SIGN.asItem(), 1, 0), signBlockEntity)
 
             );
