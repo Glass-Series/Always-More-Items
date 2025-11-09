@@ -6,7 +6,9 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MultiBlockRecipe {
     private final Identifier name;
@@ -51,7 +53,27 @@ public class MultiBlockRecipe {
         return count;
     }
 
-    public List<ItemStack> getCost(){
+    private int getPatternCountForLayer(char pattern, int layer){
+        int count = 0;
+        for(String section : layers.get(layer)){
+            for(char currentPattern : section.toCharArray()){
+                if(currentPattern == pattern){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public Map<Integer, List<ItemStack>> getCostPerLayer(){
+        Map<Integer, List<ItemStack>> costPerLayer = new HashMap<>();
+        for(int layerIndex = -1; layerIndex < layers.size(); layerIndex++){
+            costPerLayer.put(layerIndex, getCost(layerIndex));
+        }
+        return costPerLayer;
+    }
+
+    public List<ItemStack> getCost(int layer){
         List<ItemStack> cost = new ArrayList<>();
 
         for(BlockPatternEntry entry : blockPatterns){
@@ -62,12 +84,22 @@ public class MultiBlockRecipe {
                 .findFirst().orElse(null);
 
             if(existingStack != null){
-                existingStack.count += getPatternCount(entry.key());
+                if(layer == -1){
+                    existingStack.count += getPatternCount(entry.key());
+                } else {
+                    existingStack.count += getPatternCountForLayer(entry.key(), layer);
+                }
                 break;
             }
 
-            stack.count = getPatternCount(entry.key());
-            cost.add(stack);
+            if(layer == -1){
+                stack.count = getPatternCount(entry.key());
+            } else {
+                stack.count = getPatternCountForLayer(entry.key(), layer);
+            }
+            if(stack.count > 0){
+                cost.add(stack);
+            }
         }
         cost.sort((a, b) -> Integer.compare(b.count, a.count));
         return cost;

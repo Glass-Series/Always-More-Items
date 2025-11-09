@@ -29,4 +29,8 @@ public class MultiBlockRecipeRegistry {
     public void addMultiblockRecipe(Identifier identifier, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns) {
         recipes.add(new MultiBlockRecipe(identifier, description, layers, blockPatterns));
     }
+
+    public void addMultiblockRecipe(MultiBlockRecipe recipe){
+        recipes.add(recipe);
+    }
 }

@@ -28,6 +28,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MultiBlockRecipeWrapper implements RecipeWrapper {
     private static final int ARROW_Y = 13;
@@ -132,8 +133,12 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
-    public List<ItemStack> getCost(){
-        return recipe.getCost();
+    public List<ItemStack> getCost(int layer){
+        return recipe.getCost(layer);
+    }
+
+    public Map<Integer, List<ItemStack>> getCostPerLayer(){
+        return recipe.getCostPerLayer();
     }
 
     private String getLayerString(int layer){

@@ -6,6 +6,8 @@ import net.glasslauncher.mods.alwaysmoreitems.api.gui.RecipeLayout;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
+import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.GuiIngredient;
+import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.IGuiIngredient;
 import net.glasslauncher.mods.gcapi3.api.CharacterUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
@@ -14,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class MultiBlockRecipeCategory implements RecipeCategory {
 
@@ -38,8 +41,9 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
     private final AMIDrawable costBottom = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 162, 23, 25, 5);
     private final AMIDrawable costExtensionBottom = DrawableHelper.createDrawable("/assets/alwaysmoreitems/stationapi/textures/gui/multiblock.png", 162, 28, 23, 5);
 
+    MultiBlockRecipeWrapper recipeWrapper;
     GuiItemStackGroup itemStackGroup;
-    List<ItemStack> cost;
+    Map<Integer, List<ItemStack>> costPerLayer;
     int descriptionFade;
     int descriptionFadeTick;
 
@@ -65,13 +69,17 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
 
         int maxRows = 8;
 
+        for(IGuiIngredient ingredient : this.itemStackGroup.getGuiIngredients().values()){
+            ingredient.clear();
+        }
+
         if(minecraft.currentScreen.height > 300) {
             y -= 45;
             maxRows =  13;
         }
 
-        int columns = (int) Math.ceil((double) cost.size() / (double)maxRows);
-        int rows = Math.min(cost.size(), maxRows);
+        int columns = (int) Math.ceil((double) costPerLayer.get(recipeWrapper.currentLayer).size() / (double)maxRows);
+        int rows = Math.min(costPerLayer.get(recipeWrapper.currentLayer).size(), maxRows);
 
         int currentCostIndex = 0;
         int startY = y;
@@ -90,9 +98,9 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
                 else {
                     costExtensionMiddle.draw(minecraft, x, y);
                 }
-                if(currentCostIndex < cost.size()){
+                if(currentCostIndex < costPerLayer.get(recipeWrapper.currentLayer).size()){
                     itemStackGroup.init(currentCostIndex, true, x + 5, y);
-                    itemStackGroup.setFromRecipe(currentCostIndex, cost.get(currentCostIndex));
+                    itemStackGroup.set(currentCostIndex, costPerLayer.get(recipeWrapper.currentLayer).get(currentCostIndex));
                 }
                 y += 18;
                 currentCostIndex++;
@@ -121,7 +129,8 @@ public class MultiBlockRecipeCategory implements RecipeCategory {
 
     @Override
     public void setRecipe(@NotNull RecipeLayout recipeLayout, @NotNull RecipeWrapper recipeWrapper) {
-        this.cost = ((MultiBlockRecipeWrapper)recipeWrapper).getCost();
+        this.recipeWrapper = (MultiBlockRecipeWrapper)recipeWrapper;
+        this.costPerLayer = ((MultiBlockRecipeWrapper)recipeWrapper).getCostPerLayer();
         this.itemStackGroup = recipeLayout.getItemStacks();
         descriptionFadeTick = 0;
         descriptionFade = 0;
