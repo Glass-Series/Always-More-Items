@@ -38,6 +38,7 @@ gui.config.alwaysmoreitems.overlaymode.recipe=Recipe Mode
 gui.config.alwaysmoreitems.overlaymode.cheat=Cheat Mode
 gui.config.alwaysmoreitems.overlaymode.utility=Utility Mode
 
+gui.alwaysmoreitems.multiblock.description_hint=Hold shift for description!
 
 # Minecraft name fixes
 

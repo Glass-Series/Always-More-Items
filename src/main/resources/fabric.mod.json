@@ -35,7 +35,8 @@
     ],
     "alwaysmoreitems:plugin": [
       "net.glasslauncher.mods.alwaysmoreitems.plugins.ami.AMIPlugin",
-      "net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin"
+      "net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaPlugin",
+      "net.glasslauncher.mods.alwaysmoreitems.plugins.multiblock.MultiblockPluginProvider"
     ],
     "gcapi3": [
       "net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig"

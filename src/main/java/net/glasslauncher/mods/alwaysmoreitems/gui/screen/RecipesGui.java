@@ -464,4 +464,9 @@ public class RecipesGui extends Screen {
         }
         return false;
     }
+
+    @Nonnull
+    public List<RecipeLayout> getRecipeLayouts() {
+        return recipeLayouts;
+    }
 }
