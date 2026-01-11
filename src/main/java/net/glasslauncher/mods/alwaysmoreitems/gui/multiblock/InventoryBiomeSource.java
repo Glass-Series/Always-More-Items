@@ -18,12 +18,9 @@ public class InventoryBiomeSource extends BiomeSource {
         this.temperatureMap = new double[width * depth];
         this.downfallMap = new double[width * depth];
         this.weirdnessMap = new double[width * depth];
+
         Arrays.fill(biomes, Biome.PLAINS);
 
-        // Setting these values to something to avoid crashing
-        Arrays.fill(temperatureMap, 0f);
-        Arrays.fill(downfallMap, 0f);
-        Arrays.fill(weirdnessMap, 0f);
         return biomes;
     }
 }
