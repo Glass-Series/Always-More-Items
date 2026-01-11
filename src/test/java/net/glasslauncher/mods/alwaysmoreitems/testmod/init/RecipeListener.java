@@ -23,13 +23,13 @@ public class RecipeListener {
         signBlockEntity.texts = new String[]{"Bielefeld", "is", "fake", "~Altilist"};
 
         if (type == RecipeRegisterEvent.Vanilla.CRAFTING_SHAPED.type()) {
-            List<String[]> testMultiblockLayers = List.of(
+            String[][] testMultiblockLayers = new String[][] {
                     new String[]{"  xxx", "  xgx", "  xxx", "x---x", ".   .", ".   .", ".   .", "x---x"},
                     new String[]{"  xyx", "  xxx", "  xxx", "i   i", "sssss", "     ", "     ", "i   i"},
                     new String[]{"  xxx", "  pxf", "  xxx", "i   i", "     ", "     ", "     ", "i   i"},
                     new String[]{"sssss", "     ", "     ", "i   i", "     ", "     ", "     ", "i   i"},
                     new String[]{"     ", "     ", "     ", "x---x", ".   .", ".   .", ".   .", "x---x"}
-            );
+            };
             List<BlockPatternEntry> testMultiblockPatterns = List.of(
                     new BlockPatternEntry('x', Block.LOG.getDefaultState(), 0, new ItemStack(Block.LOG.asItem()), null),
                     new BlockPatternEntry('y', Block.FURNACE.getDefaultState(), 2, new ItemStack(Block.FURNACE.asItem()), null),
@@ -53,7 +53,7 @@ public class RecipeListener {
 
 
 
-            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "test"), testDescription, testMultiblockLayers.toArray(new String[0][]), testMultiblockPatterns);
+            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "test"), testDescription, testMultiblockLayers, testMultiblockPatterns);
 
             List<String[]> diverseTestMultiblockLayers = List.of(
                     new String[]{"abcde", "fghij", "klmno"},
