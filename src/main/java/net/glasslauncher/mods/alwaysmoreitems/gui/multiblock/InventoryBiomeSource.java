@@ -4,6 +4,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
 
+import java.util.Arrays;
+
 public class InventoryBiomeSource extends BiomeSource {
 
     public InventoryBiomeSource(World world){
@@ -16,14 +18,12 @@ public class InventoryBiomeSource extends BiomeSource {
         this.temperatureMap = new double[width * depth];
         this.downfallMap = new double[width * depth];
         this.weirdnessMap = new double[width * depth];
-        for(int i = 0; i < biomes.length; i++){
-            biomes[i] = Biome.PLAINS;
+        Arrays.fill(biomes, Biome.PLAINS);
 
-            // Setting these values to something to avoid crashing
-            temperatureMap[i] = 1f;
-            downfallMap[i] = 1f;
-            weirdnessMap[i] = 1f;
-        }
+        // Setting these values to something to avoid crashing
+        Arrays.fill(temperatureMap, 0f);
+        Arrays.fill(downfallMap, 0f);
+        Arrays.fill(weirdnessMap, 0f);
         return biomes;
     }
 }
