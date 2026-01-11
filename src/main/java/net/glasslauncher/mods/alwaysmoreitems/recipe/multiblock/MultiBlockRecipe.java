@@ -13,10 +13,10 @@ import java.util.Map;
 public class MultiBlockRecipe {
     private final Identifier name;
     private final List<Object> description;
-    private final List<String[]> layers;
+    private final String[][] layers;
     private final List<BlockPatternEntry> blockPatterns;
 
-    public MultiBlockRecipe(Identifier name, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns){
+    public MultiBlockRecipe(Identifier name, List<Object> description, String[][] layers, List<BlockPatternEntry> blockPatterns){
         this.name = name;
         this.description = description;
         this.layers = layers;
@@ -35,7 +35,7 @@ public class MultiBlockRecipe {
         return this.description;
     }
 
-    public List<String[]> getLayers(){
+    public String[][] getLayers(){
         return layers;
     }
 
@@ -55,7 +55,7 @@ public class MultiBlockRecipe {
 
     private int getPatternCountForLayer(char pattern, int layer){
         int count = 0;
-        for(String section : layers.get(layer)){
+        for(String section : layers[layer]){
             for(char currentPattern : section.toCharArray()){
                 if(currentPattern == pattern){
                     count++;
@@ -67,7 +67,7 @@ public class MultiBlockRecipe {
 
     public Map<Integer, List<ItemStack>> getCostPerLayer(){
         Map<Integer, List<ItemStack>> costPerLayer = new HashMap<>();
-        for(int layerIndex = -1; layerIndex < layers.size(); layerIndex++){
+        for(int layerIndex = -1; layerIndex < layers.length; layerIndex++){
             costPerLayer.put(layerIndex, getCost(layerIndex));
         }
         return costPerLayer;
@@ -139,7 +139,7 @@ public class MultiBlockRecipe {
     }
 
     public int getStructureHeight(){
-        return layers.size();
+        return layers.length;
     }
 
     public int getStructureDepth(){

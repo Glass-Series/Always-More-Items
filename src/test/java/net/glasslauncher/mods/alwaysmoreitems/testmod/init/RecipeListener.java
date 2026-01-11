@@ -53,7 +53,7 @@ public class RecipeListener {
 
 
 
-            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "test"), testDescription, testMultiblockLayers, testMultiblockPatterns);
+            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "test"), testDescription, testMultiblockLayers.toArray(new String[0][]), testMultiblockPatterns);
 
             List<String[]> diverseTestMultiblockLayers = List.of(
                     new String[]{"abcde", "fghij", "klmno"},
@@ -132,7 +132,7 @@ public class RecipeListener {
                     this.add("tab, such as rendering and the block list.");
                 }
             };
-            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "diverse_test"), diverseTestDescription, diverseTestMultiblockLayers, diverseTestMultiblockPatterns);
+            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "diverse_test"), diverseTestDescription, diverseTestMultiblockLayers.toArray(new String[0][]), diverseTestMultiblockPatterns);
 
             List<String[]> giantMultiblockLayers = List.of(
                     new String[]{"xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxx"},
@@ -168,7 +168,7 @@ public class RecipeListener {
                     this.add("This sentence is FALSE!");
                 }
             };
-            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "giant"), giantDescription, giantMultiblockLayers, giantMultiblockPatterns);
+            MultiBlockRecipeRegistry.INSTANCE.addMultiblockRecipe(Identifier.of(TestMod.NAMESPACE, "giant"), giantDescription, giantMultiblockLayers.toArray(new String[0][]), giantMultiblockPatterns);
         }
     }
 }

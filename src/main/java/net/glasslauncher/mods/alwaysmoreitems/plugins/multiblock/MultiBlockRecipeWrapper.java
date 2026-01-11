@@ -71,7 +71,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     private void loadRecipeStructure(MultiBlockRecipe recipe){
         world.clear();
-        List<String[]> layers = recipe.getLayers();
+        String[][] layers = recipe.getLayers();
         int x = 0;
         int y = 0;
         int z = 0;
@@ -257,12 +257,12 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         if(leftButtonHoverChecker.isOver(mouseX, mouseY)){
             currentLayer--;
             if(currentLayer < -1){
-                currentLayer = recipe.getLayers().size() - 1;
+                currentLayer = recipe.getLayers().length - 1;
             }
         }
         if(rightButtonHoverChecker.isOver(mouseX, mouseY)){
             currentLayer++;
-            if(currentLayer > recipe.getLayers().size() - 1){
+            if(currentLayer > recipe.getLayers().length - 1){
                 currentLayer = -1;
             }
         }

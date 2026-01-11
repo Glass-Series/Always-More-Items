@@ -26,7 +26,7 @@ public class MultiBlockRecipeRegistry {
      * @param layers Provides the shape of the multiblock. Each layer is made of a string array where each string is a linear slice. Each character represents a different block. Spaces are for air blocks.
      * @param blockPatterns Used to convert characters from the layers into blocks. Each block pattern entry handles a single character.
      */
-    public void addMultiblockRecipe(Identifier identifier, List<Object> description, List<String[]> layers, List<BlockPatternEntry> blockPatterns) {
+    public void addMultiblockRecipe(Identifier identifier, List<Object> description, String[][] layers, List<BlockPatternEntry> blockPatterns) {
         recipes.add(new MultiBlockRecipe(identifier, description, layers, blockPatterns));
     }
 
