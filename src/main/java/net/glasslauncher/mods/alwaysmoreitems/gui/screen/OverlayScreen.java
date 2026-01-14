@@ -37,6 +37,7 @@ import net.modificationstation.stationapi.api.util.math.ColorHelper;
 import org.jetbrains.annotations.ApiStatus;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import javax.management.AttributeNotFoundException;
 import java.util.ArrayList;
@@ -335,6 +336,7 @@ public class OverlayScreen extends Screen {
         if (currentTooltip != null && !currentTooltip.isEmpty()) {
             Tooltip.INSTANCE.setTooltip(new ArrayList<>(currentTooltip), mouseX, mouseY);
         }
+        GL11.glEnable(GL11.GL_DEPTH_TEST); // Breaks items in inventory otherwise
     }
 
     @Override
