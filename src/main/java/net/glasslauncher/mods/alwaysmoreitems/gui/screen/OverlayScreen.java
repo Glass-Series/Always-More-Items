@@ -237,6 +237,7 @@ public class OverlayScreen extends Screen {
                 initActionButtons();
             }
         }
+        
         recipesGui.tick();
     }
 
@@ -380,6 +381,7 @@ public class OverlayScreen extends Screen {
         }
 
         // Hovered Item
+        hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
             if (AMIConfig.isEditModeEnabled() && button == 0) {
                 boolean isCtrl = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL);
