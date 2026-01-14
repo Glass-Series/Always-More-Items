@@ -2,7 +2,7 @@ import java.net.URI
 
 plugins {
 	id("maven-publish")
-	id("fabric-loom") version "1.10.5"
+	id("fabric-loom") version "1.11.8"
 	id("babric-loom-extension") version "1.10.1"
 	id("io.freefair.lombok") version "8.6"
 }
@@ -63,7 +63,7 @@ dependencies {
 
 	modImplementation(transitiveImplementation("net.modificationstation:StationAPI:${project.properties["stapi_version"]}") as Dependency)
 
-	modImplementation("net.glasslauncher.mods:ModMenu:${project.properties["modmenu_version"]}") {
+	modImplementation("net.danygames2014:modmenu:${project.properties["modmenu_version"]}") {
 		isTransitive = false
 	}
 	
