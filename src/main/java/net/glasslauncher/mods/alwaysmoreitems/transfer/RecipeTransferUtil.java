@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems.transfer;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferError;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.transfer.RecipeTransferHandler;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RecipeLayout;
@@ -15,6 +14,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class RecipeTransferUtil {
+
     public static RecipeTransferError getTransferRecipeError(@Nonnull RecipeLayout recipeLayout, @Nonnull PlayerEntity player) {
         return transferRecipe(recipeLayout, player, false, false);
     }
@@ -32,12 +32,6 @@ public class RecipeTransferUtil {
 
             RecipeTransferHandler transferHandler = AlwaysMoreItems.getRecipeRegistry().getRecipeTransferHandler(container, recipeLayout.getRecipeCategory());
             if (transferHandler == null) {
-                if (doTransfer) {
-                    AlwaysMoreItems.LOGGER.error("No Recipe Transfer handler for container {}", container.getClass());
-                }
-                else if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-                    AlwaysMoreItems.LOGGER.warn("No Recipe Transfer handler for container {}", container.getClass());
-                }
                 return RecipeTransferErrorInternal.instance;
             }
 
