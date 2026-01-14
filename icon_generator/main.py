@@ -2,7 +2,7 @@
 import PyQt5.QtWidgets
 import functools
 
-__SIZE__ = 12
+__SIZE__ = 13
 
 app = PyQt5.QtWidgets.QApplication([])
 app.setStyle("Fusion")
@@ -30,34 +30,35 @@ for x in range(__SIZE__):
 
 window.setMinimumSize(24 * __SIZE__, 24 * __SIZE__)
 window.setMaximumSize(24 * __SIZE__, 24 * __SIZE__)
-window.setWindowTitle("Something something make my life less tedious")
+window.setWindowTitle("Close when done")
 window.show()
 app.exec()
 
 var_name, _ = PyQt5.QtWidgets.QInputDialog.getText(None, "Input", "Enter the desired name for your icon: (SCREAMING_SNAKE_CASE)")
 
-if not var_name or var_name.strip().__len__() == 0:
+if not var_name or len(var_name.strip()) == 0:
     var_name = "PLACEHOLDER_NAME"
 
-print("    public static final boolean[][] " + var_name + " = new boolean[][] {")
+print(f"    public static final boolean[][] {var_name} = new boolean[][] \u007b")
 
 width = 0
 
-for index in range(buttons.__len__()):
-    _, value = buttons[index]
+for index, (_, value) in enumerate(buttons):
     column = index % __SIZE__
-    if value and index > width:
+    if value and column > width:
         width = column
 
-for index in range(buttons.__len__()):
-    _, value = buttons[index]
+for index, (_, value) in enumerate(buttons):
     column = index % __SIZE__
-    if width == 0 and column == 0:
-        print("            new boolean[] { " + str(value).lower() + " },")
+    val = str(value).lower()
+
+    if width == 0:
+        print(f"            new boolean[] {{ {val} }},")
     elif column == 0:
-        print("            new boolean[] { " + str(value).lower() + ", ", end="")
-    elif column == width + 1:
-        print(str(value).lower() + " },")
-    elif column > 0 and column < width:
-        print(str(value).lower() + ", ", end="")
+        print(f"            new boolean[] {{ {val}, ", end="")
+    elif column == width:
+        print(f"{val} }},")
+    elif column < width:
+        print(f"{val}, ", end="")
+
 print("    };")
