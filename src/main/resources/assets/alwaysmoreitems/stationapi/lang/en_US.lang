@@ -39,6 +39,7 @@ gui.config.alwaysmoreitems.overlaymode.cheat=Cheat Mode
 gui.config.alwaysmoreitems.overlaymode.utility=Utility Mode
 
 gui.alwaysmoreitems.multiblock.description_hint=Hold shift for description!
+gui.alwaysmoreitems.multiblock.layer.all=All
 
 # Minecraft name fixes
 

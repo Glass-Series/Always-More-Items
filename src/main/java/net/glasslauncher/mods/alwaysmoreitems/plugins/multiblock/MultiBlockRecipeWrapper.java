@@ -143,7 +143,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     private String getLayerString(int layer){
-        if(layer == -1) return "A";
+        if(layer == -1) return TranslationStorage.getInstance().get("gui.alwaysmoreitems.multiblock.layer.all");
         return String.valueOf(layer);
     }
 
@@ -213,7 +213,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-        String layerText = "Layer: " + getLayerString(currentLayer);
+        String layerText = getLayerString(currentLayer);
 
         leftButtonX = 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText) - 7 - 2;
         leftButtonHoverChecker = new HoverChecker(ARROW_Y, 10 + ARROW_Y, leftButtonX, leftButtonX + 6);
