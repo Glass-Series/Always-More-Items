@@ -11,6 +11,7 @@ import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.BlockPatternEntr
 import net.glasslauncher.mods.alwaysmoreitems.recipe.multiblock.MultiBlockRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
+import net.glasslauncher.mods.gcapi3.api.CharacterUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Tessellator;
@@ -26,6 +27,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,10 +55,13 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     boolean leftMouseDown = false;
     boolean rightMouseDown = false;
 
+    long hintFadeInitialMillis;
+
     int currentLayer = -1;
     public MultiBlockRecipeWrapper(MultiBlockRecipe recipe){
         this.recipe = recipe;
         loadRecipeStructure(recipe);
+        scale = Math.min(-20f + Math.min(20, Math.max(recipe.getStructureWidth(), Math.max(recipe.getStructureDepth(), recipe.getStructureHeight()))), scale); // cap zoom out
     }
 
     @Override
@@ -70,6 +75,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     private void loadRecipeStructure(MultiBlockRecipe recipe){
+        hintFadeInitialMillis = System.currentTimeMillis();
         INVENTORY_WORLD.clear();
         String[][] layers = recipe.getLayers();
         int x = 0;
@@ -222,6 +228,15 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         minecraft.textRenderer.drawWithShadow(layerText, 161 - 6 - 2 - minecraft.textRenderer.getWidth(layerText), 2 + ARROW_Y, 0xFFFFFF);
         minecraft.textRenderer.drawWithShadow(TranslationStorage.getInstance().get(recipe.getName()), 0, 3, 0xFFFFFF);
+
+        long millisDiff = System.currentTimeMillis() - hintFadeInitialMillis;
+        if (millisDiff < 3000) { // 3s
+            GL11.glEnable(GL11.GL_BLEND);
+            minecraft.textRenderer.drawWithShadow(TranslationStorage.getInstance().get("gui.alwaysmoreitems.multiblock.description_hint"), 2, 118, CharacterUtils.getIntFromColour(new Color(1, 1, 1, 1 - (millisDiff / 3000f))));
+            GL11.glDisable(GL11.GL_BLEND);
+        }
+
+        GL11.glColor4f(1, 1, 1, 1);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
