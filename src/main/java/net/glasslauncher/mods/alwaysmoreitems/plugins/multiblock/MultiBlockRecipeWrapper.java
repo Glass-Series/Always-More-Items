@@ -113,8 +113,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
             yaw += Mouse.getDX();
         }
         if(rightMouseDown){
-            scale -= Mouse.getDY();
+            scale -= (float) Mouse.getDY() / 10f;
             scale = Math.min(-5f, scale);
+            scale = Math.max(-30f, scale);
         }
 
         if(leftButtonHoverChecker.isOver(mouseX, mouseY)){
