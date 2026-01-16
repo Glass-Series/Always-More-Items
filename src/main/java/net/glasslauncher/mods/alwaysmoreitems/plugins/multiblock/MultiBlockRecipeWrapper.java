@@ -255,12 +255,14 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
         }
 
         if(leftButtonHoverChecker.isOver(mouseX, mouseY)){
+            Minecraft.INSTANCE.soundManager.playSound("random.click", 1, 1);
             currentLayer--;
             if(currentLayer < -1){
                 currentLayer = recipe.getLayers().length - 1;
             }
         }
         if(rightButtonHoverChecker.isOver(mouseX, mouseY)){
+            Minecraft.INSTANCE.soundManager.playSound("random.click", 1, 1);
             currentLayer++;
             if(currentLayer > recipe.getLayers().length - 1){
                 currentLayer = -1;
