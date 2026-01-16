@@ -40,7 +40,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     private final MultiBlockRecipe recipe;
 
-    private static final InventoryWorld world = new InventoryWorld();
+    private static final InventoryWorld INVENTORY_WORLD = new InventoryWorld();
 
     private HoverChecker leftButtonHoverChecker;
     private HoverChecker rightButtonHoverChecker;
@@ -70,7 +70,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
     }
 
     private void loadRecipeStructure(MultiBlockRecipe recipe){
-        world.clear();
+        INVENTORY_WORLD.clear();
         String[][] layers = recipe.getLayers();
         int x = 0;
         int y = 0;
@@ -82,9 +82,9 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
                 for(char key : section.toCharArray()){
                     BlockPatternEntry entry = recipe.getEntryForPattern(key);
                     if(entry != null){
-                        MultiBlockRecipeWrapper.world.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
+                        MultiBlockRecipeWrapper.INVENTORY_WORLD.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
                         if(entry.blockEntity() != null){
-                            MultiBlockRecipeWrapper.world.setBlockEntity(x, y, z, entry.blockEntity());
+                            MultiBlockRecipeWrapper.INVENTORY_WORLD.setBlockEntity(x, y, z, entry.blockEntity());
                         }
                     }
                     else {
@@ -148,7 +148,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     @Override
     public void drawAnimations(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight) {
-        BlockRenderManager blockRenderManager = new BlockRenderManager(world);
+        BlockRenderManager blockRenderManager = new BlockRenderManager(INVENTORY_WORLD);
 
         RecipesGui recipesGui = OverlayScreen.INSTANCE.recipesGui;
         List<RecipeLayout> recipeLayouts = recipesGui.getRecipeLayouts();
@@ -183,13 +183,13 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
         tessellator.setOffset(-(recipe.getStructureWidth() / 2f), -(recipe.getStructureHeight() / 2f), -(recipe.getStructureDepth() / 2f));
 
-        MultiBlockRecipeWrapper.world.setVisibleLayer(currentLayer);
+        MultiBlockRecipeWrapper.INVENTORY_WORLD.setVisibleLayer(currentLayer);
 
-        List<BlockPos> blockPositions = MultiBlockRecipeWrapper.world.getBlockPositions();
+        List<BlockPos> blockPositions = MultiBlockRecipeWrapper.INVENTORY_WORLD.getBlockPositions();
         for(int renderLayer = 0; renderLayer < 2; renderLayer++){
             for(BlockPos blockPos : blockPositions){
                 if(currentLayer == -1 || currentLayer == blockPos.y){
-                    BlockState blockState = MultiBlockRecipeWrapper.world.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    BlockState blockState = MultiBlockRecipeWrapper.INVENTORY_WORLD.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     if(blockState.getBlock().getRenderLayer() == renderLayer){
                         blockRenderManager.render(blockState.getBlock(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     }
@@ -226,7 +226,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
 
     private void drawBlockEntities(){
         BlockEntityRenderDispatcher dispatcher = BlockEntityRenderDispatcher.INSTANCE;
-        for(BlockEntity blockEntity : world.getBlockEntities()){
+        for(BlockEntity blockEntity : INVENTORY_WORLD.getBlockEntities()){
             if(currentLayer != -1 && blockEntity.y != currentLayer){
                 continue;
             }
