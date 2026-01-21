@@ -34,7 +34,8 @@ public class SetTimeActionButton implements ActionButton {
 
         AlwaysMoreItems.LOGGER.debug("Time Before: {}", world.getTime());
         long worldTime = world.getTime();
-        worldProperties.setTime((worldTime - (worldTime % 24000L)) + time);
+        long timeRemainder = worldTime % 24000L;
+        worldProperties.setTime(worldTime - timeRemainder + (timeRemainder <= time ? 0 : 24000L) + time);
         AlwaysMoreItems.LOGGER.debug("Time After: {}", world.getTime());
 
         return true;
