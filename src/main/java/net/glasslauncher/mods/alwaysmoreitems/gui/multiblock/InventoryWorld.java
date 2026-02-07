@@ -23,7 +23,7 @@ public class InventoryWorld extends World {
     private int visibleLayer = -1;
 
     public InventoryWorld() {
-        super(new InventoryWorldStorage(), "inventoryWorld", Dimension.fromId(0), 0);
+        super(new InventoryWorldStorage(), "inventoryWorld", 0, Dimension.fromId(0));
         blockStates = new HashMap<>();
         metas = new HashMap<>();
         blockEntities = new HashMap<>();
