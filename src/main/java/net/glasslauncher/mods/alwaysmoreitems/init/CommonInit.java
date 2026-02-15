@@ -40,11 +40,13 @@ public class CommonInit {
 
     @EventListener
     public static void init(InitFinishedEvent event) {
+        AlwaysMoreItems.setInitializing(true);
         AlwaysMoreItems.setHelpers(new AMIHelpers());
         initPlugins();
         FabricLoader.getInstance().getEntrypointContainers("alwaysmoreitems:action", Object.class).forEach(EntrypointManager::setup);
         StationAPI.EVENT_BUS.post(new ActionButtonRegisterEvent());
         initAMI();
+        AlwaysMoreItems.setInitializing(false);
     }
 
     public static void initPlugins() {

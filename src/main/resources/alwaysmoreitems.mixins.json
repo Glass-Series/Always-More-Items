@@ -10,7 +10,8 @@
     "ShapedRecipeMixin",
     "ShapelessRecipeMixin",
     "StationShapedRecipeMixin",
-    "StationShapelessRecipeMixin"
+    "StationShapelessRecipeMixin",
+    "WorldMixin"
   ],
   "server": [
   ],

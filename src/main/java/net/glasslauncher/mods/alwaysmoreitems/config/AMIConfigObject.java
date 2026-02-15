@@ -3,7 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.config;
 import net.glasslauncher.mods.gcapi3.api.ConfigEntry;
 
 public class AMIConfigObject {
-    
+
     @ConfigEntry(name = "Overlay Mode")
     public OverlayMode overlayMode = OverlayMode.RECIPE;
 
@@ -19,12 +19,15 @@ public class AMIConfigObject {
     @ConfigEntry(name = "Show Nbt Counts")
     public Boolean showNbtCount = false;
 
+    @ConfigEntry(name = "Show Rarities")
+    public Boolean showRarities = true;
+
     @ConfigEntry(name = "Ignore Untranslated Names", description = "Requires restart. Only use if necessary.")
     public Boolean ignoreUntranslatedNames = false;
 
     @ConfigEntry(name = "Show Redundant/Internal Items", description = "Shows hidden stuff like the lit furnace and wheat crop block.")
     public Boolean showRedundantItems = false;
-    
+
     @ConfigEntry(name = "Centered Search Bar")
     public Boolean centeredSearchBar = true;
 

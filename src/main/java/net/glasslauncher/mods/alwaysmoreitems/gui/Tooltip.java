@@ -3,6 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.gui;
 import lombok.Getter;
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.ItemStackRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ImageUtil;
@@ -104,7 +105,7 @@ public class Tooltip {
         this.cursorX = cursorX;
         this.cursorY = cursorY;
         this.rarity = Rarity.VANILLA;
-        if (!tooltip.isEmpty() && tooltip.get(0) instanceof String tooltipString && tooltipString.startsWith(String.valueOf(Rarity.HeaderCode.PREFIX_CHARACTER))) {
+        if (AMIConfig.showRarities() && !tooltip.isEmpty() && tooltip.get(0) instanceof String tooltipString && tooltipString.startsWith(String.valueOf(Rarity.HeaderCode.PREFIX_CHARACTER))) {
             rarity = Rarity.AMI_RARITIES_BY_CODE.get(tooltipString.charAt(1));
         }
         commonInit();

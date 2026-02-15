@@ -19,6 +19,8 @@ public class AlwaysMoreItems {
     public static final Logger LOGGER = NAMESPACE.getLogger();
 
     @Getter @Setter
+    private static boolean initializing = false;
+    @Getter @Setter
     private static AMIHelpers helpers;
     @Getter @Setter
     private static ItemFilter itemFilter;

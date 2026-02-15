@@ -87,4 +87,8 @@ public class AMIConfig {
     public static OverlayMode getOverlayMode(){
         return INSTANCE.overlayMode;
     }
+
+    public static boolean showRarities() {
+        return INSTANCE.showRarities;
+    }
 }
