@@ -8,21 +8,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Rarity {
-    VANILLA("Vanilla", 'z', 0, new Color(255, 255, 255), new Color(0, 0, 0, 192), new Color(0, 0, 0, 192), HeaderCode.NONE),
-    BAD("Bad", 'a', -1, new Color(AMITextRenderer.getColorFromCode('7')), HeaderCode.BAD),
-    NONE("None", 'b', 0, new Color(AMITextRenderer.getColorFromCode('f')), HeaderCode.NONE),
-    COMMON("Common", 'c', 1, new Color(AMITextRenderer.getColorFromCode('a')), HeaderCode.NONE),
-    UNCOMMON("Uncommon", 'd', 2, new Color(AMITextRenderer.getColorFromCode('b')), HeaderCode.NORMAL),
-    RARE("Rare", 'e', 3, new Color(AMITextRenderer.getColorFromCode('d')), HeaderCode.NORMAL),
-    UNIQUE("Unique", 'f', 4, new Color(AMITextRenderer.getColorFromCode('e')), HeaderCode.FANCY),
-    LEGENDARY("Legendary", 'g',  5, new Color(43, 194, 154), new Color(150, 39, 25), new Color(43, 194, 154).darker(), HeaderCode.FANCY),
-    ARTEFACT("Artefact", 'h', 6, new Color(208, 75, 18), new Color(AMITextRenderer.getColorFromCode('6')), Color.GRAY, HeaderCode.ARTEFACT),
-    ;
+public class Rarity {
+    public static final Map<Character, Rarity> AMI_RARITIES_BY_CODE = new HashMap<>();
 
-    public static final Map<Character, Rarity> AMI_RARITIES_BY_CODE = new HashMap<>() {{
-        Arrays.stream(Rarity.values()).forEach(rarity -> put(rarity.injectionCode, rarity));
-    }};
+    public static final Rarity VANILLA = new Rarity("Vanilla", 'z', 0, new Color(255, 255, 255), new Color(0, 0, 0, 192), new Color(0, 0, 0, 192), HeaderCode.NONE);
+    public static final Rarity BAD = new Rarity("Bad", 'a', -1, new Color(AMITextRenderer.getColorFromCode('7')), HeaderCode.BAD);
+    public static final Rarity NONE = new Rarity("None", 'b', 0, new Color(AMITextRenderer.getColorFromCode('f')), HeaderCode.NONE);
+    public static final Rarity COMMON = new Rarity("Common", 'c', 1, new Color(AMITextRenderer.getColorFromCode('a')), HeaderCode.NONE);
+    public static final Rarity UNCOMMON = new Rarity("Uncommon", 'd', 2, new Color(AMITextRenderer.getColorFromCode('b')), HeaderCode.NORMAL);
+    public static final Rarity RARE = new Rarity("Rare", 'e', 3, new Color(AMITextRenderer.getColorFromCode('d')), HeaderCode.NORMAL);
+    public static final Rarity UNIQUE = new Rarity("Unique", 'f', 4, new Color(AMITextRenderer.getColorFromCode('e')), HeaderCode.FANCY);
+    public static final Rarity LEGENDARY = new Rarity("Legendary", 'g',  5, new Color(43, 194, 154), new Color(150, 39, 25), new Color(43, 194, 154).darker(), HeaderCode.FANCY);
+    public static final Rarity ARTEFACT = new Rarity("Artefact", 'h', 6, new Color(208, 75, 18), new Color(AMITextRenderer.getColorFromCode('6')), Color.GRAY, HeaderCode.ARTEFACT);
 
     public final String name;
     public final Integer value;
@@ -33,7 +30,7 @@ public enum Rarity {
     public final HeaderCode headerCode;
     public final String code;
 
-    Rarity(String name, char injectionCode, Integer value, Color color, HeaderCode headerCode) {
+    public Rarity(String name, char injectionCode, Integer value, Color color, HeaderCode headerCode) {
         this.name = name;
         this.value = value;
         this.textColor = color;
@@ -48,9 +45,10 @@ public enum Rarity {
         this.injectionCode = injectionCode;
         this.headerCode = headerCode;
         code = String.valueOf(HeaderCode.PREFIX_CHARACTER) + injectionCode;
+        AMI_RARITIES_BY_CODE.put(injectionCode, this);
     }
 
-    Rarity(String name, char injectionCode, Integer value, Color textColor, Color backgroundColor, Color iconColor, HeaderCode headerCode) {
+    public Rarity(String name, char injectionCode, Integer value, Color textColor, Color backgroundColor, Color iconColor, HeaderCode headerCode) {
         this.name = name;
         this.value = value;
         this.textColor = textColor;
@@ -64,8 +62,8 @@ public enum Rarity {
         this.iconColor = iconColor;
         this.injectionCode = injectionCode;
         this.headerCode = headerCode;
-        code = String.valueOf(HeaderCode.PREFIX_CHARACTER) +
-                injectionCode;
+        code = String.valueOf(HeaderCode.PREFIX_CHARACTER) + injectionCode;
+        AMI_RARITIES_BY_CODE.put(injectionCode, this);
     }
 
     @Override
@@ -73,13 +71,12 @@ public enum Rarity {
         return code;
     }
 
-    public enum HeaderCode {
-        BAD("Bad", '1', -1, AMIRarityIcons.BAD, false),
-        NONE("None", '2', 0, AMIRarityIcons.NONE, false),
-        NORMAL("Normal", '3', 1, AMIRarityIcons.NORMAL, false),
-        FANCY("Fancy", '4', 2, AMIRarityIcons.FANCY, true),
-        ARTEFACT("Artefact", '5', 3, AMIRarityIcons.ARTEFACT, false),
-        ;
+    public static class HeaderCode {
+        public static HeaderCode BAD = new HeaderCode("Bad", '1', -1, AMIRarityIcons.BAD, false);
+        public static HeaderCode NONE = new HeaderCode("None", '2', 0, AMIRarityIcons.NONE, false);
+        public static HeaderCode NORMAL = new HeaderCode("Normal", '3', 1, AMIRarityIcons.NORMAL, false);
+        public static HeaderCode FANCY = new HeaderCode("Fancy", '4', 2, AMIRarityIcons.FANCY, true);
+        public static HeaderCode ARTEFACT = new HeaderCode("Artefact", '5', 3, AMIRarityIcons.ARTEFACT, false);
 
         public static final char PREFIX_CHARACTER = '×';
 
@@ -89,7 +86,7 @@ public enum Rarity {
         public final boolean[][] icon;
         public final boolean edgesStretchAcross;
 
-        HeaderCode(String name, char injectionChar, int value, boolean[][] icon, boolean edgesStretchAcross) {
+        public HeaderCode(String name, char injectionChar, int value, boolean[][] icon, boolean edgesStretchAcross) {
             this.name = name;
             this.injectionChar = injectionChar;
             this.value = value;

@@ -49,6 +49,6 @@ public class AMIItem extends TemplateItem implements CustomTooltipProvider, Rari
 
     @Override
     public Rarity getRarity(ItemStack itemStack) {
-        return Rarity.values()[itemStack.getDamage() % (Rarity.values().length)];
+        return new ArrayList<>(Rarity.AMI_RARITIES_BY_CODE.values()).get(itemStack.getDamage() % (Rarity.AMI_RARITIES_BY_CODE.size()));
     }
 }
