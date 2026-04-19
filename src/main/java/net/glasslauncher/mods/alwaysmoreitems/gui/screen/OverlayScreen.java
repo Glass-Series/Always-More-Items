@@ -334,9 +334,9 @@ public class OverlayScreen extends Screen {
 
         // Queue Tooltip
         if (currentTooltip != null) {
-            if (currentTooltip instanceof ArrayList<?> arrayList && !arrayList.isEmpty()) {
+            if (currentTooltip instanceof List<?> list && !list.isEmpty()) {
                 //noinspection unchecked This is a stupid warning. It literally *can only be* an Object instance.
-                Tooltip.INSTANCE.setTooltip((List<Object>) arrayList, mouseX, mouseY);
+                Tooltip.INSTANCE.setTooltip((List<Object>) list, mouseX, mouseY);
             }
             else if (currentTooltip instanceof ItemStack stack) {
                 Tooltip.INSTANCE.setTooltip(stack, mouseX, mouseY);
