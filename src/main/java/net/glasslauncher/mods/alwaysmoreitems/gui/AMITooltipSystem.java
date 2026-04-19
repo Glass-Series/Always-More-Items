@@ -39,46 +39,4 @@ public class AMITooltipSystem {
 
         event.cancel();
     }
-
-    @EventListener(priority = ListenerPriority.LOWEST)
-    private static void yourTooltipsAreNowModified(TooltipBuildEvent event) {
-        if(event.tooltip.isEmpty()) {
-            return;
-        }
-
-        if (AMIConfig.isDebugModeEnabled()) {
-            String extras = "";
-            if (event.itemStack.getDamage() != 0) {
-                extras += ":" + event.itemStack.getDamage();
-            }
-            event.tooltip.set(0, event.tooltip.get(0) + " " + event.itemStack.itemId + extras);
-
-            event.add(Formatting.GRAY + AMITextRenderer.ITALICS + ItemRegistry.INSTANCE.getId(event.itemStack.getItem()));
-
-            List<TagKey<Item>> tags = event.itemStack.getItem().getRegistryEntry().streamTags().toList();
-            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !tags.isEmpty()) {
-                //noinspection rawtypes
-                List tooltip = event.tooltip;
-                //noinspection unchecked
-                tooltip.add(Tooltip.Divider.INSTANCE);
-
-                for (TagKey<Item> tag : tags) {
-                    event.add(Formatting.GRAY + AMITextRenderer.ITALICS + tag.id());
-                }
-
-                //noinspection unchecked
-                tooltip.add(Tooltip.Divider.INSTANCE);
-            }
-            else if (!tags.isEmpty()) {
-                event.add(Formatting.DARK_GRAY + AMITextRenderer.ITALICS + "Hold CTRL to see " + tags.size() + (tags.size() == 1 ? " tag..." : " tags..."));
-            }
-        }
-
-        if (AMIConfig.showNbtCount()) {
-            event.add(Formatting.GRAY + AMITextRenderer.ITALICS + "NBT Count: " + event.itemStack.getStationNbt().values().size());
-        }
-        if (AMIConfig.showModNames()) {
-            event.add(Formatting.BLUE + AMITextRenderer.ITALICS + AlwaysMoreItems.getItemRegistry().getModNameForItem(event.itemStack.getItem()));
-        }
-    }
 }
