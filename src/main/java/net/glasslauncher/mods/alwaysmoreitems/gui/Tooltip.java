@@ -585,13 +585,17 @@ public class Tooltip {
      */
     public static class Divider extends Element<Object> {
         public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
-            AMIDrawContext.INSTANCE.fill(x, y, maxLineWidth, element.height, element.color.getRGB());
+            AMIDrawContext.INSTANCE.fill(x, y + (int) Math.floor(element.height / 2d), x + maxLineWidth, y + (int) Math.floor(element.height / 2d) + 1, element.color.getRGB());
         };
 
         public static final Divider INSTANCE = new Divider(null, 1, 1);
 
-        private Divider(Object content, int width, int height) {
+        public Divider(Object content, int width, int height) {
             super(content, width, height, DIVIDER_RENDERER);
+        }
+
+        public Divider(Object content, int width, int height, Renderer<Object> renderer) {
+            super(content, width, height, renderer);
         }
     }
 
@@ -606,8 +610,12 @@ public class Tooltip {
 
         public static final VerticalDivider INSTANCE = new VerticalDivider(null, 3, 1);
 
-        private VerticalDivider(Object content, int width, int height) {
+        public VerticalDivider(Object content, int width, int height) {
             super(content, width, height, VERTICAL_DIVIDER_RENDERER);
+        }
+
+        public VerticalDivider(Object content, int width, int height, Renderer<Object> renderer) {
+            super(content, width, height, renderer);
         }
     }
 
@@ -620,8 +628,12 @@ public class Tooltip {
 
         public static final VerticalSpace INSTANCE = new VerticalSpace(null, 3, 1);
 
-        private VerticalSpace(Object content, int width, int height) {
+        public VerticalSpace(Object content, int width, int height) {
             super(content, width, height, DIVIDER_RENDERER);
+        }
+
+        public VerticalSpace(Object content, int width, int height, Renderer<Object> renderer) {
+            super(content, width, height, renderer);
         }
     }
 
