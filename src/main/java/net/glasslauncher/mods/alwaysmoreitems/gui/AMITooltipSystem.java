@@ -1,6 +1,5 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
-import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.mine_diver.unsafeevents.listener.EventListener;
@@ -47,10 +46,6 @@ public class AMITooltipSystem {
             return;
         }
 
-        if (event.itemStack.getItem() instanceof RarityProvider rarityProvider) {
-            event.tooltip.set(0, rarityProvider.getRarity(event.itemStack) + event.tooltip.get(0));
-        }
-
         if (AMIConfig.isDebugModeEnabled()) {
             String extras = "";
             if (event.itemStack.getDamage() != 0) {
@@ -62,13 +57,16 @@ public class AMITooltipSystem {
 
             List<TagKey<Item>> tags = event.itemStack.getItem().getRegistryEntry().streamTags().toList();
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !tags.isEmpty()) {
+                //noinspection rawtypes
                 List tooltip = event.tooltip;
+                //noinspection unchecked
                 tooltip.add(Tooltip.Divider.INSTANCE);
 
                 for (TagKey<Item> tag : tags) {
                     event.add(Formatting.GRAY + AMITextRenderer.ITALICS + tag.id());
                 }
 
+                //noinspection unchecked
                 tooltip.add(Tooltip.Divider.INSTANCE);
             }
             else if (!tags.isEmpty()) {

@@ -1,6 +1,7 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.Tessellator;
 
 /**
  * Done this way so folk changing how tooltips are typically rendered probably don't have to do much for AMI compat.
@@ -8,6 +9,20 @@ import net.minecraft.client.gui.DrawContext;
  */
 public class AMIDrawContext extends DrawContext {
     public static final AMIDrawContext INSTANCE = new AMIDrawContext();
+
+    public void drawTexture(int x, int y, int width, int height, int imgWidth, int imgHeight, int startX, int startY) {
+        double startU = (1.0 / imgWidth) * startX;
+        double startV = (1.0 / imgHeight) * startY;
+        double u = startU + ((1.0 / imgWidth) * width);
+        double v = startV + ((1.0 / imgHeight) * height);
+        Tessellator tessellator = Tessellator.INSTANCE;
+        tessellator.startQuads();
+        tessellator.vertex(x, y + height, 0.0, startU, v); // bl
+        tessellator.vertex(x + width, y + height, 0.0, u, v); // br
+        tessellator.vertex(x + width, y, 0.0, u, startV); // tr
+        tessellator.vertex(x, y, 0.0, startU, startV); // tl
+        tessellator.draw();
+    }
 
     @Override
     public void fillGradient(int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {

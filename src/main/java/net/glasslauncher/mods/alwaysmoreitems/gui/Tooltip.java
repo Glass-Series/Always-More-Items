@@ -1,12 +1,16 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui;
 
 import lombok.Getter;
+import lombok.Setter;
+import net.glasslauncher.mods.alwaysmoreitems.api.AMITooltipModifier;
+import net.glasslauncher.mods.alwaysmoreitems.api.ItemRarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.api.Rarity;
 import net.glasslauncher.mods.alwaysmoreitems.api.RarityProvider;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients.ItemStackRenderer;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ImageUtil;
+import net.glasslauncher.mods.alwaysmoreitems.util.MethodFinder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -18,6 +22,9 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.Color;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +83,11 @@ public class Tooltip {
 
     protected int cachedTooltipWidth = 0;
 
-    private Tooltip() {}
+    /**
+     * You should only instantiate one of these for whatever functionality you need it for.
+     * If you're using a real tooltip, use INSTANCE instead, it is already managed for you, and all you need to do is set the tooltip.
+     */
+    public Tooltip() {}
 
     public void setTooltip(@NotNull ItemStack itemStack, int cursorX, int cursorY) {
         this.simpleTip = null;
@@ -84,7 +95,22 @@ public class Tooltip {
         this.tooltip = null;
         this.cursorX = cursorX;
         this.cursorY = cursorY;
-        this.rarity = itemStack.getItem() instanceof RarityProvider rarityProvider ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
+
+        Method foundMethod = MethodFinder.findMethodWithAnnotation(itemStack.getItem().getClass(), ItemRarityProvider.class);
+        if (foundMethod != null) {
+            try {
+                rarity = (Rarity) foundMethod.invoke(itemStack.getItem(), itemStack);
+            } catch (IllegalAccessException e) {
+                AlwaysMoreItems.LOGGER.error("Potentially private method for {}", itemStack.getItem().getClass().getName(), e);
+            } catch (InvocationTargetException e) {
+                AlwaysMoreItems.LOGGER.error("Potentially malformed method for {}", itemStack.getItem().getClass().getName(), e);
+            }
+        }
+
+        if (this.rarity == null) { // Fallback to legacy system
+            //noinspection removal
+            this.rarity = (itemStack.getItem() instanceof RarityProvider rarityProvider) ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
+        }
         commonInit();
     }
 
@@ -134,6 +160,19 @@ public class Tooltip {
     public void setupTooltip() {
         if (itemStack != null) {
             tooltip = new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name"), itemStack, Minecraft.INSTANCE.player.inventory, containerScreen));
+
+            Method foundMethod = MethodFinder.findMethodWithAnnotation(itemStack.getItem().getClass(), AMITooltipModifier.class);
+            if (foundMethod == null) {
+                return;
+            }
+
+            try {
+                foundMethod.invoke(itemStack.getItem(), itemStack, tooltip);
+            } catch (IllegalAccessException e) {
+                AlwaysMoreItems.LOGGER.error("Potentially private method for {}", itemStack.getItem().getClass().getName(), e);
+            } catch (InvocationTargetException e) {
+                AlwaysMoreItems.LOGGER.error("Potentially malformed method for {}", itemStack.getItem().getClass().getName(), e);
+            }
         }
     }
 
@@ -171,14 +210,11 @@ public class Tooltip {
         if (line instanceof String) {
             return AMITextRenderer.FONT_HEIGHT;
         }
-        if (line instanceof Divider) {
-            return 1;
-        }
         if (line instanceof ItemStack) {
             return 16;
         }
-        if (line instanceof Image image) {
-            return image.getHeight();
+        if (line instanceof Element<?> element) {
+            return element.getHeight();
         }
 
         return 0;
@@ -188,20 +224,11 @@ public class Tooltip {
         if (line instanceof String string) {
             return AMITextRenderer.INSTANCE.getWidth(string);
         }
-        if (line instanceof Divider) {
-            return 1;
-        }
         if (line instanceof ItemStack) {
             return 16;
         }
-        if (line instanceof Image image) {
-            try {
-                return image.getWidth();
-            }
-            catch (Exception e) {
-                AlwaysMoreItems.LOGGER.error(e);
-                return 0;
-            }
+        if (line instanceof Element<?> element) {
+            return element.getWidth();
         }
 
         return 0;
@@ -211,17 +238,14 @@ public class Tooltip {
         if (line instanceof String string) {
             AMITextRenderer.INSTANCE.drawWithShadow(string, x, y, color.getRGB());
         }
-        else if (line instanceof Divider) {
-            AMIDrawContext.INSTANCE.fill(x, y, x + getMaxLineWidth(), y + 1, color.getRGB());
-        }
         else if (line instanceof ItemStack lineStack) {
             RenderHelper.enableItemLighting();
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             ITEM_STACK_RENDERER.draw(Minecraft.INSTANCE, x, y, lineStack);
             RenderHelper.disableItemLighting();
         }
-        else if (line instanceof Image image) {
-            image.draw(x, y, getMaxLineWidth(), color);
+        else if (line instanceof Element<?> element) {
+            element.render(x, y, getMaxLineWidth(), getLineHeight(line));
         }
     }
 
@@ -385,38 +409,138 @@ public class Tooltip {
         return tooltip == null || tooltip.isEmpty();
     }
 
-    public record Bounds(int x1, int y1, int x2, int y2) {}
-
-    public record Dimension(int width, int height) {}
-
-    /**
-     * Used for caching information about images. You should only instantiate this class once, ideally, though I have used a hacky solution to get a guestimate of the image size.
-     * NOTE: There seems to be a limit of 32x32 due to limitations, but frankly, if you need an image larger than this, you shouldn't be putting it in a tooltip.
-     */
-    public static class Image {
-        public final String image;
+    public static class Element<T> {
+        @Getter
+        private final T content;
         @Getter
         private final int width;
         @Getter
         private final int height;
+        private final Renderer<T> renderer;
+        @Getter
+        private final Alignment alignment;
+        @Getter @Setter
+        private Color color = Color.WHITE;
+
+        public Element(T content, int width, int height, Renderer<T> renderer) {
+            this.content = content;
+            this.width = width;
+            this.height = height;
+            this.alignment = Alignment.TOP_LEFT;
+            this.renderer = renderer;
+        }
+
+        public Element(T content, int width, int height, Alignment alignment, Renderer<T> renderer) {
+            this.content = content;
+            this.width = width;
+            this.height = height;
+            this.alignment = alignment;
+            this.renderer = renderer;
+        }
+
+        public void render(int x, int y, int maxLineWidth, int lineHeight) {
+            OffsetDimension dimension = computeAlignment(maxLineWidth, lineHeight);
+            renderer.render(x + dimension.x, y + dimension.y, maxLineWidth, lineHeight, this);
+        }
+
+        public OffsetDimension computeAlignment(int maxLineWidth, int lineHeight) {
+            return alignment.compute(width, height, maxLineWidth, lineHeight);
+        }
+    }
+
+    private static final OffsetDimension ZERO_DIMENSION = new OffsetDimension(0, 0);
+
+    @FunctionalInterface
+    public interface Alignment {
+        Alignment TOP_LEFT = ((width, height, maxLineWidth, lineHeight) -> ZERO_DIMENSION);
+        Alignment TOP_RIGHT = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension(maxLineWidth - width, 0));
+        Alignment TOP_MIDDLE = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension((maxLineWidth / 2) - (width / 2), 0));
+        Alignment BOTTOM_LEFT = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension(0, lineHeight - height));
+        Alignment BOTTOM_RIGHT = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension(maxLineWidth - width, lineHeight - height));
+        Alignment BOTTOM_MIDDLE = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension((maxLineWidth / 2) - (width / 2), lineHeight - height));
+        Alignment CENTER = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension((maxLineWidth / 2) - (width / 2), (lineHeight / 2) - (height / 2)));
+
+        OffsetDimension compute(int width, int height, int maxLineWidth, int lineHeight);
+    }
+
+    @FunctionalInterface
+    public interface Renderer<T> {
+        void render(int x, int y, int maxLineWidth, int lineHeight, Element<T> element);
+    }
+
+    public record Bounds(int x1, int y1, int x2, int y2) {}
+
+    public record Dimension(int width, int height) {}
+    public record OffsetDimension(int x, int y) {} // Purely here for readability's sake
+
+    /**
+     * Used for caching information about images. You should only instantiate this class once, ideally, though this is backed by a cache.
+     * NOTE: There seems to be a limit of 32x32 due to limitations, but frankly, if you need an image larger than this, you shouldn't be putting it in a tooltip.
+     */
+    public static class Image extends Element<String> {
+        public static final Renderer<String> IMAGE_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+            Minecraft.INSTANCE.textureManager.bindTexture(Minecraft.INSTANCE.textureManager.getTextureId(element.content));
+            GL11.glColor3d(element.color.getRed() / 255d, element.color.getBlue() / 255d, element.color.getGreen() / 255d);
+            OffsetDimension dimension = element.computeAlignment(maxLineWidth, lineHeight);
+            GL11.glEnable(GL11.GL_ALPHA_TEST);
+            GL11.glEnable(GL11.GL_BLEND);
+            AMIDrawContext.INSTANCE.drawTexture(x + dimension.x, y + dimension.y, element.width, element.height, element.width, element.height, 0, 0);
+            GL11.glDisable(GL11.GL_ALPHA_TEST);
+            GL11.glDisable(GL11.GL_BLEND);
+            GL11.glColor4d(1, 1, 1, 1);
+        };
 
         public Image(String image) {
-            this.image = image;
+            super(image, getDimension(image).width, getDimension(image).height, IMAGE_RENDERER);
+        }
+
+        public Image(String image, Alignment alignment) {
+            super(image, getDimension(image).width, getDimension(image).height, alignment, IMAGE_RENDERER);
+        }
+
+        public Image(String image, Alignment alignment, Color color) {
+            super(image, getDimension(image).width, getDimension(image).height, alignment, IMAGE_RENDERER);
+            setColor(color);
+        }
+
+        private static Dimension getDimension(String image) {
             try {
-                Dimension dimension = ImageUtil.getImageDimension(Paths.get(this.getClass().getResource(image).toURI()).toFile());
-                width = dimension.width;
-                height = dimension.height;
-            } catch (Exception e) {
+                return ImageUtil.getImageDimension(Paths.get(Image.class.getResource(image).toURI()).toFile());
+            } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }
         }
+    }
 
-        /**
-         * Made as its own method so people could in theory render literally anything they want.
-         */
-        public void draw(int x, int y, int maxTipWidth, Color color) {
-            RenderHelper.bindTexture(image);
-            AMIDrawContext.INSTANCE.drawTexture(x, y, 1, 1, width, height);
+    public static class Text extends Element<String> {
+        public static final Renderer<String> TEXT_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+            AMITextRenderer.INSTANCE.renderStringAtPos(element.content, x, y, element.getColor(), true);
+        };
+
+        public Text(String content) {
+            super(content, AMITextRenderer.INSTANCE.getWidth(content), AMITextRenderer.FONT_HEIGHT, TEXT_RENDERER);
+        }
+
+        public Text(String content, Alignment alignment) {
+            super(content, AMITextRenderer.INSTANCE.getWidth(content), AMITextRenderer.FONT_HEIGHT, alignment, TEXT_RENDERER);
+        }
+
+        public Text(String content, Alignment alignment, Color color) {
+            super(content, AMITextRenderer.INSTANCE.getWidth(content), AMITextRenderer.FONT_HEIGHT, alignment, TEXT_RENDERER);
+            this.setColor(color);
+        }
+
+        public Text(String content, Renderer<String> renderer) {
+            super(content, AMITextRenderer.INSTANCE.getWidth(content), AMITextRenderer.FONT_HEIGHT, renderer);
+        }
+
+        public Text(String content, Alignment alignment, Renderer<String> renderer) {
+            super(content, AMITextRenderer.INSTANCE.getWidth(content), AMITextRenderer.FONT_HEIGHT, alignment, renderer);
+        }
+
+        public Text(String content, Alignment alignment, Renderer<String> renderer, Color color) {
+            super(content, AMITextRenderer.INSTANCE.getWidth(content), AMITextRenderer.FONT_HEIGHT, alignment, renderer);
+            this.setColor(color);
         }
     }
 
@@ -424,7 +548,76 @@ public class Tooltip {
      * When inserted into a tooltip, a horizonal line is rendered.
      * Don't instantiate, use the instance.
      */
-    public record Divider() {
-        public static final Divider INSTANCE = new Divider();
+    public static class Divider extends Element<Object> {
+        public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+            AMIDrawContext.INSTANCE.fill(x, y, maxLineWidth, element.height, element.color.getRGB());
+        };
+
+        public static final Divider INSTANCE = new Divider(null, 1, 1);
+
+        private Divider(Object content, int width, int height) {
+            super(content, width, height, DIVIDER_RENDERER);
+        }
+    }
+
+    /**
+     * When inserted into a tooltip, a vertical line is rendered.
+     * Don't instantiate, use the instance.
+     */
+    public static class VerticalDivider extends Element<Object> {
+        public static final Renderer<Object> VERTICAL_DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+            AMIDrawContext.INSTANCE.fill(x + (int) Math.floor(element.width / 2d), y, x + (int) Math.floor(element.width / 2d) + 1, y + lineHeight, element.color.getRGB());
+        };
+
+        public static final VerticalDivider INSTANCE = new VerticalDivider(null, 3, 1);
+
+        private VerticalDivider(Object content, int width, int height) {
+            super(content, width, height, VERTICAL_DIVIDER_RENDERER);
+        }
+    }
+
+    /**
+     * When inserted into a tooltip, a vertical line is rendered.
+     * Don't instantiate, use the instance.
+     */
+    public static class VerticalSpace extends Element<Object> {
+        public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {};
+
+        public static final VerticalSpace INSTANCE = new VerticalSpace(null, 3, 1);
+
+        private VerticalSpace(Object content, int width, int height) {
+            super(content, width, height, DIVIDER_RENDERER);
+        }
+    }
+
+    /**
+     * Contains a collection of elements, which are rendered on the same line.
+     */
+    public static class Line extends Element<Element<?>[]> {
+        public static final Renderer<Element<?>[]> LINE_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+            int width = 0;
+            for (Element<?> child : element.content) {
+                child.render(x + width, y, maxLineWidth, lineHeight);
+                width += child.width;
+            }
+        };
+
+        private Line(Element<?>[] content, int width, int height) {
+            super(content, width, height, LINE_RENDERER);
+        }
+
+        public static Line create(Element<?>... content) {
+            int width = 0;
+            int height = 0;
+            for (Element<?> child : content) {
+                width += child.width;
+                if (child.height > height) {
+                    height = child.height;
+                }
+            }
+
+            return new Line(content, width, height);
+        }
+
     }
 }
