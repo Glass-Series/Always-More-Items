@@ -139,6 +139,7 @@ public class Tooltip {
 
     public void clear() {
         tooltip = null;
+        rarity = null;
         cachedTooltipWidth = 0;
     }
 
