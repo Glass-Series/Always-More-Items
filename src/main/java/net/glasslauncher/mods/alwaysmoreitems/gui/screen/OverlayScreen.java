@@ -65,7 +65,7 @@ public class OverlayScreen extends Screen {
     public static int actionButtonOffset = 2;
 
     // Tooltip
-    public List<String> currentTooltip;
+    public Object currentTooltip;
 
     // Item Overlay
     public static int maxItemListWidth = 200;
@@ -291,8 +291,7 @@ public class OverlayScreen extends Screen {
         hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
             this.fill(hoveredItem.x - 1, hoveredItem.y - 1, hoveredItem.x + itemSize - 1, hoveredItem.y + itemSize - 1, -2130706433);
-            String simpleTip = TranslationStorage.getInstance().get(hoveredItem.item.getTranslationKey() + ".name");
-            currentTooltip = TooltipHelper.getTooltipForItemStack(simpleTip, hoveredItem.item, Minecraft.INSTANCE.player.inventory, null);
+            currentTooltip = hoveredItem.item;
         }
 
         // Draw Page Number
@@ -334,8 +333,14 @@ public class OverlayScreen extends Screen {
         }
 
         // Queue Tooltip
-        if (currentTooltip != null && !currentTooltip.isEmpty()) {
-            Tooltip.INSTANCE.setTooltip(new ArrayList<>(currentTooltip), mouseX, mouseY);
+        if (currentTooltip != null) {
+            if (currentTooltip instanceof ArrayList<?> arrayList && !arrayList.isEmpty()) {
+                //noinspection unchecked This is a stupid warning. It literally *can only be* an Object instance.
+                Tooltip.INSTANCE.setTooltip((List<Object>) arrayList, mouseX, mouseY);
+            }
+            else if (currentTooltip instanceof ItemStack stack) {
+                Tooltip.INSTANCE.setTooltip(stack, mouseX, mouseY);
+            }
         }
         GL11.glEnable(GL11.GL_DEPTH_TEST); // Breaks items in inventory otherwise
     }
