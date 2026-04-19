@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 public interface ItemBlacklist {
     /**
      * Stop AMI from displaying a specific item in the item list.
-     * Use OreDictionary.WILDCARD_VALUE meta for wildcard.
+     * Use meta -1 for wildcard.
      * Items blacklisted with this API can't be seen in the config or in edit mode.
      */
     void addItemToBlacklist(@Nonnull ItemStack itemStack);
