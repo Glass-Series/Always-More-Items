@@ -326,7 +326,7 @@ public class OverlayScreen extends Screen {
             }
         }
 
-        if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
+        if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && (AMIConfig.getOverlayMode() == OverlayMode.CHEAT || AMIConfig.getOverlayMode() == OverlayMode.UTILITY) && mouseX >= getOverlayStartX() && mouseY > 21) {
             currentTooltip = new ArrayList<>() {{
                 add(TranslationStorage.getInstance().get("button.alwaysmoreitems.trash.cursor", TranslationStorage.getInstance().get(Minecraft.INSTANCE.player.inventory.getCursorStack().getTranslationKey() + ".name")));
             }};
