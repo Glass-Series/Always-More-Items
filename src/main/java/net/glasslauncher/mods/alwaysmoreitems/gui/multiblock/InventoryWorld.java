@@ -124,12 +124,12 @@ public class InventoryWorld extends World {
     }
 
     @Override
-    public BlockState setBlockState(int x, int y, int z, BlockState blockState) {
+    public BlockState setBlockStateWithoutNotifyingNeighbors(int x, int y, int z, BlockState blockState) {
         return blockState;
     }
 
     @Override
-    public BlockState setBlockStateWithNotify(BlockPos pos, BlockState blockState) {
+    public BlockState setBlockState(int x, int y, int z, BlockState blockState) {
         return blockState;
     }
 
