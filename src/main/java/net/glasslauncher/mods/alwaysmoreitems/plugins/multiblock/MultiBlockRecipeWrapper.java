@@ -88,7 +88,7 @@ public class MultiBlockRecipeWrapper implements RecipeWrapper {
                 for(char key : section.toCharArray()){
                     BlockPatternEntry entry = recipe.getEntryForPattern(key);
                     if(entry != null){
-                        MultiBlockRecipeWrapper.INVENTORY_WORLD.setBlockStateWithMetadata(x, y, z, entry.blockstate(), entry.meta());
+                        MultiBlockRecipeWrapper.INVENTORY_WORLD.setBlockState(x, y, z, entry.blockstate(), entry.meta());
                         if(entry.blockEntity() != null){
                             MultiBlockRecipeWrapper.INVENTORY_WORLD.setBlockEntity(x, y, z, entry.blockEntity());
                         }

@@ -134,7 +134,7 @@ public class InventoryWorld extends World {
     }
 
     @Override
-    public BlockState setBlockStateWithMetadata(int x, int y, int z, BlockState blockState, int meta) {
+    public BlockState setBlockState(int x, int y, int z, BlockState blockState, int meta) {
         blockStates.put(new BlockPos(x, y, z), blockState);
         metas.put(new BlockPos(x, y, z), meta);
         return blockState;
