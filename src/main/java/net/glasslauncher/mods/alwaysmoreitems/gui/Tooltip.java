@@ -292,7 +292,7 @@ public class Tooltip {
             RenderHelper.disableItemLighting();
         }
         else if (line instanceof Element<?> element) {
-            element.render(x, y, getMaxLineWidth(), getLineHeight(line));
+            element.render(x, y, getmaxWidth(), getLineHeight(line));
         }
     }
 
@@ -413,12 +413,12 @@ public class Tooltip {
             return cachedTooltipWidth + getPadding(TooltipEdge.LEFT_RIGHT);
         }
 
-        int maxWidth = getMaxLineWidth();
+        int maxWidth = getmaxWidth();
 
         return maxWidth + getPadding(TooltipEdge.LEFT_RIGHT);
     }
 
-    public int getMaxLineWidth() {
+    public int getmaxWidth() {
         if (cachedTooltipWidth != 0) {
             return cachedTooltipWidth;
         }
@@ -485,13 +485,13 @@ public class Tooltip {
             this.renderer = renderer;
         }
 
-        public void render(int x, int y, int maxLineWidth, int lineHeight) {
-            OffsetDimension dimension = computeAlignment(maxLineWidth, lineHeight);
-            renderer.render(x + dimension.x, y + dimension.y, maxLineWidth, lineHeight, this);
+        public void render(int x, int y, int maxWidth, int lineHeight) {
+            OffsetDimension dimension = computeAlignment(maxWidth, lineHeight);
+            renderer.render(x + dimension.x, y + dimension.y, maxWidth, lineHeight, this);
         }
 
-        public OffsetDimension computeAlignment(int maxLineWidth, int lineHeight) {
-            return alignment.compute(width, height, maxLineWidth, lineHeight);
+        public OffsetDimension computeAlignment(int maxWidth, int lineHeight) {
+            return alignment.compute(width, height, maxWidth, lineHeight);
         }
     }
 
@@ -499,20 +499,20 @@ public class Tooltip {
 
     @FunctionalInterface
     public interface Alignment {
-        Alignment TOP_LEFT = ((width, height, maxLineWidth, lineHeight) -> ZERO_DIMENSION);
-        Alignment TOP_RIGHT = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension(maxLineWidth - width, 0));
-        Alignment TOP_MIDDLE = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension((maxLineWidth / 2) - (width / 2), 0));
-        Alignment BOTTOM_LEFT = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension(0, lineHeight - height));
-        Alignment BOTTOM_RIGHT = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension(maxLineWidth - width, lineHeight - height));
-        Alignment BOTTOM_MIDDLE = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension((maxLineWidth / 2) - (width / 2), lineHeight - height));
-        Alignment CENTER = ((width, height, maxLineWidth, lineHeight) -> new OffsetDimension((maxLineWidth / 2) - (width / 2), (lineHeight / 2) - (height / 2)));
+        Alignment TOP_LEFT = ((width, height, maxWidth, lineHeight) -> ZERO_DIMENSION);
+        Alignment TOP_RIGHT = ((width, height, maxWidth, lineHeight) -> new OffsetDimension(maxWidth - width, 0));
+        Alignment TOP_MIDDLE = ((width, height, maxWidth, lineHeight) -> new OffsetDimension((maxWidth / 2) - (width / 2), 0));
+        Alignment BOTTOM_LEFT = ((width, height, maxWidth, lineHeight) -> new OffsetDimension(0, lineHeight - height));
+        Alignment BOTTOM_RIGHT = ((width, height, maxWidth, lineHeight) -> new OffsetDimension(maxWidth - width, lineHeight - height));
+        Alignment BOTTOM_MIDDLE = ((width, height, maxWidth, lineHeight) -> new OffsetDimension((maxWidth / 2) - (width / 2), lineHeight - height));
+        Alignment CENTER = ((width, height, maxWidth, lineHeight) -> new OffsetDimension((maxWidth / 2) - (width / 2), (lineHeight / 2) - (height / 2)));
 
-        OffsetDimension compute(int width, int height, int maxLineWidth, int lineHeight);
+        OffsetDimension compute(int width, int height, int maxWidth, int lineHeight);
     }
 
     @FunctionalInterface
     public interface Renderer<T> {
-        void render(int x, int y, int maxLineWidth, int lineHeight, Element<T> element);
+        void render(int x, int y, int maxWidth, int lineHeight, Element<T> element);
     }
 
     public record Bounds(int x1, int y1, int x2, int y2) {}
@@ -525,10 +525,10 @@ public class Tooltip {
      * NOTE: There seems to be a limit of 32x32 due to limitations, but frankly, if you need an image larger than this, you shouldn't be putting it in a tooltip.
      */
     public static class Image extends Element<String> {
-        public static final Renderer<String> IMAGE_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+        public static final Renderer<String> IMAGE_RENDERER = (x, y, maxWidth, lineHeight, element) -> {
             Minecraft.INSTANCE.textureManager.bindTexture(Minecraft.INSTANCE.textureManager.getTextureId(element.content));
             GL11.glColor3d(element.color.getRed() / 255d, element.color.getBlue() / 255d, element.color.getGreen() / 255d);
-            OffsetDimension dimension = element.computeAlignment(maxLineWidth, lineHeight);
+            OffsetDimension dimension = element.computeAlignment(maxWidth, lineHeight);
             GL11.glEnable(GL11.GL_ALPHA_TEST);
             GL11.glEnable(GL11.GL_BLEND);
             AMIDrawContext.INSTANCE.drawTexture(x + dimension.x, y + dimension.y, element.width, element.height, element.width, element.height, 0, 0);
@@ -560,7 +560,7 @@ public class Tooltip {
     }
 
     public static class Text extends Element<String> {
-        public static final Renderer<String> TEXT_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+        public static final Renderer<String> TEXT_RENDERER = (x, y, maxWidth, lineHeight, element) -> {
             AMITextRenderer.INSTANCE.renderStringAtPos(element.content, x, y, element.getColor(), true);
         };
 
@@ -596,8 +596,8 @@ public class Tooltip {
      * Don't instantiate, use the instance.
      */
     public static class Divider extends Element<Object> {
-        public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
-            AMIDrawContext.INSTANCE.fill(x, y + (int) Math.floor(element.height / 2d), x + maxLineWidth, y + (int) Math.floor(element.height / 2d) + 1, element.color.getRGB());
+        public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxWidth, lineHeight, element) -> {
+            AMIDrawContext.INSTANCE.fill(x, y + (int) Math.floor(element.height / 2d), x + maxWidth, y + (int) Math.floor(element.height / 2d) + 1, element.color.getRGB());
         };
 
         public static final Divider INSTANCE = new Divider(null, 1, 1);
@@ -616,7 +616,7 @@ public class Tooltip {
      * Don't instantiate, use the instance.
      */
     public static class VerticalDivider extends Element<Object> {
-        public static final Renderer<Object> VERTICAL_DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+        public static final Renderer<Object> VERTICAL_DIVIDER_RENDERER = (x, y, maxWidth, lineHeight, element) -> {
             AMIDrawContext.INSTANCE.fill(x + (int) Math.floor(element.width / 2d), y, x + (int) Math.floor(element.width / 2d) + 1, y + lineHeight, element.color.getRGB());
         };
 
@@ -636,7 +636,7 @@ public class Tooltip {
      * Don't instantiate, use the instance.
      */
     public static class VerticalSpace extends Element<Object> {
-        public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {};
+        public static final Renderer<Object> DIVIDER_RENDERER = (x, y, maxWidth, lineHeight, element) -> {};
 
         public static final VerticalSpace INSTANCE = new VerticalSpace(null, 3, 1);
 
@@ -653,10 +653,10 @@ public class Tooltip {
      * Contains a collection of elements, which are rendered on the same line.
      */
     public static class Line extends Element<Element<?>[]> {
-        public static final Renderer<Element<?>[]> LINE_RENDERER = (x, y, maxLineWidth, lineHeight, element) -> {
+        public static final Renderer<Element<?>[]> LINE_RENDERER = (x, y, maxWidth, lineHeight, element) -> {
             int width = 0;
             for (Element<?> child : element.content) {
-                child.render(x + width, y, maxLineWidth, lineHeight);
+                child.render(x + width, y, child.getWidth() /* Pray the element respects its own size */, lineHeight);
                 width += child.width;
             }
         };
