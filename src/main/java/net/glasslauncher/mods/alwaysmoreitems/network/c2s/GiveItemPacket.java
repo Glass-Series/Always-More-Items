@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.network.c2s;
 
+import lombok.SneakyThrows;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
@@ -21,8 +22,10 @@ import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import javax.imageio.stream.IIOByteBuffer;
+import java.io.*;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 
 public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPacket> {
     public static final PacketType<GiveItemPacket> TYPE = PacketType.builder(false, true, GiveItemPacket::new).build();
@@ -91,18 +94,28 @@ public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPack
         }
     }
 
+    @SneakyThrows
     @Environment(EnvType.CLIENT)
     public void handleClient() {
-            String id = itemNbt.getString(STATION_ID);
-            Item item = ItemRegistry.INSTANCE.get(Identifier.of(id));
-            if (item == null) {
-                AlwaysMoreItems.LOGGER.warn("Invalid item id {}", id);
-                return;
-            }
+        String id = itemNbt.getString(STATION_ID);
+        Item item = ItemRegistry.INSTANCE.get(Identifier.of(id));
+        if (item == null) {
+            AlwaysMoreItems.LOGGER.warn("Invalid item id {}", id);
+            return;
+        }
 
-            ItemStack itemStack = new ItemStack(itemNbt);
-            itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
-            Minecraft.INSTANCE.player.inventory.addStack(itemStack);
+        // Mine, this is entirely your fault. Item.copy doesn't actually copy an item.
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+        itemNbt.write(dataOutputStream);
+        dataOutputStream.flush();
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        NbtCompound compound = new NbtCompound();
+        compound.read(new DataInputStream(inputStream));
+
+        ItemStack itemStack = new ItemStack(compound);
+        itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
+        Minecraft.INSTANCE.player.inventory.addStack(itemStack);
     }
 
     @Override

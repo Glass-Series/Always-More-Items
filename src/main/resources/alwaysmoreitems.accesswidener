@@ -20,3 +20,6 @@ accessible field net/minecraft/recipe/ShapelessRecipe input Ljava/util/List;
 accessible field net/minecraft/recipe/ShapedRecipe input [Lnet/minecraft/item/ItemStack;
 accessible field net/minecraft/recipe/ShapedRecipe width I
 accessible field net/minecraft/recipe/ShapedRecipe height I
+
+accessible method net/minecraft/nbt/NbtCompound write (Ljava/io/DataOutput;)V
+accessible method net/minecraft/nbt/NbtCompound read (Ljava/io/DataInput;)V
