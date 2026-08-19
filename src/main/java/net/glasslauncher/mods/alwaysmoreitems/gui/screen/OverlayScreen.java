@@ -357,7 +357,7 @@ public class OverlayScreen extends Screen {
 
         super.mouseClicked(mouseX, mouseY, button);
 
-        if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
+        if (AlwaysMoreItems.isAMIOnServer() && AMIConfig.getOverlayMode() != OverlayMode.RECIPE && Minecraft.INSTANCE.player.inventory.getCursorStack() != null && mouseX >= getOverlayStartX() && mouseY > 21) {
             if (!minecraft.world.isRemote) {
                 trashButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, false);
             } else {
