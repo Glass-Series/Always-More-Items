@@ -45,6 +45,9 @@ public class SmeltingRecipeMaker {
                             if (items != null) {
                                 inputs.addAll(items);
                             }
+                            else {
+                                inputs.add(new ItemStack(itemRegistryEntry.value()));
+                            }
                         })
                 );
             }
