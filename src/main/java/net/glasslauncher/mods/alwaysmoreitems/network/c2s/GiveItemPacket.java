@@ -20,6 +20,7 @@ import net.modificationstation.stationapi.api.network.packet.PacketType;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.impl.item.StationNBTSetter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.stream.IIOByteBuffer;
@@ -104,16 +105,7 @@ public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPack
             return;
         }
 
-        // Mine, this is entirely your fault. Item.copy doesn't actually copy an item.
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-        itemNbt.write(dataOutputStream);
-        dataOutputStream.flush();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-        NbtCompound compound = new NbtCompound();
-        compound.read(new DataInputStream(inputStream));
-
-        ItemStack itemStack = new ItemStack(compound);
+        ItemStack itemStack = new ItemStack(itemNbt.copy());
         itemStack.count = Math.min(itemStack.count, itemStack.getMaxCount());
         Minecraft.INSTANCE.player.inventory.addStack(itemStack);
     }
