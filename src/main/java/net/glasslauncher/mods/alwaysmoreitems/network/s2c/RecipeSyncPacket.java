@@ -63,6 +63,9 @@ public class RecipeSyncPacket extends Packet implements ManagedPacket<RecipeSync
             }
         }
         readData = recipes;
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            setStatus(null);
+        }
     }
 
     @Environment(EnvType.CLIENT)
