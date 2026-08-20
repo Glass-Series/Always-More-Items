@@ -68,7 +68,7 @@ public class RecipeSyncPacket extends Packet implements ManagedPacket<RecipeSync
     @Environment(EnvType.CLIENT)
     public void setStatus(String message) {
         if (Minecraft.INSTANCE.currentScreen instanceof ConnectScreen connectScreen) {
-            ((AMIStatusScreen) connectScreen).setStatus(message);
+            ((AMIStatusScreen) connectScreen).alwaysMoreItems$setStatus(message);
         }
     }
 

@@ -16,7 +16,7 @@ public class ConnectScreenMixin extends Screen implements AMIStatusScreen {
     private String message;
 
     @Override
-    public void setStatus(String status) {
+    public void alwaysMoreItems$setStatus(String status) {
         message = status;
     }
 
