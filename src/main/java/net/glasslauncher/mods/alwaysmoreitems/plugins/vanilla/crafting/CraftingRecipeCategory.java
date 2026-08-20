@@ -119,7 +119,11 @@ public class CraftingRecipeCategory implements RecipeCategory {
                 int offsetX = (3 - width) / 2;
                 int offsetY;
 
-                if (recipe.width == 1) {
+                if (recipe.height == 1 && recipe.width == 1) {
+                    offsetY = 1;
+                    offsetX = 1;
+                }
+                else if (recipe.width == 1) {
                     offsetY = 3 / 2;
                 }
                 else {
