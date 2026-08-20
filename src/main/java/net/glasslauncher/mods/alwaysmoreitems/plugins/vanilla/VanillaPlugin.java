@@ -123,8 +123,13 @@ public class VanillaPlugin implements ModPluginProvider {
                     (SyncableRecipe) new StationShapelessRecipe(new ItemStack(recipe.getCompound("output")), parseStapiInputs(recipe.getList("input")));
             case 4 -> // StAPI shaped
                     (SyncableRecipe) new StationShapedRecipe(recipe.getInt("width"), recipe.getInt("height"), parseStapiInputs(recipe.getList("input")), new ItemStack(recipe.getCompound("output")));
-            case 5 -> // Furnace
-                    new SmeltingRecipe(Collections.singletonList(new ItemStack(recipe.getCompound("input"))), new ItemStack(recipe.getCompound("output")));
+            case 5 -> {// Furnace
+                NbtCompound input = recipe.getCompound("input");
+                if (input.contains("tag")) {
+                    yield new SmeltingRecipe(Collections.singletonList(Either.left(TagKey.of(net.modificationstation.stationapi.api.registry.ItemRegistry.KEY, Identifier.of(input.getString("tag"))))), new ItemStack(recipe.getCompound("output")));
+                }
+                yield new SmeltingRecipe(Collections.singletonList(Either.right(new ItemStack(recipe.getCompound("input")))), new ItemStack(recipe.getCompound("output")));
+            }
             case 6 -> // Furnace fuel
                     new FuelRecipe(List.of(parseInputs(recipe.getList("input"))), recipe.getInt("burnTime"));
             default -> null;

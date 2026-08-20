@@ -9,6 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.event.recipe.RecipeRegisterEvent;
 import net.modificationstation.stationapi.api.event.registry.ItemRegistryEvent;
 import net.modificationstation.stationapi.api.recipe.SmeltingRegistry;
+import net.modificationstation.stationapi.api.registry.ItemRegistry;
+import net.modificationstation.stationapi.api.tag.TagKey;
+import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.Namespace;
 
 public class TestMod {
@@ -26,7 +29,21 @@ public class TestMod {
     @EventListener
     public void initRecipes(RecipeRegisterEvent event) {
         if (event.recipeId.equals(RecipeRegisterEvent.Vanilla.SMELTING.type())) {
+            SmeltingRegistry.addSmeltingRecipe(TagKey.of(ItemRegistry.KEY, Identifier.of("c:cobblestones")), new ItemStack(amiTortureTester, 1, 2));
+        }
+        if (event.recipeId.equals(RecipeRegisterEvent.Vanilla.SMELTING.type())) {
             SmeltingRegistry.addSmeltingRecipe(new ItemStack(Block.DIRT), new ItemStack(amiTortureTester, 1, 4));
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    @EventListener
+    public void initRecipesC(RecipeRegisterEvent event) {
+        if (event.recipeId.equals(RecipeRegisterEvent.Vanilla.SMELTING.type())) {
+            SmeltingRegistry.addSmeltingRecipe(new ItemStack(Block.DIRT), new ItemStack(amiTortureTester, 1, 0));
+        }
+        if (event.recipeId.equals(RecipeRegisterEvent.Vanilla.SMELTING.type())) {
+            SmeltingRegistry.addSmeltingRecipe(TagKey.of(ItemRegistry.KEY, Identifier.of("c:cobblestones")), new ItemStack(amiTortureTester, 1, 8));
         }
     }
 }

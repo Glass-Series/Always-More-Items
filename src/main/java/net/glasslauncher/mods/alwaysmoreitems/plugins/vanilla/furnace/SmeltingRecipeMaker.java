@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
+import com.mojang.datafixers.util.Either;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
 import net.glasslauncher.mods.alwaysmoreitems.api.SubItemHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
@@ -29,33 +30,19 @@ public class SmeltingRecipeMaker {
 
         for (Map.Entry<?, ItemStack> itemStackItemStackEntry : smeltingMap.entrySet()) {
 
-            List<ItemStack> inputs;
+            List<Either<TagKey<Item>, ItemStack>> inputs;
 
             Object objItem = itemStackItemStackEntry.getKey();
             if (objItem instanceof TagKey<?> key) {
-                //noinspection unchecked
-                Optional<RegistryEntryList.Named<Item>> instanceEntryList = ItemRegistry.INSTANCE.getEntryList((TagKey<Item>) key);
-                if (instanceEntryList.isEmpty()) {
-                    continue;
-                }
-                inputs = new ArrayList<>();
-                instanceEntryList.ifPresent(
-                        registryEntries -> registryEntries.forEach(itemRegistryEntry -> {
-                            List<ItemStack> items = SubItemHelper.getSubItems(itemRegistryEntry.value());
-                            if (items != null) {
-                                inputs.addAll(items);
-                            }
-                            else {
-                                inputs.add(new ItemStack(itemRegistryEntry.value()));
-                            }
-                        })
-                );
+                //noinspection unchecked Thanks java type erasure, very cool
+                inputs = Collections.singletonList(Either.left((TagKey<Item>) key));
             }
             else if (objItem instanceof ItemStack itemStack) {
-                inputs = stackHelper.getSubtypes(itemStack);
+                inputs = new ArrayList<>();
+                stackHelper.getSubtypes(itemStack).forEach(input -> inputs.add(Either.right(input)));
             }
             else {
-                inputs = Collections.singletonList(new ItemStack((int) objItem, 1, 0));
+                inputs = Collections.singletonList(Either.right(new ItemStack((int) objItem, 1, 0)));
             }
 
             ItemStack output = itemStackItemStackEntry.getValue();
