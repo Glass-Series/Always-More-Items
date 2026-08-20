@@ -52,7 +52,9 @@ public class AlwaysMoreItems {
         });
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && AlwaysMoreItems.getItemFilter() != null) {
             AlwaysMoreItems.getItemFilter().reset();
-            OverlayScreen.INSTANCE.rebuildRenderList();
+            if (OverlayScreen.INSTANCE.parent != null) {
+                OverlayScreen.INSTANCE.rebuildRenderList();
+            }
         }
     }
 
