@@ -17,6 +17,7 @@
   ],
   "client": [
     "client.class_555Mixin",
+    "client.ConnectScreenMixin",
     "client.FixCraftingTableGhostItemsMixin",
     "client.HandledScreenMixin",
     "client.MinecraftMixin",

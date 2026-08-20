@@ -1,13 +1,18 @@
 package net.glasslauncher.mods.alwaysmoreitems.network.s2c;
 
+import lombok.SneakyThrows;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.api.ModPluginProvider;
 import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
+import net.glasslauncher.mods.alwaysmoreitems.gui.screen.AMIStatusScreen;
 import net.glasslauncher.mods.alwaysmoreitems.init.CommonInit;
 import net.glasslauncher.mods.alwaysmoreitems.network.NetworkHelper;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.ModRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.ConnectScreen;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.NetworkHandler;
@@ -26,16 +31,21 @@ import java.util.ArrayList;
  * I'm not kidding, this thing's going to end up multiple megabytes in size on even a small modpack, nevermind when you load 100+ mods.
  */
 public class RecipeSyncPacket extends Packet implements ManagedPacket<RecipeSyncPacket> {
-    public static final PacketType<RecipeSyncPacket> TYPE = PacketType.builder(true, false, RecipeSyncPacket::new).build();
+    public static final PacketType<RecipeSyncPacket> TYPE = PacketType.builder(true, false, RecipeSyncPacket::new).blocking().build();
     private static final String PLUGIN_KEY = AlwaysMoreItems.NAMESPACE.id("plugin").toString();
 
     private static NbtList CACHED_DATA;
+    private static int DATA_SIZE;
 
     private int outSize;
     private ArrayList<SyncableRecipe> readData;
 
+    @SneakyThrows
     @Override
     public void read(DataInputStream stream) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            setStatus("Syncing " + stream.readInt() + " recipes...");
+        }
         NbtList nbtList = new NbtList();
         nbtList.read(stream);
         ArrayList<SyncableRecipe> recipes = new ArrayList<>();
@@ -55,6 +65,14 @@ public class RecipeSyncPacket extends Packet implements ManagedPacket<RecipeSync
         readData = recipes;
     }
 
+    @Environment(EnvType.CLIENT)
+    public void setStatus(String message) {
+        if (Minecraft.INSTANCE.currentScreen instanceof ConnectScreen connectScreen) {
+            ((AMIStatusScreen) connectScreen).setStatus(message);
+        }
+    }
+
+    @SneakyThrows
     @Override
     public void write(DataOutputStream stream) {
         if (CACHED_DATA == null) {
@@ -64,8 +82,10 @@ public class RecipeSyncPacket extends Packet implements ManagedPacket<RecipeSync
                 NbtCompound nbtCompound = syncableRecipe.exportRecipe();
                 nbtCompound.putString(PLUGIN_KEY, syncableRecipe.getPlugin().toString());
                 CACHED_DATA.add(nbtCompound);
+                DATA_SIZE++;
             });
         }
+        stream.writeInt(DATA_SIZE);
         outSize = NetworkHelper.writeAndGetNbtLength(CACHED_DATA, stream);
     }
 
