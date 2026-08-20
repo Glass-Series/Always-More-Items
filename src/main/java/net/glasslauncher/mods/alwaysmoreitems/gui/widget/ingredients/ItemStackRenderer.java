@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.gui.widget.ingredients;
 
+import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -11,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.tools.Tool;
 import java.util.ArrayList;
 
 public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
@@ -33,7 +35,6 @@ public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {
     @Nonnull
     @Override
     public ArrayList<Object> getTooltip(@Nonnull Minecraft minecraft, @Nonnull ItemStack itemStack) {
-        String simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
-        return new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, null));
+        return Tooltip.getTooltipForItemStack(itemStack, null);
     }
 }

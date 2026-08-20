@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -102,22 +103,7 @@ public class Tooltip {
         this.tooltip = null;
         this.cursorX = cursorX;
         this.cursorY = cursorY;
-
-        Method foundMethod = MethodFinder.findMethodWithAnnotation(itemStack.getItem().getClass(), ItemRarityProvider.class);
-        if (foundMethod != null) {
-            try {
-                rarity = (Rarity) foundMethod.invoke(itemStack.getItem(), itemStack);
-            } catch (IllegalAccessException e) {
-                AlwaysMoreItems.LOGGER.error("Potentially private method for {}", itemStack.getItem().getClass().getName(), e);
-            } catch (InvocationTargetException e) {
-                AlwaysMoreItems.LOGGER.error("Potentially malformed method for {}", itemStack.getItem().getClass().getName(), e);
-            }
-        }
-
-        if (this.rarity == null) { // Fallback to legacy system
-            //noinspection removal
-            this.rarity = (itemStack.getItem() instanceof RarityProvider rarityProvider) ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
-        }
+        this.rarity = getRarity(itemStack);
         commonInit();
     }
 
@@ -164,13 +150,38 @@ public class Tooltip {
         setupTooltip();
     }
 
+    public static Rarity getRarity(ItemStack itemStack) {
+        Rarity rarity = null;
+        Method foundMethod = MethodFinder.findMethodWithAnnotation(itemStack.getItem().getClass(), ItemRarityProvider.class);
+        if (foundMethod != null) {
+            try {
+                rarity = (Rarity) foundMethod.invoke(itemStack.getItem(), itemStack);
+            } catch (IllegalAccessException e) {
+                AlwaysMoreItems.LOGGER.error("Potentially private method for {}", itemStack.getItem().getClass().getName(), e);
+            } catch (InvocationTargetException e) {
+                AlwaysMoreItems.LOGGER.error("Potentially malformed method for {}", itemStack.getItem().getClass().getName(), e);
+            }
+        }
+
+        if (rarity == null) { // Fallback to legacy system
+            //noinspection removal
+            rarity = (itemStack.getItem() instanceof RarityProvider rarityProvider) ? rarityProvider.getRarity(itemStack) : Rarity.VANILLA;
+        }
+        return rarity;
+    }
+
     public void setupTooltip() {
         if (itemStack == null) {
             fireTooltipEvent();
             return;
         }
         simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
-        tooltip = new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen));
+        tooltip = getTooltipForItemStack(itemStack, containerScreen);
+    }
+
+    public static ArrayList<Object> getTooltipForItemStack(@Nonnull ItemStack itemStack, @Nullable HandledScreen containerScreen) {
+        String simpleTip = TranslationStorage.getInstance().get(itemStack.getTranslationKey() + ".name");
+        ArrayList<Object> tooltip = new ArrayList<>(TooltipHelper.getTooltipForItemStack(simpleTip, itemStack, Minecraft.INSTANCE.player.inventory, containerScreen));
 
         Method foundMethod = MethodFinder.findMethodWithAnnotation(itemStack.getItem().getClass(), AMITooltipModifier.class);
         if (foundMethod != null) {
@@ -183,7 +194,7 @@ public class Tooltip {
             }
         }
 
-        fireTooltipEvent();
+        fireTooltipEvent(itemStack, tooltip);
 
         if (AMIConfig.isDebugModeEnabled()) {
             String extras = "";
@@ -215,12 +226,18 @@ public class Tooltip {
         if (AMIConfig.showModNames()) {
             tooltip.add(Formatting.BLUE + AMITextRenderer.ITALICS + AlwaysMoreItems.getItemRegistry().getModNameForItem(itemStack.getItem()));
         }
+
+        return tooltip;
     }
 
-    public void fireTooltipEvent() {
+    public static void fireTooltipEvent(ItemStack itemStack, List<Object> tooltip) {
         if (itemStack != null) {
             StationAPI.EVENT_BUS.post(new AMIItemTooltipEvent(itemStack, tooltip));
         }
+    }
+
+    public void fireTooltipEvent() {
+        fireTooltipEvent(itemStack, tooltip);
     }
 
     public void clear() {

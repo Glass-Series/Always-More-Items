@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
+import lombok.Getter;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.CraftingRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import java.util.List;
 public class ShapelessOreRecipeWrapper extends VanillaRecipeWrapper implements CraftingRecipeWrapper {
 
     @Nonnull
+    @Getter
     private final StationShapelessRecipe recipe;
 
     public ShapelessOreRecipeWrapper(@Nonnull StationShapelessRecipe recipe) {

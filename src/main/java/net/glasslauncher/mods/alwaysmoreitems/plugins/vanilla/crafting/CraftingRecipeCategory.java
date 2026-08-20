@@ -1,5 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.crafting;
 
+import com.mojang.datafixers.util.Either;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.AMIDrawable;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.CraftingGridHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.gui.GuiItemStackGroup;
@@ -9,10 +10,17 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.VanillaRecipeCategoryUid;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.CraftingRecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.wrapper.ShapedCraftingRecipeWrapper;
+import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
+import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.modificationstation.stationapi.api.tag.TagKey;
+import net.modificationstation.stationapi.api.util.Formatting;
+import net.modificationstation.stationapi.impl.recipe.StationShapedRecipe;
 
 import javax.annotation.Nonnull;
 
@@ -86,6 +94,49 @@ public class CraftingRecipeCategory implements RecipeCategory {
         } else {
             AlwaysMoreItems.LOGGER.error("RecipeWrapper is not a known crafting wrapper type: {}", recipeWrapper);
         }
+
+        guiItemStacks.addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
+            if (!AMIConfig.isDebugModeEnabled()) {
+                return;
+            }
+            if (!input) {
+                return;
+            }
+            if (recipeWrapper instanceof ShapelessOreRecipeWrapper shapelessOreRecipeWrapper) {
+                Either<TagKey<Item>, ItemStack> ing = shapelessOreRecipeWrapper.getRecipe().getIngredients()[shapelessOreRecipeWrapper.getRecipe().getSize()];
+                ing.mapLeft(e -> {
+                    tooltip.add(Tooltip.Divider.INSTANCE);
+                    tooltip.add(Formatting.GRAY + "Takes any " + e.id());
+                    return e;
+                });
+            }
+            else if (recipeWrapper instanceof ShapedOreRecipeWrapper shapedOreRecipeWrapper) {
+                // I. Hate. This.
+                StationShapedRecipe recipe = shapedOreRecipeWrapper.getRecipe();
+                int width = recipe.width;
+                int height = recipe.height;
+
+                int offsetX = (3 - width) / 2;
+                int offsetY;
+
+                if (recipe.width == 1) {
+                    offsetY = 3 / 2;
+                }
+                else {
+                    offsetY = (3 - height) / 2;
+                }
+
+                int x = (slotIndex - 1) % 3 - offsetX;
+                int y = (slotIndex - 1) / 3 - offsetY;
+                int inputIndex = y * width + x;
+                Either<TagKey<Item>, ItemStack> ing = shapedOreRecipeWrapper.getRecipe().getGrid()[inputIndex];
+                ing.mapLeft(e -> {
+                    tooltip.add(Tooltip.Divider.INSTANCE);
+                    tooltip.add(Formatting.GRAY + "Takes any " + e.id());
+                    return e;
+                });
+            }
+        });
     }
 
 }

@@ -9,6 +9,7 @@ import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
 import net.glasslauncher.mods.alwaysmoreitems.util.CycleTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
@@ -149,7 +150,12 @@ public class GuiIngredient<T> extends Screen implements IGuiIngredient<T> {
                 tooltipCallback.onTooltip(slotIndex, input, value, tooltip);
             }
 
-            Tooltip.INSTANCE.setTooltip(tooltip, mouseX, mouseY);
+            if (value instanceof ItemStack stack) {
+                Tooltip.INSTANCE.setTooltip(tooltip, mouseX, mouseY, Tooltip.getRarity(stack));
+            }
+            else {
+                Tooltip.INSTANCE.setTooltip(tooltip, mouseX, mouseY);
+            }
 
             GL11.glEnable(GL11.GL_DEPTH_TEST);
         } catch (RuntimeException e) {
