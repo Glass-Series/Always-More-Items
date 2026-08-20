@@ -103,7 +103,7 @@ public class CraftingRecipeCategory implements RecipeCategory {
                 return;
             }
             if (recipeWrapper instanceof ShapelessOreRecipeWrapper shapelessOreRecipeWrapper) {
-                Either<TagKey<Item>, ItemStack> ing = shapelessOreRecipeWrapper.getRecipe().getIngredients()[shapelessOreRecipeWrapper.getRecipe().getSize()];
+                Either<TagKey<Item>, ItemStack> ing = shapelessOreRecipeWrapper.getRecipe().getIngredients()[slotIndex - 1];
                 ing.mapLeft(e -> {
                     tooltip.add(Tooltip.Divider.INSTANCE);
                     tooltip.add(Formatting.GRAY + "Takes any " + e.id());
