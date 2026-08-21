@@ -26,6 +26,7 @@ import net.modificationstation.stationapi.api.registry.PacketTypeRegistry;
 import net.modificationstation.stationapi.api.registry.Registry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,16 +85,18 @@ public class CommonInit {
         AMIItemRegistry itemRegistry = new AMIItemRegistry();
         AlwaysMoreItems.setItemRegistry(itemRegistry);
         HashMap<Identifier, ModPluginProvider> plugins = (HashMap<Identifier, ModPluginProvider>) CommonInit.getPlugins().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        ArrayList<Identifier> badPlugins = new ArrayList<>();
 
         plugins.values().forEach(iModPlugin -> {
             try {
                 iModPlugin.onItemRegistryAvailable(itemRegistry);
             } catch (RuntimeException e) {
                 AlwaysMoreItems.LOGGER.error("Mod plugin failed: {}/{}", iModPlugin.getId(), iModPlugin.getClass(), e);
-                plugins.remove(iModPlugin.getId());
+                badPlugins.add(iModPlugin.getId());
             }
         });
 
+        badPlugins.forEach(plugins::remove);
         modRegistry = new ModRegistry();
 
         plugins.values().forEach(iModPlugin -> {
@@ -102,10 +105,11 @@ public class CommonInit {
                 AlwaysMoreItems.LOGGER.info("Registered plugin: {}/{}", iModPlugin.getId(), iModPlugin.getClass().getName());
             } catch (RuntimeException e) {
                 AlwaysMoreItems.LOGGER.error("Mod plugin failed: {}/{}", iModPlugin.getId(), iModPlugin.getClass(), e);
-                plugins.remove(iModPlugin.getId());
+                badPlugins.add(iModPlugin.getId());
             }
         });
 
+        badPlugins.forEach(plugins::remove);
         RecipeRegistry recipeRegistry = modRegistry.createRecipeRegistry();
         AlwaysMoreItems.setRecipeRegistry(recipeRegistry);
 
@@ -115,9 +119,14 @@ public class CommonInit {
                 iModPlugin.onRecipeRegistryAvailable(recipeRegistry);
             } catch (RuntimeException e) {
                 AlwaysMoreItems.LOGGER.error("Mod plugin failed: {}/{}", iModPlugin.getId(), iModPlugin.getClass(), e);
-                plugins.remove(iModPlugin.getId());
+                badPlugins.add(iModPlugin.getId());
             }
         });
+        badPlugins.forEach(plugins::remove);
         CommonInit.plugins = ImmutableMap.copyOf(plugins);
+        if (!badPlugins.isEmpty()) {
+            AlwaysMoreItems.LOGGER.error("List of failed plugins: {}", badPlugins.stream().map(Object::toString).collect(Collectors.joining(", ")));
+
+        }
     }
 }
