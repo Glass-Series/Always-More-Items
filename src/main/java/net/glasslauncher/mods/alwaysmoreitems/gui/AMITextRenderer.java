@@ -24,7 +24,6 @@ public class AMITextRenderer extends TextRenderer {
     public static final String ITALICS = Formatting.FORMATTING_CODE_PREFIX + "o";
     public static final String RESET = Formatting.FORMATTING_CODE_PREFIX + "r";
 
-    public static final String RANDOM_CHARS_PALLETTE = "ÀÁÂÈÊËÍÓÔÕÚßãõğİıŒœŞşŴŵžȇ\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αβΓπΣσμτΦΘΩδ∞∅∈∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u0000";
     public static final int FONT_HEIGHT = 9;
     public static final Random fontRandom = new Random();
 
@@ -61,26 +60,27 @@ public class AMITextRenderer extends TextRenderer {
         return COLOR_CODES[(VALID_COLOR_CHARS.indexOf(code))];
     }
 
-    protected float renderChar(int posX, int posY, int character, boolean shadow) {
-        int i = character % 16 * 8;
-        int j = character / 16 * 8;
-        int k = shadow ? 1 : 0;
-        int l = charWidth(character);
-        float f = (float)l - 0.01F;
+    protected int renderChar(int posX, int posY, char character, boolean shadow) {
+        int charIndex = CharacterUtils.VALID_CHARACTERS.indexOf(character) + 32;
+        int charU = charIndex % 16 * 8;
+        int charV = charIndex / 16 * 8;
+        int shadowOffset = shadow ? 1 : 0;
+        int width = charWidth(character);
+        float preventBleedWidth = (float)width - 0.01F;
         GL11.glBegin(5);
-        GL11.glTexCoord2f((float)i / 128.0F, (float)j / 128.0F);
-        GL11.glVertex3f(posX + (float)k, posY, 0.0F);
-        GL11.glTexCoord2f((float)i / 128.0F, ((float)j + 7.99F) / 128.0F);
-        GL11.glVertex3f(posX - (float)k, posY + 7.99F, 0.0F);
-        GL11.glTexCoord2f(((float)i + f - 1.0F) / 128.0F, (float)j / 128.0F);
-        GL11.glVertex3f(posX + f - 1.0F + (float)k, posY, 0.0F);
-        GL11.glTexCoord2f(((float)i + f - 1.0F) / 128.0F, ((float)j + 7.99F) / 128.0F);
-        GL11.glVertex3f(posX + f - 1.0F - (float)k, posY + 7.99F, 0.0F);
+        GL11.glTexCoord2f((float)charU / 128.0F, (float)charV / 128.0F);
+        GL11.glVertex3f(posX + (float)shadowOffset, posY, 0.0F);
+        GL11.glTexCoord2f((float)charU / 128.0F, ((float)charV + 7.99F) / 128.0F);
+        GL11.glVertex3f(posX - (float)shadowOffset, posY + 7.99F, 0.0F);
+        GL11.glTexCoord2f(((float)charU + preventBleedWidth - 1.0F) / 128.0F, (float)charV / 128.0F);
+        GL11.glVertex3f(posX + preventBleedWidth - 1.0F + (float)shadowOffset, posY, 0.0F);
+        GL11.glTexCoord2f(((float)charU + preventBleedWidth - 1.0F) / 128.0F, ((float)charV + 7.99F) / 128.0F);
+        GL11.glVertex3f(posX + preventBleedWidth - 1.0F - (float)shadowOffset, posY + 7.99F, 0.0F);
         GL11.glEnd();
-        return (float)l;
+        return width;
     }
 
-    public int charWidth(int character) {
+    public int charWidth(char character) {
         int var4 = CharacterUtils.VALID_CHARACTERS.indexOf(character);
         if (var4 >= 0) {
             return characterWidths[var4 + 32];
@@ -103,36 +103,36 @@ public class AMITextRenderer extends TextRenderer {
         setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
         for(int i = 0; i < text.length(); ++i) {
-            char c0 = text.charAt(i);
-            int i1;
-            int j1;
-            if (c0 == 167 && i + 1 < text.length()) {
-                i1 = VALID_COLOR_CHARS.indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
-                if (i1 < 16) {
+            char currentChar = text.charAt(i);
+            int characterIndex;
+            int colorInt;
+            if (currentChar == '§' && i + 1 < text.length()) {
+                characterIndex = VALID_COLOR_CHARS.indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
+                if (characterIndex < 16) {
                     randomStyle = false;
                     boldStyle = false;
                     strikethroughStyle = false;
                     underlineStyle = false;
                     italicStyle = false;
-                    if (i1 < 0) {
-                        i1 = 15;
+                    if (characterIndex < 0) {
+                        characterIndex = 15;
                     }
 
                     if (shadow) {
-                        i1 += 16;
+                        characterIndex += 16;
                     }
 
-                    j1 = COLOR_CODES[i1];
-                    setColor((float)(j1 >> 16), (float)(j1 >> 8 & 255), (float)(j1 & 255), color.getAlpha());
-                } else if (i1 == 16) {
+                    colorInt = COLOR_CODES[characterIndex];
+                    setColor((float)(colorInt >> 16), (float)(colorInt >> 8 & 255), (float)(colorInt & 255), color.getAlpha());
+                } else if (characterIndex == 16) {
                     randomStyle = true;
-                } else if (i1 == 17) {
+                } else if (characterIndex == 17) {
                     boldStyle = true;
-                } else if (i1 == 18) {
+                } else if (characterIndex == 18) {
                     strikethroughStyle = true;
-                } else if (i1 == 19) {
+                } else if (characterIndex == 19) {
                     underlineStyle = true;
-                } else if (i1 == 20) {
+                } else if (characterIndex == 20) {
                     italicStyle = true;
                 } else {
                     randomStyle = false;
@@ -145,27 +145,27 @@ public class AMITextRenderer extends TextRenderer {
 
                 ++i;
             } else {
-                i1 = RANDOM_CHARS_PALLETTE.indexOf(c0);
-                if (randomStyle && i1 != -1) {
-                    j1 = charWidth(c0);
+                characterIndex = CharacterUtils.VALID_CHARACTERS.indexOf(currentChar);
+                if (randomStyle && characterIndex != -1) {
+                    colorInt = charWidth(currentChar);
 
-                    char c1;
+                    char randomChar;
                     do {
-                        i1 = fontRandom.nextInt(RANDOM_CHARS_PALLETTE.length());
-                        c1 = RANDOM_CHARS_PALLETTE.charAt(i1);
-                    } while(j1 != charWidth(c1));
+                        characterIndex = fontRandom.nextInt(CharacterUtils.VALID_CHARACTERS.length());
+                        randomChar = CharacterUtils.VALID_CHARACTERS.charAt(characterIndex);
+                    } while(colorInt != charWidth(randomChar));
 
-                    c0 = c1;
+                    currentChar = randomChar;
                 }
 
                 int charScale = 1;
-                boolean flag = (c0 == 0 || i1 == -1) && shadow;
+                boolean flag = (currentChar == 0 || characterIndex == -1) && shadow;
                 if (flag) {
                     posX -= charScale;
                     posY -= charScale;
                 }
 
-                float f = validateAndRenderChar(posX, posY, c0, italicStyle);
+                int charWidth = renderCharRespectSpaces(posX, posY, currentChar, italicStyle);
                 if (flag) {
                     posX += charScale;
                     posY += charScale;
@@ -178,18 +178,18 @@ public class AMITextRenderer extends TextRenderer {
                         posY -= charScale;
                     }
 
-                    validateAndRenderChar(posX, posY, c0, italicStyle);
+                    renderCharRespectSpaces(posX, posY, currentChar, italicStyle);
                     posX -= charScale;
                     if (flag) {
                         posX += charScale;
                         posY += charScale;
                     }
 
-                    ++f;
+                    ++charWidth;
                 }
 
-                doDecorations(posX, posY, f, strikethroughStyle, underlineStyle);
-                posX += (int) f;
+                doDecorations(posX, posY, charWidth, strikethroughStyle, underlineStyle);
+                posX += charWidth;
             }
         }
 
@@ -199,16 +199,15 @@ public class AMITextRenderer extends TextRenderer {
         GL11.glColor4f(red / 255, green / 255, blue / 255, alpha / 255);
     }
 
-    private float validateAndRenderChar(int posX, int posY, char charToRender, boolean shadow) {
+    private int renderCharRespectSpaces(int posX, int posY, char charToRender, boolean shadow) {
         if (charToRender == ' ') {
-            return 4.0F;
+            return 4;
         } else {
-            int charIndex = RANDOM_CHARS_PALLETTE.indexOf(charToRender);
-            return renderChar(posX, posY, charIndex, shadow);
+            return renderChar(posX, posY, charToRender, shadow);
         }
     }
 
-    protected void doDecorations(int posX, int posY, float charWidth, boolean strikethroughStyle, boolean underlineStyle) {
+    protected void doDecorations(int posX, int posY, int charWidth, boolean strikethroughStyle, boolean underlineStyle) {
         Tessellator tessellator1 = null;
         if (strikethroughStyle) {
             tessellator1 = Tessellator.INSTANCE;
@@ -241,31 +240,31 @@ public class AMITextRenderer extends TextRenderer {
     }
 
 
-    public List<String> listFormattedStringToWidth(String p_listFormattedStringToWidth_1_, int p_listFormattedStringToWidth_2_) {
-        return Arrays.asList(this.wrapFormattedStringToWidth(p_listFormattedStringToWidth_1_, p_listFormattedStringToWidth_2_).split("\n"));
+    public List<String> listFormattedStringToWidth(String text, int width) {
+        return Arrays.asList(this.wrapFormattedStringToWidth(text, width).split("\n"));
     }
 
-    String wrapFormattedStringToWidth(String p_wrapFormattedStringToWidth_1_, int p_wrapFormattedStringToWidth_2_) {
-        int i = this.sizeStringToWidth(p_wrapFormattedStringToWidth_1_, p_wrapFormattedStringToWidth_2_);
-        if (p_wrapFormattedStringToWidth_1_.length() <= i) {
-            return p_wrapFormattedStringToWidth_1_;
+    String wrapFormattedStringToWidth(String text, int width) {
+        int i = this.cropStringToWidth(text, width);
+        if (text.length() <= i) {
+            return text;
         } else {
-            String s = p_wrapFormattedStringToWidth_1_.substring(0, i);
-            char c0 = p_wrapFormattedStringToWidth_1_.charAt(i);
+            String s = text.substring(0, i);
+            char c0 = text.charAt(i);
             boolean flag = c0 == ' ' || c0 == '\n';
-            String s1 = getFormatFromString(s) + p_wrapFormattedStringToWidth_1_.substring(i + (flag ? 1 : 0));
-            return s + "\n" + this.wrapFormattedStringToWidth(s1, p_wrapFormattedStringToWidth_2_);
+            String s1 = getFormatFromString(s) + text.substring(i + (flag ? 1 : 0));
+            return s + "\n" + this.wrapFormattedStringToWidth(s1, width);
         }
     }
 
-    private int sizeStringToWidth(String p_sizeStringToWidth_1_, int p_sizeStringToWidth_2_) {
-        int i = p_sizeStringToWidth_1_.length();
+    private int cropStringToWidth(String text, int width) {
+        int i = text.length();
         int j = 0;
         int k = 0;
         int l = -1;
 
         for(boolean flag = false; k < i; ++k) {
-            char c0 = p_sizeStringToWidth_1_.charAt(k);
+            char c0 = text.charAt(k);
             switch (c0) {
                 case '\n':
                     --k;
@@ -281,7 +280,7 @@ public class AMITextRenderer extends TextRenderer {
                 case '§':
                     if (k < i - 1) {
                         ++k;
-                        char c1 = p_sizeStringToWidth_1_.charAt(k);
+                        char c1 = text.charAt(k);
                         if (c1 != 'l' && c1 != 'L') {
                             if (c1 == 'r' || c1 == 'R' || isFormatColor(c1)) {
                                 flag = false;
@@ -298,7 +297,7 @@ public class AMITextRenderer extends TextRenderer {
                 break;
             }
 
-            if (j > p_sizeStringToWidth_2_) {
+            if (j > width) {
                 break;
             }
         }
@@ -306,14 +305,14 @@ public class AMITextRenderer extends TextRenderer {
         return k != i && l != -1 && l < k ? l : k;
     }
 
-    public static String getFormatFromString(String p_getFormatFromString_0_) {
+    public static String getFormatFromString(String text) {
         StringBuilder s = new StringBuilder();
         int i = -1;
-        int j = p_getFormatFromString_0_.length();
+        int j = text.length();
 
-        while((i = p_getFormatFromString_0_.indexOf(167, i + 1)) != -1) {
+        while((i = text.indexOf('§', i + 1)) != -1) {
             if (i < j - 1) {
-                char c0 = p_getFormatFromString_0_.charAt(i + 1);
+                char c0 = text.charAt(i + 1);
                 if (isFormatColor(c0)) {
                     s = new StringBuilder("§" + c0);
                 } else if (isFormatSpecial(c0)) {
@@ -325,11 +324,11 @@ public class AMITextRenderer extends TextRenderer {
         return s.toString();
     }
 
-    private static boolean isFormatColor(char p_isFormatColor_0_) {
-        return p_isFormatColor_0_ >= '0' && p_isFormatColor_0_ <= '9' || p_isFormatColor_0_ >= 'a' && p_isFormatColor_0_ <= 'f' || p_isFormatColor_0_ >= 'A' && p_isFormatColor_0_ <= 'F';
+    private static boolean isFormatColor(char chr) {
+        return chr >= '0' && chr <= '9' || chr >= 'a' && chr <= 'f' || chr >= 'A' && chr <= 'F';
     }
 
-    private static boolean isFormatSpecial(char p_isFormatSpecial_0_) {
-        return p_isFormatSpecial_0_ >= 'k' && p_isFormatSpecial_0_ <= 'o' || p_isFormatSpecial_0_ >= 'K' && p_isFormatSpecial_0_ <= 'O' || p_isFormatSpecial_0_ == 'r' || p_isFormatSpecial_0_ == 'R';
+    private static boolean isFormatSpecial(char chr) {
+        return chr >= 'k' && chr <= 'o' || chr >= 'K' && chr <= 'O' || chr == 'r' || chr == 'R';
     }
 }
