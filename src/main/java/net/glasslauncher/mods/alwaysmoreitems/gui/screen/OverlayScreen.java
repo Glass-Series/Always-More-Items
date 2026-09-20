@@ -484,7 +484,6 @@ public class OverlayScreen extends Screen {
         if (searchField.isSelected()) {
             searchField.keyPressed(character, keyCode);
             ItemFilter.setFilterText(searchField.getText());
-            currentPage = 0; //Math.min(pageCount - 1, currentPage);
             rebuildRenderList();
             return true;
         }
@@ -609,7 +608,6 @@ public class OverlayScreen extends Screen {
             lastOverlayStartX = getOverlayStartX();
 
             // Rebuild the screen
-            currentPage = 0;
             minecraft.currentScreen.init(minecraft, screenScaler.getScaledWidth(), screenScaler.getScaledHeight());
             rebuildRenderList();
         }
@@ -680,6 +678,7 @@ public class OverlayScreen extends Screen {
         int overlayStartX = getOverlayStartX();
         int itemsPerPage = itemListWidth * itemListHeight;
         pageCount = (int) Math.ceil((double) filteredItems.size() / itemsPerPage);
+        currentPage = Math.min(pageCount - 1, currentPage);
 
         for (int yIndex = 0; yIndex < itemListHeight; yIndex++) {
             for (int xIndex = 0; xIndex < itemListWidth; xIndex++) {
