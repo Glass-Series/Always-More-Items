@@ -3,6 +3,7 @@ package net.glasslauncher.mods.alwaysmoreitems.gui.screen;
 import com.google.common.collect.ImmutableList;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
+import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButtonEnvironment;
 import net.glasslauncher.mods.alwaysmoreitems.config.AMIConfig;
 import net.glasslauncher.mods.alwaysmoreitems.config.OverlayMode;
 import net.glasslauncher.mods.alwaysmoreitems.gui.RenderHelper;
@@ -30,7 +31,6 @@ import net.minecraft.client.util.ScreenScaler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
-import net.modificationstation.stationapi.api.client.TooltipHelper;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.math.ColorHelper;
@@ -181,7 +181,7 @@ public class OverlayScreen extends Screen {
         int maxHeightForLine = 0;
 
         for (int i = 0; i < ActionButtonRegistry.INSTANCE.size(); i++) {
-            Identifier identifier = ActionButtonRegistry.INSTANCE.getId(i).get();
+            Identifier identifier = ActionButtonRegistry.INSTANCE.getId(i).orElseThrow();
             ActionButton actionButton = ActionButtonRegistry.INSTANCE.get(identifier);
             if (actionButton == null) {
                 AlwaysMoreItems.LOGGER.error("Identifier {} somehow returned null", identifier, new Throwable());
@@ -194,6 +194,10 @@ public class OverlayScreen extends Screen {
 
             List<OverlayMode> allowedOverlayModes = actionButton.allowedOverlayModes();
             if (allowedOverlayModes != null && !allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
+                continue;
+            }
+
+            if (!actionButton.getActionEnvironment().canBeUsed()) {
                 continue;
             }
 
@@ -222,7 +226,7 @@ public class OverlayScreen extends Screen {
 
         if (trashButton.action != null) {
             List<OverlayMode> allowedOverlayModes = trashButton.action.allowedOverlayModes();
-            if (allowedOverlayModes == null || allowedOverlayModes.contains(AMIConfig.getOverlayMode())) {
+            if ((allowedOverlayModes == null || allowedOverlayModes.contains(AMIConfig.getOverlayMode())) && trashButton.action.getActionEnvironment().canBeUsed()) {
                 actionButtons.add(trashButton);
             }
         }
@@ -326,7 +330,7 @@ public class OverlayScreen extends Screen {
             }
         }
 
-        if (Minecraft.INSTANCE.player.inventory.getCursorStack() != null && (AMIConfig.getOverlayMode() == OverlayMode.CHEAT || AMIConfig.getOverlayMode() == OverlayMode.UTILITY) && mouseX >= getOverlayStartX() && mouseY > 21) {
+        if (AlwaysMoreItems.isAMIOnServer() && Minecraft.INSTANCE.player.inventory.getCursorStack() != null && (AMIConfig.getOverlayMode() == OverlayMode.CHEAT || AMIConfig.getOverlayMode() == OverlayMode.UTILITY) && mouseX >= getOverlayStartX() && mouseY > 21) {
             currentTooltip = new ArrayList<>() {{
                 add(TranslationStorage.getInstance().get("button.alwaysmoreitems.trash.cursor", TranslationStorage.getInstance().get(Minecraft.INSTANCE.player.inventory.getCursorStack().getTranslationKey() + ".name")));
             }};
@@ -377,10 +381,16 @@ public class OverlayScreen extends Screen {
             if (actionButton.isMouseOver(minecraft, mouseX, mouseY)) {
                 this.minecraft.soundManager.playSound(actionButton.action.getClickSound(), 1.0F, 1.0F);
                 boolean holdingShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-                if (!minecraft.world.isRemote || actionButton.action.isClientsideOnly()) {
-                    actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, holdingShift);
-                } else {
-                    PacketHelper.send(new ActionButtonPacket(actionButton.actionIdentifier, button, holdingShift));
+                if (actionButton.action.getActionEnvironment().canBeUsed()) {
+                    if (!minecraft.isWorldRemote() && actionButton.action.getActionEnvironment() == ActionButtonEnvironment.SERVER_AMI_PRESENT_OR_CLIENT) {
+                        actionButton.performAction(minecraft, minecraft.world, minecraft.player, true, button, holdingShift);
+                    }
+                    else if (actionButton.action.getActionEnvironment() != ActionButtonEnvironment.SERVER_AMI_PRESENT_ONLY && (actionButton.action.getActionEnvironment() == ActionButtonEnvironment.SERVER_AMI_PRESENT_OR_CLIENT && !AlwaysMoreItems.isAMIOnServer())) {
+                        actionButton.action.performClient(minecraft, button, holdingShift);
+                    }
+                    else {
+                        PacketHelper.send(new ActionButtonPacket(actionButton.actionIdentifier, button, holdingShift));
+                    }
                 }
             }
         }
@@ -402,7 +412,7 @@ public class OverlayScreen extends Screen {
                 return;
             }
 
-            if (!(AMIConfig.getOverlayMode() == OverlayMode.CHEAT) || recipesGui.isActive()) {
+            if (AMIConfig.getOverlayMode() != OverlayMode.CHEAT || recipesGui.isActive()) {
                 if (button == 0) { // LMB - Show Recipe
                     showRecipe(new Focus(hoveredItem.item));
                 } else if (button == 1) { // RMB - Show Uses

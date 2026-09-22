@@ -1,10 +1,6 @@
 package net.glasslauncher.mods.alwaysmoreitems.registry;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.ListMultimap;
+import com.google.common.collect.*;
 import lombok.Getter;
 import net.glasslauncher.mods.alwaysmoreitems.api.SyncableRecipe;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeCategory;
@@ -23,12 +19,7 @@ import net.minecraft.screen.ScreenHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RecipeRegistry implements net.glasslauncher.mods.alwaysmoreitems.api.RecipeRegistry {
     private final ImmutableMap<Class, RecipeHandler> recipeHandlers;

@@ -32,6 +32,7 @@ public class AlwaysMoreItems {
     private static boolean started;
 
     public static boolean overlayEnabled = true;
+    private static boolean amiOnServer;
 
     public static StackHelper getStackHelper() {
         return helpers.getStackHelper();
@@ -59,6 +60,10 @@ public class AlwaysMoreItems {
     }
 
     public static boolean isAMIOnServer() {
-        return true;
+        return amiOnServer;
+    }
+
+    public static void setAMIOnServer(boolean amiOnServer) {
+        AlwaysMoreItems.amiOnServer = amiOnServer;
     }
 }

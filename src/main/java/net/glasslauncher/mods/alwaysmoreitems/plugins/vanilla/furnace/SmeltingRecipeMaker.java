@@ -2,13 +2,10 @@ package net.glasslauncher.mods.alwaysmoreitems.plugins.vanilla.furnace;
 
 import com.mojang.datafixers.util.Either;
 import net.glasslauncher.mods.alwaysmoreitems.api.AMIHelpers;
-import net.glasslauncher.mods.alwaysmoreitems.api.SubItemHelper;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.StackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.SmeltingRecipeManager;
-import net.modificationstation.stationapi.api.registry.ItemRegistry;
-import net.modificationstation.stationapi.api.registry.RegistryEntryList;
 import net.modificationstation.stationapi.api.tag.TagKey;
 
 import javax.annotation.Nonnull;
@@ -16,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class SmeltingRecipeMaker {
 

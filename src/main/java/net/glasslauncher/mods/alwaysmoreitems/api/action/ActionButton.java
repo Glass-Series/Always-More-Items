@@ -23,6 +23,19 @@ public interface ActionButton {
     boolean perform(Object minecraft, World world, PlayerEntity player, boolean isOperator, int mouseButton, boolean holdingShift);
 
     /**
+     * @param mouseButton Mouse button used to click on the button.
+     *                    <p> 0 is Left Button, 1 is Right Button, 2 is Middle Button, 3 and 4 are Side Buttons
+     * @return Whether the action was performed
+     */
+    default boolean performClient(Minecraft minecraft, int mouseButton, boolean holdingShift) {
+        return false;
+    }
+
+    default ActionButtonEnvironment getActionEnvironment() {
+        return ActionButtonEnvironment.SERVER_AMI_PRESENT_ONLY;
+    }
+
+    /**
      * I would not recommend touching this to keep the button grid consistent
      *
      * @return The width of the button
@@ -59,6 +72,7 @@ public interface ActionButton {
      *
      * @return Whether the button is only clientsided
      */
+    @Deprecated(forRemoval = true)
     default boolean isClientsideOnly() {
         return false;
     }

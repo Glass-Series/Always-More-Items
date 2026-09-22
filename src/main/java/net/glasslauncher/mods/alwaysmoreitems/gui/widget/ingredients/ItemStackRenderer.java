@@ -4,15 +4,12 @@ import net.glasslauncher.mods.alwaysmoreitems.gui.Tooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.client.TooltipHelper;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.tools.Tool;
 import java.util.ArrayList;
 
 public class ItemStackRenderer implements IIngredientRenderer<ItemStack> {

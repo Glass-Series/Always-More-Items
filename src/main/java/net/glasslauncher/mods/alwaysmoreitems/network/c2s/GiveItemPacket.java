@@ -20,13 +20,10 @@ import net.modificationstation.stationapi.api.network.packet.PacketType;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.util.Formatting;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.impl.item.StationNBTSetter;
 import org.jetbrains.annotations.NotNull;
 
-import javax.imageio.stream.IIOByteBuffer;
-import java.io.*;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 public class GiveItemPacket extends Packet implements ManagedPacket<GiveItemPacket> {
     public static final PacketType<GiveItemPacket> TYPE = PacketType.builder(false, true, GiveItemPacket::new).build();

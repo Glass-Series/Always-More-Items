@@ -26,7 +26,7 @@ public class Commands {
         List<String> commandStrings = new ArrayList<>();
         commandStrings.add("/give");
         commandStrings.add(senderName);
-        commandStrings.add(ItemRegistry.INSTANCE.getId(itemStack.getItem()).toString());
+        commandStrings.add(String.valueOf(ItemRegistry.INSTANCE.getRawId(itemStack.getItem())));
         commandStrings.add(String.valueOf(amount));
 
         String fullCommand = StringUtils.join(commandStrings, " ");

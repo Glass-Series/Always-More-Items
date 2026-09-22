@@ -2,9 +2,11 @@ package net.glasslauncher.mods.alwaysmoreitems.network.c2s;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.alwaysmoreitems.action.ActionButtonRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -58,7 +60,10 @@ public class ActionButtonPacket extends Packet implements ManagedPacket<ActionBu
 
     @Override
     public void apply(NetworkHandler networkHandler) {
-        handleServer(networkHandler);
+        switch (FabricLoader.getInstance().getEnvironmentType()) {
+            case CLIENT -> handleClient();
+            case SERVER -> handleServer(networkHandler);
+        }
     }
 
     @Environment(EnvType.SERVER)
@@ -77,6 +82,23 @@ public class ActionButtonPacket extends Packet implements ManagedPacket<ActionBu
             } else {
                 AlwaysMoreItems.LOGGER.warn("Player {} tried to execute invalid action {}", serverPlay.player.name, actionIdentifier);
             }
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void handleClient() {
+        ActionButton actionButton = ActionButtonRegistry.INSTANCE.get(actionIdentifier);
+        if (actionButton != null) {
+            actionButton.perform(
+                    Minecraft.INSTANCE,
+                    Minecraft.INSTANCE.world,
+                    Minecraft.INSTANCE.player,
+                    true,
+                    mouseButton,
+                    holdingShift
+            );
+        } else {
+            AlwaysMoreItems.LOGGER.warn("Player {} tried to execute invalid action {}", Minecraft.INSTANCE.player.name, actionIdentifier);
         }
     }
 

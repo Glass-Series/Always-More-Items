@@ -28,7 +28,8 @@
     "stationapi:event_bus_client": [
       "net.glasslauncher.mods.alwaysmoreitems.init.ClientInit",
       "net.glasslauncher.mods.alwaysmoreitems.init.KeybindListener",
-      "net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem"
+      "net.glasslauncher.mods.alwaysmoreitems.gui.AMITooltipSystem",
+      "net.glasslauncher.mods.alwaysmoreitems.event.MultiplayerLogoutListener"
     ],
     "stationapi:event_bus_server": [
       "net.glasslauncher.mods.alwaysmoreitems.event.PlayerJoinedListener"

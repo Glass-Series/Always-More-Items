@@ -1,11 +1,12 @@
 package net.glasslauncher.mods.alwaysmoreitems.action;
 
 import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButton;
+import net.glasslauncher.mods.alwaysmoreitems.api.action.ActionButtonEnvironment;
 import net.glasslauncher.mods.alwaysmoreitems.config.OverlayMode;
 import net.glasslauncher.mods.alwaysmoreitems.util.AlwaysMoreItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProperties;
 import net.modificationstation.stationapi.api.util.Formatting;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,14 +31,16 @@ public class SetTimeActionButton implements ActionButton {
             return false;
         }
 
-        WorldProperties worldProperties = world.getProperties();
-
         AlwaysMoreItems.LOGGER.debug("Time Before: {}", world.getTime());
-        long worldTime = world.getTime();
-        long timeRemainder = worldTime % 24000L;
-        worldProperties.setTime(worldTime - timeRemainder + (timeRemainder <= time ? 0 : 24000L) + time);
+        world.getProperties().setTime(getNewTime(world));
         AlwaysMoreItems.LOGGER.debug("Time After: {}", world.getTime());
 
+        return true;
+    }
+
+    @Override
+    public boolean performClient(Minecraft minecraft, int mouseButton, boolean holdingShift) {
+        minecraft.player.sendChatMessage("/time set " + getNewTime(minecraft.world));
         return true;
     }
 
@@ -49,5 +52,16 @@ public class SetTimeActionButton implements ActionButton {
     @Override
     public String getTexture() {
         return texture;
+    }
+
+    public long getNewTime(World world) {
+        long worldTime = world.getTime();
+        long timeRemainder = worldTime % 24000L;
+        return worldTime - timeRemainder + (timeRemainder <= time ? 0 : 24000L) + time;
+    }
+
+    @Override
+    public ActionButtonEnvironment getActionEnvironment() {
+        return ActionButtonEnvironment.SERVER_AMI_PRESENT_OR_CLIENT;
     }
 }

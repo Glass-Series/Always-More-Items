@@ -23,3 +23,5 @@ accessible field net/minecraft/recipe/ShapedRecipe height I
 
 accessible method net/minecraft/nbt/NbtCompound write (Ljava/io/DataOutput;)V
 accessible method net/minecraft/nbt/NbtCompound read (Ljava/io/DataInput;)V
+
+accessible field net/minecraft/client/gui/screen/ConnectScreen networkHandler Lnet/minecraft/client/network/ClientNetworkHandler;
