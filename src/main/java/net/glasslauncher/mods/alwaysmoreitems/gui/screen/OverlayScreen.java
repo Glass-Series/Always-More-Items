@@ -385,6 +385,10 @@ public class OverlayScreen extends Screen {
             }
         }
 
+        if (!AlwaysMoreItems.isAMIOnServer() && minecraft.player.inventory.getCursorStack() != null) {
+            return;
+        }
+
         // Hovered Item
         hoveredItem = getHoveredItem(mouseX, mouseY);
         if (hoveredItem != null) {
